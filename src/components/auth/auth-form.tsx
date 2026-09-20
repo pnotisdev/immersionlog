@@ -18,6 +18,10 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   // `next` would let /login?next=https://evil.com be used for phishing.
   const next = safeRedirect(params.get("next"), "/dashboard");
   const [pending, setPending] = useState(false);
+  // Set on signup when the server didn't hand back a session — i.e. email
+  // verification is required (auth.ts: requireEmailVerification) — instead of
+  // redirecting into a dashboard the user has no session for.
+  const [awaitingVerification, setAwaitingVerification] = useState(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,8 +47,32 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       toast.error(result.error.message ?? "Something went wrong");
       return;
     }
+    if (mode === "signup" && !result.data.token) {
+      setAwaitingVerification(true);
+      return;
+    }
     router.push(next);
     router.refresh();
+  }
+
+  if (awaitingVerification) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Check your email</CardTitle>
+          <CardDescription>We sent a verification link to finish creating your account.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">
+            Click the link in that email to verify your address and sign in. Didn&apos;t get it? Check spam, or{" "}
+            <Link href="/login" className="underline underline-offset-4">
+              try signing in
+            </Link>{" "}
+            once it arrives.
+          </p>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (

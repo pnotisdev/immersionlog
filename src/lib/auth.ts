@@ -72,11 +72,7 @@ export const auth = betterAuth({
         text: `Hi ${user.name},\n\nSomeone (hopefully you) asked to reset the password for your immersionlog account.\n\nReset it here: ${url}\n\nThis link expires in 1 hour. If you didn't request this, you can ignore this email.`,
       });
     },
-    // Existing accounts predate email verification and would otherwise be
-    // locked out on their next sign-in — leave sign-in unblocked for now.
-    // New signups still get a verification email (see emailVerification.sendOnSignUp)
-    // and this can be flipped to `true` once verification has rolled out.
-    requireEmailVerification: false,
+    requireEmailVerification: true,
   },
   emailVerification: {
     async sendVerificationEmail({ user, url }) {
