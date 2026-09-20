@@ -81,9 +81,18 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
         if (!r2.ok) toast.error(r2.error);
       }
       toast.success("Saved");
+      // Refreshing now would re-key EntryEditor on the entry's new updatedAt (see the
+      // page's `key={entry.updatedAt...}`) and remount it mid-dialog, wiping logPrompt
+      // and closing the prompt before it can be used. Defer the refresh until the
+      // dialog is actually done with (closeLogPrompt) instead.
       if (delta > 0 && unit) setLogPrompt({ amount: delta, unit });
-      router.refresh();
+      else router.refresh();
     });
+  }
+
+  function closeLogPrompt() {
+    setLogPrompt(null);
+    router.refresh();
   }
 
   function remove() {
@@ -210,7 +219,7 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
         </Button>
       </div>
 
-      <Dialog open={logPrompt !== null} onOpenChange={(o) => !o && setLogPrompt(null)}>
+      <Dialog open={logPrompt !== null} onOpenChange={(o) => !o && closeLogPrompt()}>
         <DialogContent className="max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Log the time for that?</DialogTitle>
@@ -228,7 +237,7 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
                 amount: logPrompt.amount,
                 amountUnit: logPrompt.unit,
               }}
-              onDone={() => setLogPrompt(null)}
+              onDone={closeLogPrompt}
             />
           )}
         </DialogContent>
