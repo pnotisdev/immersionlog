@@ -5,6 +5,7 @@ import { ENTRY_STATUSES, MEDIA_TYPES, type EntryStatus, type MediaType } from "@
 import { getPublicUser } from "@/lib/ranking-queries";
 import { requireUser } from "@/lib/session";
 import { USERNAME_RE } from "@/lib/username";
+import { getLibraryPicks } from "@/lib/view-models";
 import { PageHeader } from "@/components/layout/page-header";
 import { LibraryBrowser } from "@/components/library/library-browser";
 
@@ -29,6 +30,7 @@ export default async function UserLibraryPage(props: PageProps<"/u/[username]/li
 
   const isSelf = u.id === viewer.id;
   const firstName = u.name.split(" ")[0];
+  const entries = isSelf ? await getLibraryPicks(viewer.id) : null;
 
   return (
     <div>
@@ -46,6 +48,7 @@ export default async function UserLibraryPage(props: PageProps<"/u/[username]/li
         basePath={`/u/${u.username}/library`}
         status={status}
         type={type}
+        quickLog={entries ? { entries, tz: viewer.timezone ?? "UTC" } : undefined}
         emptyState={
           <div className="rounded-xl border border-dashed p-12 text-center">
             <p className="text-sm text-muted-foreground">

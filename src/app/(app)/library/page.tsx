@@ -3,6 +3,7 @@ import { Compass } from "lucide-react";
 import { ENTRY_STATUSES, MEDIA_TYPES, type EntryStatus, type MediaType } from "@/db/schema";
 import { getLibrary } from "@/lib/queries";
 import { requireUser } from "@/lib/session";
+import { getLibraryPicks } from "@/lib/view-models";
 import { PageHeader } from "@/components/layout/page-header";
 import { AddMediaDialog } from "@/components/library/add-media-dialog";
 import { LibraryBrowser } from "@/components/library/library-browser";
@@ -17,7 +18,11 @@ export default async function LibraryPage(props: PageProps<"/library">) {
   const status = (ENTRY_STATUSES as readonly string[]).includes(statusParam ?? "") ? (statusParam as EntryStatus) : undefined;
   const type = (MEDIA_TYPES as readonly string[]).includes(typeParam ?? "") ? (typeParam as MediaType) : undefined;
 
-  const total = await getLibrary(user.id).then((rows) => rows.length);
+  const [total, entries] = await Promise.all([
+    getLibrary(user.id).then((rows) => rows.length),
+    getLibraryPicks(user.id),
+  ]);
+  const tz = user.timezone ?? "UTC";
 
   return (
     <div>
@@ -42,6 +47,7 @@ export default async function LibraryPage(props: PageProps<"/library">) {
         basePath="/library"
         status={status}
         type={type}
+        quickLog={{ entries, tz }}
         emptyState={
           <div className="rounded-xl border border-dashed p-12 text-center">
             <p className="text-sm text-muted-foreground">

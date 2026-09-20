@@ -4,6 +4,8 @@ import { MEDIA_TYPE_META, STATUS_LABELS } from "@/lib/media";
 import { getLibrary } from "@/lib/queries";
 import { TabLinks } from "@/components/layout/tab-links";
 import { MediaCard } from "@/components/library/media-card";
+import { MediaCardQuickLog } from "@/components/library/media-card-quick-log";
+import type { LibraryPick } from "@/components/library/types";
 
 /**
  * The status/type-filtered grid shared by "my library" and "someone's library"
@@ -15,6 +17,7 @@ export async function LibraryBrowser({
   status,
   type,
   emptyState,
+  quickLog,
 }: {
   userId: string;
   /** e.g. "/library" or "/u/mika/library" — filter links are built from this. */
@@ -23,6 +26,8 @@ export async function LibraryBrowser({
   type?: MediaType;
   /** Shown only when the library has zero entries at all (not just for this filter). */
   emptyState: ReactNode;
+  /** Pass only when this is the viewer's own library — adds a one-click "log" button per tile. */
+  quickLog?: { entries: LibraryPick[]; tz: string };
 }) {
   const [entries, allEntries] = await Promise.all([
     getLibrary(userId, status, type),
@@ -74,24 +79,26 @@ export async function LibraryBrowser({
         )
       ) : (
         <div className="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-4 lg:grid-cols-6">
-          {entries.map((e) => (
-            <MediaCard
-              key={e.id}
-              item={{
-                mediaItemId: e.mediaItemId,
-                title: e.mediaItem.title,
-                titleNative: e.mediaItem.titleNative,
-                coverUrl: e.mediaItem.coverUrl,
-                type: e.mediaItem.type,
-                status: e.status,
-                progress: e.progress,
-                progressUnit: e.progressUnit,
-                totalAmount: e.mediaItem.totalAmount,
-                totalUnit: e.mediaItem.totalUnit,
-                rating: e.rating,
-              }}
-            />
-          ))}
+          {entries.map((e) => {
+            const item = {
+              mediaItemId: e.mediaItemId,
+              title: e.mediaItem.title,
+              titleNative: e.mediaItem.titleNative,
+              coverUrl: e.mediaItem.coverUrl,
+              type: e.mediaItem.type,
+              status: e.status,
+              progress: e.progress,
+              progressUnit: e.progressUnit,
+              totalAmount: e.mediaItem.totalAmount,
+              totalUnit: e.mediaItem.totalUnit,
+              rating: e.rating,
+            };
+            return quickLog ? (
+              <MediaCardQuickLog key={e.id} item={item} entries={quickLog.entries} tz={quickLog.tz} />
+            ) : (
+              <MediaCard key={e.id} item={item} />
+            );
+          })}
         </div>
       )}
     </div>
