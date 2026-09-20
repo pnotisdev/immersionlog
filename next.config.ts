@@ -1,8 +1,26 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Don't advertise the framework in responses.
+  poweredByHeader: false,
   // PGlite ships WASM and postgres.js opens sockets — keep both out of the server bundle.
   serverExternalPackages: ["@electric-sql/pglite", "postgres"],
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          // Safe to set unconditionally: nginx only ever terminates this app over HTTPS
+          // (see the port-3001 firewall rule this pairs with — that path never reaches here).
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // No legitimate reason for this app to be framed by another origin.
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        ],
+      },
+    ];
+  },
   images: {
     // Restricted to the CDNs this app actually pulls media from (see src/lib/sources/*)
     // plus DiceBear (generated avatars, see scripts/seed-demo.ts). A wildcard hostname here
