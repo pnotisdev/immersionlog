@@ -195,8 +195,11 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
             {entry ? (
               <EntryEditor
                 key={entry.updatedAt.toISOString()}
+                entries={picks}
+                tz={tz}
                 entry={{
                   mediaItemId: item.id,
+                  mediaType: item.type,
                   status: entry.status,
                   progress: entry.progress,
                   progressUnit: entry.progressUnit,
