@@ -98,7 +98,7 @@ export default function PrivacyPage() {
       <Section title="9. Contact">
         <p>
           Questions, or a data request you&rsquo;d rather we handle manually:{" "}
-          <a href="mailto:privacy@immersemoar.app">privacy@immersemoar.app</a>.
+          <a href="mailto:privacy@immersionlog.com">privacy@immersionlog.com</a>.
         </p>
       </Section>
     </article>

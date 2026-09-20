@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   // in this app returns one implicitly) against "http://localhost:3000" at build time —
   // fine in dev, silently wrong in production. See src/lib/site.ts.
   metadataBase: new URL(getSiteUrl()),
-  title: { default: "immersemoar", template: "%s · immersemoar" },
+  title: { default: "immersionlog", template: "%s · immersionlog" },
   description: "Track everything you consume in Japanese: anime, manga, VNs, books, movies, podcasts, and your hours.",
 };
 

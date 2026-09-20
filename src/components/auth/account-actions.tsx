@@ -34,7 +34,7 @@ export function ExportDataButton() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "immersemoar-export.json";
+      a.download = "immersionlog-export.json";
       document.body.appendChild(a);
       a.click();
       a.remove();

@@ -1,4 +1,4 @@
-# immersemoar
+# immersionlog
 
 One account to track everything you consume in Japanese — anime, manga, visual novels, light novels, books, movies, series, YouTube, podcasts, drama CDs, games — with the language-learning metrics layered on top: **hours, characters, streaks, levels, goals, rankings and clubs**.
 
@@ -48,7 +48,7 @@ pnpm seed:demo            # ~9 demo members, real covers from AniList/VNDB, mont
 pnpm seed:demo --reset    # delete previously seeded demo members first
 ```
 
-Demo accounts are real accounts you can sign in as: `<handle>@demo.immersemoar.app` / `immerse-demo-2026` (handles are printed at the end of the run). They are recognisable by that email domain, which is also how `--reset` finds them — never run the seeder against a production database.
+Demo accounts are real accounts you can sign in as: `<handle>@demo.immersionlog.com` / `immerse-demo-2026` (handles are printed at the end of the run). They are recognisable by that email domain, which is also how `--reset` finds them — never run the seeder against a production database.
 
 ### Environment
 

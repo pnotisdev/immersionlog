@@ -39,7 +39,7 @@ import { browseAniList } from "../src/lib/sources/anilist";
 import { browseVndb } from "../src/lib/sources/vndb";
 import type { SearchResult } from "../src/lib/sources/types";
 
-const DEMO_DOMAIN = "@demo.immersemoar.app";
+const DEMO_DOMAIN = "@demo.immersionlog.com";
 const DEMO_PASSWORD = "immerse-demo-2026";
 
 interface DemoUser {

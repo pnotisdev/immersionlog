@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   }
 
   // isDemo excluded: seed-demo.ts accounts have no real inbox behind their
-  // @demo.immersemoar.app addresses (see src/db/schema/auth.ts).
+  // @demo.immersionlog.com addresses (see src/db/schema/auth.ts).
   const recipients = await db
     .select({ id: user.id, name: user.name, email: user.email, timezone: user.timezone })
     .from(user)

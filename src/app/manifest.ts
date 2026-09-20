@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "immersemoar",
-    short_name: "immersemoar",
+    name: "immersionlog",
+    short_name: "immersionlog",
     description: "Track every hour of Japanese you consume: anime, manga, visual novels, books, podcasts and more.",
     start_url: "/dashboard",
     display: "standalone",

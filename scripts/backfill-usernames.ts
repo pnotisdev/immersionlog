@@ -27,7 +27,7 @@ import { dedupeUsername, slugifyUsername } from "../src/lib/username";
 // Must match scripts/seed-demo.ts's DEMO_DOMAIN. Not imported from there directly:
 // that file's module-scope `main().catch(...)` call would run the whole demo seed as a
 // side effect of importing it.
-const DEMO_DOMAIN = "@demo.immersemoar.app";
+const DEMO_DOMAIN = "@demo.immersionlog.com";
 
 async function main() {
   const pending = await db

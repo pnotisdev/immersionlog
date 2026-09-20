@@ -3,12 +3,12 @@ import { Resend } from "resend";
 
 // Cached the same way as src/db/index.ts: `next dev` hot reloads shouldn't
 // construct a new client (or re-check env) on every module re-evaluation.
-const g = globalThis as unknown as { __immersemoarResend?: Resend };
+const g = globalThis as unknown as { __immersionlogResend?: Resend };
 
 function getClient(): Resend | null {
   const key = process.env.RESEND_API_KEY;
   if (!key) return null;
-  return g.__immersemoarResend ?? (g.__immersemoarResend = new Resend(key));
+  return g.__immersionlogResend ?? (g.__immersionlogResend = new Resend(key));
 }
 
 export type SendEmailInput = {
@@ -27,7 +27,7 @@ export type SendEmailInput = {
  */
 export async function sendEmail({ to, subject, text }: SendEmailInput): Promise<void> {
   const client = getClient();
-  const from = process.env.EMAIL_FROM || "immersemoar <onboarding@resend.dev>";
+  const from = process.env.EMAIL_FROM || "immersionlog <onboarding@resend.dev>";
 
   if (!client) {
     if (process.env.NODE_ENV === "production") {

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPublicUser } from "@/lib/ranking-queries";
 
-export const alt = "immersemoar profile";
+export const alt = "immersionlog profile";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -51,7 +51,7 @@ export default async function Image({ params }: { params: Promise<{ username: st
               {user.name}
             </div>
             <div style={{ display: "flex", marginTop: 16, fontSize: 32, color: "#7fb1ea" }}>@{user.username}</div>
-            <div style={{ display: "flex", marginTop: 28, fontSize: 28, color: "#c3c9d6" }}>Tracking immersion time on immersemoar</div>
+            <div style={{ display: "flex", marginTop: 28, fontSize: 28, color: "#c3c9d6" }}>Tracking immersion time on immersionlog</div>
           </div>
         ) : (
           <div style={{ display: "flex", fontSize: 64, fontWeight: 700, color: "white", letterSpacing: -1 }}>

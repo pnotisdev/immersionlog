@@ -76,5 +76,5 @@ export function formatWeeklyRecapEmail(name: string, recap: WeeklyRecap, unsubsc
     unsubscribeUrl,
   );
 
-  return { subject: "Your week on immersemoar", text: lines.join("\n") };
+  return { subject: "Your week on immersionlog", text: lines.join("\n") };
 }

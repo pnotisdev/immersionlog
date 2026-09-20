@@ -9,7 +9,7 @@ import * as schema from "./schema";
 export type Db = PgDatabase<PgQueryResultHKT, typeof schema>;
 
 // Cached on globalThis so `next dev` hot reloads don't open a new connection / PGlite instance each time.
-const g = globalThis as unknown as { __immersemoarDb?: Db };
+const g = globalThis as unknown as { __immersionlogDb?: Db };
 
 // Conservative per-process default. This app can run as several PM2 cluster workers,
 // each opening its own connection pool against Neon's pooler (the "-pooler" host in
@@ -45,7 +45,7 @@ function createDb(): Db {
 }
 
 function getDb(): Db {
-  return g.__immersemoarDb ?? (g.__immersemoarDb = createDb());
+  return g.__immersionlogDb ?? (g.__immersionlogDb = createDb());
 }
 
 // Lazy: importing this module must not open a database (e.g. during `next build` prerendering).

@@ -24,7 +24,7 @@ const SOURCES = {
 type SourceKey = keyof typeof SOURCES;
 const SOURCE_ITEMS: Record<string, string> = Object.fromEntries(Object.entries(SOURCES).map(([k, v]) => [k, v.label]));
 
-const STORAGE_KEY = "immersemoar:texthooker:v1";
+const STORAGE_KEY = "immersionlog:texthooker:v1";
 const AFK_OPTIONS = [60, 120, 180, 300, 600];
 const AFK_ITEMS: Record<string, string> = Object.fromEntries(AFK_OPTIONS.map((s) => [String(s), `${s / 60} min`]));
 

@@ -14,17 +14,17 @@ import type { ActionResult } from "./types";
  * Fire-and-forget: a slow or failing email provider must never break the follow action
  * itself, so this is intentionally not awaited by its caller (matches the same pattern
  * in src/lib/sources/browse.ts's cache writes). Skips demo accounts (see
- * src/db/schema/auth.ts) — their @demo.immersemoar.app addresses aren't real inboxes.
+ * src/db/schema/auth.ts) — their @demo.immersionlog.com addresses aren't real inboxes.
  */
 async function sendNewFollowerEmail(target: { id: string; name: string; email: string }, followerName: string) {
   const unsubscribeUrl = `${getSiteUrl()}/api/unsubscribe?token=${createUnsubscribeToken(target.id)}`;
   await sendEmail({
     to: target.email,
-    subject: `${followerName} started following you on immersemoar`,
+    subject: `${followerName} started following you on immersionlog`,
     text: [
       `Hi ${target.name.split(" ")[0]},`,
       "",
-      `${followerName} just started following you on immersemoar.`,
+      `${followerName} just started following you on immersionlog.`,
       "",
       "—",
       "Don't want these emails? Unsubscribe here (this also turns off weekly recap emails):",

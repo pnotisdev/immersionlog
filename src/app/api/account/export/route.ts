@@ -131,7 +131,7 @@ export async function GET() {
   return new NextResponse(JSON.stringify(payload, null, 2), {
     headers: {
       "Content-Type": "application/json",
-      "Content-Disposition": `attachment; filename="immersemoar-export-${userId}.json"`,
+      "Content-Disposition": `attachment; filename="immersionlog-export-${userId}.json"`,
     },
   });
 }

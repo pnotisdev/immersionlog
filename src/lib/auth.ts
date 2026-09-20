@@ -68,8 +68,8 @@ export const auth = betterAuth({
     async sendResetPassword({ user, url }) {
       await sendEmail({
         to: user.email,
-        subject: "Reset your immersemoar password",
-        text: `Hi ${user.name},\n\nSomeone (hopefully you) asked to reset the password for your immersemoar account.\n\nReset it here: ${url}\n\nThis link expires in 1 hour. If you didn't request this, you can ignore this email.`,
+        subject: "Reset your immersionlog password",
+        text: `Hi ${user.name},\n\nSomeone (hopefully you) asked to reset the password for your immersionlog account.\n\nReset it here: ${url}\n\nThis link expires in 1 hour. If you didn't request this, you can ignore this email.`,
       });
     },
     // Existing accounts predate email verification and would otherwise be
@@ -82,8 +82,8 @@ export const auth = betterAuth({
     async sendVerificationEmail({ user, url }) {
       await sendEmail({
         to: user.email,
-        subject: "Verify your immersemoar email",
-        text: `Hi ${user.name},\n\nConfirm this is your email address to finish setting up your immersemoar account.\n\nVerify it here: ${url}\n\nThis link expires in 1 hour. If you didn't create this account, you can ignore this email.`,
+        subject: "Verify your immersionlog email",
+        text: `Hi ${user.name},\n\nConfirm this is your email address to finish setting up your immersionlog account.\n\nVerify it here: ${url}\n\nThis link expires in 1 hour. If you didn't create this account, you can ignore this email.`,
       });
     },
     sendOnSignUp: true,

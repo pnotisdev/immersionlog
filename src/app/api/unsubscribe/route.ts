@@ -7,10 +7,10 @@ import { verifyUnsubscribeToken } from "@/lib/unsubscribe-token";
 function page(body: string, status: number) {
   return new NextResponse(
     `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>immersemoar</title>
+<title>immersionlog</title>
 <style>body{font-family:system-ui,sans-serif;background:#171b26;color:#e6e9f0;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:24px}
 .card{max-width:420px;text-align:center}h1{font-size:1.1rem;margin:0 0 8px}p{color:#98a2b3;line-height:1.5}a{color:#7fb1ea}</style>
-</head><body><div class="card"><h1>immersemoar</h1><p>${body}</p></div></body></html>`,
+</head><body><div class="card"><h1>immersionlog</h1><p>${body}</p></div></body></html>`,
     { status, headers: { "Content-Type": "text/html; charset=utf-8" } },
   );
 }
@@ -29,5 +29,5 @@ export async function GET(request: NextRequest) {
   }
 
   await db.update(user).set({ emailNotifications: false }).where(eq(user.id, userId));
-  return page("You&rsquo;ve been unsubscribed from immersemoar emails. You can turn them back on anytime from Settings.", 200);
+  return page("You&rsquo;ve been unsubscribed from immersionlog emails. You can turn them back on anytime from Settings.", 200);
 }

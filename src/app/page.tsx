@@ -8,7 +8,7 @@ import { getShelves } from "@/lib/sources/browse";
 import { Poster } from "@/components/media/poster";
 
 export const metadata = {
-  title: "immersemoar — track every hour of Japanese you consume",
+  title: "immersionlog — track every hour of Japanese you consume",
   description:
     "Anime, manga, visual novels, books, podcasts — one tracker for everything you read and watch in Japanese, with hours, streaks, levels, goals and a leaderboard.",
 };

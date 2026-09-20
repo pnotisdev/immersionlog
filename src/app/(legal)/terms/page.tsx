@@ -18,7 +18,7 @@ export default function TermsPage() {
 
       <Section title="1. What this is">
         <p>
-          immersemoar (&ldquo;the service&rdquo;, &ldquo;we&rdquo;) is a personal tool for tracking time spent
+          immersionlog (&ldquo;the service&rdquo;, &ldquo;we&rdquo;) is a personal tool for tracking time spent
           consuming Japanese-language media, plus optional social features (following other users, clubs, kudos,
           leaderboards). By creating an account you agree to these terms.
         </p>
@@ -77,7 +77,7 @@ export default function TermsPage() {
 
       <Section title="8. Contact">
         <p>
-          Questions about these terms: <a href="mailto:hello@immersemoar.app">hello@immersemoar.app</a>.
+          Questions about these terms: <a href="mailto:hello@immersionlog.com">hello@immersionlog.com</a>.
         </p>
       </Section>
     </article>
