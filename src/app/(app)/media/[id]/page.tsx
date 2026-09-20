@@ -194,7 +194,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
           <CardContent>
             {entry ? (
               <EntryEditor
-                key={entry.updatedAt.toISOString()}
+                key={item.id}
                 entries={picks}
                 tz={tz}
                 entry={{

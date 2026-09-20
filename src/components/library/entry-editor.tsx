@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { removeEntry, updateEntry, updateMediaItem } from "@/actions/library";
 import { ENTRY_STATUSES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
@@ -55,6 +55,25 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
   const effectiveTotal = entry.canEditTotal ? (total === "" ? null : Number(total)) : entry.totalAmount;
   const effectiveTotalUnit = entry.canEditTotal ? totalUnit : entry.totalUnit;
   const maxProgress = effectiveTotal && effectiveTotalUnit === unit ? effectiveTotal : undefined;
+
+  // Re-sync local fields when the server's copy of this entry changes — e.g. a session
+  // logged elsewhere on this page (the timer) bumps progress via the delta-sync in
+  // src/actions/sessions.ts. This used to be handled by remounting the whole component
+  // (keyed on entry.updatedAt), but that also wiped UI-only state like an open
+  // logPrompt dialog the instant our own save's revalidatePath came back. Syncing in
+  // place instead leaves logPrompt (and any other local-only state) untouched.
+  useEffect(() => {
+    setStatus(entry.status);
+    setProgress(String(entry.progress));
+    setUnit(entry.progressUnit);
+    setRating(entry.rating ? String(entry.rating) : NONE);
+    setNotes(entry.notes ?? "");
+    setStartedAt(entry.startedAt ?? "");
+    setFinishedAt(entry.finishedAt ?? "");
+    setTotal(entry.totalAmount ? String(entry.totalAmount) : "");
+    setTotalUnit(entry.totalUnit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entry.status, entry.progress, entry.progressUnit, entry.rating, entry.notes, entry.startedAt, entry.finishedAt, entry.totalAmount, entry.totalUnit]);
 
   function save() {
     const newProgress = Math.min(Number(progress) || 0, maxProgress ?? Infinity);
