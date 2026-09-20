@@ -130,9 +130,6 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
         <span>
           <span className="font-medium text-foreground">{formatNumber(counts.following)}</span> following
         </span>
-        <span>
-          <span className="font-medium text-foreground">{formatNumber(progression.overall.xp)}</span> XP
-        </span>
         {rank.rank && (
           <Link href="/ranking" className="hover:text-foreground">
             #{rank.rank} this month

@@ -307,7 +307,7 @@ export function QuickLogFlow({ picks, tz }: { picks: PickWithStats[]; tz: string
                 )}
 
                 <div className="grid gap-1.5">
-                  <Label htmlFor="ql-started">When (optional — defaults to just now)</Label>
+                  <Label htmlFor="ql-started">When (optional, defaults to just now)</Label>
                   <Input id="ql-started" type="datetime-local" value={startedAt} onChange={(e) => setStartedAt(e.target.value)} />
                 </div>
 

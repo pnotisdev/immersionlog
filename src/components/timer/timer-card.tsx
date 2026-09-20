@@ -80,15 +80,14 @@ function FixedItemCard({
   }
 
   return (
-    <Card>
+    <Card className="border-primary/20 bg-accent/40">
       <CardContent className="flex flex-wrap items-center gap-3">
-        <Button size="lg" onClick={() => setLogOpen(true)} className="h-11 px-5 text-base font-semibold shadow-sm shadow-primary/20">
+        <Button size="lg" onClick={() => setLogOpen(true)} className="h-11 px-5 text-base font-semibold">
           <Plus /> Log what you watched
         </Button>
-        <Button size="lg" variant="outline" onClick={start} disabled={pending}>
+        <Button size="lg" variant="outline" onClick={start} disabled={pending} className="bg-background">
           <Play /> {pending ? "Starting…" : "Start timer"}
         </Button>
-        <p className="basis-full text-xs text-muted-foreground sm:basis-auto">Already watched it? Log it. Watching now? Start the timer.</p>
       </CardContent>
       <SessionDialog
         open={logOpen}
@@ -122,10 +121,10 @@ function IdleTimer({ entries }: { entries: LibraryPick[] }) {
   }
 
   return (
-    <Card>
+    <Card className="border-primary/20 bg-accent/40">
       <CardContent className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
         <ItemPicker entries={entries} value={pick} onChange={setPick} idPrefix="timer" />
-        <Button size="lg" onClick={start} disabled={pending} className="w-full sm:w-auto">
+        <Button size="lg" onClick={start} disabled={pending} className="h-11 w-full px-5 text-base font-semibold sm:w-auto">
           <Play /> Start timer
         </Button>
       </CardContent>
@@ -169,7 +168,7 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
   }
 
   return (
-    <Card className="border-primary/40">
+    <Card className="border-primary/30 bg-accent/40">
       <CardContent className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-3">
           <span className="relative flex size-3">

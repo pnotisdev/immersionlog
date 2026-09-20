@@ -65,7 +65,7 @@ export default async function DashboardPage() {
   return (
     <div className="grid gap-8">
       <div>
-        <h1 className="text-xl font-semibold sm:text-2xl">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
           {greeting(now, tz)}, {firstName}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -75,12 +75,12 @@ export default async function DashboardPage() {
       </div>
 
       {recent.length === 0 && (
-        <Card className="border-primary/30 bg-primary/5">
+        <Card className="border-primary/20 bg-accent/40">
           <CardContent className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <div className="font-medium">Welcome — let&apos;s log your first session.</div>
+              <div className="font-medium">Welcome. Let&apos;s log your first session.</div>
               <p className="mt-1 text-sm text-muted-foreground">
-                Start the timer below for anything, even something not in your library yet — a visual novel, a game, an
+                Start the timer below for anything, even something not in your library yet: a visual novel, a game, an
                 anime episode. Or browse Discover first to add what you&apos;re into.
               </p>
             </div>
@@ -108,7 +108,7 @@ export default async function DashboardPage() {
             { label: "Level", value: progression.overall.level, hint: `${formatNumber(progression.overall.xp)} XP` },
             {
               label: "Monthly rank",
-              value: rank.rank ? `#${rank.rank}` : "—",
+              value: rank.rank ? `#${rank.rank}` : "-",
               hint: !user.publicProfile ? "profile is private" : rank.rank ? `of ${rank.total} · ${rank.gapToNext != null ? `${formatDuration(rank.gapToNext)} behind #${rank.rank - 1}` : "first place"}` : "log time to be ranked",
             },
             { label: "This week", value: formatDuration(weekSec), hint: `${toHours(progression.totals.total, 0)}h all time` },
@@ -129,17 +129,19 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <section>
-        <SectionHeader
-          title="Pick up where you left off"
-          action={
-            <Link href="/library" className="text-xs text-muted-foreground hover:text-foreground">
-              Library
-            </Link>
-          }
-        />
-        <QuickLogGrid items={recentItems.map((r) => ({ ...r, lastLabel: relativeTime(r.lastAt, now) }))} entries={picks} tz={tz} />
-      </section>
+      {recentItems.length > 0 && (
+        <section>
+          <SectionHeader
+            title="Pick up where you left off"
+            action={
+              <Link href="/library" className="text-xs text-muted-foreground hover:text-foreground">
+                Library
+              </Link>
+            }
+          />
+          <QuickLogGrid items={recentItems.map((r) => ({ ...r, lastLabel: relativeTime(r.lastAt, now) }))} entries={picks} tz={tz} />
+        </section>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <section>
@@ -170,7 +172,7 @@ export default async function DashboardPage() {
                 <Link href="/goals" className="underline underline-offset-4">
                   Set one
                 </Link>{" "}
-                — 1000 hours this year, 2M characters this month, anything.
+                for example 1000 hours this year, 2M characters this month, anything.
               </CardContent>
             </Card>
           ) : (

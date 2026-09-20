@@ -47,7 +47,7 @@ export function formatWeeklyRecapEmail(name: string, recap: WeeklyRecap, unsubsc
 
   if (recap.seconds === 0) {
     lines.push(
-      "You didn't log any immersion time this last week. No pressure — pick something you enjoy and hit start whenever you're ready.",
+      "You didn't log any immersion time this last week. No pressure, pick something you enjoy and hit start whenever you're ready.",
     );
   } else {
     lines.push(`You logged ${formatDuration(recap.seconds)} of Japanese immersion this last week.`);
@@ -69,9 +69,9 @@ export function formatWeeklyRecapEmail(name: string, recap: WeeklyRecap, unsubsc
 
   lines.push(
     "",
-    "Keep it up — every session counts.",
+    "Keep it up. Every session counts.",
     "",
-    "—",
+    "--",
     "Don't want these weekly emails? Unsubscribe here (this also turns off new-follower emails):",
     unsubscribeUrl,
   );

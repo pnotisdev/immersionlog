@@ -1,6 +1,8 @@
+import { Users } from "lucide-react";
 import { presetRange } from "@/lib/dates";
 import { listMembers } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
+import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { TabLinks } from "@/components/layout/tab-links";
 import { CommunityTabs } from "@/components/community/community-tabs";
@@ -28,13 +30,13 @@ export default async function MembersPage(props: PageProps<"/members">) {
 
   return (
     <div>
-      <PageHeader title="Members" description="Everyone tracking their Japanese here. Follow a few and their sessions show up in your feed." />
+      <PageHeader title="Members" />
       <CommunityTabs active="/members" />
 
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <TabLinks
           tabs={[
-            { href: href("active"), label: "Most active" },
+            { href: href("active"), label: "Active this month" },
             { href: href("new"), label: "Newest" },
           ]}
           active={href(sort)}
@@ -52,14 +54,8 @@ export default async function MembersPage(props: PageProps<"/members">) {
         </form>
       </div>
 
-      <p className="mb-2 text-xs text-muted-foreground">
-        Time shown is what each member logged this month.
-      </p>
-
       {members.length === 0 ? (
-        <p className="rounded-xl border border-dashed p-10 text-center text-sm text-muted-foreground">
-          {q ? `Nobody matches “${q}”.` : "No public profiles yet."}
-        </p>
+        <EmptyState icon={Users} title={q ? `Nobody matches "${q}".` : "No public profiles yet."} />
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m) => (

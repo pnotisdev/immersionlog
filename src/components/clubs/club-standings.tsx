@@ -36,7 +36,7 @@ export function ClubStandings({ standings }: { standings: Standing[] }) {
                 </Link>
                 <span className="tabular-nums text-muted-foreground">{formatDuration(s.seconds)}</span>
                 <span className="w-16 text-right font-semibold tabular-nums">
-                  {s.rank ? `#${s.rank}` : "—"}
+                  {s.rank ? `#${s.rank}` : "-"}
                   <span className="text-xs font-normal text-muted-foreground"> / {s.total}</span>
                 </span>
               </li>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { presetRange } from "@/lib/dates";
-import { formatCompact, formatDuration } from "@/lib/format";
+import { formatDuration } from "@/lib/format";
 import { getLeaderboard } from "@/lib/ranking-queries";
 import { getCommunityPulse, getFeed, getSuggestedMembers, type FeedScope } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
@@ -10,7 +10,6 @@ import { ActivityFeed } from "@/components/community/activity-feed";
 import { CommunityTabs } from "@/components/community/community-tabs";
 import { MemberRowCompact } from "@/components/community/member-card";
 import { Avatar } from "@/components/ranking/avatar";
-import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata = { title: "Community" };
 
@@ -97,17 +96,6 @@ export default async function CommunityPage(props: PageProps<"/community">) {
         </div>
 
         <aside className="grid gap-6 lg:sticky lg:top-20 lg:self-start">
-          <Card size="sm">
-            <CardContent className="grid gap-3">
-              <SectionHeader title="This week" className="mb-0" />
-              <dl className="grid grid-cols-3 gap-2 text-center">
-                <Stat label="Active" value={String(pulse.activeThisWeek)} />
-                <Stat label="Sessions" value={formatCompact(pulse.sessionsThisWeek)} />
-                <Stat label="Hours" value={String(Math.round(pulse.secondsThisWeek / 3600))} />
-              </dl>
-            </CardContent>
-          </Card>
-
           {suggestions.length > 0 && (
             <div>
               <SectionHeader
@@ -152,15 +140,6 @@ export default async function CommunityPage(props: PageProps<"/community">) {
           )}
         </aside>
       </div>
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dd className="text-lg font-semibold tabular-nums">{value}</dd>
-      <dt className="text-[11px] text-muted-foreground">{label}</dt>
     </div>
   );
 }

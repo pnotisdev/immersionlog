@@ -26,7 +26,7 @@ async function sendNewFollowerEmail(target: { id: string; name: string; email: s
       "",
       `${followerName} just started following you on immersionlog.`,
       "",
-      "—",
+      "--",
       "Don't want these emails? Unsubscribe here (this also turns off weekly recap emails):",
       unsubscribeUrl,
     ].join("\n"),

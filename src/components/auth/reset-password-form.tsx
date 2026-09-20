@@ -36,7 +36,7 @@ export function ResetPasswordForm() {
       toast.error(result.error.message ?? "That link is invalid or has expired");
       return;
     }
-    toast.success("Password updated — sign in with your new password");
+    toast.success("Password updated. Sign in with your new password");
     router.push("/login");
   }
 

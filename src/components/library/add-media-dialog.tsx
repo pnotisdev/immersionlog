@@ -180,7 +180,7 @@ function SearchTab({ type, status, onDone }: { type: MediaType; status: EntrySta
               <div className="truncate text-sm font-medium">{r.title}</div>
               <div className="truncate text-xs text-muted-foreground">
                 {r.titleNative && <span lang="ja">{r.titleNative} · </span>}
-                {r.year ?? "—"}
+                {r.year ?? "-"}
                 {r.totalAmount && r.totalUnit && ` · ${r.totalAmount} ${UNIT_LABELS[r.totalUnit]}`}
               </div>
             </div>

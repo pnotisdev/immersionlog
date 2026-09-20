@@ -201,7 +201,7 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
         </div>
         <p className="text-xs text-muted-foreground">
           {USERNAME_MIN}-{USERNAME_MAX} characters: lowercase letters, numbers and underscores. This is your public
-          profile URL — share it anywhere.
+          profile URL, share it anywhere.
         </p>
       </div>
       <div className="grid gap-1.5">

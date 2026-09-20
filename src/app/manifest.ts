@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#ffffff",
     // Matches the app's blue accent (--viz-series / --primary in src/app/globals.css).
-    theme_color: "#2a78d6",
+    theme_color: "#918df6",
     icons: [
       { src: "/icon", sizes: "512x512", type: "image/png", purpose: "any" },
       { src: "/apple-icon", sizes: "180x180", type: "image/png", purpose: "any" },

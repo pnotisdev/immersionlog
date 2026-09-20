@@ -24,10 +24,7 @@ export default async function DiscoverPage() {
   return (
     <div className="grid gap-9">
       <div>
-        <PageHeader
-          title="Discover"
-          description="Search anything, or pick from what's popular right now. Tapping a cover adds it to your library."
-        />
+        <PageHeader title="Discover" />
         <DiscoverSearch />
       </div>
 

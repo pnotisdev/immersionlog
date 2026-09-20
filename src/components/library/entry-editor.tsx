@@ -18,7 +18,7 @@ import type { LibraryPick } from "./types";
 const STATUS_ITEMS: Record<string, string> = { ...STATUS_LABELS };
 const NONE = "__none__";
 const UNIT_ITEMS: Record<string, string> = { [NONE]: "no unit", ...UNIT_LABELS };
-const RATING_ITEMS: Record<string, string> = { [NONE]: "—", ...Object.fromEntries(Array.from({ length: 10 }, (_, i) => [String(i + 1), `${i + 1} / 10`])) };
+const RATING_ITEMS: Record<string, string> = { [NONE]: "No rating", ...Object.fromEntries(Array.from({ length: 10 }, (_, i) => [String(i + 1), `${i + 1} / 10`])) };
 
 export interface EntryEditorData {
   mediaItemId: string;
@@ -199,7 +199,7 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
                 <span className="text-muted-foreground"> / {entry.totalAmount}</span>
               )}{" "}
               {UNIT_LABELS[entry.progressUnit]}
-              <span className="ml-1.5 text-xs text-muted-foreground">— correct it</span>
+              <span className="ml-1.5 text-xs text-muted-foreground">(correct it)</span>
             </span>
           ) : (
             <span className="text-muted-foreground">Set progress</span>
@@ -226,7 +226,7 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
               </Select>
             </div>
             <p className="text-xs text-muted-foreground">
-              Bumping this by hand doesn&apos;t log time on its own — you&apos;ll get a prompt to add it. Logging a session
+              Bumping this by hand doesn&apos;t log time on its own: you&apos;ll get a prompt to add it. Logging a session
               with a matching unit updates this automatically instead.
             </p>
           </div>
@@ -288,7 +288,7 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
         open={logPrompt !== null}
         onOpenChange={(o) => !o && closeLogPrompt()}
         title="Log the time for that?"
-        description={logPrompt && `+${logPrompt.amount} ${UNIT_LABELS[logPrompt.unit]} — how long did it take?`}
+        description={logPrompt && `+${logPrompt.amount} ${UNIT_LABELS[logPrompt.unit]}: how long did it take?`}
         entries={entries}
         tz={tz}
         initial={

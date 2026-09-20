@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { Users } from "lucide-react";
 import { formatCompact, formatDuration, relativeTime } from "@/lib/format";
 import { MEDIA_TYPE_META, activityVerb, unitLabel } from "@/lib/media";
 import type { FeedItem } from "@/lib/social-queries";
+import { EmptyState } from "@/components/layout/empty-state";
 import { Avatar } from "@/components/ranking/avatar";
 import { Thumb } from "@/components/media/poster";
 import { KudosButton } from "./kudos-button";
@@ -72,12 +74,7 @@ export function ActivityFeed({
 }) {
   const now = new Date();
   if (items.length === 0) {
-    return (
-      <div className="rounded-xl border border-dashed p-10 text-center">
-        <p className="text-sm text-muted-foreground">{emptyText}</p>
-        {emptyAction && <div className="mt-3 flex justify-center">{emptyAction}</div>}
-      </div>
-    );
+    return <EmptyState icon={Users} title={emptyText} action={emptyAction} />;
   }
   return (
     <ul className="divide-y">

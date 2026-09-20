@@ -11,7 +11,7 @@ const HIGHLIGHTS = [
   },
   {
     title: "One tracker, every format",
-    body: "Anime, VNs, manga, podcasts — AniList, VNDB, and TMDB search built in.",
+    body: "Anime, VNs, manga, podcasts: AniList, VNDB, and TMDB search built in.",
     tag: "Covers and lengths included",
   },
 ];

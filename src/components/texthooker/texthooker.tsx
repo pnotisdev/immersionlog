@@ -291,7 +291,7 @@ export function Texthooker({ entries }: { entries: LibraryPick[] }) {
                 )}
               >
                 <span className={cn("size-2 rounded-full", status === "connected" ? "bg-[var(--viz-good)]" : status === "error" ? "bg-destructive" : "bg-muted-foreground/50")} />
-                {status === "connected" ? "Connected" : status === "connecting" ? "Connecting" : status === "error" ? "Could not connect — is the hooker running?" : "Not connected"}
+                {status === "connected" ? "Connected" : status === "connecting" ? "Connecting" : status === "error" ? "Could not connect. Is the hooker running?" : "Not connected"}
               </span>
             </div>
           </CardContent>
@@ -313,7 +313,7 @@ export function Texthooker({ entries }: { entries: LibraryPick[] }) {
           <Stat label="Characters" value={formatNumber(chars)} />
           <Stat label="Active time" value={formatClock(active)} hint={idle ? "paused (idle)" : undefined} />
           <Stat label="Lines" value={formatNumber(lines.length)} />
-          <Stat label="Speed" value={charsPerHour ? `${formatNumber(charsPerHour)}/h` : "—"} />
+          <Stat label="Speed" value={charsPerHour ? `${formatNumber(charsPerHour)}/h` : "-"} />
         </div>
 
         <Card className="flex min-h-[420px] flex-col">
@@ -332,7 +332,7 @@ export function Texthooker({ entries }: { entries: LibraryPick[] }) {
                     type="button"
                     onClick={() => removeLine(l.id)}
                     className="block w-full rounded px-1 text-left hover:bg-destructive/10 hover:line-through"
-                    title={`${l.chars} characters — click to remove`}
+                    title={`${l.chars} characters, click to remove`}
                   >
                     {l.text}
                   </button>

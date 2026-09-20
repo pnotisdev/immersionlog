@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import type { MediaType } from "@/db/schema";
 import { formatDuration } from "@/lib/format";
-import { Button } from "@/components/ui/button";
 import { Poster } from "@/components/media/poster";
 import type { LibraryPick } from "@/components/library/types";
 import { SessionDialog } from "./session-dialog";
@@ -20,22 +18,9 @@ export interface QuickLogItem {
   seconds: number;
 }
 
-/** Cover tiles for recently logged items; one click opens a pre-filled session form. */
+/** Cover tiles for recently logged items; one click opens a pre-filled session form. Caller only renders this once there's at least one item. */
 export function QuickLogGrid({ items, entries, tz }: { items: QuickLogItem[]; entries: LibraryPick[]; tz: string }) {
   const [active, setActive] = useState<QuickLogItem | null>(null);
-
-  if (items.length === 0) {
-    return (
-      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed p-4">
-        <p className="text-sm text-muted-foreground">
-          Items you log from your library show up here for one-click logging next time.
-        </p>
-        <Button render={<Link href="/discover" />} nativeButton={false} variant="outline" size="sm" className="ml-auto">
-          Browse Discover
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <>

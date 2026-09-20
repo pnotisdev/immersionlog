@@ -1,6 +1,8 @@
+import { Users } from "lucide-react";
 import { CLUB_TAGS } from "@/db/schema";
 import { listMyClubs, listPublicClubs } from "@/lib/club-queries";
 import { requireUser } from "@/lib/session";
+import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { TabLinks } from "@/components/layout/tab-links";
 import { CommunityTabs } from "@/components/community/community-tabs";
@@ -73,9 +75,11 @@ export default async function ClubsPage(props: PageProps<"/clubs">) {
           className="mb-4"
         />
         {others.length === 0 ? (
-          <div className="rounded-xl border border-dashed p-10 text-center text-sm text-muted-foreground">
-            {discover.length === 0 && !q && !tag ? "No public clubs yet — create the first one." : "No clubs match. Try another tag or search."}
-          </div>
+          <EmptyState
+            icon={Users}
+            title={discover.length === 0 && !q && !tag ? "No public clubs yet." : "No clubs match."}
+            description={discover.length === 0 && !q && !tag ? "Create the first one." : "Try another tag or search."}
+          />
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((c) => (

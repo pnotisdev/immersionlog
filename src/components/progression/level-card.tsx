@@ -82,7 +82,7 @@ export function RankCard({ rank, total, gapToNext, isPublic }: { rank: number | 
           <div className="min-w-0 flex-1">
             <div className="text-xs text-muted-foreground">Monthly ranking</div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-semibold tracking-tight tabular-nums">{rank ? `#${rank}` : "—"}</span>
+              <span className="text-2xl font-semibold tracking-tight tabular-nums">{rank ? `#${rank}` : "-"}</span>
               {rank && <span className="text-xs text-muted-foreground">of {total}</span>}
             </div>
             <div className="mt-1.5 text-xs text-muted-foreground">

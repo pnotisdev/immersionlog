@@ -15,7 +15,7 @@ export default async function AdminPage(props: PageProps<"/admin">) {
 
   return (
     <div className="grid gap-8">
-      <PageHeader title="Admin" description="Moderation and user management — only visible to admins." />
+      <PageHeader title="Admin" description="Moderation and user management, only visible to admins." />
 
       <section>
         <SectionHeader title="Users" />

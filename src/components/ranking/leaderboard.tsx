@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { Trophy } from "lucide-react";
 import { formatDuration, formatNumber } from "@/lib/format";
 import type { LeaderboardRow } from "@/lib/ranking-queries";
 import { cn } from "@/lib/utils";
+import { EmptyState } from "@/components/layout/empty-state";
 import { Avatar } from "./avatar";
 
 /** Muted metal tones for the first three; everyone else gets plain numerals. */
@@ -56,7 +58,7 @@ export function Leaderboard({
   emptyText?: string;
 }) {
   if (rows.length === 0) {
-    return <p className="rounded-xl border border-dashed p-10 text-center text-sm text-muted-foreground">{emptyText}</p>;
+    return <EmptyState icon={Trophy} title={emptyText} />;
   }
   const max = Math.max(...rows.map((r) => r.seconds), 1);
 

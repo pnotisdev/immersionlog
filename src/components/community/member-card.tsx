@@ -19,7 +19,6 @@ export function MemberCard({ member, viewerId }: { member: MemberRow; viewerId: 
         </Link>
         <p className="truncate text-xs text-muted-foreground">
           Lv {member.level.level} · {formatDuration(member.seconds)}
-          {member.followers > 0 && ` · ${member.followers} follower${member.followers === 1 ? "" : "s"}`}
         </p>
       </div>
       {!isSelf && <FollowButton userId={member.userId} initialFollowing={member.followedByViewer} size="sm" />}

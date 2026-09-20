@@ -41,7 +41,7 @@ export default async function Image({ params }: { params: Promise<{ username: st
             background: "linear-gradient(135deg, #1c2436 0%, #171b26 55%, #12151d 100%)",
           }}
         />
-        <div style={{ position: "absolute", top: -120, right: -120, width: 420, height: 420, borderRadius: 420, background: "#2a78d6", opacity: 0.25, display: "flex" }} />
+        <div style={{ position: "absolute", top: -120, right: -120, width: 420, height: 420, borderRadius: 420, background: "#918df6", opacity: 0.25, display: "flex" }} />
         {user ? (
           // A real flex container, not a bare Fragment: Satori (the renderer behind
           // ImageResponse) needs an actual element to group multiple stacked children —

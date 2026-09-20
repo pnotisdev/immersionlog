@@ -50,12 +50,12 @@ export async function LibraryBrowser({
       href: q(s, type),
       label: STATUS_LABELS[s],
       count: everything.filter((e) => e.status === s).length,
-    })).filter((t) => t.count > 0 || everything.length === 0),
+    })).filter((t) => t.count > 0),
   ];
 
   return (
     <div>
-      <TabLinks tabs={statusTabs} active={q(status ?? "all", type)} />
+      {everything.length > 0 && <TabLinks tabs={statusTabs} active={q(status ?? "all", type)} />}
 
       {typesInLibrary.length > 1 && (
         <TabLinks

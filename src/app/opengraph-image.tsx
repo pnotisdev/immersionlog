@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "immersionlog — track every hour of Japanese you consume";
+export const alt = "immersionlog: track every hour of Japanese you consume";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -30,7 +30,7 @@ export default function Image() {
             background: "linear-gradient(135deg, #1c2436 0%, #171b26 55%, #12151d 100%)",
           }}
         />
-        <div style={{ position: "absolute", top: -120, right: -120, width: 420, height: 420, borderRadius: 420, background: "#2a78d6", opacity: 0.25, display: "flex" }} />
+        <div style={{ position: "absolute", top: -120, right: -120, width: 420, height: 420, borderRadius: 420, background: "#918df6", opacity: 0.25, display: "flex" }} />
         <div style={{ display: "flex", fontSize: 88, fontWeight: 700, color: "white", letterSpacing: -2 }}>
           immersion<span style={{ color: "#8a93a6" }}>log</span>
         </div>

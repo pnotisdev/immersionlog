@@ -152,14 +152,14 @@ export default async function StatsPage(props: PageProps<"/stats">) {
             stats={[
               {
                 label: "Reading speed",
-                value: reading.charsPerHour ? formatCompact(reading.charsPerHour) : "—",
+                value: reading.charsPerHour ? formatCompact(reading.charsPerHour) : "-",
                 hint: "chars per hour",
               },
               { label: "Characters", value: formatCompact(reading.characters), hint: formatNumber(reading.characters) },
               { label: "Pages", value: formatNumber(reading.pages) },
               {
                 label: "Chars per active day",
-                value: activeDays && reading.characters ? formatCompact(Math.round(reading.characters / activeDays)) : "—",
+                value: activeDays && reading.characters ? formatCompact(Math.round(reading.characters / activeDays)) : "-",
               },
             ]}
           />
@@ -201,7 +201,7 @@ export default async function StatsPage(props: PageProps<"/stats">) {
         <Heatmap days={heatDays} />
         <p className="mt-3 text-xs text-muted-foreground">
           {progression.activeDays} active days all time · tracking since{" "}
-          {lifetime.firstSession ? String(lifetime.firstSession).slice(0, 10) : "—"}
+          {lifetime.firstSession ? String(lifetime.firstSession).slice(0, 10) : "-"}
         </p>
       </section>
     </div>
