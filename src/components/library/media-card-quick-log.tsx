@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { SessionForm } from "@/components/sessions/session-form";
+import { SessionDialog } from "@/components/sessions/session-dialog";
 import type { LibraryPick } from "./types";
 import { MediaCard, type MediaCardData } from "./media-card";
 
@@ -32,23 +31,16 @@ export function MediaCardQuickLog({ item, entries, tz }: { item: MediaCardData; 
         <Plus className="size-3.5 sm:size-4" />
       </button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Log a session</DialogTitle>
-            <DialogDescription>{item.title}</DialogDescription>
-          </DialogHeader>
-          {open && (
-            <SessionForm
-              key={item.mediaItemId}
-              entries={entries}
-              tz={tz}
-              initial={{ mediaItemId: item.mediaItemId, mediaType: item.type }}
-              onDone={() => setOpen(false)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <SessionDialog
+        open={open}
+        onOpenChange={setOpen}
+        description={item.title}
+        formKey={item.mediaItemId}
+        entries={entries}
+        tz={tz}
+        initial={{ mediaItemId: item.mediaItemId, mediaType: item.type }}
+        onDone={() => setOpen(false)}
+      />
     </div>
   );
 }

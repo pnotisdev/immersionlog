@@ -5,10 +5,9 @@ import { useState } from "react";
 import type { MediaType } from "@/db/schema";
 import { formatDuration } from "@/lib/format";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Poster } from "@/components/media/poster";
 import type { LibraryPick } from "@/components/library/types";
-import { SessionForm } from "./session-form";
+import { SessionDialog } from "./session-dialog";
 
 export interface QuickLogItem {
   mediaItemId: string;
@@ -60,23 +59,16 @@ export function QuickLogGrid({ items, entries, tz }: { items: QuickLogItem[]; en
         ))}
       </div>
 
-      <Dialog open={active !== null} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Log a session</DialogTitle>
-            <DialogDescription>{active?.title}</DialogDescription>
-          </DialogHeader>
-          {active && (
-            <SessionForm
-              key={active.mediaItemId}
-              entries={entries}
-              tz={tz}
-              initial={{ mediaItemId: active.mediaItemId, mediaType: active.type }}
-              onDone={() => setActive(null)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <SessionDialog
+        open={active !== null}
+        onOpenChange={(o) => !o && setActive(null)}
+        description={active?.title}
+        formKey={active?.mediaItemId}
+        entries={entries}
+        tz={tz}
+        initial={active ? { mediaItemId: active.mediaItemId, mediaType: active.type } : undefined}
+        onDone={() => setActive(null)}
+      />
     </>
   );
 }

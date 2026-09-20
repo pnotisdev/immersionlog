@@ -4,9 +4,8 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import type { MediaType } from "@/db/schema";
 import { Button, type buttonVariants } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { LibraryPick } from "@/components/library/types";
-import { SessionForm } from "./session-form";
+import { SessionDialog } from "./session-dialog";
 import type { VariantProps } from "class-variance-authority";
 
 /** "Log session" button that opens the manual/backdated entry form. */
@@ -36,22 +35,15 @@ export function LogSessionButton({
       <Button variant={variant} size={size} onClick={() => setOpen(true)} className={className}>
         <Plus /> {label}
       </Button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Log a session</DialogTitle>
-            <DialogDescription>Forgot to start the timer? Backdate it here.</DialogDescription>
-          </DialogHeader>
-          {open && (
-            <SessionForm
-              entries={entries}
-              tz={tz}
-              initial={{ mediaItemId: defaultMediaItemId ?? null, mediaType: defaultMediaType }}
-              onDone={() => setOpen(false)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <SessionDialog
+        open={open}
+        onOpenChange={setOpen}
+        description="Forgot to start the timer? Backdate it here."
+        entries={entries}
+        tz={tz}
+        initial={{ mediaItemId: defaultMediaItemId ?? null, mediaType: defaultMediaType }}
+        onDone={() => setOpen(false)}
+      />
     </>
   );
 }

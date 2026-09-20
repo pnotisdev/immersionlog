@@ -9,10 +9,9 @@ import { deleteSession } from "@/actions/sessions";
 import { formatDuration, formatNumber } from "@/lib/format";
 import { MEDIA_TYPE_META, unitLabel } from "@/lib/media";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Thumb } from "@/components/media/poster";
 import type { LibraryPick } from "@/components/library/types";
-import { SessionForm } from "./session-form";
+import { SessionDialog } from "./session-dialog";
 import type { SessionView } from "./types";
 
 function dayFormatter(tz: string) {
@@ -124,18 +123,17 @@ export function SessionList({
         </section>
       ))}
 
-      <Dialog open={editing !== null} onOpenChange={(o) => !o && setEditing(null)}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Edit session</DialogTitle>
-          </DialogHeader>
-          {editing && (
-            <SessionForm
-              key={editing.id}
-              entries={entries}
-              tz={tz}
-              sessionId={editing.id}
-              initial={{
+      <SessionDialog
+        open={editing !== null}
+        onOpenChange={(o) => !o && setEditing(null)}
+        title="Edit session"
+        formKey={editing?.id}
+        entries={entries}
+        tz={tz}
+        sessionId={editing?.id}
+        initial={
+          editing
+            ? {
                 mediaItemId: editing.mediaItemId,
                 mediaType: editing.mediaType,
                 label: editing.label ?? "",
@@ -144,12 +142,11 @@ export function SessionList({
                 amount: editing.amount,
                 amountUnit: editing.amountUnit,
                 notes: editing.notes ?? "",
-              }}
-              onDone={() => setEditing(null)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+              }
+            : undefined
+        }
+        onDone={() => setEditing(null)}
+      />
     </div>
   );
 }

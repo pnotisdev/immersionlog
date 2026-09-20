@@ -7,12 +7,11 @@ import { removeEntry, updateEntry, updateMediaItem } from "@/actions/library";
 import { ENTRY_STATUSES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
 import { STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { SessionForm } from "@/components/sessions/session-form";
+import { SessionDialog } from "@/components/sessions/session-dialog";
 import type { LibraryPick } from "./types";
 
 const STATUS_ITEMS: Record<string, string> = { ...STATUS_LABELS };
@@ -238,29 +237,20 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
         </Button>
       </div>
 
-      <Dialog open={logPrompt !== null} onOpenChange={(o) => !o && closeLogPrompt()}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Log the time for that?</DialogTitle>
-            <DialogDescription>
-              {logPrompt && `+${logPrompt.amount} ${UNIT_LABELS[logPrompt.unit]}`} — how long did it take?
-            </DialogDescription>
-          </DialogHeader>
-          {logPrompt && (
-            <SessionForm
-              entries={entries}
-              tz={tz}
-              initial={{
-                mediaItemId: entry.mediaItemId,
-                mediaType: entry.mediaType,
-                amount: logPrompt.amount,
-                amountUnit: logPrompt.unit,
-              }}
-              onDone={closeLogPrompt}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <SessionDialog
+        open={logPrompt !== null}
+        onOpenChange={(o) => !o && closeLogPrompt()}
+        title="Log the time for that?"
+        description={logPrompt && `+${logPrompt.amount} ${UNIT_LABELS[logPrompt.unit]} — how long did it take?`}
+        entries={entries}
+        tz={tz}
+        initial={
+          logPrompt
+            ? { mediaItemId: entry.mediaItemId, mediaType: entry.mediaType, amount: logPrompt.amount, amountUnit: logPrompt.unit }
+            : undefined
+        }
+        onDone={closeLogPrompt}
+      />
     </div>
   );
 }
