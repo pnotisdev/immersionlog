@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ItemPicker, type PickerValue } from "@/components/library/item-picker";
 import type { LibraryPick } from "@/components/library/types";
 import { AmountInput } from "./amount-input";
+import { DurationInput } from "./duration-input";
 
 export interface SessionFormValues {
   mediaItemId: string | null;
@@ -123,19 +124,7 @@ export function SessionForm({
           <Label htmlFor="started">Started</Label>
           <Input id="started" type="datetime-local" value={startedAt} onChange={(e) => setStartedAt(e.target.value)} required />
         </div>
-        <div className="grid gap-1.5">
-          <Label>Duration</Label>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="relative">
-              <Input type="number" min={0} max={24} value={hours} onChange={(e) => setHours(e.target.value)} aria-label="Hours" className="pr-8" />
-              <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-muted-foreground">h</span>
-            </div>
-            <div className="relative">
-              <Input type="number" min={0} max={59} value={minutes} onChange={(e) => setMinutes(e.target.value)} aria-label="Minutes" className="pr-8" />
-              <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-muted-foreground">m</span>
-            </div>
-          </div>
-        </div>
+        <DurationInput hours={hours} minutes={minutes} onChange={(v) => { setHours(v.hours); setMinutes(v.minutes); }} />
       </div>
 
       <AmountInput amount={amount} unit={unit} onChange={(v) => { setAmount(v.amount); setUnit(v.unit); }} />

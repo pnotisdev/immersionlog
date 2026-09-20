@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { LibraryPick } from "@/components/library/types";
 import { AmountInput } from "./amount-input";
+import { DurationInput } from "./duration-input";
 
 export type PickWithStats = LibraryPick & {
   seconds: number;
@@ -277,19 +278,12 @@ export function QuickLogFlow({ picks, tz }: { picks: PickWithStats[]; tz: string
                   </button>
                 </div>
 
-                <div className="grid gap-1.5">
-                  <Label>3. How long?</Label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="relative">
-                      <Input type="number" min={0} max={24} value={hours} onChange={(e) => setHours(e.target.value)} aria-label="Hours" className="pr-8" />
-                      <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-muted-foreground">h</span>
-                    </div>
-                    <div className="relative">
-                      <Input type="number" min={0} max={59} value={minutes} onChange={(e) => setMinutes(e.target.value)} aria-label="Minutes" className="pr-8" />
-                      <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-muted-foreground">m</span>
-                    </div>
-                  </div>
-                </div>
+                <DurationInput
+                  label="3. How long?"
+                  hours={hours}
+                  minutes={minutes}
+                  onChange={(v) => { setHours(v.hours); setMinutes(v.minutes); }}
+                />
 
                 <AmountInput amount={amount} unit={unit} onChange={(v) => { setAmount(v.amount); setUnit(v.unit); }} idPrefix="ql-amount" />
                 {maxAmount != null && (
