@@ -7,7 +7,10 @@ import { db, schema } from "@/db";
 import { sendEmail } from "@/lib/email";
 import { dedupeUsername, slugifyUsername, USERNAME_MAX, USERNAME_MIN, USERNAME_RE } from "@/lib/username";
 
-const isProduction = process.env.NODE_ENV === "production";
+// __Secure- prefixed cookies (see useSecureCookies below) are rejected by browsers
+// unless actually served over HTTPS — NODE_ENV alone doesn't tell us that (e.g. a
+// production build served over plain HTTP behind no TLS-terminating proxy yet).
+const isHttps = (process.env.BETTER_AUTH_URL ?? "").startsWith("https://");
 
 /**
  * Every account needs a working /u/[username] profile URL from the moment it's created
@@ -118,9 +121,9 @@ export const auth = betterAuth({
     max: 30,
   },
   advanced: {
-    // Cookies must be `Secure` in production (served over HTTPS behind the
-    // reverse proxy) but NOT in local dev, where the app runs on plain HTTP.
-    useSecureCookies: isProduction,
+    // Cookies must be `Secure` when served over HTTPS (behind a TLS-terminating
+    // reverse proxy) but NOT when the app is reachable over plain HTTP.
+    useSecureCookies: isHttps,
     ipAddress: {
       // The app is expected to run behind a reverse proxy (e.g. nginx/Vercel)
       // that sets this header; without it, rate limiting would key off a
