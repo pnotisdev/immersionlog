@@ -118,7 +118,16 @@ export function QuickLogFlow({ picks, tz }: { picks: PickWithStats[]; tz: string
       unit: p.progressUnit,
       stats: { seconds: p.seconds, sessions: p.sessions, progress: p.progress, totalAmount: p.totalAmount, totalUnit: p.totalUnit },
     });
-    setUnit(p.progressUnit ?? MEDIA_TYPE_META[p.type].defaultUnit);
+    const nextUnit = p.progressUnit ?? MEDIA_TYPE_META[p.type].defaultUnit;
+    setUnit(nextUnit);
+    // Picking a title you've logged before suggests how long it usually takes, and
+    // how much you usually log in one sitting — same idea as the entry editor's
+    // "log the time for that?" prompt, just for a fresh log instead of a delta.
+    if (p.lastDurationSeconds) {
+      setHours(String(Math.floor(p.lastDurationSeconds / 3600)));
+      setMinutes(String(Math.round((p.lastDurationSeconds % 3600) / 60)));
+    }
+    setAmount(p.lastAmountUnit === nextUnit && p.lastAmount != null ? String(p.lastAmount) : "");
   }
 
   function chooseExternal(r: SearchResult) {
@@ -138,11 +147,15 @@ export function QuickLogFlow({ picks, tz }: { picks: PickWithStats[]; tz: string
         stats: { seconds: 0, sessions: 0, progress: 0, totalAmount: r.totalAmount, totalUnit: r.totalUnit },
       });
       setUnit(r.totalUnit ?? MEDIA_TYPE_META[r.mediaType].defaultUnit);
+      // Just added — no logging history yet, so don't carry over amount suggested by a
+      // previously-selected library title.
+      setAmount("");
     });
   }
 
   function chooseFreeform() {
     setSelected({ mediaItemId: null, title: query || meta.label, titleNative: null, coverUrl: null, type, unit: meta.defaultUnit });
+    setAmount("");
   }
 
   function submit(e: FormEvent) {
@@ -283,6 +296,7 @@ export function QuickLogFlow({ picks, tz }: { picks: PickWithStats[]; tz: string
                   hours={hours}
                   minutes={minutes}
                   onChange={(v) => { setHours(v.hours); setMinutes(v.minutes); }}
+                  typicalMinutes={selected.mediaItemId ? Math.round((picks.find((p) => p.mediaItemId === selected.mediaItemId)?.lastDurationSeconds ?? 0) / 60) || undefined : undefined}
                 />
 
                 <AmountInput amount={amount} unit={unit} onChange={(v) => { setAmount(v.amount); setUnit(v.unit); }} idPrefix="ql-amount" />

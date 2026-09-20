@@ -9,6 +9,7 @@ import {
   mediaItems,
   type EntryStatus,
   type MediaType,
+  type Unit,
 } from "@/db/schema";
 import { dayEnd, dayStart } from "./dates";
 
@@ -285,6 +286,29 @@ export async function getRecentItems(userId: string, limit = 6) {
     .groupBy(mediaItems.id)
     .orderBy(desc(last))
     .limit(limit);
+}
+
+/**
+ * Each item's most recently logged session (duration + amount) — seeds "log it again"
+ * defaults so a repeat session doesn't need retyping what was typed last time.
+ */
+export async function getLastSessionByItem(userId: string) {
+  const rows = await db
+    .selectDistinctOn([immersionSessions.mediaItemId], {
+      mediaItemId: immersionSessions.mediaItemId,
+      durationSeconds: immersionSessions.durationSeconds,
+      amount: immersionSessions.amount,
+      amountUnit: immersionSessions.amountUnit,
+    })
+    .from(immersionSessions)
+    .where(and(eq(immersionSessions.userId, userId), sql`${immersionSessions.mediaItemId} is not null`))
+    .orderBy(immersionSessions.mediaItemId, desc(immersionSessions.startedAt));
+  return new Map(
+    rows.map((r) => [
+      r.mediaItemId as string,
+      { durationSeconds: r.durationSeconds, amount: r.amount, amountUnit: r.amountUnit as Unit | null },
+    ]),
+  );
 }
 
 /** Lifetime seconds + session count per media item for a user. */

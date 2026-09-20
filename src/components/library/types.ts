@@ -11,4 +11,8 @@ export interface LibraryPick {
   coverUrl: string | null;
   /** AniList's average per-episode runtime, anime only. See defaultDurationSeconds in session-form.tsx. */
   episodeMinutes: number | null;
+  /** This item's most recently logged session — seeds "log it again" defaults. */
+  lastDurationSeconds: number | null;
+  lastAmount: number | null;
+  lastAmountUnit: Unit | null;
 }

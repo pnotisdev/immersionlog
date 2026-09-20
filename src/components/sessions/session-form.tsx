@@ -36,11 +36,22 @@ function defaultUnitFor(entries: LibraryPick[], mediaItemId: string | null, medi
  * When the item and episode count are already known (e.g. the entry editor's "log the
  * time for that?" prompt after bumping progress) and AniList gave us this anime's
  * average runtime, turn "N episodes" into a real duration instead of a flat guess.
+ * Falls back to how long the last session against this item actually took — covers
+ * everything episodeMinutes doesn't (manga, VNs, podcasts, books, anime with no
+ * AniList runtime).
  */
 function defaultDurationSeconds(entries: LibraryPick[], mediaItemId: string | null, amount: number | null, unit: Unit | null): number | null {
-  if (!mediaItemId || !amount || unit !== "episodes") return null;
-  const minutes = entries.find((e) => e.mediaItemId === mediaItemId)?.episodeMinutes;
-  return minutes ? Math.round(minutes * amount * 60) : null;
+  const e = mediaItemId ? entries.find((x) => x.mediaItemId === mediaItemId) : null;
+  if (!e) return null;
+  if (amount && unit === "episodes" && e.episodeMinutes) return Math.round(e.episodeMinutes * amount * 60);
+  return e.lastDurationSeconds ?? null;
+}
+
+/** What was logged last time for this item, only if it was in the same unit we're defaulting to. */
+function defaultAmountFor(entries: LibraryPick[], mediaItemId: string | null, unit: Unit | null): number | null {
+  const e = mediaItemId ? entries.find((x) => x.mediaItemId === mediaItemId) : null;
+  if (!e || !unit || e.lastAmountUnit !== unit) return null;
+  return e.lastAmount;
 }
 
 export function SessionForm({
@@ -74,16 +85,27 @@ export function SessionForm({
   );
   const [hours, setHours] = useState(String(Math.floor(initialDuration / 3600)));
   const [minutes, setMinutes] = useState(String(Math.round((initialDuration % 3600) / 60)));
-  const [amount, setAmount] = useState(initial?.amount != null ? String(initial.amount) : "");
-  const [unit, setUnit] = useState<Unit | null>(
-    initial?.amountUnit !== undefined ? initial.amountUnit : defaultUnitFor(entries, pick.mediaItemId, pick.mediaType),
-  );
+  const initialUnit = initial?.amountUnit !== undefined ? initial.amountUnit : defaultUnitFor(entries, pick.mediaItemId, pick.mediaType);
+  const [amount, setAmount] = useState(() => {
+    if (initial?.amount != null) return String(initial.amount);
+    const last = defaultAmountFor(entries, pick.mediaItemId, initialUnit);
+    return last != null ? String(last) : "";
+  });
+  const [unit, setUnit] = useState<Unit | null>(initialUnit);
   const [notes, setNotes] = useState(initial?.notes ?? "");
+  const typicalMinutes = pick.mediaItemId
+    ? Math.round((entries.find((e) => e.mediaItemId === pick.mediaItemId)?.lastDurationSeconds ?? 0) / 60) || undefined
+    : undefined;
 
   function onPickChange(v: PickerValue) {
     setPick(v);
-    // Follow the item's unit unless the user has typed an amount already.
-    if (!amount) setUnit(defaultUnitFor(entries, v.mediaItemId, v.mediaType));
+    // Follow the item's unit and last-logged amount unless the user has typed one already.
+    if (!amount) {
+      const nextUnit = defaultUnitFor(entries, v.mediaItemId, v.mediaType);
+      setUnit(nextUnit);
+      const last = defaultAmountFor(entries, v.mediaItemId, nextUnit);
+      if (last != null) setAmount(String(last));
+    }
   }
 
   function submit(e: FormEvent) {
@@ -124,7 +146,12 @@ export function SessionForm({
           <Label htmlFor="started">Started</Label>
           <Input id="started" type="datetime-local" value={startedAt} onChange={(e) => setStartedAt(e.target.value)} required />
         </div>
-        <DurationInput hours={hours} minutes={minutes} onChange={(v) => { setHours(v.hours); setMinutes(v.minutes); }} />
+        <DurationInput
+          hours={hours}
+          minutes={minutes}
+          onChange={(v) => { setHours(v.hours); setMinutes(v.minutes); }}
+          typicalMinutes={typicalMinutes}
+        />
       </div>
 
       <AmountInput amount={amount} unit={unit} onChange={(v) => { setAmount(v.amount); setUnit(v.unit); }} />

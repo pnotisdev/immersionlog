@@ -26,31 +26,47 @@ export function DurationInput({
   minutes,
   onChange,
   label = "Duration",
+  typicalMinutes,
 }: {
   hours: string;
   minutes: string;
   onChange: (v: { hours: string; minutes: string }) => void;
   label?: string;
+  /** This item's own average session length, if there's history — shown as a distinguished "usual" chip. */
+  typicalMinutes?: number | null;
 }) {
   const totalMinutes = (Number(hours) || 0) * 60 + (Number(minutes) || 0);
+  const presets =
+    typicalMinutes && !PRESETS_MINUTES.includes(typicalMinutes)
+      ? [...PRESETS_MINUTES, typicalMinutes].sort((a, b) => a - b)
+      : PRESETS_MINUTES;
 
   return (
     <div className="grid gap-1.5">
       <Label>{label}</Label>
       <div className="flex flex-wrap gap-1.5">
-        {PRESETS_MINUTES.map((m) => (
-          <button
-            key={m}
-            type="button"
-            onClick={() => onChange(fromMinutes(m))}
-            className={cn(
-              "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-              totalMinutes === m ? "border-foreground bg-foreground text-background" : "hover:bg-muted",
-            )}
-          >
-            {presetLabel(m)}
-          </button>
-        ))}
+        {presets.map((m) => {
+          const isTypical = m === typicalMinutes;
+          const isSelected = totalMinutes === m;
+          return (
+            <button
+              key={m}
+              type="button"
+              onClick={() => onChange(fromMinutes(m))}
+              className={cn(
+                "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                isSelected
+                  ? "border-foreground bg-foreground text-background"
+                  : isTypical
+                    ? "border-primary/50 text-primary hover:bg-primary/10"
+                    : "hover:bg-muted",
+              )}
+            >
+              {presetLabel(m)}
+              {isTypical && !isSelected && " · usual"}
+            </button>
+          );
+        })}
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div className="relative">
