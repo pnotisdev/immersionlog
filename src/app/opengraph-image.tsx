@@ -32,7 +32,7 @@ export default function Image() {
         />
         <div style={{ position: "absolute", top: -120, right: -120, width: 420, height: 420, borderRadius: 420, background: "#2a78d6", opacity: 0.25, display: "flex" }} />
         <div style={{ display: "flex", fontSize: 88, fontWeight: 700, color: "white", letterSpacing: -2 }}>
-          immerse<span style={{ color: "#8a93a6" }}>moar</span>
+          immersion<span style={{ color: "#8a93a6" }}>log</span>
         </div>
         <div style={{ display: "flex", marginTop: 28, fontSize: 34, color: "#c3c9d6", textAlign: "center", maxWidth: 880 }}>
           Track every hour of Japanese you consume

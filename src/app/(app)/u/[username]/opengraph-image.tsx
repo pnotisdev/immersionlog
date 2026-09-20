@@ -55,7 +55,7 @@ export default async function Image({ params }: { params: Promise<{ username: st
           </div>
         ) : (
           <div style={{ display: "flex", fontSize: 64, fontWeight: 700, color: "white", letterSpacing: -1 }}>
-            immerse<span style={{ color: "#8a93a6" }}>moar</span>
+            immersion<span style={{ color: "#8a93a6" }}>log</span>
           </div>
         )}
       </div>

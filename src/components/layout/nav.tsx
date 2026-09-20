@@ -81,7 +81,7 @@ export function Nav({ user }: { user: NavUser }) {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4">
         <Link href="/dashboard" className="shrink-0 font-semibold tracking-tight">
-          immerse<span className="text-muted-foreground">moar</span>
+          immersion<span className="text-muted-foreground">log</span>
         </Link>
 
         <nav className="ml-4 hidden items-center md:flex">

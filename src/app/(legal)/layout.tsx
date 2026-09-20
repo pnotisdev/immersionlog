@@ -7,7 +7,7 @@ export default function LegalLayout({ children }: LayoutProps<"/">) {
       <header className="border-b border-border/70">
         <div className="mx-auto flex h-14 max-w-3xl items-center px-4">
           <Link href="/" className="font-semibold tracking-tight">
-            immerse<span className="text-muted-foreground">moar</span>
+            immersion<span className="text-muted-foreground">log</span>
           </Link>
         </div>
       </header>
