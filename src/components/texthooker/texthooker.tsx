@@ -87,8 +87,13 @@ export function Texthooker({ entries }: { entries: LibraryPick[] }) {
   const [customUrl, setCustomUrl] = useState("");
   const [afk, setAfk] = useState(180);
   const [pick, setPick] = useState<PickerValue>(() => {
-    const vn = entries.find((e) => e.type === "visual_novel" && e.status === "active") ?? entries.find((e) => e.type === "visual_novel");
-    return { mediaItemId: vn?.mediaItemId ?? null, mediaType: "visual_novel", label: "" };
+    // Text hookers read equally well from VNs and (J)RPGs — prefer whichever the
+    // player has actively in progress, VN first since that's the more common case.
+    const hookable = (e: LibraryPick) => e.type === "visual_novel" || e.type === "game";
+    const active = entries.find((e) => hookable(e) && e.status === "active");
+    const any = entries.find(hookable);
+    const preset = active ?? any;
+    return { mediaItemId: preset?.mediaItemId ?? null, mediaType: preset?.type ?? "visual_novel", label: "" };
   });
   const [lines, setLines] = useState<Line[]>([]);
   const [status, setStatus] = useState<"idle" | "connecting" | "connected" | "error">("idle");
@@ -294,7 +299,8 @@ export function Texthooker({ entries }: { entries: LibraryPick[] }) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Reading</CardTitle>
+            <CardTitle>What you&apos;re logging</CardTitle>
+            <CardDescription>A visual novel, a JRPG, anything the hooker is reading text from.</CardDescription>
           </CardHeader>
           <CardContent>
             <ItemPicker entries={entries} value={pick} onChange={setPick} idPrefix="th" />
@@ -318,7 +324,7 @@ export function Texthooker({ entries }: { entries: LibraryPick[] }) {
           <CardContent className="flex flex-1 flex-col">
             <div ref={listRef} className="flex-1 space-y-1 overflow-y-auto rounded-md border bg-muted/30 p-3 font-[system-ui] text-base leading-relaxed" lang="ja" style={{ maxHeight: 480 }}>
               {lines.length === 0 ? (
-                <p className="text-sm text-muted-foreground">Waiting for text… start your VN with the hooker running.</p>
+                <p className="text-sm text-muted-foreground">Waiting for text… start reading with the hooker running.</p>
               ) : (
                 lines.map((l) => (
                   <button

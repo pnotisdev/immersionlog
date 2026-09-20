@@ -9,6 +9,7 @@ import { getDailyTotals, getGoalsWithProgress, getRecentItems, getRecentSessions
 import { getFeed } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
 import { getActiveTimerView, getLibraryPicks } from "@/lib/view-models";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeader } from "@/components/layout/page-header";
 import { ActivityFeed } from "@/components/community/activity-feed";
@@ -72,6 +73,23 @@ export default async function DashboardPage() {
           {formatDuration(weekSec)} this week · {toHours(progression.dailyAverage)}h/day average
         </p>
       </div>
+
+      {recent.length === 0 && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardContent className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="font-medium">Welcome — let&apos;s log your first session.</div>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Start the timer below for anything, even something not in your library yet — a visual novel, a game, an
+                anime episode. Or browse Discover first to add what you&apos;re into.
+              </p>
+            </div>
+            <Button render={<Link href="/discover" />} nativeButton={false} variant="outline" className="shrink-0">
+              Browse Discover
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       <TimerCard timer={timer} entries={picks} />
 

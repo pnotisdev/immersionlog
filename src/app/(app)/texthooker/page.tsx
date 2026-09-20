@@ -12,7 +12,7 @@ export default async function TexthookerPage() {
     <div>
       <PageHeader
         title="Texthooker"
-        description="Connect LunaTranslator or Textractor, read your visual novel, and the characters and active time are logged for you."
+        description="Connect LunaTranslator or Textractor, read your visual novel or game, and the characters and active time are logged for you."
       />
       <Texthooker entries={picks} />
     </div>

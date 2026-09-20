@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { MediaType } from "@/db/schema";
 import { formatDuration } from "@/lib/format";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Poster } from "@/components/media/poster";
 import type { LibraryPick } from "@/components/library/types";
@@ -24,7 +26,16 @@ export function QuickLogGrid({ items, entries, tz }: { items: QuickLogItem[]; en
   const [active, setActive] = useState<QuickLogItem | null>(null);
 
   if (items.length === 0) {
-    return <p className="text-sm text-muted-foreground">Items you log show up here for one-click logging.</p>;
+    return (
+      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed p-4">
+        <p className="text-sm text-muted-foreground">
+          Items you log from your library show up here for one-click logging next time.
+        </p>
+        <Button render={<Link href="/discover" />} nativeButton={false} variant="outline" size="sm" className="ml-auto">
+          Browse Discover
+        </Button>
+      </div>
+    );
   }
 
   return (
