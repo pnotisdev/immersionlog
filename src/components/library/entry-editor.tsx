@@ -58,9 +58,10 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
 
   function save() {
     const newProgress = Math.min(Number(progress) || 0, maxProgress ?? Infinity);
-    // Same unit as before the edit: a unit change alongside the bump makes "how much
-    // more" ambiguous, so only offer the prompt when it's unambiguous.
-    const delta = unit && unit === entry.progressUnit ? newProgress - entry.progress : 0;
+    // A fresh entry has no unit yet, so the first time one's picked isn't a "change" to
+    // reconcile — the whole new value is the delta. Only an actual swap between two
+    // already-set units (e.g. episodes -> chapters) is genuinely ambiguous and skipped.
+    const delta = !unit ? 0 : entry.progressUnit === null || entry.progressUnit === unit ? newProgress - entry.progress : 0;
     startTransition(async () => {
       const res = await updateEntry(entry.mediaItemId, {
         status,
