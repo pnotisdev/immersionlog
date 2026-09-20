@@ -10,6 +10,7 @@ import { ActivityFeed } from "@/components/community/activity-feed";
 import { CommunityTabs } from "@/components/community/community-tabs";
 import { MemberRowCompact } from "@/components/community/member-card";
 import { Avatar } from "@/components/ranking/avatar";
+import { Button } from "@/components/ui/button";
 
 export const metadata = { title: "Community" };
 
@@ -64,12 +65,9 @@ export default async function CommunityPage(props: PageProps<"/community">) {
                 : "No activity yet. Log a session and you'll be the first."
             }
             emptyAction={
-              <Link
-                href={scope === "following" ? "/members" : "/log/new"}
-                className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground"
-              >
+              <Button render={<Link href={scope === "following" ? "/members" : "/log/new"} />} nativeButton={false}>
                 {scope === "following" ? "Browse members" : "Log a session"}
-              </Link>
+              </Button>
             }
           />
 

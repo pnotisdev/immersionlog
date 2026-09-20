@@ -14,19 +14,19 @@ export interface StripStat {
  */
 export function StatStrip({ stats, className }: { stats: StripStat[]; className?: string }) {
   return (
-    <dl className={cn("grid grid-cols-2 gap-x-6 gap-y-5 border-t pt-5 sm:grid-cols-4", className)}>
+    <dl className={cn("grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-6 sm:grid-cols-4", className)}>
       {stats.map((s) => (
         <div key={s.label} className="min-w-0">
           <dt className="section-label truncate">{s.label}</dt>
           <dd
             className={cn(
-              "mt-1 text-2xl leading-none font-semibold tracking-tight tabular-nums sm:text-3xl",
+              "mt-1.5 text-3xl leading-none font-bold tracking-tight tabular-nums sm:text-4xl",
               s.accent && "text-primary",
             )}
           >
             {s.value}
           </dd>
-          {s.hint && <dd className="mt-1.5 truncate text-xs text-muted-foreground">{s.hint}</dd>}
+          {s.hint && <dd className="mt-2 truncate text-xs text-muted-foreground">{s.hint}</dd>}
         </div>
       ))}
     </dl>

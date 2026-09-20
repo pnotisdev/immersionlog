@@ -64,7 +64,7 @@ export default async function ClubsPage(props: PageProps<"/clubs">) {
               defaultValue={q}
               placeholder="Search clubs…"
               aria-label="Search clubs"
-              className="h-8 w-52 rounded-full border bg-transparent px-3.5 text-sm outline-none focus-visible:border-ring"
+              className="h-9 w-52 rounded-full border bg-transparent px-4 text-sm outline-none focus-visible:border-ring"
             />
           </form>
         </div>

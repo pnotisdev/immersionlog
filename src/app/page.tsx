@@ -26,17 +26,17 @@ export default async function LandingPage() {
   return (
     <div className="flex min-h-svh flex-col">
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
-          <span className="font-semibold tracking-tight">
+        <div className="mx-auto flex h-16 max-w-5xl items-center px-4">
+          <span className="text-lg font-semibold tracking-tight">
             immersion<span className="text-muted-foreground">log</span>
           </span>
           <div className="ml-auto flex items-center gap-2">
-            <Link href="/login" className="rounded-full px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground">
+            <Link href="/login" className="rounded-full px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground">
               Sign in
             </Link>
             <Link
               href="/signup"
-              className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_2px_5px_-1px_rgb(0_0_0_/_20%),0_0_0_0.5px_rgb(0_0_0_/_8%)] transition-opacity hover:opacity-90"
             >
               Create account
             </Link>
@@ -52,10 +52,10 @@ export default async function LandingPage() {
         </div>
 
         <section className="mx-auto max-w-5xl px-4 pt-14 pb-10 sm:pt-20">
-          <h1 className="max-w-3xl text-3xl leading-tight font-semibold motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-700 sm:text-5xl">
+          <h1 className="max-w-3xl text-4xl leading-[1.05] font-bold tracking-tight motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-700 sm:text-6xl">
             Every hour of Japanese you consume, in one place.
           </h1>
-          <p className="mt-4 max-w-2xl text-base text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:delay-100 motion-safe:duration-700 sm:text-lg">
+          <p className="mt-5 max-w-2xl text-lg text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:delay-100 motion-safe:duration-700 sm:text-xl">
             Anime, manga, visual novels, light novels, books, YouTube, podcasts: track the time, keep the streak, watch
             the level climb, and see where you land against everyone else doing the same.
           </p>
@@ -63,11 +63,11 @@ export default async function LandingPage() {
           <div className="mt-7 flex flex-wrap items-center gap-3 motion-safe:animate-in motion-safe:fade-in motion-safe:delay-200 motion-safe:duration-700">
             <Link
               href="/signup"
-              className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[0_8px_20px_-8px_color-mix(in_oklch,var(--primary),transparent_35%)] transition-all hover:-translate-y-px hover:opacity-90"
+              className="rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-[0_8px_20px_-8px_color-mix(in_oklch,var(--primary),transparent_35%)] transition-all hover:-translate-y-px hover:opacity-90"
             >
               Start tracking for free
             </Link>
-            <Link href="/login" className="rounded-full border px-5 py-2.5 text-sm transition-colors hover:bg-muted">
+            <Link href="/login" className="rounded-full border px-7 py-4 text-base font-medium transition-colors hover:bg-muted">
               I already have an account
             </Link>
           </div>
@@ -150,7 +150,7 @@ export default async function LandingPage() {
             </p>
             <Link
               href="/signup"
-              className="mt-6 inline-block rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              className="mt-6 inline-block rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-[0_8px_20px_-8px_color-mix(in_oklch,var(--primary),transparent_35%)] transition-opacity hover:opacity-90"
             >
               Create your account
             </Link>
@@ -182,8 +182,8 @@ export default async function LandingPage() {
 function Pulse({ value, label }: { value: string; label: string }) {
   return (
     <div className="min-w-0">
-      <dd className="text-xl font-semibold tabular-nums sm:text-2xl">{value}</dd>
-      <dt className="mt-0.5 truncate text-xs text-muted-foreground">{label}</dt>
+      <dd className="text-2xl font-bold tabular-nums sm:text-3xl">{value}</dd>
+      <dt className="mt-1 truncate text-xs text-muted-foreground">{label}</dt>
     </div>
   );
 }
@@ -203,7 +203,7 @@ async function PosterWall() {
         {rows.map((row, i) => (
           <div key={i} className="flex overflow-hidden">
             <div
-              className={cn("flex shrink-0 gap-3 motion-safe:animate-marquee", i === 1 && "[animation-direction:reverse]")}
+              className={cn("flex shrink-0 gap-3 motion-safe:animate-marquee", i === 0 && "[animation-direction:reverse]")}
             >
               {[...row, ...row].map((item, j) => (
                 <div key={`${item.source}:${item.sourceId}:${j}`} className="w-24 shrink-0 sm:w-28">

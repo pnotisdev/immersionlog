@@ -80,9 +80,9 @@ function FixedItemCard({
   }
 
   return (
-    <Card className="border-primary/20 bg-accent/40">
+    <Card className="border-primary/30 bg-accent">
       <CardContent className="flex flex-wrap items-center gap-3">
-        <Button size="lg" onClick={() => setLogOpen(true)} className="h-11 px-5 text-base font-semibold">
+        <Button size="lg" onClick={() => setLogOpen(true)}>
           <Plus /> Log what you watched
         </Button>
         <Button size="lg" variant="outline" onClick={start} disabled={pending} className="bg-background">
@@ -121,10 +121,10 @@ function IdleTimer({ entries }: { entries: LibraryPick[] }) {
   }
 
   return (
-    <Card className="border-primary/20 bg-accent/40">
+    <Card className="border-primary/30 bg-accent">
       <CardContent className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
         <ItemPicker entries={entries} value={pick} onChange={setPick} idPrefix="timer" />
-        <Button size="lg" onClick={start} disabled={pending} className="h-11 w-full px-5 text-base font-semibold sm:w-auto">
+        <Button size="lg" onClick={start} disabled={pending} className="w-full sm:w-auto">
           <Play /> Start timer
         </Button>
       </CardContent>
@@ -168,7 +168,7 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
   }
 
   return (
-    <Card className="border-primary/30 bg-accent/40">
+    <Card className="border-primary/40 bg-accent">
       <CardContent className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-3">
           <span className="relative flex size-3">
@@ -176,11 +176,11 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
             <span className="relative inline-flex size-3 rounded-full bg-primary" />
           </span>
           <div className="min-w-0">
-            <div className="truncate font-medium">{what}</div>
+            <div className="truncate text-base font-semibold">{what}</div>
             <div className="text-xs text-muted-foreground">{MEDIA_TYPE_META[timer.mediaType].label}</div>
           </div>
         </div>
-        <div className="ml-auto font-mono text-3xl tabular-nums tracking-tight">{formatClock(elapsed)}</div>
+        <div className="ml-auto font-mono text-4xl font-medium tabular-nums tracking-tight">{formatClock(elapsed)}</div>
         <div className="flex w-full gap-2 sm:w-auto">
           <Button onClick={() => setOpen(true)} className="flex-1 sm:flex-none">
             <Square /> Stop

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 /** Initials fallback avatar; uses the image when the user has one. */
 export function Avatar({ name, image, size = "md", className }: { name: string; image: string | null; size?: "sm" | "md" | "lg" | "xl"; className?: string }) {
-  const dim = { sm: "size-7 text-xs", md: "size-9 text-sm", lg: "size-14 text-lg", xl: "size-20 text-2xl" }[size];
+  const dim = { sm: "size-8 text-xs", md: "size-10 text-sm", lg: "size-16 text-xl", xl: "size-24 text-3xl" }[size];
   const initials = name
     .trim()
     .split(/\s+/)

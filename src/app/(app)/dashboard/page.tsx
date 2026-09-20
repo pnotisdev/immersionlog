@@ -63,19 +63,19 @@ export default async function DashboardPage() {
   const friendItems = friends.items.filter((i) => i.userId !== user.id).slice(0, 5);
 
   return (
-    <div className="grid gap-8">
+    <div className="grid gap-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
           {greeting(now, tz)}, {firstName}
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-2 text-base text-muted-foreground">
           {todaySec > 0 ? `${formatDuration(todaySec)} today` : "Nothing logged today yet"} ·{" "}
           {formatDuration(weekSec)} this week · {toHours(progression.dailyAverage)}h/day average
         </p>
       </div>
 
       {recent.length === 0 && (
-        <Card className="border-primary/20 bg-accent/40">
+        <Card className="border-primary/30 bg-accent">
           <CardContent className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <div className="font-medium">Welcome. Let&apos;s log your first session.</div>

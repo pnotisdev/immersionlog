@@ -20,6 +20,7 @@ import { Heatmap } from "@/components/stats/heatmap";
 import { SplitBar, StatStrip } from "@/components/stats/stat-strip";
 import { TypeBars } from "@/components/stats/type-bars";
 import { TopTitles } from "@/components/stats/top-titles";
+import { Button } from "@/components/ui/button";
 
 export async function generateMetadata(props: PageProps<"/u/[username]">) {
   const { username } = await props.params;
@@ -79,17 +80,17 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
   });
 
   const libraryLink = (
-    <Link href={`/u/${u.username}/library`} className="rounded-full border px-3.5 py-1.5 text-xs transition-colors hover:bg-muted">
+    <Button render={<Link href={`/u/${u.username}/library`} />} nativeButton={false} variant="outline" size="sm">
       Library
-    </Link>
+    </Button>
   );
   const action = (
     <div className="flex items-center gap-2">
       {libraryLink}
       {isSelf ? (
-        <Link href="/settings" className="rounded-full border px-3.5 py-1.5 text-xs transition-colors hover:bg-muted">
+        <Button render={<Link href="/settings" />} nativeButton={false} variant="outline" size="sm">
           Edit profile
-        </Link>
+        </Button>
       ) : (
         <FollowButton userId={u.id} initialFollowing={following} />
       )}

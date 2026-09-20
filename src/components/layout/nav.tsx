@@ -79,18 +79,18 @@ export function Nav({ user }: { user: NavUser }) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4">
-        <Link href="/dashboard" className="shrink-0 font-semibold tracking-tight">
+      <div className="mx-auto flex h-15 max-w-6xl items-center gap-2 px-4">
+        <Link href="/dashboard" className="shrink-0 text-base font-semibold tracking-tight">
           immersion<span className="text-muted-foreground">log</span>
         </Link>
 
-        <nav className="ml-4 hidden items-center md:flex">
+        <nav className="ml-5 hidden items-center md:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={cn(
-                "rounded-md px-3 py-1.5 text-sm transition-colors",
+                "rounded-full px-3.5 py-2 text-sm transition-colors",
                 isActive(l) ? "font-medium text-foreground" : "text-muted-foreground hover:text-foreground",
               )}
             >
@@ -172,7 +172,7 @@ export function MobileTabs() {
 
   return (
     <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 backdrop-blur-md md:hidden">
-      <div className="mx-auto grid max-w-lg grid-cols-5 items-center px-1 pt-1.5">
+      <div className="mx-auto grid max-w-lg grid-cols-5 items-center px-1 pt-2.5">
         {tabs.slice(0, 2).map((l) => (
           <Tab key={l.href} link={l} active={isActive(l)} />
         ))}
@@ -194,11 +194,11 @@ function Tab({ link, active }: { link: NavLink; active: boolean }) {
       href={link.href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "flex flex-col items-center gap-1 rounded-lg py-1.5 text-[10px] transition-colors",
+        "flex flex-col items-center gap-1 rounded-lg py-2 text-[11px] font-medium transition-colors",
         active ? "text-foreground" : "text-muted-foreground",
       )}
     >
-      <Icon className={cn("size-5", active && "text-primary")} strokeWidth={active ? 2.4 : 1.8} />
+      <Icon className={cn("size-6", active && "text-primary")} strokeWidth={active ? 2.4 : 1.8} />
       {link.label}
     </Link>
   );

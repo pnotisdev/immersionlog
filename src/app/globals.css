@@ -177,16 +177,25 @@
   .pb-safe {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
   }
-  /* Landing page poster wall: two rows drifting in opposite directions. The animated
-     element holds two copies of its row back to back, so -50% is exactly one loop. */
-  .animate-marquee {
-    animation: marquee 46s linear infinite;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .animate-marquee {
-      animation: none;
-    }
-  }
+}
+
+/*
+ * Landing page poster wall: two rows drifting in opposite directions. The animated
+ * element holds two copies of its row back to back, so -50% is exactly one loop.
+ * Declared with @utility (not a plain class in @layer utilities) so Tailwind's variant
+ * engine can actually generate `motion-safe:animate-marquee` — a plain class here would
+ * never get combined with the variant, so the animation would silently never apply.
+ * Longhand properties on purpose: the `animation` shorthand implicitly resets
+ * animation-direction to `normal`, which raced against the row's own
+ * `[animation-direction:reverse]` utility depending on generated rule order and
+ * silently won — leaving both rows scrolling the same way.
+ */
+@utility animate-marquee {
+  animation-name: marquee;
+  animation-duration: 260s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
 }
 
 @keyframes marquee {

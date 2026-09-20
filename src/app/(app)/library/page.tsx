@@ -6,6 +6,7 @@ import { requireUser } from "@/lib/session";
 import { getLibraryPicks } from "@/lib/view-models";
 import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
 import { AddMediaDialog } from "@/components/library/add-media-dialog";
 import { LibraryBrowser } from "@/components/library/library-browser";
 
@@ -32,12 +33,9 @@ export default async function LibraryPage(props: PageProps<"/library">) {
         description={`${total} title${total === 1 ? "" : "s"} tracked`}
         actions={
           <>
-            <Link
-              href="/discover"
-              className="inline-flex h-8 items-center gap-1.5 rounded-full border px-3.5 text-sm transition-colors hover:bg-muted"
-            >
-              <Compass className="size-4" /> Discover
-            </Link>
+            <Button render={<Link href="/discover" />} nativeButton={false} variant="outline">
+              <Compass /> Discover
+            </Button>
             <AddMediaDialog />
           </>
         }
@@ -55,12 +53,9 @@ export default async function LibraryPage(props: PageProps<"/library">) {
             title="Your library is empty."
             description="Add an anime, a VN, a book: anything you're consuming in Japanese."
             action={
-              <Link
-                href="/discover"
-                className="inline-flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-sm font-medium text-primary-foreground"
-              >
-                <Compass className="size-4" /> Browse popular titles
-              </Link>
+              <Button render={<Link href="/discover" />} nativeButton={false}>
+                <Compass /> Browse popular titles
+              </Button>
             }
           />
         }
