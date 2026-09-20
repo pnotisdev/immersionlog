@@ -4,6 +4,16 @@ import { MEDIA_TYPE_META } from "@/lib/media";
 import { cn } from "@/lib/utils";
 
 /**
+ * books.google.com/books/content (unlike the googleapis.com Books API itself) blocks
+ * this server's IP with an automated-query 403 — next/image's server-side optimizer
+ * hits that block on every request, so these covers need to skip it and load straight
+ * from the visitor's own browser instead.
+ */
+export function isGoogleBooksImage(src: string): boolean {
+  return src.includes("books.google.com/");
+}
+
+/**
  * Cover art in the standard 2:3 poster frame. Sources (AniList, VNDB, TMDB, Google Books)
  * all hand back different ratios, so everything is cropped to the same shape and titles
  * without art fall back to a typographic tile instead of an empty box.
@@ -32,6 +42,7 @@ export function Poster({
           fill
           sizes={sizes}
           priority={priority}
+          unoptimized={isGoogleBooksImage(src)}
           className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
       ) : (
@@ -62,7 +73,7 @@ export function Thumb({
   return (
     <div className={cn("relative shrink-0 overflow-hidden rounded-[5px] bg-muted", dim, className)}>
       {src ? (
-        <Image src={src} alt="" fill sizes="48px" className="object-cover" />
+        <Image src={src} alt="" fill sizes="48px" unoptimized={isGoogleBooksImage(src)} className="object-cover" />
       ) : (
         <span className="flex h-full items-center justify-center text-[9px] font-medium text-muted-foreground">
           {title.slice(0, 1)}

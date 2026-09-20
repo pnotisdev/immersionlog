@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { isGoogleBooksImage } from "./poster";
 
 /**
  * A header built from the art someone actually spends time on: a few banners/covers
@@ -27,6 +28,7 @@ export function ArtBanner({
                 alt=""
                 fill
                 sizes="(max-width: 640px) 50vw, 20vw"
+                unoptimized={isGoogleBooksImage(src)}
                 className="object-cover"
                 priority={i === 0}
               />

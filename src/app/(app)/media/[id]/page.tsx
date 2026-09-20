@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddToLibraryButton } from "@/components/library/add-to-library-button";
 import { EntryEditor } from "@/components/library/entry-editor";
-import { Poster } from "@/components/media/poster";
+import { isGoogleBooksImage, Poster } from "@/components/media/poster";
 import { TmdbLogo } from "@/components/media/tmdb-logo";
 import { Avatar } from "@/components/ranking/avatar";
 import { LogSessionButton } from "@/components/sessions/log-session-button";
@@ -79,6 +79,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
               fill
               priority
               sizes="100vw"
+              unoptimized={isGoogleBooksImage(art)}
               className={item.bannerUrl ? "object-cover" : "scale-110 object-cover blur-xl saturate-150"}
             />
           )}
