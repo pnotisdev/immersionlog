@@ -32,20 +32,18 @@ export function TimerCard({
   timer,
   entries,
   tz,
-  defaultMediaItemId,
-  defaultMediaType,
+  fixedItem,
 }: {
   timer: ActiveTimerView | null;
   entries: LibraryPick[];
-  /** Only needed for the fixed-item card's "log what you watched" dialog. */
+  /** Only needed when fixedItem is set, for its "log what you watched" dialog. */
   tz?: string;
-  /** Pre-select and lock to one item (e.g. on its detail page) instead of showing the full picker. */
-  defaultMediaItemId?: string;
-  defaultMediaType?: MediaType;
+  /** Lock to one item (e.g. on its detail page) instead of showing the full picker. */
+  fixedItem?: { mediaItemId: string; mediaType: MediaType };
 }) {
   if (timer) return <RunningTimer timer={timer} />;
-  return defaultMediaItemId ? (
-    <FixedItemCard entries={entries} tz={tz ?? "UTC"} mediaItemId={defaultMediaItemId} mediaType={defaultMediaType!} />
+  return fixedItem ? (
+    <FixedItemCard entries={entries} tz={tz ?? "UTC"} mediaItemId={fixedItem.mediaItemId} mediaType={fixedItem.mediaType} />
   ) : (
     <IdleTimer entries={entries} />
   );

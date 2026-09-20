@@ -167,7 +167,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
         </div>
       )}
 
-      <TimerCard timer={timer} entries={picks} tz={tz} defaultMediaItemId={entry ? item.id : undefined} defaultMediaType={item.type} />
+      <TimerCard timer={timer} entries={picks} tz={tz} fixedItem={entry ? { mediaItemId: item.id, mediaType: item.type } : undefined} />
 
       <StatStrip
         stats={[
