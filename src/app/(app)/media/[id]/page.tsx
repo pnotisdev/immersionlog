@@ -132,7 +132,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-3">
         {!entry && <AddToLibraryButton mediaItemId={item.id} />}
         <LogSessionButton
           entries={picks}
@@ -140,7 +140,11 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
           defaultMediaItemId={entry ? item.id : undefined}
           defaultMediaType={item.type}
           variant={entry ? "default" : "outline"}
+          size="lg"
+          label={entry ? "Log what you watched" : "Log session"}
+          className={entry ? "h-11 px-5 text-base font-semibold shadow-sm shadow-primary/20" : undefined}
         />
+        {entry && <p className="text-xs text-muted-foreground">Fastest way to add an episode — updates your progress too.</p>}
       </div>
 
       {item.description && (

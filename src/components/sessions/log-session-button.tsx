@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import type { MediaType } from "@/db/schema";
-import { Button } from "@/components/ui/button";
+import { Button, type buttonVariants } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { LibraryPick } from "@/components/library/types";
 import { SessionForm } from "./session-form";
+import type { VariantProps } from "class-variance-authority";
 
 /** "Log session" button that opens the manual/backdated entry form. */
 export function LogSessionButton({
@@ -15,19 +16,24 @@ export function LogSessionButton({
   defaultMediaItemId,
   defaultMediaType,
   variant = "default",
+  size = "default",
   label = "Log session",
+  className,
 }: {
   entries: LibraryPick[];
   tz: string;
   defaultMediaItemId?: string;
   defaultMediaType?: MediaType;
   variant?: "default" | "outline" | "secondary";
+  size?: VariantProps<typeof buttonVariants>["size"];
   label?: string;
+  /** e.g. weightier styling where this is the page's main call to action. */
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button variant={variant} onClick={() => setOpen(true)}>
+      <Button variant={variant} size={size} onClick={() => setOpen(true)} className={className}>
         <Plus /> {label}
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
