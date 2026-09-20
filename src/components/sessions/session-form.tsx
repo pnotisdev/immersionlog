@@ -31,6 +31,17 @@ function defaultUnitFor(entries: LibraryPick[], mediaItemId: string | null, medi
   return e?.progressUnit ?? MEDIA_TYPE_META[mediaType].defaultUnit;
 }
 
+/**
+ * When the item and episode count are already known (e.g. the entry editor's "log the
+ * time for that?" prompt after bumping progress) and AniList gave us this anime's
+ * average runtime, turn "N episodes" into a real duration instead of a flat guess.
+ */
+function defaultDurationSeconds(entries: LibraryPick[], mediaItemId: string | null, amount: number | null, unit: Unit | null): number | null {
+  if (!mediaItemId || !amount || unit !== "episodes") return null;
+  const minutes = entries.find((e) => e.mediaItemId === mediaItemId)?.episodeMinutes;
+  return minutes ? Math.round(minutes * amount * 60) : null;
+}
+
 export function SessionForm({
   entries,
   tz,
@@ -53,7 +64,10 @@ export function SessionForm({
     mediaType: initial?.mediaType ?? "anime",
     label: initial?.label ?? "",
   });
-  const initialDuration = initial?.durationSeconds ?? 30 * 60;
+  const initialDuration =
+    initial?.durationSeconds ??
+    defaultDurationSeconds(entries, initial?.mediaItemId ?? null, initial?.amount ?? null, initial?.amountUnit ?? null) ??
+    30 * 60;
   const [startedAt, setStartedAt] = useState(() =>
     toLocalInputValue(initial?.startedAt ?? new Date(Date.now() - initialDuration * 1000), tz),
   );

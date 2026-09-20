@@ -9,4 +9,6 @@ export interface LibraryPick {
   status: EntryStatus;
   progressUnit: Unit | null;
   coverUrl: string | null;
+  /** AniList's average per-episode runtime, anime only. See defaultDurationSeconds in session-form.tsx. */
+  episodeMinutes: number | null;
 }

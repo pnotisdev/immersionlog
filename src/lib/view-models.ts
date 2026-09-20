@@ -3,6 +3,12 @@ import type { ActiveTimerView } from "@/components/timer/timer-card";
 import type { LibraryPick } from "@/components/library/types";
 import { getActiveTimer, getItemStats, getLibrary } from "./queries";
 
+/** AniList-sourced anime items carry this in metadata (src/lib/sources/anilist.ts). */
+function episodeMinutesOf(mediaItem: { metadata: Record<string, unknown> | null }): number | null {
+  const v = mediaItem.metadata?.episodeMinutes;
+  return typeof v === "number" ? v : null;
+}
+
 /** Library entries in the compact shape client pickers need. */
 export async function getLibraryPicks(userId: string): Promise<LibraryPick[]> {
   const rows = await getLibrary(userId);
@@ -14,6 +20,7 @@ export async function getLibraryPicks(userId: string): Promise<LibraryPick[]> {
     status: r.status,
     progressUnit: r.progressUnit,
     coverUrl: r.mediaItem.coverUrl,
+    episodeMinutes: episodeMinutesOf(r.mediaItem),
   }));
 }
 
@@ -44,6 +51,7 @@ export async function getLibraryPicksWithStats(userId: string): Promise<(Library
       status: r.status,
       progressUnit: r.progressUnit,
       coverUrl: r.mediaItem.coverUrl,
+      episodeMinutes: episodeMinutesOf(r.mediaItem),
       seconds: s?.seconds ?? 0,
       sessions: s?.count ?? 0,
       progress: r.progress,

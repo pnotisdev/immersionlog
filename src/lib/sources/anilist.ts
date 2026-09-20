@@ -11,6 +11,7 @@ const MEDIA_FIELDS = /* GraphQL */ `
   episodes
   chapters
   volumes
+  duration
   format
   startDate { year }
   siteUrl
@@ -59,6 +60,8 @@ interface AniListMedia {
   episodes: number | null;
   chapters: number | null;
   volumes: number | null;
+  // Average per-episode runtime in minutes; anime only (AniList returns null for manga/LN).
+  duration: number | null;
   format: string | null;
   startDate: { year: number | null } | null;
   siteUrl: string | null;
@@ -112,7 +115,13 @@ function toResult(m: AniListMedia, mediaType: AniListType): SearchResult {
     externalUrl: m.siteUrl,
     totalAmount,
     totalUnit,
-    metadata: { format: m.format, romaji: m.title.romaji },
+    metadata: {
+      format: m.format,
+      romaji: m.title.romaji,
+      // Lets session logging default duration to "episodes logged × runtime" instead
+      // of a flat guess (see defaultDurationSeconds in session-form.tsx).
+      ...(mediaType === "anime" && m.duration ? { episodeMinutes: m.duration } : {}),
+    },
   };
 }
 
