@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
+import { ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { removeEntry, updateEntry, updateMediaItem } from "@/actions/library";
 import { ENTRY_STATUSES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
@@ -50,6 +51,11 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
   // since bumping this number alone doesn't — see the createSession delta-sync in
   // src/actions/sessions.ts, which is the *other* direction this stays in sync.
   const [logPrompt, setLogPrompt] = useState<{ amount: number; unit: Unit } | null>(null);
+  // Closed by default: correcting the raw counter is a fallback for when logging a
+  // session got the progress wrong, not the everyday way to move it — that's the
+  // timer/log card above. Open it up front if there's nothing recorded yet, since
+  // there's no summary line to show instead.
+  const [progressOpen, setProgressOpen] = useState(!entry.progressUnit);
   // Progress can never exceed a known total in the same unit.
   const effectiveTotal = entry.canEditTotal ? (total === "" ? null : Number(total)) : entry.totalAmount;
   const effectiveTotalUnit = entry.canEditTotal ? totalUnit : entry.totalUnit;
@@ -59,9 +65,15 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
   // logged elsewhere on this page (the timer) bumps progress via the delta-sync in
   // src/actions/sessions.ts. This used to be handled by remounting the whole component
   // (keyed on entry.updatedAt), but that also wiped UI-only state like an open
-  // logPrompt dialog the instant our own save's revalidatePath came back. Syncing in
-  // place instead leaves logPrompt (and any other local-only state) untouched.
-  useEffect(() => {
+  // logPrompt dialog the instant our own save's revalidatePath came back. Adjusting
+  // state during render (React's recommended pattern for this, rather than an effect —
+  // see https://react.dev/learn/you-might-not-need-an-effect) syncs in place instead,
+  // leaving logPrompt (and any other local-only state) untouched. `entry` is a fresh
+  // object from the server on each real data change, so reference inequality is exactly
+  // the signal we want.
+  const [prevEntry, setPrevEntry] = useState(entry);
+  if (prevEntry !== entry) {
+    setPrevEntry(entry);
     setStatus(entry.status);
     setProgress(String(entry.progress));
     setUnit(entry.progressUnit);
@@ -71,8 +83,7 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
     setFinishedAt(entry.finishedAt ?? "");
     setTotal(entry.totalAmount ? String(entry.totalAmount) : "");
     setTotalUnit(entry.totalUnit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entry.status, entry.progress, entry.progressUnit, entry.rating, entry.notes, entry.startedAt, entry.finishedAt, entry.totalAmount, entry.totalUnit]);
+  }
 
   function save() {
     const newProgress = Math.min(Number(progress) || 0, maxProgress ?? Infinity);
@@ -161,56 +172,76 @@ export function EntryEditor({ entry, entries, tz }: { entry: EntryEditorData; en
         </div>
       </div>
 
-      <div className="grid gap-1.5">
-        <Label htmlFor="e-progress">Progress</Label>
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2">
-          <Input id="e-progress" type="number" min={0} max={maxProgress} value={progress} onChange={(e) => setProgress(e.target.value)} />
-          <Select items={UNIT_ITEMS} value={unit ?? NONE} onValueChange={(v) => setUnit(v === NONE ? null : (v as Unit))}>
-            <SelectTrigger aria-label="Progress unit" className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={NONE}>no unit</SelectItem>
-              {UNITS.map((u) => (
-                <SelectItem key={u} value={u}>
-                  {UNIT_LABELS[u]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          {maxProgress != null && `of ${maxProgress} ${UNIT_LABELS[unit!]} · `}Bumping this by hand doesn&apos;t log time on
-          its own — you&apos;ll get a prompt to add it. Logging a session with a matching unit updates this automatically
-          instead.
-        </p>
-      </div>
+      <details
+        className="group rounded-lg border px-3 py-2 open:pb-3"
+        open={progressOpen}
+        onToggle={(e) => setProgressOpen(e.currentTarget.open)}
+      >
+        <summary className="flex cursor-pointer list-none items-center gap-1.5 py-1 text-sm select-none [&::-webkit-details-marker]:hidden">
+          <ChevronRight className="size-3.5 text-muted-foreground transition-transform group-open:rotate-90" />
+          {unit ? (
+            <span>
+              <span className="font-medium">{entry.progress}</span>
+              {maxProgress != null && <span className="text-muted-foreground"> / {maxProgress}</span>} {UNIT_LABELS[unit]}
+              <span className="ml-1.5 text-xs text-muted-foreground">— correct it</span>
+            </span>
+          ) : (
+            <span className="text-muted-foreground">Set progress</span>
+          )}
+        </summary>
 
-      {!entry.canEditTotal && entry.totalAmount && entry.totalUnit && (
-        <p className="text-xs text-muted-foreground">Total length: {entry.totalAmount} {UNIT_LABELS[entry.totalUnit]} (from the source).</p>
-      )}
-
-      {entry.canEditTotal && (
-        <div className="grid gap-1.5">
-          <Label htmlFor="e-total">Total length</Label>
-          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2">
-            <Input id="e-total" type="number" min={1} value={total} onChange={(e) => setTotal(e.target.value)} placeholder="unknown" />
-            <Select items={UNIT_ITEMS} value={totalUnit ?? NONE} onValueChange={(v) => setTotalUnit(v === NONE ? null : (v as Unit))}>
-              <SelectTrigger aria-label="Total unit" className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={NONE}>no unit</SelectItem>
-                {UNITS.map((u) => (
-                  <SelectItem key={u} value={u}>
-                    {UNIT_LABELS[u]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        <div className="mt-2 grid gap-4">
+          <div className="grid gap-1.5">
+            <Label htmlFor="e-progress">Progress</Label>
+            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2">
+              <Input id="e-progress" type="number" min={0} max={maxProgress} value={progress} onChange={(e) => setProgress(e.target.value)} />
+              <Select items={UNIT_ITEMS} value={unit ?? NONE} onValueChange={(v) => setUnit(v === NONE ? null : (v as Unit))}>
+                <SelectTrigger aria-label="Progress unit" className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>no unit</SelectItem>
+                  {UNITS.map((u) => (
+                    <SelectItem key={u} value={u}>
+                      {UNIT_LABELS[u]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Bumping this by hand doesn&apos;t log time on its own — you&apos;ll get a prompt to add it. Logging a session
+              with a matching unit updates this automatically instead.
+            </p>
           </div>
+
+          {!entry.canEditTotal && entry.totalAmount && entry.totalUnit && (
+            <p className="text-xs text-muted-foreground">Total length: {entry.totalAmount} {UNIT_LABELS[entry.totalUnit]} (from the source).</p>
+          )}
+
+          {entry.canEditTotal && (
+            <div className="grid gap-1.5">
+              <Label htmlFor="e-total">Total length</Label>
+              <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2">
+                <Input id="e-total" type="number" min={1} value={total} onChange={(e) => setTotal(e.target.value)} placeholder="unknown" />
+                <Select items={UNIT_ITEMS} value={totalUnit ?? NONE} onValueChange={(v) => setTotalUnit(v === NONE ? null : (v as Unit))}>
+                  <SelectTrigger aria-label="Total unit" className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={NONE}>no unit</SelectItem>
+                    {UNITS.map((u) => (
+                      <SelectItem key={u} value={u}>
+                        {UNIT_LABELS[u]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </details>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="grid gap-1.5">
