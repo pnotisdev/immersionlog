@@ -132,20 +132,14 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        {!entry && <AddToLibraryButton mediaItemId={item.id} />}
-        <LogSessionButton
-          entries={picks}
-          tz={tz}
-          defaultMediaItemId={entry ? item.id : undefined}
-          defaultMediaType={item.type}
-          variant={entry ? "default" : "outline"}
-          size="lg"
-          label={entry ? "Log what you watched" : "Log session"}
-          className={entry ? "h-11 px-5 text-base font-semibold shadow-sm shadow-primary/20" : undefined}
-        />
-        {entry && <p className="text-xs text-muted-foreground">Fastest way to add an episode — updates your progress too.</p>}
-      </div>
+      {/* Once it's in the library, the timer/log card below is the one place to record
+          time against it — a second button up here would just be the same action twice. */}
+      {!entry && (
+        <div className="flex flex-wrap items-center gap-3">
+          <AddToLibraryButton mediaItemId={item.id} />
+          <LogSessionButton entries={picks} tz={tz} defaultMediaType={item.type} variant="outline" />
+        </div>
+      )}
 
       {item.description && (
         <p className="line-clamp-5 max-w-prose text-sm leading-relaxed text-muted-foreground">{item.description}</p>
@@ -173,7 +167,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
         </div>
       )}
 
-      <TimerCard timer={timer} entries={picks} defaultMediaItemId={entry ? item.id : undefined} />
+      <TimerCard timer={timer} entries={picks} tz={tz} defaultMediaItemId={entry ? item.id : undefined} defaultMediaType={item.type} />
 
       <StatStrip
         stats={[

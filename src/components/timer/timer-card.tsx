@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { Play, Square, Trash2 } from "lucide-react";
+import { Play, Plus, Square, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { discardTimer, startTimer, stopTimer } from "@/actions/sessions";
 import type { MediaType, Unit } from "@/db/schema";
@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ItemPicker, type PickerValue } from "@/components/library/item-picker";
 import type { LibraryPick } from "@/components/library/types";
 import { AmountInput } from "@/components/sessions/amount-input";
+import { SessionDialog } from "@/components/sessions/session-dialog";
 import { useElapsed } from "./use-elapsed";
 
 export interface ActiveTimerView {
@@ -30,20 +31,84 @@ export interface ActiveTimerView {
 export function TimerCard({
   timer,
   entries,
+  tz,
   defaultMediaItemId,
+  defaultMediaType,
 }: {
   timer: ActiveTimerView | null;
   entries: LibraryPick[];
-  /** Pre-select an item (e.g. on its detail page). */
+  /** Only needed for the fixed-item card's "log what you watched" dialog. */
+  tz?: string;
+  /** Pre-select and lock to one item (e.g. on its detail page) instead of showing the full picker. */
   defaultMediaItemId?: string;
+  defaultMediaType?: MediaType;
 }) {
-  return timer ? <RunningTimer timer={timer} /> : <IdleTimer entries={entries} defaultMediaItemId={defaultMediaItemId} />;
+  if (timer) return <RunningTimer timer={timer} />;
+  return defaultMediaItemId ? (
+    <FixedItemCard entries={entries} tz={tz ?? "UTC"} mediaItemId={defaultMediaItemId} mediaType={defaultMediaType!} />
+  ) : (
+    <IdleTimer entries={entries} />
+  );
 }
 
-function IdleTimer({ entries, defaultMediaItemId }: { entries: LibraryPick[]; defaultMediaItemId?: string }) {
+/**
+ * The media detail page already knows exactly which item this is for, so asking
+ * "what are you timing?" via the full library picker (as the dashboard's idle timer
+ * does) is pure redundancy. One card, one clear pair of actions: log what you already
+ * watched, or start timing now — instead of a hero button above plus a whole separate
+ * picker card below.
+ */
+function FixedItemCard({
+  entries,
+  tz,
+  mediaItemId,
+  mediaType,
+}: {
+  entries: LibraryPick[];
+  tz: string;
+  mediaItemId: string;
+  mediaType: MediaType;
+}) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const preset = defaultMediaItemId ? entries.find((e) => e.mediaItemId === defaultMediaItemId) : entries.find((e) => e.status === "active");
+  const [logOpen, setLogOpen] = useState(false);
+
+  function start() {
+    startTransition(async () => {
+      const res = await startTimer({ mediaItemId, mediaType, label: null });
+      if (!res.ok) toast.error(res.error);
+      else router.refresh();
+    });
+  }
+
+  return (
+    <Card>
+      <CardContent className="flex flex-wrap items-center gap-3">
+        <Button size="lg" onClick={() => setLogOpen(true)} className="h-11 px-5 text-base font-semibold shadow-sm shadow-primary/20">
+          <Plus /> Log what you watched
+        </Button>
+        <Button size="lg" variant="outline" onClick={start} disabled={pending}>
+          <Play /> {pending ? "Starting…" : "Start timer"}
+        </Button>
+        <p className="basis-full text-xs text-muted-foreground sm:basis-auto">Already watched it? Log it. Watching now? Start the timer.</p>
+      </CardContent>
+      <SessionDialog
+        open={logOpen}
+        onOpenChange={setLogOpen}
+        description="Forgot to start the timer? Backdate it here."
+        entries={entries}
+        tz={tz}
+        initial={{ mediaItemId, mediaType }}
+        onDone={() => setLogOpen(false)}
+      />
+    </Card>
+  );
+}
+
+function IdleTimer({ entries }: { entries: LibraryPick[] }) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const preset = entries.find((e) => e.status === "active");
   const [pick, setPick] = useState<PickerValue>({
     mediaItemId: preset?.mediaItemId ?? null,
     mediaType: preset?.type ?? "anime",
