@@ -49,7 +49,7 @@ export default async function LandingPage() {
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
           <span className="font-semibold tracking-tight">
-            immerse<span className="text-muted-foreground">moar</span>
+            immersion<span className="text-muted-foreground">log</span>
           </span>
           <div className="ml-auto flex items-center gap-2">
             <Link href="/login" className="rounded-full px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground">
@@ -131,7 +131,7 @@ export default async function LandingPage() {
       <footer className="border-t">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-6 text-xs text-muted-foreground">
           <span>
-            immerse<span className="opacity-60">moar</span>
+            immersion<span className="opacity-60">log</span>
           </span>
           <span>Cover art and metadata from AniList, VNDB, TMDB and Google Books.</span>
           <Link href="/terms" className="hover:text-foreground">
@@ -163,7 +163,9 @@ async function PosterWall() {
   const shelves = await getShelves(["anime", "manga", "visual_novel"]);
   const items = shelves.flatMap((s) => s.items).filter((i) => i.coverUrl);
   if (items.length === 0) return null;
-  const rows = [items.filter((_, i) => i % 2 === 0).slice(0, 14), items.filter((_, i) => i % 2 === 1).slice(0, 14)];
+  // No cap: `overflow-hidden` on the section clips whatever spills past the viewport,
+  // so under-filling (blank space on wide screens) is the only failure mode to avoid.
+  const rows = [items.filter((_, i) => i % 2 === 0), items.filter((_, i) => i % 2 === 1)];
 
   return (
     <section aria-hidden className="overflow-hidden py-2">
