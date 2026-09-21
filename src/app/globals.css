@@ -110,25 +110,36 @@
   --surface-2: #f0f0f2;
   --line-strong: #d4d4d8;
   --text-3: #767676;
-  --accent-hover: #7d78f0;
-  --accent-tint: #f2f1fe;
+  /*
+   * Vermillion (shu-iro), same family as dark mode's --primary below, not the
+   * lavender this used to be — that lavender was the exact "vibecode purple" the
+   * dark redesign moved away from (see the .dark accent comment), and with
+   * defaultTheme="system" every light-OS visitor was still getting it. Values are
+   * a light-appropriate step of the same hue, not a copy-paste of the dark hex:
+   * dark's #E0552E only clears 3.8:1 against white, short of the 4.5:1 AA text/
+   * button-label target, so this is darkened until --primary itself (#C6491F)
+   * and --accent-foreground (#8A3417) both clear 4.5:1 against white AND against
+   * --primary-foreground/--accent-tint respectively.
+   */
+  --accent-hover: #d96a3e;
+  --accent-tint: #fbeee7;
   --on-accent: #ffffff;
   --popover: #ffffff;
   --popover-foreground: var(--foreground);
-  --primary: #918df6;
+  --primary: #c6491f;
   --primary-foreground: #ffffff;
   --secondary: #f5f5f5;
   --secondary-foreground: #181925;
   --muted: #f5f5f5;
   --muted-foreground: #666666;
-  --accent: #f2f1fe;
-  --accent-foreground: #4b46c9;
+  --accent: #fbeee7;
+  --accent-foreground: #8a3417;
   --destructive: oklch(0.577 0.245 27.325);
   --success: #1e8a4c;
   --danger: var(--destructive);
   --border: #e8e8e8;
   --input: #e8e8e8;
-  --ring: #918df6;
+  --ring: #c6491f;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

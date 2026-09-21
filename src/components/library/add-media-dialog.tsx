@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition, type FormEvent } from "react";
+import { useState, useTransition, type FormEvent } from "react";
 import { Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { addFromSearch, addManual } from "@/actions/library";
 import { ENTRY_STATUSES, MEDIA_TYPES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
 import { MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
-import type { SearchResponse, SearchResult } from "@/lib/sources";
+import type { SearchResult } from "@/lib/sources";
+import { useMediaSearch } from "@/lib/use-media-search";
 import { TmdbLogo } from "@/components/media/tmdb-logo";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -102,37 +103,12 @@ function AddMediaBody({ defaultType, onDone }: { defaultType: MediaType; onDone:
 function SearchTab({ type, status, onDone }: { type: MediaType; status: EntryStatus; onDone: () => void }) {
   const router = useRouter();
   const [q, setQ] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [warning, setWarning] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [pending, startTransition] = useTransition();
   const [addingId, setAddingId] = useState<string | null>(null);
 
-  const active = q.trim().length >= 2;
-
-  // Debounced search against our own API (keys stay server-side).
-  useEffect(() => {
-    const query = q.trim();
-    if (query.length < 2) return;
-    const ctrl = new AbortController();
-    const t = setTimeout(async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/search?type=${type}&q=${encodeURIComponent(query)}`, { signal: ctrl.signal });
-        const data = (await res.json()) as SearchResponse;
-        setResults(data.results ?? []);
-        setWarning(data.warning ?? null);
-      } catch (e) {
-        if ((e as Error).name !== "AbortError") setWarning("Search failed");
-      } finally {
-        if (!ctrl.signal.aborted) setLoading(false);
-      }
-    }, 350);
-    return () => {
-      clearTimeout(t);
-      ctrl.abort();
-    };
-  }, [q, type]);
+  const query = q.trim();
+  const active = query.length >= 2;
+  const { results, warning, loading } = useMediaSearch(type, query);
 
   function add(r: SearchResult) {
     setAddingId(r.sourceId);

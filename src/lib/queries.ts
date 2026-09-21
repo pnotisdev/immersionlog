@@ -312,16 +312,6 @@ export async function getLastSessionByItem(userId: string) {
   );
 }
 
-/** Lifetime seconds + session count per media item for a user. */
-export async function getItemStats(userId: string) {
-  const rows = await db
-    .select({ mediaItemId: immersionSessions.mediaItemId, seconds: sumSeconds, count: countRows })
-    .from(immersionSessions)
-    .where(and(eq(immersionSessions.userId, userId), sql`${immersionSessions.mediaItemId} is not null`))
-    .groupBy(immersionSessions.mediaItemId);
-  return new Map(rows.map((r) => [r.mediaItemId as string, { seconds: r.seconds, count: r.count }]));
-}
-
 /** What the whole community logged the most time on in a range — the Discover rail. */
 export async function getCommunityTopItems(from: Date, to: Date, limit = 12) {
   return db

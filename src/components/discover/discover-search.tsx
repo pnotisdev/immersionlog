@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loader2, Search } from "lucide-react";
 import { MEDIA_TYPE_META } from "@/lib/media";
 import type { MediaType } from "@/db/schema";
-import type { SearchResponse, SearchResult } from "@/lib/sources";
+import { useMediaSearch } from "@/lib/use-media-search";
 import { cn } from "@/lib/utils";
 import { DiscoverTile } from "./discover-tile";
 
@@ -19,36 +19,8 @@ const TYPES: MediaType[] = ["anime", "manga", "visual_novel", "light_novel", "bo
 export function DiscoverSearch() {
   const [type, setType] = useState<MediaType>("anime");
   const [q, setQ] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [warning, setWarning] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
   const query = q.trim();
-  // Results are only shown for a live query, so the effect never has to clear them.
-  const visible = query.length >= 2 ? results : [];
-  const visibleWarning = query.length >= 2 ? warning : null;
-
-  useEffect(() => {
-    if (query.length < 2) return;
-    const ctrl = new AbortController();
-    const timer = setTimeout(async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/search?type=${type}&q=${encodeURIComponent(query)}`, { signal: ctrl.signal });
-        const data = (await res.json()) as SearchResponse;
-        setResults(data.results ?? []);
-        setWarning(data.warning ?? null);
-      } catch (err) {
-        if ((err as Error).name !== "AbortError") setWarning("Search failed. Try again.");
-      } finally {
-        setLoading(false);
-      }
-    }, 350);
-    return () => {
-      ctrl.abort();
-      clearTimeout(timer);
-    };
-  }, [query, type]);
+  const { results: visible, warning: visibleWarning, loading } = useMediaSearch(type, query);
 
   return (
     <div className="grid gap-4">

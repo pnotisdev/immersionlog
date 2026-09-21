@@ -1,17 +1,17 @@
 import { requireUser } from "@/lib/session";
-import { getLibraryPicksWithStats } from "@/lib/view-models";
+import { getLibraryPicks } from "@/lib/view-models";
 import { PageHeader } from "@/components/layout/page-header";
-import { QuickLogFlow } from "@/components/sessions/quick-log-flow";
+import { NewLogForm } from "@/components/sessions/new-log-form";
 
 export const metadata = { title: "Log immersion" };
 
 export default async function NewLogPage() {
   const user = await requireUser();
-  const picks = await getLibraryPicksWithStats(user.id);
+  const picks = await getLibraryPicks(user.id);
   return (
     <div>
       <PageHeader title="Log" />
-      <QuickLogFlow picks={picks} tz={user.timezone ?? "UTC"} />
+      <NewLogForm entries={picks} tz={user.timezone ?? "UTC"} />
     </div>
   );
 }

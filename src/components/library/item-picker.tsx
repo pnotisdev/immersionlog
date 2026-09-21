@@ -1,7 +1,13 @@
 "use client";
 
+import { useState, useTransition } from "react";
+import { Search } from "lucide-react";
+import { toast } from "sonner";
+import { addFromSearch } from "@/actions/library";
 import { MEDIA_TYPES, type MediaType } from "@/db/schema";
-import { MEDIA_TYPE_META, STATUS_LABELS } from "@/lib/media";
+import { MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
+import type { SearchResult } from "@/lib/sources";
+import { useMediaSearch } from "@/lib/use-media-search";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -19,8 +25,14 @@ export interface PickerValue {
 }
 
 /**
- * Choose what a session/timer is for: either a library item (type is inferred)
- * or a free-form "type + label" for things that aren't in the library.
+ * Choose what a session/timer is for: a library item (type is inferred), a fresh
+ * title found by searching AniList/VNDB/TMDB/Google Books (added to the library the
+ * moment you pick it, same as Discover's "tap to add"), or a free-form "type + label"
+ * for things that will never be in the library. One picker, used by SessionForm
+ * (every "log a session" dialog) and TimerCard's idle-timer "what are you timing"
+ * row — search used to only exist on the dedicated /log/new page (QuickLogFlow,
+ * since removed); this is that same search+add capability, just moved to where the
+ * dropdown always lived instead of being its own parallel form.
  */
 export function ItemPicker({
   entries,
@@ -33,12 +45,34 @@ export function ItemPicker({
   onChange: (v: PickerValue) => void;
   idPrefix?: string;
 }) {
+  const [pending, startTransition] = useTransition();
+  // Titles added via search this session — the Select needs a label for them even
+  // though the `entries` prop (fetched once, server-side) doesn't know about them yet.
+  const [addedLabels, setAddedLabels] = useState<Record<string, string>>({});
+
   const grouped = STATUS_ORDER.map((s) => ({ status: s, items: entries.filter((e) => e.status === s) })).filter(
     (g) => g.items.length > 0,
   );
-  // Base UI renders the selected label from this map (needed for SSR / hydration).
-  const itemLabels: Record<string, string> = { [NO_ITEM]: "Something not in my library…" };
+  const itemLabels: Record<string, string> = { [NO_ITEM]: "Something not in my library…", ...addedLabels };
   for (const e of entries) itemLabels[e.mediaItemId] = e.title;
+
+  const meta = MEDIA_TYPE_META[value.mediaType];
+  const searchable = meta.searchSource !== null;
+  const query = value.label.trim();
+  const { results, warning, loading } = useMediaSearch(value.mediaType, query, value.mediaItemId === null && searchable);
+
+  function add(r: SearchResult) {
+    if (pending) return;
+    startTransition(async () => {
+      const res = await addFromSearch(r, "active");
+      if (!res.ok) {
+        toast.error(res.error);
+        return;
+      }
+      setAddedLabels((m) => ({ ...m, [res.data.mediaItemId]: r.title }));
+      onChange({ mediaItemId: res.data.mediaItemId, mediaType: r.mediaType, label: "" });
+    });
+  }
 
   return (
     <div className="grid gap-3">
@@ -77,32 +111,85 @@ export function ItemPicker({
       </div>
 
       {value.mediaItemId === null && (
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-3">
-          <div className="grid gap-1.5">
-            <Label htmlFor={`${idPrefix}-type`}>Type</Label>
-            <Select items={TYPE_LABELS} value={value.mediaType} onValueChange={(v) => onChange({ ...value, mediaType: v as MediaType })}>
-              <SelectTrigger id={`${idPrefix}-type`} className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {MEDIA_TYPES.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {MEDIA_TYPE_META[t].label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        <div className="grid gap-3">
+          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-3">
+            <div className="grid gap-1.5">
+              <Label htmlFor={`${idPrefix}-type`}>Type</Label>
+              <Select
+                items={TYPE_LABELS}
+                value={value.mediaType}
+                onValueChange={(v) => onChange({ ...value, mediaType: v as MediaType })}
+              >
+                <SelectTrigger id={`${idPrefix}-type`} className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {MEDIA_TYPES.map((t) => (
+                    <SelectItem key={t} value={t}>
+                      {MEDIA_TYPE_META[t].label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor={`${idPrefix}-label`}>{searchable ? "Search or type a label" : "Label"}</Label>
+              <div className="relative">
+                {searchable && (
+                  <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+                )}
+                <Input
+                  id={`${idPrefix}-label`}
+                  placeholder={searchable ? `Search ${SOURCE_LABELS[meta.searchSource!]}…` : "e.g. Tutor session, NHK Easy"}
+                  value={value.label}
+                  onChange={(e) => onChange({ ...value, label: e.target.value })}
+                  maxLength={200}
+                  className={searchable ? "pl-8" : undefined}
+                />
+              </div>
+            </div>
           </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor={`${idPrefix}-label`}>Label</Label>
-            <Input
-              id={`${idPrefix}-label`}
-              placeholder="e.g. Tutor session, NHK Easy"
-              value={value.label}
-              onChange={(e) => onChange({ ...value, label: e.target.value })}
-              maxLength={200}
-            />
-          </div>
+
+          {searchable && query.length >= 2 && (
+            <div className="grid gap-1">
+              {loading && <p className="px-1.5 text-sm text-muted-foreground">Searching…</p>}
+              {warning && <p className="px-1.5 text-sm text-muted-foreground">{warning}</p>}
+              {!loading && !warning && results.length === 0 && (
+                <p className="px-1.5 text-sm text-muted-foreground">
+                  No results — “{query}” will be logged as a one-off label instead.
+                </p>
+              )}
+              {results.length > 0 && (
+                <ul className="grid gap-0.5 rounded-md border p-1">
+                  {results.map((r) => (
+                    <li key={r.sourceId}>
+                      <button
+                        type="button"
+                        onClick={() => add(r)}
+                        disabled={pending}
+                        className="flex w-full items-center gap-3 rounded-md p-1.5 text-left hover:bg-muted/50 disabled:opacity-50"
+                      >
+                        <div className="h-12 w-8 shrink-0 overflow-hidden rounded-sm bg-muted">
+                          {r.coverUrl && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={r.coverUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-sm font-medium">{r.title}</div>
+                          <div className="truncate text-xs text-muted-foreground">
+                            {[r.titleNative, r.year, r.totalAmount && r.totalUnit ? `${r.totalAmount} ${UNIT_LABELS[r.totalUnit]}` : null]
+                              .filter(Boolean)
+                              .join(" · ")}
+                          </div>
+                        </div>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

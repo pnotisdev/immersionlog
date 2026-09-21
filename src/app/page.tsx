@@ -22,6 +22,12 @@ export const metadata = {
     "Anime, manga, visual novels, books, podcasts: one tracker for everything you read and watch in Japanese, with hours, streaks, levels, goals and a leaderboard.",
 };
 
+// Below this, "not tracking alone" / "a leaderboard worth climbing" oversells what a
+// visitor is about to see — a handful of names looks like proof there's barely
+// anyone here, not proof there's a crowd. Under the bar, the copy leans into "early"
+// honestly instead of pretending the numbers are bigger than they are.
+const EARLY_STAGE_MEMBER_THRESHOLD = 50;
+
 export default async function LandingPage() {
   const now = new Date();
   const weekAgo = subDays(now, 7);
@@ -29,19 +35,23 @@ export default async function LandingPage() {
     getCommunityPulse(weekAgo),
     getLeaderboard({ from: weekAgo, to: now, limit: 6 }),
   ]);
+  const isEarlyStage = pulse.members < EARLY_STAGE_MEMBER_THRESHOLD;
 
   return (
     <div className="flex min-h-svh flex-col">
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-5xl items-center px-4">
           <Wordmark markSize={18} textClassName="text-lg font-semibold" />
-          <div className="ml-auto flex items-center gap-2">
-            <Link href="/login" className="rounded-full px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground">
+          <div className="ml-auto flex items-center gap-1 sm:gap-2">
+            <Link
+              href="/login"
+              className="rounded-full px-3 py-2.5 text-sm whitespace-nowrap text-muted-foreground hover:text-foreground sm:px-4"
+            >
               Sign in
             </Link>
             <Link
               href="/signup"
-              className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="rounded-full bg-primary px-3.5 py-2.5 text-sm font-semibold whitespace-nowrap text-primary-foreground transition-opacity hover:opacity-90 sm:px-5"
             >
               Create account
             </Link>
@@ -103,9 +113,11 @@ export default async function LandingPage() {
         <section className="mx-auto max-w-5xl px-4 py-14">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
             <div>
-              <h2 className="section-title">Not tracking alone</h2>
+              <h2 className="section-title">{isEarlyStage ? "Not building alone" : "Not tracking alone"}</h2>
               <h3 className="mt-2 max-w-md text-2xl font-semibold tracking-tight sm:text-3xl">
-                A leaderboard worth climbing, stats worth checking.
+                {isEarlyStage
+                  ? "Be one of the first names on the board."
+                  : "A leaderboard worth climbing, stats worth checking."}
               </h3>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
                 Every session becomes XP, a streak, and a level that actually moves. Reading speed in characters per
@@ -113,16 +125,24 @@ export default async function LandingPage() {
                 themselves, no spreadsheets involved.
               </p>
 
-              <dl className="mt-8 grid grid-cols-3 gap-x-6 gap-y-4 border-t pt-5">
-                <Pulse value={formatNumber(pulse.members)} label="members" />
-                <Pulse value={formatCompact(Math.round(pulse.secondsThisWeek / 3600))} label="hours this week" />
-                <Pulse value={formatNumber(pulse.sessionsThisWeek)} label="sessions this week" />
-              </dl>
+              {isEarlyStage ? (
+                <p className="mt-8 max-w-md border-t pt-5 text-sm text-muted-foreground">
+                  <span className="font-semibold text-foreground">{formatNumber(pulse.members)}</span>{" "}
+                  {pulse.members === 1 ? "person has" : "people have"} logged in the last week — early enough that
+                  the leaderboard is still wide open.
+                </p>
+              ) : (
+                <dl className="mt-8 grid grid-cols-3 gap-x-6 gap-y-4 border-t pt-5">
+                  <Pulse value={formatNumber(pulse.members)} label="members" />
+                  <Pulse value={formatCompact(Math.round(pulse.secondsThisWeek / 3600))} label="hours this week" />
+                  <Pulse value={formatNumber(pulse.sessionsThisWeek)} label="sessions this week" />
+                </dl>
+              )}
             </div>
 
             <div className="rounded-2xl border bg-surface p-5">
               <div className="mb-1 flex items-baseline justify-between gap-3">
-                <span className="section-title">Top this week</span>
+                <span className="section-title">{isEarlyStage ? "Early birds this week" : "Top this week"}</span>
                 <Link href="/ranking" className="text-xs text-muted-foreground hover:text-foreground">
                   Full ranking
                 </Link>
