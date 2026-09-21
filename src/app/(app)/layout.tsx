@@ -10,7 +10,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       <Nav user={navUser} />
       <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 pt-8 pb-10">{children}</main>
       {/* Bottom padding clears the mobile tab bar. */}
-      <Footer className="pb-28 md:pb-0" />
+      <Footer className="pb-28 md:pb-0" homeHref="/dashboard" />
       <MobileTabs />
     </>
   );

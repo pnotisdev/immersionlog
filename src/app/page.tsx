@@ -7,6 +7,12 @@ import { getCommunityPulse } from "@/lib/social-queries";
 import { getShelves } from "@/lib/sources/browse";
 import { cn } from "@/lib/utils";
 import { Footer } from "@/components/layout/footer";
+import { Wordmark } from "@/components/layout/mark";
+import { DashboardPreview } from "@/components/marketing/dashboard-preview";
+import { DiscoverPreview } from "@/components/marketing/discover-preview";
+import { LibraryPreview } from "@/components/marketing/library-preview";
+import { ProductShowcase } from "@/components/marketing/product-showcase";
+import { StatsPreview } from "@/components/marketing/stats-preview";
 import { Avatar } from "@/components/ranking/avatar";
 import { Poster } from "@/components/media/poster";
 
@@ -28,9 +34,7 @@ export default async function LandingPage() {
     <div className="flex min-h-svh flex-col">
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-5xl items-center px-4">
-          <span className="text-lg font-semibold tracking-tight">
-            immersion<span className="text-muted-foreground">log</span>
-          </span>
+          <Wordmark markSize={18} textClassName="text-lg font-semibold" />
           <div className="ml-auto flex items-center gap-2">
             <Link href="/login" className="rounded-full px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground">
               Sign in
@@ -76,6 +80,21 @@ export default async function LandingPage() {
         <Suspense fallback={<div className="h-44 sm:h-56" />}>
           <PosterWall />
         </Suspense>
+
+        <section className="mx-auto max-w-5xl px-4 py-14">
+          <h2 className="section-title">The app itself</h2>
+          <h3 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight sm:text-3xl">
+            Dashboard, stats, library, discover — see them before you sign up.
+          </h3>
+          <div className="mt-8">
+            <ProductShowcase
+              dashboard={<DashboardPreview />}
+              stats={<StatsPreview />}
+              library={<LibraryPreview />}
+              discover={<DiscoverPreview />}
+            />
+          </div>
+        </section>
 
         {/* Community and stats, told with real numbers instead of icon bullets: the
             app itself treats data as typography, not cards (see stat-strip.tsx), so

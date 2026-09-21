@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wordmark } from "@/components/layout/mark";
 
 /** Shared chrome for the public legal pages (terms, privacy) — no auth required. */
 export default function LegalLayout({ children }: LayoutProps<"/">) {
@@ -6,8 +7,8 @@ export default function LegalLayout({ children }: LayoutProps<"/">) {
     <div className="flex min-h-svh flex-col">
       <header className="border-b border-border/70">
         <div className="mx-auto flex h-14 max-w-3xl items-center px-4">
-          <Link href="/" className="font-semibold tracking-tight">
-            immersion<span className="text-muted-foreground">log</span>
+          <Link href="/">
+            <Wordmark markSize={16} textClassName="font-semibold" />
           </Link>
         </div>
       </header>
