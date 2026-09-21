@@ -4,29 +4,42 @@ import { cn } from "@/lib/utils";
 export interface StripStat {
   label: string;
   value: ReactNode;
+  /** Must carry new information — a delta, a record, a denominator. Omit if it would only restate the value. */
   hint?: ReactNode;
-  accent?: boolean;
+  /** Signed delta, colored by direction only — never the value itself (redesign.md §3.1). */
+  delta?: { label: string; direction: "up" | "down" | "flat" };
+  /** Exactly one hero figure per view (≥34px) if any; every other stat sits at 24px. */
+  hero?: boolean;
 }
 
 /**
- * Numbers as typography, not as boxes: a hairline, small caps labels and big tabular
- * figures. Cards around single numbers are what makes a dashboard look generic.
+ * Numbers as typography, not as boxes: no card, no border — four stats in a row
+ * separated by 1px vertical rules, with a hairline above and below the whole strip.
+ * Cards around single numbers are what makes a dashboard look generic.
  */
 export function StatStrip({ stats, className }: { stats: StripStat[]; className?: string }) {
   return (
-    <dl className={cn("grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-6 sm:grid-cols-4", className)}>
+    <dl className={cn("grid grid-cols-2 divide-x divide-y divide-border border-y border-border sm:grid-cols-4 sm:divide-y-0", className)}>
       {stats.map((s) => (
-        <div key={s.label} className="min-w-0">
+        <div key={s.label} className="min-w-0 px-4 py-3 first:pl-0">
           <dt className="section-label truncate">{s.label}</dt>
-          <dd
-            className={cn(
-              "mt-1.5 text-3xl leading-none font-bold tracking-tight tabular-nums sm:text-4xl",
-              s.accent && "text-primary",
-            )}
-          >
-            {s.value}
-          </dd>
-          {s.hint && <dd className="mt-2 truncate text-xs text-muted-foreground">{s.hint}</dd>}
+          <dd className={cn("mt-1 truncate font-semibold text-foreground", s.hero ? "text-display" : "text-h1")}>{s.value}</dd>
+          {(s.hint || s.delta) && (
+            <dd className="mt-1 truncate text-micro text-dim">
+              {s.delta && (
+                <span
+                  className={cn(
+                    "mr-1",
+                    s.delta.direction === "up" && "text-success",
+                    s.delta.direction === "down" && "text-danger",
+                  )}
+                >
+                  {s.delta.label}
+                </span>
+              )}
+              {s.hint}
+            </dd>
+          )}
         </div>
       ))}
     </dl>

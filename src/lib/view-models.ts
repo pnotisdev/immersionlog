@@ -44,8 +44,8 @@ export async function getActiveTimerView(userId: string, picks?: LibraryPick[]):
   };
 }
 
-/** Library picks plus per-item lifetime stats (for the quick-log preview panel). */
-export async function getLibraryPicksWithStats(userId: string): Promise<(LibraryPick & { seconds: number; sessions: number; progress: number; totalAmount: number | null; totalUnit: LibraryPick["progressUnit"] })[]> {
+/** Library picks plus per-item lifetime stats (for the quick-log "last:" line). */
+export async function getLibraryPicksWithStats(userId: string): Promise<(LibraryPick & { seconds: number; sessions: number; progress: number; totalAmount: number | null; totalUnit: LibraryPick["progressUnit"]; lastAt: string | null })[]> {
   const [rows, stats, lastByItem] = await Promise.all([getLibrary(userId), getItemStats(userId), getLastSessionByItem(userId)]);
   return rows.map((r) => {
     const s = stats.get(r.mediaItemId);
@@ -62,6 +62,7 @@ export async function getLibraryPicksWithStats(userId: string): Promise<(Library
       lastDurationSeconds: last?.durationSeconds ?? null,
       lastAmount: last?.amount ?? null,
       lastAmountUnit: last?.amountUnit ?? null,
+      lastAt: last?.startedAt?.toISOString() ?? null,
       seconds: s?.seconds ?? 0,
       sessions: s?.count ?? 0,
       progress: r.progress,

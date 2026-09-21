@@ -13,11 +13,11 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
-      <div className="min-w-0">
-        {eyebrow && <div className="section-label mb-1.5">{eyebrow}</div>}
-        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">{title}</h1>
-        {description && <p className="mt-2 text-base text-muted-foreground">{description}</p>}
+    <div className="mb-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+      <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-1">
+        {eyebrow && <span className="section-label">{eyebrow}</span>}
+        <h1 className="text-h1 font-semibold text-foreground">{title}</h1>
+        {description && <p className="text-meta text-dim">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -36,7 +36,7 @@ export function SectionHeader({
 }) {
   return (
     <div className={`mb-3 flex items-baseline justify-between gap-3 ${className ?? ""}`}>
-      <h2 className="section-label">{title}</h2>
+      <h2 className="section-title">{title}</h2>
       {action}
     </div>
   );

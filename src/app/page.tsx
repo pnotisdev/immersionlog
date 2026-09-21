@@ -6,6 +6,7 @@ import { getLeaderboard } from "@/lib/ranking-queries";
 import { getCommunityPulse } from "@/lib/social-queries";
 import { getShelves } from "@/lib/sources/browse";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/layout/footer";
 import { Avatar } from "@/components/ranking/avatar";
 import { Poster } from "@/components/media/poster";
 
@@ -36,7 +37,7 @@ export default async function LandingPage() {
             </Link>
             <Link
               href="/signup"
-              className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_2px_5px_-1px_rgb(0_0_0_/_20%),0_0_0_0.5px_rgb(0_0_0_/_8%)] transition-opacity hover:opacity-90"
+              className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Create account
             </Link>
@@ -45,25 +46,19 @@ export default async function LandingPage() {
       </header>
 
       <main className="relative flex-1">
-        {/* Ambient glow behind the hero: the one place on the site where colour is
-            purely atmospheric rather than tied to user data. */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[560px] overflow-hidden">
-          <div className="absolute top-[-220px] left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklch,var(--primary),transparent_80%),transparent)] blur-2xl" />
-        </div>
-
         <section className="mx-auto max-w-5xl px-4 pt-14 pb-10 sm:pt-20">
-          <h1 className="max-w-3xl text-4xl leading-[1.05] font-bold tracking-tight motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-700 sm:text-6xl">
+          <h1 className="max-w-3xl text-4xl leading-[1.05] font-bold tracking-tight sm:text-6xl">
             Every hour of Japanese you consume, in one place.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:delay-100 motion-safe:duration-700 sm:text-xl">
+          <p className="mt-5 max-w-2xl text-lg text-muted-foreground sm:text-xl">
             Anime, manga, visual novels, light novels, books, YouTube, podcasts: track the time, keep the streak, watch
             the level climb, and see where you land against everyone else doing the same.
           </p>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3 motion-safe:animate-in motion-safe:fade-in motion-safe:delay-200 motion-safe:duration-700">
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <Link
               href="/signup"
-              className="rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-[0_8px_20px_-8px_color-mix(in_oklch,var(--primary),transparent_35%)] transition-all hover:-translate-y-px hover:opacity-90"
+              className="rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Start tracking for free
             </Link>
@@ -72,7 +67,7 @@ export default async function LandingPage() {
             </Link>
           </div>
 
-          <p className="mt-4 max-w-md text-sm text-muted-foreground motion-safe:animate-in motion-safe:fade-in motion-safe:delay-300 motion-safe:duration-700">
+          <p className="mt-4 max-w-md text-sm text-muted-foreground">
             Start a timer, or log a session after the fact. Titles, covers and known lengths get pulled in
             automatically from AniList, VNDB, TMDB and Google Books.
           </p>
@@ -89,7 +84,7 @@ export default async function LandingPage() {
         <section className="mx-auto max-w-5xl px-4 py-14">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
             <div>
-              <h2 className="section-label">Not tracking alone</h2>
+              <h2 className="section-title">Not tracking alone</h2>
               <h3 className="mt-2 max-w-md text-2xl font-semibold tracking-tight sm:text-3xl">
                 A leaderboard worth climbing, stats worth checking.
               </h3>
@@ -108,7 +103,7 @@ export default async function LandingPage() {
 
             <div className="rounded-2xl border bg-surface p-5">
               <div className="mb-1 flex items-baseline justify-between gap-3">
-                <span className="section-label">Top this week</span>
+                <span className="section-title">Top this week</span>
                 <Link href="/ranking" className="text-xs text-muted-foreground hover:text-foreground">
                   Full ranking
                 </Link>
@@ -138,11 +133,7 @@ export default async function LandingPage() {
         </section>
 
         <section className="mx-auto max-w-5xl px-4 pb-20">
-          <div className="relative overflow-hidden rounded-2xl border bg-surface px-6 py-10 text-center sm:px-10">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,color-mix(in_oklch,var(--primary),transparent_88%),transparent_70%)]"
-            />
+          <div className="rounded-2xl border bg-surface px-6 py-10 text-center sm:px-10">
             <h2 className="text-xl font-semibold sm:text-2xl">Start with tonight&rsquo;s episode.</h2>
             <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
               Create an account, add what you&rsquo;re watching or reading, and hit start. XP, streaks, rankings and
@@ -150,7 +141,7 @@ export default async function LandingPage() {
             </p>
             <Link
               href="/signup"
-              className="mt-6 inline-block rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-[0_8px_20px_-8px_color-mix(in_oklch,var(--primary),transparent_35%)] transition-opacity hover:opacity-90"
+              className="mt-6 inline-block rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Create your account
             </Link>
@@ -158,23 +149,14 @@ export default async function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-6 text-xs text-muted-foreground">
-          <span>
-            immersion<span className="opacity-60">log</span>
-          </span>
-          <span>Cover art and metadata from AniList, VNDB, TMDB and Google Books.</span>
-          <Link href="/terms" className="hover:text-foreground">
-            Terms
-          </Link>
-          <Link href="/privacy" className="hover:text-foreground">
-            Privacy
-          </Link>
-          <Link href="/login" className="ml-auto hover:text-foreground">
+      <Footer
+        containerClassName="max-w-5xl"
+        action={
+          <Link href="/login" className="hover:text-foreground">
             Sign in
           </Link>
-        </div>
-      </footer>
+        }
+      />
     </div>
   );
 }

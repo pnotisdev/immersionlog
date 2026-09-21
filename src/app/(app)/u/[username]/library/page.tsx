@@ -6,6 +6,7 @@ import { getPublicUser } from "@/lib/ranking-queries";
 import { requireUser } from "@/lib/session";
 import { USERNAME_RE } from "@/lib/username";
 import { getLibraryPicks } from "@/lib/view-models";
+import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { LibraryBrowser } from "@/components/library/library-browser";
 
@@ -34,12 +35,15 @@ export default async function UserLibraryPage(props: PageProps<"/u/[username]/li
 
   return (
     <div>
-      <Link
-        href={`/u/${u.username}`}
-        className="mb-3 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeft className="size-4" /> {u.name}
-      </Link>
+      {/* A back link only when it isn't your own library (redesign.md §5.3). */}
+      {!isSelf && (
+        <Link
+          href={`/u/${u.username}`}
+          className="mb-3 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" /> {u.name}
+        </Link>
+      )}
 
       <PageHeader title={isSelf ? "Your library" : `${firstName}'s library`} />
 
@@ -50,11 +54,7 @@ export default async function UserLibraryPage(props: PageProps<"/u/[username]/li
         type={type}
         quickLog={entries ? { entries, tz: viewer.timezone ?? "UTC" } : undefined}
         emptyState={
-          <div className="rounded-xl border border-dashed p-12 text-center">
-            <p className="text-sm text-muted-foreground">
-              {isSelf ? "Your library is empty." : `${firstName} hasn't added anything to their library yet.`}
-            </p>
-          </div>
+          <EmptyState title={isSelf ? "Your library is empty." : `${firstName} hasn't added anything yet.`} />
         }
       />
     </div>

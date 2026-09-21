@@ -84,7 +84,10 @@ export function ClubForm({ clubId, initial, onDone }: { clubId?: string; initial
               key={t}
               type="button"
               onClick={() => toggleTag(t)}
-              className={cn("rounded-full border px-2.5 py-0.5 text-xs", tags.includes(t) ? "bg-foreground text-background" : "hover:bg-muted")}
+              className={cn(
+                "rounded-sm border px-2.5 py-0.5 text-xs",
+                tags.includes(t) ? "border-primary bg-accent text-accent-foreground" : "hover:bg-muted",
+              )}
             >
               {t}
             </button>

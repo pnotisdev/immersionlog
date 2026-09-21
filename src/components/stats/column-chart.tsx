@@ -10,6 +10,15 @@ export interface Column {
   emphasized?: boolean; // e.g. "today"
 }
 
+const DAY_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Sat/Sun get a weekend background band, but only when columns are single days. */
+function isWeekend(dateKey: string | undefined): boolean {
+  if (!dateKey || !DAY_KEY_RE.test(dateKey)) return false;
+  const dow = new Date(dateKey + "T00:00:00Z").getUTCDay();
+  return dow === 0 || dow === 6;
+}
+
 /** Nice round upper bound in hours for the y axis. */
 function niceMaxHours(maxSeconds: number): number {
   const h = maxSeconds / 3600;
@@ -57,6 +66,9 @@ export function ColumnChart({ columns, height = 160 }: { columns: Column[]; heig
   const labelEvery = band >= 22 ? 1 : band >= 12 ? 2 : Math.ceil(24 / band);
 
   const y = (seconds: number) => TOP + plotH - (seconds / 3600 / maxH) * plotH;
+  // Only dim non-emphasized bars when something *is* emphasized (e.g. "today") —
+  // otherwise every bar in a plain range chart would render one step down for no reason.
+  const hasEmphasis = columns.some((c) => c.emphasized);
 
   return (
     // Fixed height + absolutely positioned SVG: the chart can never widen its parent,
@@ -69,6 +81,19 @@ export function ColumnChart({ columns, height = 160 }: { columns: Column[]; heig
         role="img"
         aria-label="Time per day"
       >
+        {columns.map(
+          (c, i) =>
+            isWeekend(c.title) && (
+              <rect
+                key={`weekend-${i}`}
+                x={LEFT + i * band}
+                y={TOP}
+                width={band}
+                height={plotH}
+                fill="var(--surface-2)"
+              />
+            ),
+        )}
         {ticks.map((t) => (
           <g key={t}>
             <line x1={LEFT} x2={width} y1={y(t * 3600)} y2={y(t * 3600)} stroke={t === 0 ? "var(--viz-axis)" : "var(--viz-grid)"} strokeWidth={1} />
@@ -88,6 +113,7 @@ export function ColumnChart({ columns, height = 160 }: { columns: Column[]; heig
                 <path
                   d={`M${x},${TOP + plotH} v${-(h - r)} a${r},${r} 0 0 1 ${r},${-r} h${barW - 2 * r} a${r},${r} 0 0 1 ${r},${r} v${h - r} z`}
                   fill="var(--viz-series)"
+                  fillOpacity={!hasEmphasis || c.emphasized ? 1 : 0.7}
                 />
               )}
               {/* Hit target wider than the bar */}

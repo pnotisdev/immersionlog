@@ -66,7 +66,7 @@ export function ClubPicks({
         <div className="flex gap-4 rounded-lg border border-[var(--viz-series)]/40 bg-[var(--viz-series-track)]/30 p-3">
           <Cover item={current.mediaItem} size="lg" />
           <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Now reading / watching</div>
+            <div className="section-label">Now reading / watching</div>
             <Link href={`/media/${current.mediaItem.id}`} className="block truncate text-lg font-semibold hover:underline">
               {current.mediaItem.title}
             </Link>

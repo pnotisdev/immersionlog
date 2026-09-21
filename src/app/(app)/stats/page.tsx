@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { differenceInCalendarDays, subMonths } from "date-fns";
 import { eachDayKey, presetRange } from "@/lib/dates";
-import { formatCompact, formatDuration, formatNumber, toHours } from "@/lib/format";
+import { formatCompact, formatDuration, formatMonthYear, formatNumber, pluralize } from "@/lib/format";
 import { UNIT_LABELS } from "@/lib/media";
 import { xpFromSeconds } from "@/lib/progression";
 import { getGroupTotals, getProgression, getReadingMetrics } from "@/lib/progression-queries";
@@ -47,7 +47,11 @@ export default async function StatsPage(props: PageProps<"/stats">) {
       getGroupTotals(user.id, monthRange.from, monthRange.to),
       getGroupTotals(user.id, lastMonthFrom, lastMonthTo),
     ]);
-  const heatDays = eachDayKey(heatRange.from, heatRange.to, tz).map((k) => ({ key: k, seconds: heat.get(k)?.seconds ?? 0 }));
+  const heatDaysFull = eachDayKey(heatRange.from, heatRange.to, tz).map((k) => ({
+    key: k,
+    seconds: heat.get(k)?.seconds ?? 0,
+    sessions: heat.get(k)?.count ?? 0,
+  }));
 
   const totalSeconds = [...daily.values()].reduce((a, d) => a + d.seconds, 0);
   const sessionCount = [...daily.values()].reduce((a, d) => a + d.count, 0);
@@ -67,8 +71,12 @@ export default async function StatsPage(props: PageProps<"/stats">) {
   const amounts = new Map<string, number>();
   for (const s of sessions) if (s.amount && s.amountUnit) amounts.set(s.amountUnit, (amounts.get(s.amountUnit) ?? 0) + s.amount);
 
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.round((totalSeconds % 3600) / 60);
+  const nonZeroChartDays = columns.filter((c) => c.seconds > 0).length;
+
+  const activeDaysInHeatRange = heatDaysFull.filter((d) => d.seconds > 0).length;
+  // A light user's 52 flat weeks read as one step of the ramp; show the last 12 weeks instead (redesign.md §7).
+  const heatmapIsShortRange = activeDaysInHeatRange < 10;
+  const heatDaysShown = heatmapIsShortRange ? heatDaysFull.slice(-84) : heatDaysFull;
 
   return (
     <div>
@@ -76,19 +84,11 @@ export default async function StatsPage(props: PageProps<"/stats">) {
         <RangePicker current={range.preset} from={range.fromKey} to={range.toKey} />
       </Suspense>
 
-      {/* The headline is the time itself — everything else is context for it. */}
+      {/* The headline is the time itself — everything else is context for it. One hero
+          figure per view (redesign.md §3.1), proportional figures, not tabular. */}
       <div className="mt-7">
         <p className="section-label">{range.label}</p>
-        <h1 className="mt-1.5 flex items-baseline gap-1 text-5xl font-semibold tracking-tight tabular-nums sm:text-6xl">
-          {hours}
-          <span className="text-2xl font-medium text-muted-foreground sm:text-3xl">h</span>
-          {minutes > 0 && (
-            <>
-              <span className="ml-1">{minutes}</span>
-              <span className="text-2xl font-medium text-muted-foreground sm:text-3xl">m</span>
-            </>
-          )}
-        </h1>
+        <h1 className="mt-1.5 text-display font-semibold text-foreground">{formatDuration(totalSeconds)}</h1>
         <p className="mt-2.5 text-sm text-muted-foreground">
           {formatNumber(xpFromSeconds(totalSeconds))} XP · {formatNumber(sessionCount)} session
           {sessionCount === 1 ? "" : "s"} · {activeDays} active day{activeDays === 1 ? "" : "s"}
@@ -97,10 +97,11 @@ export default async function StatsPage(props: PageProps<"/stats">) {
       </div>
 
       <div className="mt-6">
-        {columns.length === 0 ? (
-          <p className="py-10 text-center text-sm text-muted-foreground">Nothing logged in this range.</p>
-        ) : (
+        {/* Never an axis with nothing on it (redesign.md §7). */}
+        {nonZeroChartDays >= 3 ? (
           <ColumnChart columns={columns} height={190} />
+        ) : (
+          <p className="py-10 text-center text-sm text-muted-foreground">Log 3 days to see your trend.</p>
         )}
       </div>
 
@@ -110,11 +111,11 @@ export default async function StatsPage(props: PageProps<"/stats">) {
           {
             label: "Daily average",
             value: formatDuration(progression.dailyAverage),
-            hint: progression.firstDay ? `since ${progression.firstDay}` : undefined,
+            hint: progression.firstDay ? `since ${formatMonthYear(progression.firstDay)}` : undefined,
           },
           { label: "Current streak", value: `${progression.currentStreak}d`, hint: "consecutive days" },
           { label: "Longest streak", value: `${progression.longestStreak}d`, hint: "all time" },
-          { label: "All time", value: `${toHours(lifetime.seconds, 0)}h`, hint: `${formatNumber(lifetime.count)} sessions` },
+          { label: "All time", value: formatDuration(lifetime.seconds), hint: pluralize(lifetime.count, "session") },
         ]}
       />
 
@@ -131,12 +132,12 @@ export default async function StatsPage(props: PageProps<"/stats">) {
           <SectionHeader title="Reading vs listening" />
           <SplitBar
             segments={[
-              { label: "Reading", seconds: groups.reading, color: "bg-amber-500" },
-              { label: "Listening", seconds: groups.listening, color: "bg-teal-500" },
+              { label: "Reading", seconds: groups.reading, color: "bg-d-reading" },
+              { label: "Listening", seconds: groups.listening, color: "bg-d-listening" },
             ]}
           />
           <p className="mt-2 text-xs text-muted-foreground">
-            {toHours(groups.reading)}h reading · {toHours(groups.listening)}h listening
+            {formatDuration(groups.reading)} reading · {formatDuration(groups.listening)} listening
           </p>
           <div className="mt-7">
             <SectionHeader title="By medium" />
@@ -152,14 +153,14 @@ export default async function StatsPage(props: PageProps<"/stats">) {
             stats={[
               {
                 label: "Reading speed",
-                value: reading.charsPerHour ? formatCompact(reading.charsPerHour) : "-",
+                value: reading.charsPerHour ? formatCompact(reading.charsPerHour) : "—",
                 hint: "chars per hour",
               },
               { label: "Characters", value: formatCompact(reading.characters), hint: formatNumber(reading.characters) },
               { label: "Pages", value: formatNumber(reading.pages) },
               {
                 label: "Chars per active day",
-                value: activeDays && reading.characters ? formatCompact(Math.round(reading.characters / activeDays)) : "-",
+                value: activeDays && reading.characters ? formatCompact(Math.round(reading.characters / activeDays)) : "—",
               },
             ]}
           />
@@ -169,18 +170,15 @@ export default async function StatsPage(props: PageProps<"/stats">) {
       {amounts.size > 0 && (
         <section className="mt-10">
           <SectionHeader title="Amounts logged" />
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-5 border-t pt-5 sm:grid-cols-4">
-            {[...amounts.entries()]
+          <StatStrip
+            stats={[...amounts.entries()]
               .sort((a, b) => b[1] - a[1])
-              .map(([unit, n]) => (
-                <div key={unit}>
-                  <dt className="section-label">{UNIT_LABELS[unit as keyof typeof UNIT_LABELS]}</dt>
-                  <dd className="mt-1 text-2xl leading-none font-semibold tracking-tight tabular-nums sm:text-3xl">
-                    {formatCompact(n)}
-                  </dd>
-                </div>
-              ))}
-          </dl>
+              .slice(0, 4)
+              .map(([unit, n]) => ({
+                label: UNIT_LABELS[unit as keyof typeof UNIT_LABELS],
+                value: formatCompact(n),
+              }))}
+          />
         </section>
       )}
 
@@ -191,17 +189,17 @@ export default async function StatsPage(props: PageProps<"/stats">) {
 
       <section className="mt-10">
         <SectionHeader
-          title="Past year"
+          title={heatmapIsShortRange ? "Last 12 weeks" : "Past year"}
           action={
             <Link href="/stats?range=all" className="text-xs text-muted-foreground hover:text-foreground">
               All time
             </Link>
           }
         />
-        <Heatmap days={heatDays} />
+        <Heatmap days={heatDaysShown} />
         <p className="mt-3 text-xs text-muted-foreground">
-          {progression.activeDays} active days all time · tracking since{" "}
-          {lifetime.firstSession ? String(lifetime.firstSession).slice(0, 10) : "-"}
+          {progression.activeDays} active days all time
+          {lifetime.firstSession && <> · tracking since {formatMonthYear(String(lifetime.firstSession))}</>}
         </p>
       </section>
     </div>

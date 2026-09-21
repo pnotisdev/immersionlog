@@ -44,7 +44,7 @@ export function GoalCard({ goal, actions, compact = false }: { goal: GoalWithPro
 
         <div className="mt-2 text-xs text-muted-foreground">
           {done ? (
-            <span className="text-[var(--viz-good)]">Goal reached 🎉</span>
+            <span className="text-success">Goal reached</span>
           ) : goal.isPast ? (
             <>Ended · {fmt(goal.remaining, goal.metric)} {unit} short</>
           ) : goal.isActive ? (

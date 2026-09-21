@@ -1,4 +1,3 @@
-import { Users } from "lucide-react";
 import { CLUB_TAGS } from "@/db/schema";
 import { listMyClubs, listPublicClubs } from "@/lib/club-queries";
 import { requireUser } from "@/lib/session";
@@ -45,7 +44,7 @@ export default async function ClubsPage(props: PageProps<"/clubs">) {
 
       {mine.length > 0 && (
         <section className="mb-8">
-          <h2 className="section-label mb-3">Your clubs</h2>
+          <h2 className="section-title mb-3">Your clubs</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {mine.map((c) => (
               <ClubCard key={c.id} club={c} />
@@ -56,7 +55,7 @@ export default async function ClubsPage(props: PageProps<"/clubs">) {
 
       <section>
         <div className="mb-3 flex flex-wrap items-center gap-3">
-          <h2 className="section-label">Discover</h2>
+          <h2 className="section-title">Discover</h2>
           <form method="get" action="/clubs" className="ml-auto flex gap-2">
             {tag && <input type="hidden" name="tag" value={tag} />}
             <input
@@ -64,7 +63,7 @@ export default async function ClubsPage(props: PageProps<"/clubs">) {
               defaultValue={q}
               placeholder="Search clubs…"
               aria-label="Search clubs"
-              className="h-9 w-52 rounded-full border bg-transparent px-4 text-sm outline-none focus-visible:border-ring"
+              className="h-9 w-52 rounded-sm border bg-transparent px-4 text-sm outline-none focus-visible:border-ring"
             />
           </form>
         </div>
@@ -75,11 +74,7 @@ export default async function ClubsPage(props: PageProps<"/clubs">) {
           className="mb-4"
         />
         {others.length === 0 ? (
-          <EmptyState
-            icon={Users}
-            title={discover.length === 0 && !q && !tag ? "No public clubs yet." : "No clubs match."}
-            description={discover.length === 0 && !q && !tag ? "Create the first one." : "Try another tag or search."}
-          />
+          <EmptyState title={discover.length === 0 && !q && !tag ? "No public clubs yet." : "No clubs match."} />
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((c) => (

@@ -1,16 +1,13 @@
 import Link from "next/link";
 import { subDays } from "date-fns";
 import { dayKey, eachDayKey, presetRange } from "@/lib/dates";
-import { formatDuration, formatNumber, relativeTime, toHours } from "@/lib/format";
+import { formatDuration, formatNumber, relativeTime } from "@/lib/format";
 import { getProgression } from "@/lib/progression-queries";
-import { getUserRank } from "@/lib/ranking-queries";
 import { getMyClubStandings } from "@/lib/club-queries";
 import { getDailyTotals, getGoalsWithProgress, getRecentItems, getRecentSessions, sumDuration } from "@/lib/queries";
 import { getFeed } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
 import { getActiveTimerView, getLibraryPicks } from "@/lib/view-models";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeader } from "@/components/layout/page-header";
 import { ActivityFeed } from "@/components/community/activity-feed";
 import { ClubStandings } from "@/components/clubs/club-standings";
@@ -34,7 +31,7 @@ export default async function DashboardPage() {
   const month = presetRange("month", tz, now);
   const last30 = presetRange("30d", tz, now);
 
-  const [picks, progression, todaySec, weekSec, daily, goals, recent, recentItems, rank, standings, friends] =
+  const [picks, progression, todaySec, weekSec, daily, goals, recent, recentItems, standings, friends] =
     await Promise.all([
       getLibraryPicks(user.id),
       getProgression(user.id, tz, now),
@@ -44,202 +41,158 @@ export default async function DashboardPage() {
       getGoalsWithProgress(user.id, tz),
       getRecentSessions(user.id, 5),
       getRecentItems(user.id, 6),
-      getUserRank(user.id, { from: month.from, to: month.to }),
       getMyClubStandings(user.id, month.from, month.to),
       getFeed(user.id, { scope: "following", limit: 6 }),
     ]);
   const timer = await getActiveTimerView(user.id, picks);
 
   const todayKey = dayKey(now, tz);
-  const columns = eachDayKey(subDays(today.from, 13), today.to, tz).map((k) => ({
+  // 30 days, not 14 — a fortnight with one bar looks broken; a month gives the series a
+  // shape even when sparse (redesign.md §3.2).
+  const columns = eachDayKey(subDays(today.from, 29), today.to, tz).map((k) => ({
     label: k.slice(8),
     title: k,
     seconds: daily.get(k)?.seconds ?? 0,
     emphasized: k === todayKey,
   }));
+  const activeChartDays = columns.filter((c) => c.seconds > 0).length;
   const activeGoals = goals.filter((g) => g.isActive).slice(0, 2);
-  const firstName = user.name.split(" ")[0];
   // Your own sessions are in this feed too; only show it when someone else is in it.
   const friendItems = friends.items.filter((i) => i.userId !== user.id).slice(0, 5);
 
   return (
-    <div className="grid gap-10">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
-          {greeting(now, tz)}, {firstName}
-        </h1>
-        <p className="mt-2 text-base text-muted-foreground">
-          {todaySec > 0 ? `${formatDuration(todaySec)} today` : "Nothing logged today yet"} ·{" "}
-          {formatDuration(weekSec)} this week · {toHours(progression.dailyAverage)}h/day average
-        </p>
-      </div>
-
+    <div className="grid gap-8">
+      {/* Above the fold: log action, current state, what to continue — never a
+          headline (redesign.md §1.5). At most one onboarding line, and it's text,
+          not a bordered card. */}
       {recent.length === 0 && (
-        <Card className="border-primary/30 bg-accent">
-          <CardContent className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <div className="font-medium">Welcome. Let&apos;s log your first session.</div>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Start the timer below for anything, even something not in your library yet: a visual novel, a game, an
-                anime episode. Or browse Discover first to add what you&apos;re into.
-              </p>
-            </div>
-            <Button render={<Link href="/discover" />} nativeButton={false} variant="outline" className="shrink-0">
-              Browse Discover
-            </Button>
-          </CardContent>
-        </Card>
+        <p className="text-sm text-muted-foreground">
+          Start the timer below for anything, even something not in your library yet, or{" "}
+          <Link href="/discover" className="text-primary hover:underline">
+            browse Discover
+          </Link>{" "}
+          to add what you&apos;re into first.
+        </p>
       )}
 
-      <TimerCard timer={timer} entries={picks} />
+      <TimerCard timer={timer} entries={picks} tz={tz} />
 
-      <div>
-        <StatStrip
-          stats={[
-            {
-              label: "Streak",
-              value: `${progression.currentStreak}d`,
-              hint:
-                progression.currentStreak > 0
-                  ? `longest ${progression.longestStreak} day${progression.longestStreak === 1 ? "" : "s"}`
-                  : "log today to start one",
-              accent: progression.currentStreak > 0,
-            },
-            { label: "Level", value: progression.overall.level, hint: `${formatNumber(progression.overall.xp)} XP` },
-            {
-              label: "Monthly rank",
-              value: rank.rank ? `#${rank.rank}` : "-",
-              hint: !user.publicProfile ? "profile is private" : rank.rank ? `of ${rank.total} · ${rank.gapToNext != null ? `${formatDuration(rank.gapToNext)} behind #${rank.rank - 1}` : "first place"}` : "log time to be ranked",
-            },
-            { label: "This week", value: formatDuration(weekSec), hint: `${toHours(progression.totals.total, 0)}h all time` },
-          ]}
-        />
-        {/* Level progress reads better as one line across the page than as a card. */}
-        <div className="mt-5">
-          <div className="flex items-baseline justify-between text-xs text-muted-foreground">
-            <span>Lv {progression.overall.level}</span>
-            <span>
-              {formatNumber(progression.overall.xpForNext - progression.overall.xpIntoLevel)} XP to Lv{" "}
-              {progression.overall.level + 1}
-            </span>
-          </div>
-          <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-[var(--viz-seq-0)]">
-            <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, progression.overall.percent)}%` }} />
-          </div>
-        </div>
-      </div>
+      <StatStrip
+        stats={[
+          {
+            label: "Streak",
+            value: `${progression.currentStreak}d`,
+            hint:
+              progression.currentStreak > 0
+                ? `longest ${progression.longestStreak} day${progression.longestStreak === 1 ? "" : "s"}`
+                : "log today to start one",
+          },
+          { label: "This week", value: formatDuration(weekSec), hint: `${formatDuration(progression.totals.total)} all time`, hero: true },
+          { label: "Today", value: formatDuration(todaySec) },
+          {
+            label: "Level",
+            value: progression.overall.level,
+            // The XP bar lives here as a line of text, not a full-width progress bar (redesign.md §5.1).
+            hint: `${formatNumber(progression.overall.xpForNext - progression.overall.xpIntoLevel)} XP to Lv ${progression.overall.level + 1}`,
+          },
+        ]}
+      />
 
       {recentItems.length > 0 && (
-        <section>
-          <SectionHeader
-            title="Pick up where you left off"
-            action={
-              <Link href="/library" className="text-xs text-muted-foreground hover:text-foreground">
-                Library
-              </Link>
-            }
-          />
-          <QuickLogGrid items={recentItems.map((r) => ({ ...r, lastLabel: relativeTime(r.lastAt, now) }))} entries={picks} tz={tz} />
-        </section>
+        <QuickLogGrid
+          items={recentItems.map((r) => ({ ...r, lastLabel: relativeTime(r.lastAt, now) }))}
+          entries={picks}
+          tz={tz}
+          action={
+            <Link href="/library" className="text-xs text-muted-foreground hover:text-foreground">
+              Library →
+            </Link>
+          }
+        />
       )}
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <section>
-          <SectionHeader
-            title="Last 14 days"
-            action={
-              <Link href="/stats" className="text-xs text-muted-foreground hover:text-foreground">
-                All stats
-              </Link>
-            }
-          />
-          <ColumnChart columns={columns} />
-        </section>
-
-        <section>
-          <SectionHeader
-            title="Goals"
-            action={
-              <Link href="/goals" className="text-xs text-muted-foreground hover:text-foreground">
-                All goals
-              </Link>
-            }
-          />
-          {activeGoals.length === 0 ? (
-            <Card>
-              <CardContent className="text-sm text-muted-foreground">
-                No active goals.{" "}
-                <Link href="/goals" className="underline underline-offset-4">
-                  Set one
-                </Link>{" "}
-                for example 1000 hours this year, 2M characters this month, anything.
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid gap-3">
-              {activeGoals.map((g) => (
-                <GoalCard key={g.id} goal={g} compact />
-              ))}
-            </div>
-          )}
-        </section>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <section>
-          <SectionHeader
-            title="Recent sessions"
-            action={
-              <Link href="/log" className="text-xs text-muted-foreground hover:text-foreground">
-                Full log
-              </Link>
-            }
-          />
-          <SessionList
-            sessions={recent.map(toSessionView)}
-            entries={picks}
-            tz={tz}
-            groupByDay={false}
-            emptyText="Start the timer or log a session to see it here."
-          />
-        </section>
-
-        <section>
-          <SectionHeader
-            title={friendItems.length > 0 ? "From people you follow" : "Community"}
-            action={
-              <Link href="/community" className="text-xs text-muted-foreground hover:text-foreground">
-                Activity
-              </Link>
-            }
-          />
-          {friendItems.length > 0 ? (
-            <ActivityFeed items={friendItems} viewerId={user.id} />
-          ) : (
-            <Card>
-              <CardContent className="text-sm text-muted-foreground">
-                Follow a few members and their sessions show up here.{" "}
-                <Link href="/members" className="underline underline-offset-4">
-                  Browse members
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div className="grid gap-8">
+          <section>
+            <SectionHeader
+              title="Activity"
+              action={
+                <Link href="/stats" className="text-xs text-muted-foreground hover:text-foreground">
+                  All stats
                 </Link>
-                .
-              </CardContent>
-            </Card>
+              }
+            />
+            {/* Never an axis with nothing on it (redesign.md §7). */}
+            {activeChartDays >= 3 ? (
+              <ColumnChart columns={columns} />
+            ) : (
+              <p className="py-10 text-center text-sm text-muted-foreground">Log 3 days to see your trend.</p>
+            )}
+          </section>
+
+          <section>
+            <SectionHeader
+              title="Recent sessions"
+              action={
+                <Link href="/log" className="text-xs text-muted-foreground hover:text-foreground">
+                  Full log
+                </Link>
+              }
+            />
+            <SessionList
+              sessions={recent.map(toSessionView)}
+              entries={picks}
+              tz={tz}
+              groupByDay={false}
+              emptyText="Start the timer or log a session to see it here."
+            />
+          </section>
+        </div>
+
+        <div className="grid gap-8">
+          {/* Omitted entirely when empty, not filled with a prompt (redesign.md §7). */}
+          {activeGoals.length > 0 && (
+            <section>
+              <SectionHeader
+                title="Goals"
+                action={
+                  <Link href="/goals" className="text-xs text-muted-foreground hover:text-foreground">
+                    All goals
+                  </Link>
+                }
+              />
+              <div className="grid gap-3">
+                {activeGoals.map((g) => (
+                  <GoalCard key={g.id} goal={g} compact />
+                ))}
+              </div>
+            </section>
           )}
-          <div className="mt-6">
-            <ClubStandings standings={standings} />
-          </div>
-        </section>
+
+          {/* The "Following" feed is omitted (not filled with a prompt) when there's
+              nothing to show; Club standings already omit themselves (redesign.md §7). */}
+          {(friendItems.length > 0 || standings.length > 0) && (
+            <section>
+              {friendItems.length > 0 && (
+                <>
+                  <SectionHeader
+                    title="From people you follow"
+                    action={
+                      <Link href="/community" className="text-xs text-muted-foreground hover:text-foreground">
+                        Activity
+                      </Link>
+                    }
+                  />
+                  <ActivityFeed items={friendItems} viewerId={user.id} />
+                </>
+              )}
+              <div className={friendItems.length > 0 ? "mt-6" : undefined}>
+                <ClubStandings standings={standings} />
+              </div>
+            </section>
+          )}
+        </div>
       </div>
     </div>
   );
-}
-
-/** Greets in the user's own timezone, not the server's. */
-function greeting(now: Date, tz: string) {
-  const hour = Number(new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: tz }).format(now));
-  if (hour < 5) return "Still up";
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
 }

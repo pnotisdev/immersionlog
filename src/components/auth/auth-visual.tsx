@@ -38,14 +38,12 @@ export async function AuthVisual() {
           </p>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-5">
           {HIGHLIGHTS.map((h) => (
-            <div key={h.title} className="rounded-xl border border-white/10 bg-white/[0.08] p-5 backdrop-blur-sm">
+            <div key={h.title} className="border-t border-white/15 pt-4">
               <p className="font-medium text-white">{h.title}</p>
               <p className="mt-1.5 text-sm text-white/70">{h.body}</p>
-              <span className="mt-3 inline-block rounded-full bg-white/10 px-2.5 py-1 text-xs text-white/80">
-                {h.tag}
-              </span>
+              <p className="mt-2 text-xs text-white/50">{h.tag}</p>
             </div>
           ))}
         </div>

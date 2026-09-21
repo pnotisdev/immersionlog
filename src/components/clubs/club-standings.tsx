@@ -6,7 +6,10 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 
 type Standing = Awaited<ReturnType<typeof getMyClubStandings>>[number];
 
+/** Not shown to users without a club — advertising a feature by its own empty state
+ * is the most template-like move in the product (redesign.md §7). */
 export function ClubStandings({ standings }: { standings: Standing[] }) {
+  if (standings.length === 0) return null;
   return (
     <Card>
       <CardHeader>
@@ -19,30 +22,20 @@ export function ClubStandings({ standings }: { standings: Standing[] }) {
         </CardAction>
       </CardHeader>
       <CardContent>
-        {standings.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            You&apos;re not in a club yet.{" "}
-            <Link href="/clubs" className="underline underline-offset-4">
-              Find one
-            </Link>{" "}
-            or start your own.
-          </p>
-        ) : (
-          <ul className="grid gap-2">
-            {standings.map((s) => (
-              <li key={s.club.id} className="flex items-center gap-3 text-sm">
-                <Link href={`/clubs/${s.club.id}`} className="min-w-0 flex-1 truncate font-medium hover:underline">
-                  {s.club.name}
-                </Link>
-                <span className="tabular-nums text-muted-foreground">{formatDuration(s.seconds)}</span>
-                <span className="w-16 text-right font-semibold tabular-nums">
-                  {s.rank ? `#${s.rank}` : "-"}
-                  <span className="text-xs font-normal text-muted-foreground"> / {s.total}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className="grid gap-2">
+          {standings.map((s) => (
+            <li key={s.club.id} className="flex items-center gap-3 text-sm">
+              <Link href={`/clubs/${s.club.id}`} className="min-w-0 flex-1 truncate font-medium hover:underline">
+                {s.club.name}
+              </Link>
+              <span className="tabular-nums text-muted-foreground">{formatDuration(s.seconds)}</span>
+              <span className="w-16 text-right font-semibold tabular-nums">
+                {s.rank ? `#${s.rank}` : "—"}
+                <span className="text-xs font-normal text-muted-foreground"> / {s.total}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </CardContent>
     </Card>
   );

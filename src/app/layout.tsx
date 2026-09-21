@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { getSiteUrl } from "@/lib/site";
 import { Toaster } from "@/components/ui/sonner";
@@ -7,6 +7,9 @@ import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Japanese titles must render in a designed JP face, not the Latin font's fallback
+// (redesign.md §2.2, defect #14) — applied via [lang="ja"] in globals.css.
+const notoSansJP = Noto_Sans_JP({ variable: "--font-jp", weight: ["400", "500", "700"], preload: false });
 
 export const metadata: Metadata = {
   // Without this, Next resolves relative OG/Twitter image URLs (every opengraph-image.tsx
@@ -19,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}

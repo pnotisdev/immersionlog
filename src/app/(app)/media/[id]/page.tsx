@@ -96,7 +96,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
 
         <div className="mx-auto -mt-16 flex max-w-6xl gap-4 px-4 sm:-mt-24 sm:gap-5">
           <div className="w-24 shrink-0 sm:w-36">
-            <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="144px" priority className="shadow-lg" />
+            <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="144px" priority />
           </div>
           <div className="min-w-0 flex-1 pt-16 sm:pt-24">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
@@ -172,7 +172,7 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
 
       <StatStrip
         stats={[
-          { label: "Your time", value: formatDuration(totalSeconds), accent: totalSeconds > 0 },
+          { label: "Your time", value: formatDuration(totalSeconds), hero: totalSeconds > 0 },
           {
             label: "Sessions",
             value: sessions.length,

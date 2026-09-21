@@ -45,7 +45,7 @@ export function TimerCard({
   return fixedItem ? (
     <FixedItemCard entries={entries} tz={tz ?? "UTC"} mediaItemId={fixedItem.mediaItemId} mediaType={fixedItem.mediaType} />
   ) : (
-    <IdleTimer entries={entries} />
+    <IdleTimer entries={entries} tz={tz ?? "UTC"} />
   );
 }
 
@@ -102,9 +102,15 @@ function FixedItemCard({
   );
 }
 
-function IdleTimer({ entries }: { entries: LibraryPick[] }) {
+/**
+ * The log bar: the product's primary action, and the only tinted surface on Home
+ * (redesign.md §5.1). One medium/title picker, a Start button, and a "Log manually"
+ * escape hatch for backdating a session instead of timing it live.
+ */
+function IdleTimer({ entries, tz }: { entries: LibraryPick[]; tz: string }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [logOpen, setLogOpen] = useState(false);
   const preset = entries.find((e) => e.status === "active");
   const [pick, setPick] = useState<PickerValue>({
     mediaItemId: preset?.mediaItemId ?? null,
@@ -121,13 +127,28 @@ function IdleTimer({ entries }: { entries: LibraryPick[] }) {
   }
 
   return (
-    <Card className="border-primary/30 bg-accent">
-      <CardContent className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+    <Card className="border-primary/30 bg-accent py-4">
+      <CardContent className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-end">
         <ItemPicker entries={entries} value={pick} onChange={setPick} idPrefix="timer" />
         <Button size="lg" onClick={start} disabled={pending} className="w-full sm:w-auto">
           <Play /> Start timer
         </Button>
+        <Button size="lg" variant="ghost" onClick={() => setLogOpen(true)} className="w-full sm:w-auto">
+          Log manually
+        </Button>
       </CardContent>
+
+      <SessionDialog
+        open={logOpen}
+        onOpenChange={setLogOpen}
+        description="Backdate a session instead of timing it live."
+        entries={entries}
+        tz={tz}
+        initial={
+          pick.mediaItemId ? { mediaItemId: pick.mediaItemId, mediaType: pick.mediaType } : { mediaType: pick.mediaType, label: pick.label }
+        }
+        onDone={() => setLogOpen(false)}
+      />
     </Card>
   );
 }

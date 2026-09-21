@@ -299,6 +299,7 @@ export async function getLastSessionByItem(userId: string) {
       durationSeconds: immersionSessions.durationSeconds,
       amount: immersionSessions.amount,
       amountUnit: immersionSessions.amountUnit,
+      startedAt: immersionSessions.startedAt,
     })
     .from(immersionSessions)
     .where(and(eq(immersionSessions.userId, userId), sql`${immersionSessions.mediaItemId} is not null`))
@@ -306,7 +307,7 @@ export async function getLastSessionByItem(userId: string) {
   return new Map(
     rows.map((r) => [
       r.mediaItemId as string,
-      { durationSeconds: r.durationSeconds, amount: r.amount, amountUnit: r.amountUnit as Unit | null },
+      { durationSeconds: r.durationSeconds, amount: r.amount, amountUnit: r.amountUnit as Unit | null, startedAt: r.startedAt },
     ]),
   );
 }

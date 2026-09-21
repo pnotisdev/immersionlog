@@ -25,7 +25,7 @@ export function LogSessionEntry({ compact = false, className }: { compact?: bool
     <Link
       href="/log/new"
       className={cn(
-        "inline-flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90",
+        "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90",
         className,
       )}
     >

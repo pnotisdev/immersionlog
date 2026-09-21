@@ -81,21 +81,21 @@ export function SessionList({
               <span className="tabular-nums text-muted-foreground">{formatDuration(g.seconds)}</span>
             </div>
           )}
-          <ul className="divide-y rounded-xl border">
+          <ul className="divide-y rounded-md border">
             {g.items.map((s) => {
               const what = s.title ?? s.label ?? MEDIA_TYPE_META[s.mediaType].label;
               return (
-                <li key={s.id} className="group flex items-center gap-3 px-3 py-2.5">
+                <li key={s.id} className="group flex min-h-16 items-center gap-4 px-4 py-3">
                   <Thumb src={s.coverUrl} title={what} size="sm" />
                   <div className="min-w-0 flex-1">
                     {s.mediaItemId ? (
-                      <Link href={`/media/${s.mediaItemId}`} className="block truncate text-sm font-medium hover:underline">
+                      <Link href={`/media/${s.mediaItemId}`} className="block truncate text-h3 font-semibold hover:underline">
                         {what}
                       </Link>
                     ) : (
-                      <span className="block truncate text-sm font-medium">{what}</span>
+                      <span className="block truncate text-h3 font-semibold">{what}</span>
                     )}
-                    <div className="truncate text-xs text-muted-foreground">
+                    <div className="truncate text-meta text-dim">
                       {MEDIA_TYPE_META[s.mediaType].label} · {fmt.time.format(new Date(s.startedAt))}
                       {s.amount != null && s.amount > 0 && s.amountUnit && (
                         <>

@@ -1,4 +1,3 @@
-import { Users } from "lucide-react";
 import { presetRange } from "@/lib/dates";
 import { listMembers } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
@@ -49,13 +48,13 @@ export default async function MembersPage(props: PageProps<"/members">) {
             defaultValue={q}
             placeholder="Search members…"
             aria-label="Search members"
-            className="h-9 w-48 rounded-full border bg-transparent px-4 text-sm outline-none focus-visible:border-ring"
+            className="h-9 w-48 rounded-sm border bg-transparent px-4 text-sm outline-none focus-visible:border-ring"
           />
         </form>
       </div>
 
       {members.length === 0 ? (
-        <EmptyState icon={Users} title={q ? `Nobody matches "${q}".` : "No public profiles yet."} />
+        <EmptyState title={q ? `Nobody matches "${q}".` : "No public profiles yet."} />
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m) => (

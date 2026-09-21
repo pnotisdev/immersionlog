@@ -40,21 +40,66 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-surface: var(--surface);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-surface-2: var(--surface-2);
+  --color-line-strong: var(--line-strong);
+  --color-dim: var(--text-3);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-tint: var(--accent-tint);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-d-anime: var(--d-anime);
+  --color-d-manga: var(--d-manga);
+  --color-d-vn: var(--d-vn);
+  --color-d-ln: var(--d-ln);
+  --color-d-book: var(--d-book);
+  --color-d-video: var(--d-video);
+  --color-d-audio: var(--d-audio);
+  --color-d-other: var(--d-other);
+  --color-d-reading: var(--d-reading);
+  --color-d-listening: var(--d-listening);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-lg);
+  --radius-2xl: var(--r-lg);
+  --radius-3xl: var(--r-lg);
+  --radius-4xl: var(--r-lg);
+
+  /* Type scale — six steps, two weights (400/600). Nothing outside this ships. */
+  --text-display: 2.125rem;
+  --text-display--line-height: 2.5rem;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: 1.5rem;
+  --text-h1--line-height: 1.875rem;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: 1.125rem;
+  --text-h2--line-height: 1.5rem;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: 0.9375rem;
+  --text-h3--line-height: 1.25rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.25rem;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.125rem;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1rem;
 }
 
 /*
- * Palette: white canvas, near-black "carbon" text, a single lavender accent that does
- * all the CTA/focus/selected-state work. Structural chrome (borders, secondary fills)
- * stays grayscale; colour elsewhere (streak/reading/listening tones, the --viz-* data
- * ramp) is reserved for what the user did, not decoration. Modelled on a reference
+ * Palette: white canvas, near-black "carbon" text, a single accent that does all the
+ * CTA/focus/selected-state work. Structural chrome (borders, secondary fills) stays
+ * grayscale; colour elsewhere (streak/reading/listening tones, the --viz-* data ramp)
+ * is reserved for what the user did, not decoration. Modelled on a reference
  * "white engineering blueprint" style (Linear/Vercel/Plausible-adjacent).
+ *
+ * Dark mode follows redesign.md v1 (see repo root), except the accent: v1 specified a
+ * lavender (#A99BFF), which turned out to sit squarely in the "vibecode purple" family
+ * (ai-slop.md #2) — replaced with shu-iro, a Japanese vermillion (#E0552E), keeping the
+ * same structural rules (one accent, everywhere) with a color that isn't the default
+ * every AI design tool converges on. Light mode is intentionally left as-is
+ * (redesign.md §2.3.6: out of scope for v1, ship dark properly rather than two
+ * half-finished themes).
  */
 :root {
   --background: #ffffff;
@@ -62,6 +107,12 @@
   --card: #ffffff;
   --card-foreground: var(--foreground);
   --surface: #fafafa;
+  --surface-2: #f0f0f2;
+  --line-strong: #d4d4d8;
+  --text-3: #767676;
+  --accent-hover: #7d78f0;
+  --accent-tint: #f2f1fe;
+  --on-accent: #ffffff;
   --popover: #ffffff;
   --popover-foreground: var(--foreground);
   --primary: #918df6;
@@ -73,6 +124,8 @@
   --accent: #f2f1fe;
   --accent-foreground: #4b46c9;
   --destructive: oklch(0.577 0.245 27.325);
+  --success: #1e8a4c;
+  --danger: var(--destructive);
   --border: #e8e8e8;
   --input: #e8e8e8;
   --ring: #918df6;
@@ -82,6 +135,34 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.7rem;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-full: 999px;
+
+  /* Layout (redesign.md §2.1) — identical on every route, nav bar included. */
+  --container: 1200px;
+  --gutter: 24px;
+  --nav-h: 56px;
+  --read-max: 680px;
+
+  /* Space (§2.4) — 4px base; Tailwind's default spacing scale already lines up
+     1:1 with these (p-1=4px … p-20=80px), so components use Tailwind spacing
+     utilities directly rather than these. Kept for reference/non-Tailwind CSS. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s7: 32px;
+  --s8: 40px;
+  --s9: 56px;
+  --s10: 80px;
+
+  /* Motion (§2.5) */
+  --t-fast: 120ms cubic-bezier(0, 0, 0.2, 1);
+  --t-base: 180ms cubic-bezier(0.2, 0, 0, 1);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -90,28 +171,62 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: var(--ring);
+
+  /* Data — categorical, fixed per medium. Never reorder: the order is the
+     colorblind-safety mechanism (redesign.md §2.3.2), not decoration. Shared
+     across themes; these are brand-medium colors, not UI chrome. */
+  --d-anime: #9085e9;
+  --d-manga: #d95926;
+  --d-vn: #199e70;
+  --d-ln: #c98500;
+  --d-book: #d55181;
+  --d-video: #008300;
+  --d-audio: #3987e5;
+  --d-other: #e66767;
+  --d-reading: #d95926;
+  --d-listening: #199e70;
 }
 
 .dark {
-  --background: #131319;
-  --foreground: #f2f1f5;
-  --card: #1b1c24;
+  --background: #0b0b0f;
+  --foreground: #ededf2;
+  --card: #121218;
   --card-foreground: var(--foreground);
-  --surface: #17181f;
-  --popover: #1f2029;
+  --surface: #121218;
+  --surface-2: #1a1a22;
+  --line-strong: #34343f;
+  --text-3: #7a7a88;
+  --popover: #1a1a22;
   --popover-foreground: var(--foreground);
-  --primary: #a39dfa;
-  --primary-foreground: #14141b;
-  --secondary: #23242e;
-  --secondary-foreground: #f2f1f5;
-  --muted: #23242e;
-  --muted-foreground: #9a9ba6;
-  --accent: #262441;
-  --accent-foreground: #c9c5ff;
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 9%);
-  --input: oklch(1 0 0 / 13%);
-  --ring: #a39dfa;
+  /*
+   * Accent: shu-iro (朱色), a traditional Japanese vermillion — chosen deliberately
+   * away from the "vibecode purple" family (violet/indigo #6366f1-#A855F7) that the
+   * previous lavender accent sat in (see ai-slop.md). Contrast-checked against --bg
+   * and --surface (≥4.5:1) and against --on-accent as button text (≥4.5:1). It sits
+   * close in hue to the Manga/Reading (#D95926) and Other (#E66767) categorical data
+   * colors — an unavoidable consequence of picking a warm red-orange in a palette
+   * that already uses that band for two data categories — separated from them by
+   * lightness/weight instead: this is a deeper, richer tone than either. --destructive
+   * is shifted to a cooler crimson (348° hue vs the accent's 13°) so "primary action"
+   * and "danger" don't collide now that the brand color itself is a red.
+   */
+  --primary: #e0552e;
+  --primary-foreground: #1f0d08;
+  --accent-hover: #f0704d;
+  --accent-tint: rgba(224, 85, 46, 0.14);
+  --on-accent: #1f0d08;
+  --secondary: #1a1a22;
+  --secondary-foreground: #ededf2;
+  --muted: #1a1a22;
+  --muted-foreground: #a0a0ae;
+  --accent: rgba(224, 85, 46, 0.14);
+  --accent-foreground: #e0552e;
+  --destructive: #e8506e;
+  --success: #5bc98a;
+  --danger: #e8506e;
+  --border: #26262f;
+  --input: #26262f;
+  --ring: #e0552e;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -140,6 +255,17 @@
     scrollbar-gutter: stable;
   }
   /*
+   * Japanese titles must render in a designed JP face, not whatever glyphs the Latin
+   * font's own fallback happens to carry — they sat at the wrong optical size beside
+   * the English title before this (redesign.md §2.2, defect #14). --font-jp comes from
+   * next/font (see src/app/layout.tsx); the literal names after it are a safety net if
+   * that ever fails to load. A single restrained JP accent stays confined to this rule
+   * and the wordmark — never on numbers (redesign.md §5 Phase 5).
+   */
+  [lang="ja"] {
+    font-family: var(--font-jp), "Zen Kaku Gothic New", "Noto Sans JP", var(--font-sans);
+  }
+  /*
    * A grid with no explicit columns places everything in one *implicit* column, which is
    * auto-sized — so a single wide child (a poster rail, a chart) stretches that column and
    * the whole page scrolls sideways. Clamp implicit columns the way Tailwind's grid-cols-*
@@ -155,6 +281,12 @@
     @apply tracking-tight;
     text-wrap: balance;
   }
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --t-fast: 0ms;
+      --t-base: 0ms;
+    }
+  }
 }
 
 @layer utilities {
@@ -167,11 +299,29 @@
     display: none;
   }
   /* Standard poster ratio, so mixed sources (AniList 2:3, VNDB, TMDB) line up. */
+  /* 2:3 frame, r-md, a 1px inset ring to hide bad source-art edges (redesign.md §4.5). */
   .poster {
-    @apply relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-muted;
+    @apply relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted ring-1 ring-border ring-inset;
+  }
+  /*
+   * redesign.md: "retire uppercase section labels completely." One level of
+   * hierarchy only — `.section-title` for real section headings (sentence
+   * case, h2), `.section-label` for the smaller meta/stat-label role. Neither
+   * is ever uppercase; caps+letterspacing marked every level before, so it
+   * marked nothing.
+   */
+  .section-title {
+    @apply text-h2 font-semibold text-foreground;
   }
   .section-label {
-    @apply text-[11px] font-medium tracking-[0.12em] text-muted-foreground uppercase;
+    @apply text-meta text-dim;
+  }
+  /* Edge fade for a horizontally-scrolling row (rails, filter chips) so the
+     truncation reads as "more content", not a rendering bug. Always-on CSS
+     mask rather than JS scroll-position tracking, so it works everywhere the
+     row can overflow without wiring up a ref. */
+  .scroll-fade-x {
+    mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
   }
   /* Room for the mobile tab bar plus the home indicator. */
   .pb-safe {
@@ -207,7 +357,8 @@
   }
 }
 
-/* --- Data-viz tokens (validated sequential blue ramp; dark steps are selected, not flipped) --- */
+/* --- Data-viz tokens: light keeps its own validated blue ramp (light mode is out of
+   scope for this pass); dark uses redesign.md's validated violet ramp. --- */
 :root {
   --viz-series: #2a78d6;
   --viz-series-track: #dbe8fa;
@@ -223,16 +374,21 @@
   --viz-good: #006300;
 }
 .dark {
-  --viz-series: #4f97ec;
-  --viz-series-track: #23344c;
-  --viz-seq-0: #272b31;
-  --viz-seq-1: #0d366b;
-  --viz-seq-2: #1c5cab;
-  --viz-seq-3: #3987e5;
-  --viz-seq-4: #86b6ef;
-  --viz-seq-5: #cde2fb;
-  --viz-grid: #2a2e35;
-  --viz-axis: #3a3f47;
-  --viz-muted: #8b8e95;
-  --viz-good: #0ca30c;
+  /* A monochrome ramp of the site's own accent, not an arbitrary medium's color — the
+   * heatmap and the all-media activity chart are part of the identity system (redesign.md
+   * §1.6), so they follow whatever --primary is rather than staying violet after the
+   * accent moved to vermillion. Re-derived from --primary's hue; empty cell is
+   * --surface-2, not part of the ramp; dimmest step still clears 2:1 against surface. */
+  --viz-series: var(--primary);
+  --viz-series-track: var(--surface-2);
+  --viz-seq-0: var(--surface-2);
+  --viz-seq-1: #893a24;
+  --viz-seq-2: #ae4529;
+  --viz-seq-3: #d85531;
+  --viz-seq-4: #e57a5d;
+  --viz-seq-5: #ebaa98;
+  --viz-grid: var(--border);
+  --viz-axis: var(--line-strong);
+  --viz-muted: var(--text-3);
+  --viz-good: var(--success);
 }

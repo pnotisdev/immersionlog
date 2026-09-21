@@ -1,48 +1,32 @@
 import Link from "next/link";
-import { Trophy } from "lucide-react";
-import { formatDuration, formatNumber } from "@/lib/format";
+import { formatDuration, pluralize } from "@/lib/format";
 import type { LeaderboardRow } from "@/lib/ranking-queries";
 import { cn } from "@/lib/utils";
 import { EmptyState } from "@/components/layout/empty-state";
 import { Avatar } from "./avatar";
 
-/** Muted metal tones for the first three; everyone else gets plain numerals. */
-const MEDAL: Record<number, string> = {
-  1: "text-amber-500",
-  2: "text-zinc-400",
-  3: "text-orange-700 dark:text-orange-400/90",
-};
-
-function Row({ row, max, isViewer }: { row: LeaderboardRow; max: number; isViewer: boolean }) {
-  const share = Math.max(2, (row.seconds / max) * 100);
+/** A table, not a card list (redesign.md §5.6) — no medal colors, no value bar. */
+function Row({ row, isViewer }: { row: LeaderboardRow; isViewer: boolean }) {
   return (
     <li className="relative">
-      {/* The bar is the ranking: length is time logged, relative to the leader. */}
-      <div
-        aria-hidden
-        className={cn(
-          "absolute inset-y-0 left-0 rounded-r-md",
-          isViewer ? "bg-primary/15" : "bg-muted/70",
-        )}
-        style={{ width: `${share}%` }}
-      />
-      <Link
-        href={`/u/${row.username}`}
-        className="relative flex items-center gap-3 rounded-md px-2.5 py-2.5 transition-colors hover:bg-foreground/[0.04]"
-      >
-        <span className={cn("w-6 shrink-0 text-center text-sm font-semibold tabular-nums", MEDAL[row.rank] ?? "text-muted-foreground")}>
+      {/* "Your row": full-width tint plus a left accent border. */}
+      {isViewer && <div aria-hidden className="absolute inset-0 border-l-2 border-primary bg-accent" />}
+      <Link href={`/u/${row.username}`} className="relative flex h-11 items-center gap-3 px-2.5 transition-colors hover:bg-muted">
+        <span className={cn("w-8 shrink-0 text-center text-micro tabular-nums", row.rank <= 3 ? "text-foreground" : "text-dim")}>
           {row.rank}
         </span>
-        <Avatar name={row.name} image={row.image} size="sm" className={cn(row.rank === 1 && "ring-2 ring-amber-400/70")} />
+        <Avatar name={row.name} image={row.image} size="xs" />
         <span className="min-w-0 flex-1 truncate text-sm font-medium">
           {row.name}
           {isViewer && <span className="ml-1.5 text-xs font-normal text-muted-foreground">you</span>}
         </span>
-        <span className="hidden shrink-0 text-xs text-muted-foreground tabular-nums sm:inline">Lv {row.level.level}</span>
-        <span className="hidden w-20 shrink-0 text-right text-xs text-muted-foreground tabular-nums md:inline">
-          {formatNumber(row.sessions)} sessions
+        <span className="hidden w-16 shrink-0 text-micro text-dim tabular-nums sm:inline">Lv {row.level.level}</span>
+        <span className="hidden w-20 shrink-0 text-right text-xs text-dim tabular-nums md:inline">
+          {pluralize(row.sessions, "session")}
         </span>
-        <span className="w-16 shrink-0 text-right text-sm font-semibold tabular-nums">{formatDuration(row.seconds)}</span>
+        <span className="w-[88px] shrink-0 text-right text-sm font-semibold text-foreground tabular-nums">
+          {formatDuration(row.seconds)}
+        </span>
       </Link>
     </li>
   );
@@ -58,14 +42,13 @@ export function Leaderboard({
   emptyText?: string;
 }) {
   if (rows.length === 0) {
-    return <EmptyState icon={Trophy} title={emptyText} />;
+    return <EmptyState title={emptyText} />;
   }
-  const max = Math.max(...rows.map((r) => r.seconds), 1);
 
   return (
-    <ol className="grid">
+    <ol className="divide-y divide-border">
       {rows.map((r) => (
-        <Row key={r.userId} row={r} max={max} isViewer={r.userId === currentUserId} />
+        <Row key={r.userId} row={r} isViewer={r.userId === currentUserId} />
       ))}
     </ol>
   );

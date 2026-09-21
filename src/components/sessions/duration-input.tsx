@@ -54,9 +54,9 @@ export function DurationInput({
               type="button"
               onClick={() => onChange(fromMinutes(m))}
               className={cn(
-                "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                "rounded-sm border px-3 py-1 text-xs font-medium transition-colors",
                 isSelected
-                  ? "border-foreground bg-foreground text-background"
+                  ? "border-primary bg-accent text-accent-foreground"
                   : isTypical
                     ? "border-primary/50 text-primary hover:bg-primary/10"
                     : "hover:bg-muted",

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Users } from "lucide-react";
 import { formatCompact, formatDuration, relativeTime } from "@/lib/format";
 import { MEDIA_TYPE_META, activityVerb, unitLabel } from "@/lib/media";
 import type { FeedItem } from "@/lib/social-queries";
@@ -35,7 +34,7 @@ function FeedRow({ item, viewerId, now }: { item: FeedItem; viewerId: string; no
           )}
         </p>
 
-        <p className="mt-0.5 text-xs text-muted-foreground">
+        <p className="mt-0.5 text-meta text-dim">
           <span className="font-medium text-foreground/80 tabular-nums">{formatDuration(item.durationSeconds)}</span>
           {amount && <> · {amount}</>} · {MEDIA_TYPE_META[item.mediaType].label} · {relativeTime(item.startedAt, now)}
         </p>
@@ -74,7 +73,7 @@ export function ActivityFeed({
 }) {
   const now = new Date();
   if (items.length === 0) {
-    return <EmptyState icon={Users} title={emptyText} action={emptyAction} />;
+    return <EmptyState title={emptyText} action={emptyAction} />;
   }
   return (
     <ul className="divide-y">

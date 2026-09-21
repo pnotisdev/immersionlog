@@ -25,16 +25,16 @@ export function TabLinks({
 }) {
   if (variant === "pill") {
     return (
-      <div className={cn("no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0", className)}>
+      <div className={cn("no-scrollbar scroll-fade-x -mx-4 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0", className)}>
         {tabs.map((t) => (
           <Link
             key={t.href}
             href={t.href}
             aria-current={t.href === active ? "page" : undefined}
             className={cn(
-              "shrink-0 rounded-full border px-3 py-1 text-xs transition-colors",
+              "shrink-0 rounded-sm border px-3 py-1 text-xs transition-colors",
               t.href === active
-                ? "border-transparent bg-foreground text-background"
+                ? "border-primary bg-accent text-accent-foreground"
                 : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground",
             )}
           >

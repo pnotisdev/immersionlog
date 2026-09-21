@@ -1,22 +1,30 @@
-import { formatDuration } from "@/lib/format";
+import { formatDuration, pluralize } from "@/lib/format";
 
 export interface HeatmapDay {
   key: string; // YYYY-MM-DD
   seconds: number;
+  sessions?: number;
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DOW = ["Mon", "", "Wed", "", "Fri", "", ""];
+const WEEKDAY = new Intl.DateTimeFormat("en", { weekday: "short", timeZone: "UTC" });
 
-/** Sequential step 0-5 for a day's seconds, using a fixed scale so the same hour count always reads the same. */
-function step(seconds: number): number {
-  if (seconds <= 0) return 0;
-  const h = seconds / 3600;
-  if (h < 0.5) return 1;
-  if (h < 1) return 2;
-  if (h < 2) return 3;
-  if (h < 4) return 4;
-  return 5;
+/**
+ * Sequential step 1-5 by quantile of the user's *own* non-zero days, not a fixed global
+ * scale — otherwise a light user's whole year reads as a single step (redesign.md §3.3).
+ */
+function quantileStep(days: HeatmapDay[]): (seconds: number) => number {
+  const nonZero = days.map((d) => d.seconds).filter((s) => s > 0).sort((a, b) => a - b);
+  if (nonZero.length === 0) return () => 0;
+  const at = (p: number) => nonZero[Math.min(nonZero.length - 1, Math.floor(p * nonZero.length))];
+  const thresholds = [at(0.2), at(0.4), at(0.6), at(0.8)];
+  return (seconds: number) => {
+    if (seconds <= 0) return 0;
+    let s = 1;
+    for (const t of thresholds) if (seconds > t) s++;
+    return Math.min(5, s);
+  };
 }
 
 /**
@@ -25,6 +33,7 @@ function step(seconds: number): number {
  */
 export function Heatmap({ days }: { days: HeatmapDay[] }) {
   if (days.length === 0) return null;
+  const step = quantileStep(days);
 
   // Columns are weeks; rows are Mon..Sun.
   const firstDow = (new Date(days[0].key + "T00:00:00Z").getUTCDay() + 6) % 7; // Mon=0
@@ -80,7 +89,7 @@ export function Heatmap({ days }: { days: HeatmapDay[] }) {
                   rx={2}
                   fill={`var(--viz-seq-${step(day.seconds)})`}
                 >
-                  <title>{`${day.key}: ${day.seconds > 0 ? formatDuration(day.seconds) : "nothing logged"}`}</title>
+                  <title>{tooltipText(day)}</title>
                 </rect>
               ) : null,
             )}
@@ -96,4 +105,14 @@ export function Heatmap({ days }: { days: HeatmapDay[] }) {
       </div>
     </div>
   );
+}
+
+/** "Sat 20 Sep · 1h 13m · 3 sessions" (redesign.md §3.3). */
+function tooltipText(day: HeatmapDay): string {
+  const d = new Date(day.key + "T00:00:00Z");
+  const date = `${WEEKDAY.format(d)} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
+  if (day.seconds <= 0) return `${date} · nothing logged`;
+  const parts = [date, formatDuration(day.seconds)];
+  if (day.sessions) parts.push(pluralize(day.sessions, "session"));
+  return parts.join(" · ");
 }

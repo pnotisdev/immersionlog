@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, RefreshCw } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { getShelf, isShelfKey, SHELF_KEYS, SHELF_META } from "@/lib/sources/browse";
 import { requireUser } from "@/lib/session";
 import { EmptyState } from "@/components/layout/empty-state";
@@ -39,7 +39,7 @@ export default async function ShelfPage(props: PageProps<"/discover/[shelf]">) {
       />
 
       {shelf.items.length === 0 ? (
-        <EmptyState icon={RefreshCw} title={`${shelf.credit} isn't answering right now.`} description="Try again in a minute." />
+        <EmptyState title={`${shelf.credit} isn't answering right now — try again shortly.`} />
       ) : (
         <div className="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-4 lg:grid-cols-6">
           {shelf.items.map((item) => (

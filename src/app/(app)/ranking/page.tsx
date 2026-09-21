@@ -42,7 +42,7 @@ export default async function RankingPage(props: PageProps<"/ranking">) {
             </Link>
             .
           </span>
-        ) : mine.rank ? (
+        ) : mine.rank && mine.total >= 20 ? (
           <>
             <span className="flex items-baseline gap-1.5">
               <span className="text-muted-foreground">Your rank</span>
@@ -50,28 +50,36 @@ export default async function RankingPage(props: PageProps<"/ranking">) {
               <span className="text-xs text-muted-foreground">of {mine.total}</span>
             </span>
             <span className="tabular-nums">{formatDuration(mine.seconds)}</span>
-            {mine.gapToNext != null ? (
+            {/* #1 with no gap already says "first place" — the number, not a sentence. */}
+            {mine.gapToNext != null && (
               <span className="text-muted-foreground">
                 {formatDuration(mine.gapToNext)} behind #{mine.rank - 1}
               </span>
-            ) : (
-              <span className="text-muted-foreground">You&rsquo;re in first place.</span>
             )}
           </>
+        ) : mine.rank ? (
+          <span className="text-muted-foreground">Not enough public activity yet for a rank to mean much.</span>
         ) : (
           <span className="text-muted-foreground">Log some time in this range to get ranked.</span>
         )}
       </div>
 
-      <Leaderboard
-        rows={rows}
-        currentUserId={user.id}
-        emptyText={
-          audience === "following"
-            ? "Nobody you follow has logged time in this range."
-            : "Nobody has logged time in this range yet. Be the first."
-        }
-      />
+      {/* A 3-row table is worse than no table (redesign.md §7): rendered only at ≥10 rows. */}
+      {rows.length >= 10 ? (
+        <Leaderboard rows={rows} currentUserId={user.id} />
+      ) : rows.length > 0 ? (
+        <p className="py-10 text-center text-sm text-muted-foreground">Not enough activity yet to rank this range.</p>
+      ) : (
+        <Leaderboard
+          rows={rows}
+          currentUserId={user.id}
+          emptyText={
+            audience === "following"
+              ? "Nobody you follow has logged time in this range."
+              : "Nobody has logged time in this range yet. Be the first."
+          }
+        />
+      )}
     </div>
   );
 }

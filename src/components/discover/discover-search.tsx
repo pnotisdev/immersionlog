@@ -11,6 +11,11 @@ import { DiscoverTile } from "./discover-tile";
 /** Media types that can actually be searched, in the order people reach for them. */
 const TYPES: MediaType[] = ["anime", "manga", "visual_novel", "light_novel", "book", "series", "movie"];
 
+/**
+ * Search is the reason this page exists, so it sits in the page head next to the
+ * title, not below a 60px headline (redesign.md §5.2). Medium selection is tabs —
+ * it switches what's shown, which is what a tab means, not chips (additive filters).
+ */
 export function DiscoverSearch() {
   const [type, setType] = useState<MediaType>("anime");
   const [q, setQ] = useState("");
@@ -46,33 +51,34 @@ export function DiscoverSearch() {
   }, [query, type]);
 
   return (
-    <div className="grid gap-3">
-      <div className="relative">
-        {loading ? (
-          <Loader2 className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 animate-spin text-muted-foreground" />
-        ) : (
-          <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
-        )}
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder={`Search ${MEDIA_TYPE_META[type].label.toLowerCase()}…`}
-          aria-label="Search titles"
-          className="h-11 w-full rounded-full border bg-card pr-4 pl-10 text-sm outline-none transition-colors focus-visible:border-ring"
-        />
+    <div className="grid gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h1 className="text-h1 font-semibold text-foreground">Discover</h1>
+        <div className="relative w-full sm:w-[420px]">
+          {loading ? (
+            <Loader2 className="absolute top-1/2 left-3 size-4 -translate-y-1/2 animate-spin text-muted-foreground" />
+          ) : (
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+          )}
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder={`Search ${MEDIA_TYPE_META[type].label.toLowerCase()}…`}
+            aria-label="Search titles"
+            className="h-9 w-full rounded-sm border bg-card pr-4 pl-9 text-sm outline-none transition-colors focus-visible:border-ring"
+          />
+        </div>
       </div>
 
-      <div className="no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+      <div className="no-scrollbar scroll-fade-x -mx-4 flex gap-5 overflow-x-auto border-b px-4 sm:mx-0 sm:px-0">
         {TYPES.map((t) => (
           <button
             key={t}
             type="button"
             onClick={() => setType(t)}
             className={cn(
-              "shrink-0 rounded-full border px-3 py-1 text-xs transition-colors",
-              t === type
-                ? "border-transparent bg-foreground text-background"
-                : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground",
+              "-mb-px shrink-0 border-b-2 py-2.5 text-sm transition-colors",
+              t === type ? "border-primary font-medium text-foreground" : "border-transparent text-muted-foreground hover:text-foreground",
             )}
           >
             {MEDIA_TYPE_META[t].label}

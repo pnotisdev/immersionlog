@@ -65,11 +65,6 @@ export function mediaTypeLabel(type: MediaType) {
   return MEDIA_TYPE_META[type].label;
 }
 
-/** Maps a media group to the matching BarList/StatTile color tone (reading = amber, listening = teal). */
-export function groupTone(group: MediaGroup): "default" | "reading" | "listening" {
-  return group === "reading" || group === "listening" ? group : "default";
-}
-
 /** "1 episode" / "12 episodes" — every unit label is plural, so singularise for one. */
 export function unitLabel(unit: Unit, amount: number): string {
   const label = UNIT_LABELS[unit];

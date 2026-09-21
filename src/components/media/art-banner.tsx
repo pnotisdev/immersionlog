@@ -3,38 +3,32 @@ import { cn } from "@/lib/utils";
 import { isGoogleBooksImage } from "./poster";
 
 /**
- * A header built from the art someone actually spends time on: a few banners/covers
- * side by side, dimmed into the page. Falls back to a quiet gradient for new accounts.
+ * A header built from the art someone actually spends time on: the cover of their
+ * single most-immersed title, dimmed into the page. Falls back to a quiet gradient
+ * for new accounts. One image only — a strip of several covers butted together
+ * produces a hard seam at every boundary (redesign.md §8.1).
  */
 export function ArtBanner({
-  images,
+  image,
   className,
   height = "h-36 sm:h-48",
 }: {
-  images: string[];
+  image?: string | null;
   className?: string;
   height?: string;
 }) {
-  const art = images.filter(Boolean).slice(0, 5);
-
   return (
     <div className={cn("relative overflow-hidden rounded-b-2xl bg-secondary", height, className)}>
-      {art.length > 0 ? (
-        <div className="absolute inset-0 flex">
-          {art.map((src, i) => (
-            <div key={src + i} className="relative h-full flex-1">
-              <Image
-                src={src}
-                alt=""
-                fill
-                sizes="(max-width: 640px) 50vw, 20vw"
-                unoptimized={isGoogleBooksImage(src)}
-                className="object-cover"
-                priority={i === 0}
-              />
-            </div>
-          ))}
-        </div>
+      {image ? (
+        <Image
+          src={image}
+          alt=""
+          fill
+          sizes="100vw"
+          unoptimized={isGoogleBooksImage(image)}
+          className="object-cover"
+          priority
+        />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary to-secondary" />
       )}

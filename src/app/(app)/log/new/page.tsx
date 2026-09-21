@@ -10,7 +10,7 @@ export default async function NewLogPage() {
   const picks = await getLibraryPicksWithStats(user.id);
   return (
     <div>
-      <PageHeader title="Log your immersion" description="Pick a medium, find the title, fill in the details. New titles are added to your library automatically." />
+      <PageHeader title="Log" />
       <QuickLogFlow picks={picks} tz={user.timezone ?? "UTC"} />
     </div>
   );

@@ -34,7 +34,8 @@ export function Poster({
   priority?: boolean;
 }) {
   return (
-    <div className={cn("poster", className)}>
+    // Hover: the poster scales and its ring darkens — nothing else moves (redesign.md §4.5).
+    <div className={cn("poster transition-shadow duration-200 group-hover:ring-line-strong", className)}>
       {src ? (
         <Image
           src={src}
@@ -43,7 +44,7 @@ export function Poster({
           sizes={sizes}
           priority={priority}
           unoptimized={isGoogleBooksImage(src)}
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
         />
       ) : (
         <div className="flex h-full flex-col items-center justify-center gap-1 bg-gradient-to-br from-muted to-secondary p-2 text-center">

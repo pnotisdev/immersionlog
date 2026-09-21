@@ -1,8 +1,9 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import type { MediaType } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { Poster } from "./poster";
-import { ScrollRail } from "./scroll-rail";
+import { Rail } from "./scroll-rail";
 
 export interface RailItem {
   mediaItemId: string;
@@ -12,20 +13,33 @@ export interface RailItem {
   meta?: string;
 }
 
-/** Horizontally scrollable poster rail for items that already live in the database. */
-export function MediaRail({ items, label, className }: { items: RailItem[]; label: string; className?: string }) {
+/** Section heading + horizontally scrollable poster rail for items already in the database. */
+export function MediaRail({
+  items,
+  title,
+  label,
+  action,
+  className,
+}: {
+  items: RailItem[];
+  title: string;
+  /** Accessible label for the scroller, if it should differ from the visible title. */
+  label?: string;
+  action?: ReactNode;
+  className?: string;
+}) {
   return (
-    <ScrollRail label={label} className={className}>
+    <Rail title={title} label={label} action={action} className={className}>
       {items.map((item) => (
-        <Link key={item.mediaItemId} href={`/media/${item.mediaItemId}`} className="group w-28 shrink-0 sm:w-32">
-          <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="128px" />
-          <p className="mt-1.5 line-clamp-2 min-h-8 text-xs leading-snug font-medium group-hover:text-primary">
+        <Link key={item.mediaItemId} href={`/media/${item.mediaItemId}`} className="group w-[132px] shrink-0">
+          <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="132px" />
+          <p className="mt-1.5 line-clamp-2 h-10 text-h3 leading-snug font-semibold group-hover:text-primary">
             {item.title}
           </p>
-          {item.meta && <p className="text-[11px] text-muted-foreground">{item.meta}</p>}
+          {item.meta && <p className="truncate text-meta text-dim">{item.meta}</p>}
         </Link>
       ))}
-    </ScrollRail>
+    </Rail>
   );
 }
 
@@ -36,10 +50,10 @@ export function MediaGrid({ items, className }: { items: RailItem[]; className?:
       {items.map((item) => (
         <Link key={item.mediaItemId} href={`/media/${item.mediaItemId}`} className="group">
           <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="(max-width: 640px) 33vw, 160px" />
-          <p className="mt-1.5 line-clamp-2 min-h-8 text-xs leading-snug font-medium group-hover:text-primary">
+          <p className="mt-1.5 line-clamp-2 h-10 text-h3 leading-snug font-semibold group-hover:text-primary">
             {item.title}
           </p>
-          {item.meta && <p className="text-[11px] text-muted-foreground">{item.meta}</p>}
+          {item.meta && <p className="truncate text-meta text-dim">{item.meta}</p>}
         </Link>
       ))}
     </div>

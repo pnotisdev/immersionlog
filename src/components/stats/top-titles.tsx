@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { MediaType } from "@/db/schema";
 import { formatDuration } from "@/lib/format";
 import { MEDIA_TYPE_META } from "@/lib/media";
-import { cn } from "@/lib/utils";
 import { Poster } from "@/components/media/poster";
 
 export interface TopTitle {
@@ -36,20 +35,13 @@ export function TopTitles({
 
   return (
     <ol className="divide-y divide-border/60">
-      {items.map((item, i) => (
+      {items.map((item) => (
         <li key={item.mediaItemId}>
-          <Link href={`/media/${item.mediaItemId}`} className="group flex items-center gap-3 py-2.5 sm:gap-4">
-            <span
-              className={cn(
-                "w-5 shrink-0 text-right text-sm font-semibold tabular-nums",
-                i === 0 ? "text-primary" : "text-muted-foreground/70",
-              )}
-            >
-              {i + 1}
-            </span>
-
-            <div className="w-9 shrink-0 sm:w-11">
-              <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="48px" className="rounded-[4px]" />
+          {/* No rank badge, no distorted square thumbnail — a real 32×48 poster and a
+              2px accent bar under the title carry the ranking (redesign.md §5.7). */}
+          <Link href={`/media/${item.mediaItemId}`} className="group flex items-center gap-3 py-2.5">
+            <div className="w-8 shrink-0">
+              <Poster src={item.coverUrl} title={item.title} type={item.type} sizes="32px" />
             </div>
 
             <div className="min-w-0 flex-1">
@@ -58,8 +50,7 @@ export function TopTitles({
                 {MEDIA_TYPE_META[item.type].label}
                 {item.detail ? ` · ${item.detail}` : ""}
               </p>
-              {/* The bar lives under the title so long names never squeeze it. */}
-              <div className="mt-1.5 h-[3px] w-full overflow-hidden rounded-full bg-[var(--viz-seq-0)]">
+              <div className="mt-1.5 h-[2px] w-full overflow-hidden rounded-full bg-[var(--viz-seq-0)]">
                 <div
                   className="h-full rounded-full bg-[var(--viz-series)] transition-[width] duration-500"
                   style={{ width: `${Math.max(2, (item.seconds / max) * 100)}%` }}

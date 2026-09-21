@@ -34,7 +34,7 @@ export function DiscoverTile({ item, className }: { item: SearchResult; classNam
   }
 
   return (
-    <div className={cn("group w-32 shrink-0 sm:w-36", className)}>
+    <div className={cn("group", className)}>
       <button
         type="button"
         onClick={() => add(true)}
@@ -43,7 +43,7 @@ export function DiscoverTile({ item, className }: { item: SearchResult; classNam
         aria-label={`Add ${item.title} to your library`}
       >
         <div className="relative">
-          <Poster src={item.coverUrl} title={item.title} type={item.mediaType} sizes="144px" />
+          <Poster src={item.coverUrl} title={item.title} type={item.mediaType} sizes="132px" />
           <span
             className={cn(
               "absolute right-1.5 bottom-1.5 flex size-7 items-center justify-center rounded-full bg-background/90 text-foreground opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100",
@@ -54,10 +54,10 @@ export function DiscoverTile({ item, className }: { item: SearchResult; classNam
             {added ? <Check className="size-4 text-emerald-500" /> : <Plus className="size-4" />}
           </span>
         </div>
-        <p className="mt-1.5 line-clamp-2 min-h-8 text-xs leading-snug font-medium group-hover:text-primary">
+        <p className="mt-1.5 line-clamp-2 h-10 text-h3 leading-snug font-semibold group-hover:text-primary">
           {item.title}
         </p>
-        <p className="text-[11px] text-muted-foreground">
+        <p className="truncate text-meta text-dim">
           {MEDIA_TYPE_META[item.mediaType].label}
           {item.year ? ` · ${item.year}` : ""}
         </p>

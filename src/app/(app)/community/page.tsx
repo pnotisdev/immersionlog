@@ -40,7 +40,13 @@ export default async function CommunityPage(props: PageProps<"/community">) {
     <div>
       <PageHeader
         title="Community"
-        description={`${pulse.members} members · ${pulse.activeThisWeek} active this week · ${formatDuration(pulse.secondsThisWeek)} logged together`}
+        description={[
+          pulse.members > 0 && `${pulse.members} members`,
+          pulse.activeThisWeek > 0 && `${pulse.activeThisWeek} active this week`,
+          pulse.secondsThisWeek > 0 && `${formatDuration(pulse.secondsThisWeek)} logged together`,
+        ]
+          .filter(Boolean)
+          .join(" · ")}
       />
       <CommunityTabs active="/community" />
 
@@ -78,7 +84,7 @@ export default async function CommunityPage(props: PageProps<"/community">) {
                   ...(scope === "following" ? { scope } : {}),
                   before: feed.nextCursor,
                 }).toString()}`}
-                className="rounded-full border px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="rounded-sm border px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 Older activity
               </Link>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Compass, Library } from "lucide-react";
+import { Compass } from "lucide-react";
 import { ENTRY_STATUSES, MEDIA_TYPES, type EntryStatus, type MediaType } from "@/db/schema";
 import { getLibrary } from "@/lib/queries";
 import { requireUser } from "@/lib/session";
@@ -49,11 +49,9 @@ export default async function LibraryPage(props: PageProps<"/library">) {
         quickLog={{ entries, tz }}
         emptyState={
           <EmptyState
-            icon={Library}
             title="Your library is empty."
-            description="Add an anime, a VN, a book: anything you're consuming in Japanese."
             action={
-              <Button render={<Link href="/discover" />} nativeButton={false}>
+              <Button render={<Link href="/discover" />} nativeButton={false} variant="ghost" size="sm">
                 <Compass /> Browse popular titles
               </Button>
             }

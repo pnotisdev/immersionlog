@@ -1,3 +1,4 @@
+import { Footer } from "@/components/layout/footer";
 import { MobileTabs, Nav } from "@/components/layout/nav";
 import { requireUser } from "@/lib/session";
 
@@ -7,8 +8,9 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <>
       <Nav user={navUser} />
+      <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 pt-8 pb-10">{children}</main>
       {/* Bottom padding clears the mobile tab bar. */}
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-8 pb-28 sm:pt-10 md:pb-12">{children}</main>
+      <Footer className="pb-28 md:pb-0" />
       <MobileTabs />
     </>
   );

@@ -23,9 +23,9 @@ export function TypeBars({ rows, limit = 7 }: { rows: TypeRow[]; limit?: number 
             <div
               className={
                 MEDIA_TYPE_META[r.mediaType].group === "reading"
-                  ? "h-full bg-amber-500"
+                  ? "h-full bg-d-reading"
                   : MEDIA_TYPE_META[r.mediaType].group === "listening"
-                    ? "h-full bg-teal-500"
+                    ? "h-full bg-d-listening"
                     : "h-full bg-muted-foreground/60"
               }
               style={{ width: `${Math.max(2, (r.seconds / max) * 100)}%` }}

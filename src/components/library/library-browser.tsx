@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { ENTRY_STATUSES, MEDIA_TYPES, type EntryStatus, type MediaType } from "@/db/schema";
 import { MEDIA_TYPE_META, STATUS_LABELS } from "@/lib/media";
 import { getLibrary } from "@/lib/queries";
+import { EmptyState } from "@/components/layout/empty-state";
 import { TabLinks } from "@/components/layout/tab-links";
 import { MediaCard } from "@/components/library/media-card";
 import { MediaCardQuickLog } from "@/components/library/media-card-quick-log";
@@ -73,12 +74,10 @@ export async function LibraryBrowser({
         everything.length === 0 ? (
           emptyState
         ) : (
-          <div className="rounded-xl border border-dashed p-12 text-center">
-            <p className="text-sm text-muted-foreground">Nothing matches this filter.</p>
-          </div>
+          <EmptyState title="Nothing matches this filter." />
         )
       ) : (
-        <div className="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-4 lg:grid-cols-6">
+        <div className="grid gap-x-5 gap-y-6" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(132px, 1fr))" }}>
           {entries.map((e) => {
             const item = {
               mediaItemId: e.mediaItemId,

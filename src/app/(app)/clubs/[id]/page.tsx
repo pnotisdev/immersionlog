@@ -108,14 +108,14 @@ export default async function ClubPage(props: PageProps<"/clubs/[id]">) {
           <CardContent>
             <ol className="grid gap-1">
               {board.map((r) => (
-                <li key={r.userId} className={cn("flex items-center gap-3 rounded-md px-2 py-1.5", r.userId === user.id && "bg-[var(--viz-series-track)]/40")}>
-                  <span className="w-6 text-right text-sm tabular-nums text-muted-foreground">{r.rank}</span>
-                  <Avatar name={r.name} image={r.image} size="sm" />
+                <li key={r.userId} className={cn("relative flex items-center gap-3 px-2 py-1.5", r.userId === user.id && "border-l-2 border-primary bg-accent")}>
+                  <span className="w-8 shrink-0 text-center text-micro text-dim tabular-nums">{r.rank}</span>
+                  <Avatar name={r.name} image={r.image} size="xs" />
                   <Link href={`/u/${r.username}`} className="min-w-0 flex-1 truncate text-sm font-medium hover:underline">
                     {r.name}
                     {r.userId === club.ownerId && <span className="ml-1 text-xs font-normal text-muted-foreground">owner</span>}
                   </Link>
-                  <span className="rounded-full border px-2 py-0.5 text-[10px] tabular-nums">Lv {r.level.level}</span>
+                  <span className="text-micro text-dim tabular-nums">Lv {r.level.level}</span>
                   <span className="w-16 text-right text-sm font-semibold tabular-nums">{formatDuration(r.seconds)}</span>
                 </li>
               ))}
