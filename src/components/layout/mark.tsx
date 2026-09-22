@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -22,25 +23,52 @@ const GRID = [
   [5, 4, 3, 2, 1],
 ];
 
-/** `size` is the mark's overall width/height in px; cells and gap scale off it. */
-export function Mark({ size = 16, className }: { size?: number; className?: string }) {
-  const cell = size / 5.6;
-  const gap = cell * 0.22;
+/**
+ * `size` is the mark's overall width/height; cells and gap are derived from it in CSS
+ * rather than in JS, so a caller can pass an em-relative length ("0.92em") and have the
+ * mark scale with whatever type it is locked up with — which is what the oversized
+ * landing-page footer lockup needs. A plain number still means pixels.
+ *
+ * Every cell carries `data-mark-cell` so a caller can animate the grid filling in one
+ * square at a time (see landing-motion.tsx); nothing depends on it otherwise.
+ */
+export function Mark({ size = 16, className }: { size?: number | string; className?: string }) {
+  const length = typeof size === "number" ? `${size}px` : size;
+  const cell = "calc(var(--mark-size) / 5.6)";
   return (
     <span
       aria-hidden
       className={cn("inline-grid shrink-0 select-none align-middle", className)}
-      style={{ gridTemplateColumns: `repeat(5, ${cell}px)`, gridAutoRows: cell, gap }}
+      style={
+        {
+          "--mark-size": length,
+          gridTemplateColumns: `repeat(5, ${cell})`,
+          gridAutoRows: cell,
+          gap: `calc(${cell} * 0.22)`,
+        } as CSSProperties
+      }
     >
       {GRID.flat().map((step, i) => (
-        <span key={i} style={{ width: cell, height: cell, background: step === 0 ? EMPTY : RAMP[step - 1] }} />
+        <span
+          key={i}
+          data-mark-cell
+          style={{ width: cell, height: cell, background: step === 0 ? EMPTY : RAMP[step - 1] }}
+        />
       ))}
     </span>
   );
 }
 
-/** Mark + wordmark, the lockup used in every header/footer. */
-export function Wordmark({ markSize = 16, className, textClassName }: { markSize?: number; className?: string; textClassName?: string }) {
+/** Mark + wordmark, the lockup used in every header and footer. */
+export function Wordmark({
+  markSize = 16,
+  className,
+  textClassName,
+}: {
+  markSize?: number | string;
+  className?: string;
+  textClassName?: string;
+}) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
       <Mark size={markSize} />

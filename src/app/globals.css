@@ -403,3 +403,157 @@
   --viz-muted: var(--text-3);
   --viz-good: var(--success);
 }
+
+/*
+ * --- Landing page ---
+ *
+ * The marketing page ships dark only. Light mode is explicitly a half-finished theme
+ * here (see the palette comment above), and the product previews embedded on the page
+ * force `dark` on themselves regardless of the visitor's theme — so a light-OS visitor
+ * used to get a white page wrapped around dark screenshots. `:has()` rather than a
+ * class on <body>, because <body>'s classes come from the shared root layout and this
+ * applies to one route.
+ */
+body:has([data-landing]) {
+  background-color: #0b0b0f;
+  color-scheme: dark;
+}
+
+/*
+ * --- Landing page glow (components/marketing/glow.tsx) ---
+ *
+ * Both halves are measured off the Photoshop mockup rather than tuned by eye.
+ *
+ * The light is the accent at 73.5% alpha in the shape of the box it surrounds, blurred
+ * with a 96px Gaussian. That one model lands within 1% alpha of the mockup at every point
+ * sampled around the screenshot, corners included, and fits the footer too. An outer
+ * box-shadow is exactly that shape (the box, blurred with a standard deviation of half
+ * the blur radius), is painted only outside the box, and is cheap to draw. --glow is the
+ * standard deviation; it shrinks with the column on narrow screens so a phone-sized
+ * screenshot gets the same proportions of light rather than a blob.
+ */
+[data-landing] {
+  --glow: clamp(28px, 8.2vw, 96px);
+}
+
+.glow-light {
+  box-shadow: 0 0 calc(var(--glow) * 2) color-mix(in srgb, var(--primary) 73.5%, transparent);
+}
+
+/*
+ * The grain is additive, monochrome and zero-mean, which is what Photoshop's Add Noise
+ * does and what the mockup measures as: the same ±3-4 levels in R, G and B wherever the
+ * light is, at full strength or almost gone, and none on the black around it. Two things
+ * that look close and are not:
+ *
+ * - Grey noise laid over the colour (normal, overlay, soft-light) pulls every pixel
+ *   towards grey on average, so the light goes muddy.
+ * - Varying the density of the accent keeps the hue but only ever adds orange, so the
+ *   grain melts into the gradient instead of sitting on it.
+ *
+ * CSS has no signed add, so it takes two layers of the same dark noise tile at different
+ * offsets: plus-lighter adds one, difference subtracts the other. The means cancel
+ * exactly and what is left moves all three channels together. The tile is pre-scaled to
+ * 0-4.5% so difference always has more under it than it takes away (the page itself is
+ * 4-6%) and never flips. Both layers blend with the page behind them, which is why
+ * nothing between them and the page may start a stacking context.
+ *
+ * The grain box reaches 2.2 sigma past the light's box and fades out over the last 0.75,
+ * which is where the grain in the mockup stops too.
+ */
+.glow-grain {
+  --fade: calc(var(--glow) * 0.75);
+  position: absolute;
+  inset: calc(var(--glow) * -2.2);
+  pointer-events: none;
+}
+
+.glow-grain::before,
+.glow-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='g' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='table' tableValues='0 0 .0225 .045 .045'/%3E%3CfeFuncG type='table' tableValues='0 0 .0225 .045 .045'/%3E%3CfeFuncB type='table' tableValues='0 0 .0225 .045 .045'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23g)'/%3E%3C/svg%3E")
+    0 0 / 256px 256px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  mask-composite: intersect;
+}
+
+.glow-grain::before {
+  mix-blend-mode: screen; /* near enough wherever plus-lighter is missing */
+  mix-blend-mode: plus-lighter;
+}
+
+.glow-grain::after {
+  background-position: 101px 53px;
+  mix-blend-mode: difference;
+}
+
+/*
+ * Landing page entrance.
+ *
+ * The hero animates in CSS, not through the motion script, and deliberately so: the
+ * server HTML paints long before React hydrates and GSAP gets a chance to run, so
+ * anything hidden waiting for JS leaves the page blank for as long as hydration takes.
+ * That was measurable in a production build here, not theoretical. A CSS animation with
+ * `both` fill starts from the hidden state on the very first frame and finishes on its
+ * own, with no script, no hydration and no flash.
+ *
+ * Everything below the fold is handled by landing-motion.tsx instead, which only hides
+ * what is already off screen — so there is no state the page can get stuck in where
+ * something a visitor can see is invisible.
+ */
+@keyframes landing-line-in {
+  from {
+    /* 120%, not 100%: the clip box is 0.16em taller than the line so descenders
+       survive, so the line has to travel past its own height to start out of sight. */
+    transform: translateY(120%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes landing-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-landing] [data-line-inner] {
+  animation: landing-line-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* The hero light rises with the screenshot. Its layers are animated one by one, never
+   their wrapper: an animated wrapper is a stacking context, and the grain would stop
+   blending with the page for as long as the animation ran. */
+[data-landing] [data-hero-item],
+[data-landing] [data-glow-enter] .glow-light,
+[data-landing] [data-glow-enter] .glow-grain::before,
+[data-landing] [data-glow-enter] .glow-grain::after {
+  animation: landing-item-in 0.6s cubic-bezier(0, 0, 0.2, 1) both;
+  animation-delay: calc(0.35s + var(--d, 0s));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-landing] [data-line-inner],
+  [data-landing] [data-hero-item],
+  [data-landing] [data-glow-enter] .glow-light,
+  [data-landing] [data-glow-enter] .glow-grain::before,
+  [data-landing] [data-glow-enter] .glow-grain::after {
+    animation: none;
+  }
+}

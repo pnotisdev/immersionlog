@@ -15,20 +15,22 @@ const NAV_LINKS = ["Home", "Library", "Discover", "Community", "Stats"] as const
 /**
  * Wraps a static product preview: the page rendered at a fixed desktop width and
  * scaled to fit (see ScaleToFit) so it always reads as a real screenshot, never a
- * squeezed mobile layout. No browser-window chrome — the same plain bordered-card
- * treatment the rest of this page already uses (see the "Top this week" panel),
- * not a floating mockup. `dark` is forced regardless of the visitor's site theme —
- * this is what the product looks like, not a themed embed.
+ * squeezed mobile layout. No browser-window chrome and no rounded corners — a plain
+ * hairline box, the same one the rest of the landing page is drawn with, not a
+ * floating mockup. `dark` is forced regardless of the visitor's site theme — this is
+ * what the product looks like, not a themed embed.
  */
 export function PreviewFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="dark overflow-hidden rounded-2xl border bg-surface">
+    <div className="dark overflow-hidden border border-border/70 bg-surface">
       <ScaleToFit width={CANVAS_WIDTH}>
         {/* inert: this is a static screenshot, not a live view of the app — the real
             components underneath still carry real Links and server-action buttons
             (delete session, add to library…), so the whole subtree must be
             unclickable and unfocusable, not just visually inert. */}
-        <div inert className="bg-background text-foreground select-none">
+        {/* font-sans: the landing page around this is set entirely in mono, but a preview
+            is a screenshot of the app and has to look like the app. */}
+        <div inert className="bg-background font-sans text-foreground select-none">
           {children}
         </div>
       </ScaleToFit>
