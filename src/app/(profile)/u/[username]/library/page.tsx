@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ENTRY_STATUSES, MEDIA_TYPES, type EntryStatus, type MediaType } from "@/db/schema";
 import { getPublicUser } from "@/lib/ranking-queries";
-import { requireUser } from "@/lib/session";
+import { getSession } from "@/lib/session";
 import { USERNAME_RE } from "@/lib/username";
 import { getLibraryPicks } from "@/lib/view-models";
 import { EmptyState } from "@/components/layout/empty-state";
@@ -17,7 +17,8 @@ export async function generateMetadata(props: PageProps<"/u/[username]/library">
 }
 
 export default async function UserLibraryPage(props: PageProps<"/u/[username]/library">) {
-  const viewer = await requireUser();
+  const session = await getSession();
+  const viewer = session?.user ?? null;
   const { username } = await props.params;
   if (!USERNAME_RE.test(username)) notFound();
   const u = await getPublicUser(username);
@@ -29,9 +30,9 @@ export default async function UserLibraryPage(props: PageProps<"/u/[username]/li
   const status = (ENTRY_STATUSES as readonly string[]).includes(statusParam ?? "") ? (statusParam as EntryStatus) : undefined;
   const type = (MEDIA_TYPES as readonly string[]).includes(typeParam ?? "") ? (typeParam as MediaType) : undefined;
 
-  const isSelf = u.id === viewer.id;
+  const isSelf = viewer != null && u.id === viewer.id;
   const firstName = u.name.split(" ")[0];
-  const entries = isSelf ? await getLibraryPicks(viewer.id) : null;
+  const entries = isSelf && viewer ? await getLibraryPicks(viewer.id) : null;
 
   return (
     <div>
@@ -52,7 +53,7 @@ export default async function UserLibraryPage(props: PageProps<"/u/[username]/li
         basePath={`/u/${u.username}/library`}
         status={status}
         type={type}
-        quickLog={entries ? { entries, tz: viewer.timezone ?? "UTC" } : undefined}
+        quickLog={entries ? { entries, tz: viewer?.timezone ?? "UTC" } : undefined}
         emptyState={
           <EmptyState title={isSelf ? "Your library is empty." : `${firstName} hasn't added anything yet.`} />
         }

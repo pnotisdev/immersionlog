@@ -89,6 +89,10 @@ export const auth = betterAuth({
     additionalFields: {
       timezone: { type: "string", required: false, defaultValue: "UTC", input: true },
       publicProfile: { type: "boolean", required: false, defaultValue: true, input: true },
+      // Public profile bio, shown on /u/[username]. Length-capped client-side
+      // (src/lib/profile-links.ts's BIO_MAX_LENGTH) — not re-validated here since an
+      // over-length value is merely cosmetic, never a security concern.
+      bio: { type: "string", required: false, input: true },
       // Settable from Settings (authClient.updateUser) so a user can turn it back on;
       // the no-login unsubscribe link (src/app/api/unsubscribe/route.ts) flips it off
       // directly with a `db.update` instead, since that flow has no session at all.

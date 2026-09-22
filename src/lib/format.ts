@@ -71,3 +71,9 @@ export function formatMonthYear(dateKey: string): string {
   const [y, m] = dateKey.slice(0, 7).split("-").map(Number);
   return new Intl.DateTimeFormat("en", { month: "short", year: "numeric" }).format(new Date(Date.UTC(y, m - 1, 1)));
 }
+
+/** "2026-09-20" -> "Sep 20, 2026". Milestone dates — a day, not just a month, matters there. */
+export function formatDate(dateKey: string): string {
+  const [y, m, d] = dateKey.slice(0, 10).split("-").map(Number);
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(Date.UTC(y, m - 1, d)));
+}

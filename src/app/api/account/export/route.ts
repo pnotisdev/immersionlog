@@ -1,17 +1,8 @@
-import { desc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { db } from "@/db";
-import {
-  clubMembers,
-  clubPickVotes,
-  clubPicks,
-  follows,
-  goals,
-  immersionSessions,
-  libraryEntries,
-  mediaItems,
-  sessionKudos,
-} from "@/db/schema";
+import { clubMembers, clubPickVotes, clubPicks, follows, goals, sessionKudos } from "@/db/schema";
+import { getExportLibrary, getExportSessions } from "@/lib/export-queries";
 import { getSession } from "@/lib/session";
 
 /**
@@ -35,44 +26,8 @@ export async function GET() {
     picksProposed,
     votesCast,
   ] = await Promise.all([
-    db
-      .select({
-        id: immersionSessions.id,
-        mediaItemId: immersionSessions.mediaItemId,
-        mediaTitle: mediaItems.title,
-        mediaType: immersionSessions.mediaType,
-        label: immersionSessions.label,
-        startedAt: immersionSessions.startedAt,
-        durationSeconds: immersionSessions.durationSeconds,
-        amount: immersionSessions.amount,
-        amountUnit: immersionSessions.amountUnit,
-        notes: immersionSessions.notes,
-        createdAt: immersionSessions.createdAt,
-        updatedAt: immersionSessions.updatedAt,
-      })
-      .from(immersionSessions)
-      .leftJoin(mediaItems, eq(immersionSessions.mediaItemId, mediaItems.id))
-      .where(eq(immersionSessions.userId, userId))
-      .orderBy(desc(immersionSessions.startedAt)),
-
-    db
-      .select({
-        mediaItemId: libraryEntries.mediaItemId,
-        mediaTitle: mediaItems.title,
-        mediaType: mediaItems.type,
-        status: libraryEntries.status,
-        progress: libraryEntries.progress,
-        progressUnit: libraryEntries.progressUnit,
-        rating: libraryEntries.rating,
-        notes: libraryEntries.notes,
-        startedAt: libraryEntries.startedAt,
-        finishedAt: libraryEntries.finishedAt,
-        createdAt: libraryEntries.createdAt,
-        updatedAt: libraryEntries.updatedAt,
-      })
-      .from(libraryEntries)
-      .innerJoin(mediaItems, eq(libraryEntries.mediaItemId, mediaItems.id))
-      .where(eq(libraryEntries.userId, userId)),
+    getExportSessions(userId),
+    getExportLibrary(userId),
 
     db.select().from(goals).where(eq(goals.userId, userId)),
 

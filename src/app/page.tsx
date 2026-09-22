@@ -8,6 +8,7 @@ import { getShelves } from "@/lib/sources/browse";
 import { cn } from "@/lib/utils";
 import { Footer } from "@/components/layout/footer";
 import { Wordmark } from "@/components/layout/mark";
+import { CommunityPreview } from "@/components/marketing/community-preview";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { DiscoverPreview } from "@/components/marketing/discover-preview";
 import { LibraryPreview } from "@/components/marketing/library-preview";
@@ -17,9 +18,9 @@ import { Avatar } from "@/components/ranking/avatar";
 import { Poster } from "@/components/media/poster";
 
 export const metadata = {
-  title: "immersionlog: track every hour of Japanese you consume",
+  title: "immersionlog: track Japanese together",
   description:
-    "Anime, manga, visual novels, books, podcasts: one tracker for everything you read and watch in Japanese, with hours, streaks, levels, goals and a leaderboard.",
+    "Follow people who are immersing in Japanese, see what they're watching and reading, and keep each other moving. Anime, manga, visual novels, books, podcasts — one tracker, a real feed, a leaderboard worth climbing.",
 };
 
 // Below this, "not tracking alone" / "a leaderboard worth climbing" oversells what a
@@ -27,6 +28,14 @@ export const metadata = {
 // anyone here, not proof there's a crowd. Under the bar, the copy leans into "early"
 // honestly instead of pretending the numbers are bigger than they are.
 const EARLY_STAGE_MEMBER_THRESHOLD = 50;
+
+const LOOP_STEPS = [
+  { title: "Find people", description: "Browse the member directory or the activity feed for others learning Japanese the way you do." },
+  { title: "Follow", description: "One click. Their sessions start showing up in your feed, and yours in theirs." },
+  { title: "See activity", description: "Watch what they're watching, reading and finishing, as it happens." },
+  { title: "Log your own", description: "Start a timer or log after the fact. It joins the feed the moment you save it." },
+  { title: "Give kudos", description: "A heart on a good session — no comments to write, just a nudge to keep going." },
+] as const;
 
 export default async function LandingPage() {
   const now = new Date();
@@ -62,11 +71,12 @@ export default async function LandingPage() {
       <main className="relative flex-1">
         <section className="mx-auto max-w-5xl px-4 pt-14 pb-10 sm:pt-20">
           <h1 className="max-w-3xl text-4xl leading-[1.05] font-bold tracking-tight sm:text-6xl">
-            Every hour of Japanese you consume, in one place.
+            Track Japanese together.
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Anime, manga, visual novels, light novels, books, YouTube, podcasts: track the time, keep the streak, watch
-            the level climb, and see where you land against everyone else doing the same.
+            Follow people who are immersing, see what they&rsquo;re watching and reading, and keep each other moving.
+            Anime, manga, visual novels, light novels, books, YouTube, podcasts: one tracker, a real feed, a
+            leaderboard worth climbing.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -91,25 +101,11 @@ export default async function LandingPage() {
           <PosterWall />
         </Suspense>
 
-        <section className="mx-auto max-w-5xl px-4 py-14">
-          <h2 className="section-title">The app itself</h2>
-          <h3 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight sm:text-3xl">
-            Dashboard, stats, library, discover — see them before you sign up.
-          </h3>
-          <div className="mt-8">
-            <ProductShowcase
-              dashboard={<DashboardPreview />}
-              stats={<StatsPreview />}
-              library={<LibraryPreview />}
-              discover={<DiscoverPreview />}
-            />
-          </div>
-        </section>
-
         {/* Community and stats, told with real numbers instead of icon bullets: the
             app itself treats data as typography, not cards (see stat-strip.tsx), so
             the landing page does the same rather than reaching for a generic feature
-            grid. */}
+            grid. Moved up right after the hero — the social proof is the pitch now,
+            not a footnote after the product tour. */}
         <section className="mx-auto max-w-5xl px-4 py-14">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
             <div>
@@ -168,6 +164,41 @@ export default async function LandingPage() {
                 </p>
               )}
             </div>
+          </div>
+        </section>
+
+        {/* The loop, spelled out: five short typographic steps, not an icon grid —
+            same idiom as the stat strip above, just walking through the mechanism
+            instead of showing a snapshot of it. */}
+        <section className="mx-auto max-w-5xl px-4 py-14">
+          <h2 className="section-title">How it works</h2>
+          <h3 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight sm:text-3xl">
+            Nobody immerses in a vacuum.
+          </h3>
+          <ol className="mt-8 grid gap-6 sm:grid-cols-5 sm:gap-5">
+            {LOOP_STEPS.map((step, i) => (
+              <li key={step.title} className="border-t pt-4">
+                <span className="text-2xl font-bold tabular-nums text-muted-foreground/40">{i + 1}</span>
+                <h4 className="mt-1.5 text-sm font-semibold">{step.title}</h4>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="mx-auto max-w-5xl px-4 py-14">
+          <h2 className="section-title">See it before you sign up</h2>
+          <h3 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight sm:text-3xl">
+            The activity feed, the member directory — then the dashboard, stats, library and discover.
+          </h3>
+          <div className="mt-8">
+            <ProductShowcase
+              community={<CommunityPreview />}
+              dashboard={<DashboardPreview />}
+              stats={<StatsPreview />}
+              library={<LibraryPreview />}
+              discover={<DiscoverPreview />}
+            />
           </div>
         </section>
 

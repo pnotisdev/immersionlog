@@ -2,11 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState, useSyncExternalStore, useTransition, type ChangeEvent, type FormEvent } from "react";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { removeAvatar, uploadAvatar } from "@/actions/account";
+import { removeAvatar, updateProfileLinks, uploadAvatar } from "@/actions/account";
 import { authClient } from "@/lib/auth-client";
 import { MAX_AVATAR_UPLOAD_BYTES } from "@/lib/avatar";
+import { BIO_MAX_LENGTH, MAX_PROFILE_LINKS, PROFILE_LINK_PLATFORMS } from "@/lib/profile-links";
 import { USERNAME_MAX, USERNAME_MIN, USERNAME_RE } from "@/lib/username";
+import type { ProfileLink } from "@/db/schema";
 import { Avatar } from "@/components/ranking/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +38,8 @@ export interface SettingsUser {
   publicProfile: boolean;
   username: string;
   emailNotifications: boolean;
+  bio: string;
+  profileLinks: ProfileLink[];
 }
 
 /** Avatar upload/remove: separate from the rest of the form — it saves itself on
@@ -119,6 +124,58 @@ function AvatarField({ name, image }: { name: string; image: string | null }) {
   );
 }
 
+/** One row of the profile-links editor: a platform picker plus its URL. */
+function LinksField({ links, onChange }: { links: ProfileLink[]; onChange: (next: ProfileLink[]) => void }) {
+  function update(i: number, patch: Partial<ProfileLink>) {
+    onChange(links.map((l, idx) => (idx === i ? { ...l, ...patch } : l)));
+  }
+  function remove(i: number) {
+    onChange(links.filter((_, idx) => idx !== i));
+  }
+  function add() {
+    if (links.length >= MAX_PROFILE_LINKS) return;
+    onChange([...links, { platform: PROFILE_LINK_PLATFORMS[0].id, url: "" }]);
+  }
+
+  return (
+    <div className="grid gap-1.5">
+      <Label>Profile links</Label>
+      <div className="grid gap-2">
+        {links.map((link, i) => (
+          <div key={i} className="flex items-center gap-1.5">
+            <select
+              value={link.platform}
+              onChange={(e) => update(i, { platform: e.target.value })}
+              className="h-9 shrink-0 rounded-sm border bg-transparent px-2 text-sm outline-none focus-visible:border-ring"
+            >
+              {PROFILE_LINK_PLATFORMS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+            <Input
+              value={link.url}
+              onChange={(e) => update(i, { url: e.target.value })}
+              placeholder="https://…"
+              className="flex-1"
+            />
+            <Button type="button" variant="ghost" size="icon-xs" aria-label="Remove link" onClick={() => remove(i)}>
+              <Trash2 className="size-3.5" />
+            </Button>
+          </div>
+        ))}
+      </div>
+      {links.length < MAX_PROFILE_LINKS && (
+        <Button type="button" variant="outline" size="sm" className="w-fit" onClick={add}>
+          Add link
+        </Button>
+      )}
+      <p className="text-xs text-muted-foreground">AniList, VNDB, Bookmeter, Discord, X, or your own site. Up to {MAX_PROFILE_LINKS}.</p>
+    </div>
+  );
+}
+
 export function SettingsForm({ user }: { user: SettingsUser }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -127,6 +184,8 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
   const [publicProfile, setPublicProfile] = useState(user.publicProfile);
   const [emailNotifications, setEmailNotifications] = useState(user.emailNotifications);
   const [username, setUsername] = useState(user.username);
+  const [bio, setBio] = useState(user.bio);
+  const [links, setLinks] = useState<ProfileLink[]>(user.profileLinks);
   const browserTz = typeof Intl !== "undefined" ? Intl.DateTimeFormat().resolvedOptions().timeZone : "";
   // useSyncExternalStore (not useState+useEffect) is React's sanctioned way to read a
   // browser-only value that must still render consistently during SSR: the server
@@ -153,21 +212,34 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
     }
 
     startTransition(async () => {
-      const res = await authClient.updateUser({
-        name,
-        timezone: tz,
-        publicProfile,
-        emailNotifications,
-        // Only sent when actually changed and non-empty — an empty field never clears an
-        // existing username (every account should always resolve to a profile URL).
-        ...(usernameChanged && trimmedUsername.length > 0 ? { username: trimmedUsername } : {}),
-      });
-      if (res.error) {
+      // Two calls, one Save button: bio rides authClient.updateUser (a plain
+      // additionalField), links go through their own action since a structured array
+      // isn't a type that mechanism supports (see updateProfileLinks in
+      // src/actions/account.ts).
+      const [userRes, linksRes] = await Promise.all([
+        authClient.updateUser({
+          name,
+          timezone: tz,
+          publicProfile,
+          emailNotifications,
+          bio: bio.trim(),
+          // Only sent when actually changed and non-empty — an empty field never clears an
+          // existing username (every account should always resolve to a profile URL).
+          ...(usernameChanged && trimmedUsername.length > 0 ? { username: trimmedUsername } : {}),
+        }),
+        updateProfileLinks(links),
+      ]);
+      if (userRes.error) {
         // The username plugin's own errors ("Username is already taken. Please try
         // another.", too short/long, invalid format) already read as friendly toasts.
-        toast.error(res.error.message ?? "Could not save");
+        toast.error(userRes.error.message ?? "Could not save");
         return;
       }
+      if (!linksRes.ok) {
+        toast.error(linksRes.error);
+        return;
+      }
+      setLinks(linksRes.data.links);
       toast.success("Settings saved");
       router.refresh();
     });
@@ -226,6 +298,22 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
           )}
         </p>
       </div>
+      <div className="grid gap-1.5">
+        <Label htmlFor="s-bio">Bio</Label>
+        <textarea
+          id="s-bio"
+          value={bio}
+          onChange={(e) => setBio(e.target.value.slice(0, BIO_MAX_LENGTH))}
+          maxLength={BIO_MAX_LENGTH}
+          rows={3}
+          placeholder="A line or two about what you're learning and why."
+          className="min-h-16 resize-y rounded-sm border bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring"
+        />
+        <p className="text-xs text-muted-foreground">
+          {bio.length}/{BIO_MAX_LENGTH} — shown on your profile page.
+        </p>
+      </div>
+      <LinksField links={links} onChange={setLinks} />
       <label className="flex items-start gap-3 rounded-lg border p-3">
         <input type="checkbox" className="mt-1 size-4 accent-[var(--viz-series)]" checked={publicProfile} onChange={(e) => setPublicProfile(e.target.checked)} />
         <span className="grid gap-0.5 text-sm">

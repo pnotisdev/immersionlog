@@ -1,4 +1,10 @@
-import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, index, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+/** One link on a public profile — see src/lib/profile-links.ts for the platform allowlist and validation. */
+export interface ProfileLink {
+  platform: string;
+  url: string;
+}
 
 // Better Auth core tables. JS property names must match Better Auth's field names;
 // the DB column names are snake_case.
@@ -13,6 +19,11 @@ export const user = pgTable("user", {
   timezone: text("timezone").notNull().default("UTC"),
   // Opt-out for leaderboards and the public profile page.
   publicProfile: boolean("public_profile").notNull().default(true),
+  // Public profile fields — shown on /u/[username] and in its OG image (see
+  // src/app/(profile)/u/[username]/). Both editable from Settings, src/lib/profile-links.ts
+  // owns the length/platform limits enforced when saving.
+  bio: text("bio"),
+  profileLinks: jsonb("profile_links").$type<ProfileLink[]>().notNull().default([]),
   // Public profile handle (/u/[username]) — see the better-auth `username` plugin in
   // src/lib/auth.ts and src/lib/username.ts for the format rules (3-20 chars, lowercase
   // alphanumeric + underscore). Nullable only so existing rows can be backfilled

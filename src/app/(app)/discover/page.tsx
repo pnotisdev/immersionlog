@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronRight } from "lucide-react";
 import { presetRange } from "@/lib/dates";
+import { getDifficultyForItems } from "@/lib/difficulty-queries";
 import { formatDuration } from "@/lib/format";
 import { getCommunityTopItems } from "@/lib/queries";
 import { requireUser } from "@/lib/session";
@@ -19,6 +20,7 @@ export default async function DiscoverPage() {
   const tz = user.timezone ?? "UTC";
   const month = presetRange("month", tz, new Date());
   const community = await getCommunityTopItems(month.from, month.to, 16);
+  const difficulty = await getDifficultyForItems(community.map((c) => c.mediaItemId));
 
   return (
     <div className="grid gap-9">
@@ -27,13 +29,16 @@ export default async function DiscoverPage() {
       {community.length > 0 && (
         <MediaRail
           title="Popular with members this month"
-          items={community.map((c) => ({
-            mediaItemId: c.mediaItemId,
-            title: c.title,
-            coverUrl: c.coverUrl,
-            type: c.type,
-            meta: `${formatDuration(c.seconds)} · ${c.learners} learner${c.learners === 1 ? "" : "s"}`,
-          }))}
+          items={community.map((c) => {
+            const d = difficulty.get(c.mediaItemId);
+            return {
+              mediaItemId: c.mediaItemId,
+              title: c.title,
+              coverUrl: c.coverUrl,
+              type: c.type,
+              meta: `${formatDuration(c.seconds)} · ${c.learners} learner${c.learners === 1 ? "" : "s"}${d?.average != null ? ` · Difficulty ${d.average.toFixed(1)}/5` : ""}`,
+            };
+          })}
         />
       )}
 

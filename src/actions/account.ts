@@ -4,9 +4,10 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import sharp from "sharp";
 import { db } from "@/db";
-import { user, userAvatars } from "@/db/schema";
+import { user, userAvatars, type ProfileLink } from "@/db/schema";
 import { requireUser } from "@/lib/session";
 import { AVATAR_CONTENT_TYPE, AVATAR_SIZE, avatarUrl, MAX_AVATAR_UPLOAD_BYTES } from "@/lib/avatar";
+import { sanitizeProfileLinks } from "@/lib/profile-links";
 import type { ActionResult } from "./types";
 
 function revalidateProfile(username: string | null | undefined) {
@@ -69,4 +70,19 @@ export async function removeAvatar(): Promise<ActionResult<{ image: null }>> {
   });
   revalidateProfile(me.username);
   return { ok: true, data: { image: null } };
+}
+
+/**
+ * The profile-links list on /u/[username]. A separate action from the rest of Settings
+ * (src/lib/auth.ts's `additionalFields` + authClient.updateUser) because it's a
+ * structured array, not one of the primitive types that mechanism supports — same
+ * db.update(user) shape as the avatar actions above. Re-sanitizes server-side
+ * (sanitizeProfileLinks) rather than trusting the client's own filtering.
+ */
+export async function updateProfileLinks(links: unknown): Promise<ActionResult<{ links: ProfileLink[] }>> {
+  const me = await requireUser();
+  const clean = sanitizeProfileLinks(links);
+  await db.update(user).set({ profileLinks: clean }).where(eq(user.id, me.id));
+  revalidateProfile(me.username);
+  return { ok: true, data: { links: clean } };
 }

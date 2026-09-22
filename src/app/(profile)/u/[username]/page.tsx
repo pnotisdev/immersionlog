@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { eachDayKey, presetRange } from "@/lib/dates";
-import { formatDuration, formatMonthYear, formatNumber } from "@/lib/format";
+import { Link2 } from "lucide-react";
+import { dayKey, presetRange } from "@/lib/dates";
+import { formatDate, formatDuration, formatMonthYear, formatNumber } from "@/lib/format";
+import { UNIT_LABELS } from "@/lib/media";
+import { listRecentMilestones } from "@/lib/milestones-queries";
+import { platformLabel } from "@/lib/profile-links";
 import { getProgression } from "@/lib/progression-queries";
-import { getDailyTotals, getLibrary, getTopItems, getTypeBreakdown } from "@/lib/queries";
+import { buildHeatmapDays, getDailyTotals, getLibrary, getTopItems, getTypeBreakdown } from "@/lib/queries";
 import { getPublicUser, getUserRank } from "@/lib/ranking-queries";
+import { getSiteUrl } from "@/lib/site";
 import { getFeed, getFollowCounts, isFollowing, listFollowConnections } from "@/lib/social-queries";
-import { requireUser } from "@/lib/session";
+import { getSession } from "@/lib/session";
 import { USERNAME_RE } from "@/lib/username";
 import { SectionHeader } from "@/components/layout/page-header";
 import { ActivityFeed } from "@/components/community/activity-feed";
@@ -21,6 +26,7 @@ import { SplitBar, StatStrip } from "@/components/stats/stat-strip";
 import { TypeBars } from "@/components/stats/type-bars";
 import { TopTitles } from "@/components/stats/top-titles";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 
 export async function generateMetadata(props: PageProps<"/u/[username]">) {
   const { username } = await props.params;
@@ -29,38 +35,38 @@ export async function generateMetadata(props: PageProps<"/u/[username]">) {
 }
 
 export default async function ProfilePage(props: PageProps<"/u/[username]">) {
-  const viewer = await requireUser();
+  const session = await getSession();
+  const viewer = session?.user ?? null;
   const { username } = await props.params;
   // Cheap guard so an obviously-malformed handle 404s before hitting the database.
   if (!USERNAME_RE.test(username)) notFound();
   const u = await getPublicUser(username);
   if (!u) notFound();
 
-  const isSelf = u.id === viewer.id;
+  const isSelf = viewer != null && u.id === viewer.id;
   const now = new Date();
   const tz = u.timezone; // their days, not the viewer's
   const month = presetRange("month", tz, now);
   const heatRange = presetRange("365d", tz, now);
   const all = presetRange("all", tz, now);
 
-  const [progression, heat, breakdown, top, rank, counts, following, feed, library, followers] = await Promise.all([
+  const [progression, heat, breakdown, top, rank, counts, following, feed, library, followers, highlights] = await Promise.all([
     getProgression(u.id, tz, now),
     getDailyTotals(u.id, heatRange.from, heatRange.to, tz),
     getTypeBreakdown(u.id, all.from, all.to),
     getTopItems(u.id, all.from, all.to, 10),
     getUserRank(u.id, { from: month.from, to: month.to }),
     getFollowCounts(u.id),
-    isSelf ? Promise.resolve(false) : isFollowing(viewer.id, u.id),
-    getFeed(viewer.id, { ofUser: u.id, limit: 10 }),
+    isSelf || !viewer ? Promise.resolve(false) : isFollowing(viewer.id, u.id),
+    // getFeed only uses viewerId for own-post/kudos-given checks — both no-ops for a
+    // logged-out visitor, so "" is safe here (see src/lib/social-queries.ts:47-111).
+    getFeed(viewer?.id ?? "", { ofUser: u.id, limit: 10 }),
     getLibrary(u.id),
     listFollowConnections(u.id, "followers", 10),
+    listRecentMilestones(u.id, 6),
   ]);
 
-  const heatDaysFull = eachDayKey(heatRange.from, heatRange.to, tz).map((k) => ({
-    key: k,
-    seconds: heat.get(k)?.seconds ?? 0,
-    sessions: heat.get(k)?.count ?? 0,
-  }));
+  const heatDaysFull = buildHeatmapDays(heat, heatRange.from, heatRange.to, tz);
   const activeDaysInHeatRange = heatDaysFull.filter((d) => d.seconds > 0).length;
   // A light user's 52 flat weeks read as one step of the ramp; show the last 12 weeks instead (redesign.md §7).
   const heatmapIsShortRange = activeDaysInHeatRange < 10;
@@ -87,21 +93,38 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
     rating: e.rating,
   });
 
+  const currentYear = dayKey(now, tz).slice(0, 4);
   const libraryLink = (
     <Button render={<Link href={`/u/${u.username}/library`} />} nativeButton={false} variant="outline" size="sm">
       Library
     </Button>
   );
+  const reportLink = (
+    <Button render={<Link href={`/u/${u.username}/report/${currentYear}`} />} nativeButton={false} variant="outline" size="sm">
+      Report
+    </Button>
+  );
   const action = (
     <div className="flex items-center gap-2">
       {libraryLink}
+      {reportLink}
       {isSelf ? (
         <Button render={<Link href="/settings" />} nativeButton={false} variant="outline" size="sm">
           Edit profile
         </Button>
-      ) : (
+      ) : viewer ? (
         <FollowButton userId={u.id} initialFollowing={following} />
+      ) : (
+        // Logged-out visitor: "Follow" has nothing to act on yet, so it's a plain
+        // signup link styled the same as the real button.
+        <Link
+          href="/signup"
+          className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-transparent bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
+        >
+          Follow
+        </Link>
       )}
+      <CopyButton value={`${getSiteUrl()}/u/${u.username}`} label="Copy link" />
     </div>
   );
 
@@ -134,6 +157,25 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
           <div className="hidden sm:block">{action}</div>
         </div>
       </div>
+
+      {u.bio && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{u.bio}</p>}
+
+      {u.profileLinks.length > 0 && (
+        <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+          {u.profileLinks.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Link2 className="size-3.5" />
+              {platformLabel(link.platform)}
+            </a>
+          ))}
+        </div>
+      )}
 
       <p className="mt-3 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-sm text-muted-foreground">
         {/* Any zero count disappears rather than rendering "0 followers" (redesign.md §7). */}
@@ -235,7 +277,7 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
             <SectionHeader title="Recent sessions" />
             <ActivityFeed
               items={feed.items}
-              viewerId={viewer.id}
+              viewerId={viewer?.id ?? ""}
               emptyText={isSelf ? "You haven't logged anything yet." : `${u.name} hasn't logged anything yet.`}
             />
           </section>
@@ -253,6 +295,28 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
             <SectionHeader title="By medium" />
             <TypeBars rows={breakdown} limit={6} />
           </div>
+
+          {/* Omitted entirely when there are none — a milestone list only exists once
+              someone's added one, never as an empty prompt. */}
+          {highlights.length > 0 && (
+            <div className="mt-7">
+              <SectionHeader title="Highlights" />
+              <ul className="grid gap-2.5">
+                {highlights.map((m) => (
+                  <li key={m.id} className="text-sm">
+                    <Link href={`/media/${m.mediaItemId}`} className="font-medium hover:underline">
+                      {m.title}
+                    </Link>
+                    <p className="text-xs text-muted-foreground">
+                      {m.mediaTitle}
+                      {m.occurredAt && ` · ${formatDate(m.occurredAt)}`}
+                      {m.progressAmount != null && m.progressUnit && ` · ${m.progressAmount} ${UNIT_LABELS[m.progressUnit]}`}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
       </div>
     </div>

@@ -67,6 +67,13 @@ export function presetRange(preset: RangePreset, tz: string, now = new Date()): 
   }
 }
 
+/** Jan 1–Dec 31 of an arbitrary year (not just "this year" like the "year" preset), in tz. */
+export function yearRange(year: number, tz: string): DateRange {
+  const from = new Date(new TZDate(year, 0, 1, tz).getTime());
+  const to = new Date(new TZDate(year + 1, 0, 1, tz).getTime());
+  return { from, to, label: `${year}` };
+}
+
 /** Every "YYYY-MM-DD" from `from` up to (excluding) `to`, in tz. */
 export function eachDayKey(from: Date, to: Date, tz: string): string[] {
   const keys: string[] = [];

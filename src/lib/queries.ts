@@ -11,7 +11,7 @@ import {
   type MediaType,
   type Unit,
 } from "@/db/schema";
-import { dayEnd, dayStart } from "./dates";
+import { dayEnd, dayStart, eachDayKey } from "./dates";
 
 // --- Timer ---
 
@@ -91,6 +91,17 @@ export async function getDailyTotals(userId: string, from: Date, to: Date, tz: s
     .groupBy(sql`"day"`)
     .orderBy(sql`"day"`);
   return new Map(rows.map((r) => [r.day, { seconds: r.seconds, count: r.count }]));
+}
+
+/** Every day in [from, to) as a Heatmap-ready row, zero-filled where `daily` has no entry.
+ * Shared by the dashboard, profile and Immersion Report — each still decides for itself
+ * whether to trim a sparse range down (see their own "short range" logic). */
+export function buildHeatmapDays(daily: Map<string, { seconds: number; count: number }>, from: Date, to: Date, tz: string) {
+  return eachDayKey(from, to, tz).map((key) => ({
+    key,
+    seconds: daily.get(key)?.seconds ?? 0,
+    sessions: daily.get(key)?.count ?? 0,
+  }));
 }
 
 export async function getTypeBreakdown(userId: string, from: Date, to: Date) {

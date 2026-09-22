@@ -15,11 +15,19 @@ const GRID = [
   [5, 4, 3, 2, 1],
 ];
 
+/** Cuts a bio to one clean line for the OG card rather than truncating mid-word. */
+function truncateBio(bio: string, max: number): string {
+  if (bio.length <= max) return bio;
+  const cut = bio.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`;
+}
+
 /**
- * Unlike the page itself (src/app/(app)/u/[username]/page.tsx), this never calls
- * requireUser() — metadata file conventions like opengraph-image are their own Route
- * Handlers, not part of the page's component tree, so they don't inherit
- * src/app/(app)/layout.tsx's auth redirect. That's intentional: link-unfurling bots
+ * This route handler never calls requireUser() — metadata file conventions like
+ * opengraph-image are their own Route Handlers, not part of the page's component tree,
+ * so they don't inherit src/app/(profile)/layout.tsx's session check (which itself
+ * doesn't redirect either — see that file). That's intentional: link-unfurling bots
  * (Slack, Discord, iMessage, etc.) fetch this unauthenticated, the same way they would
  * for any public site's OG image. getPublicUser already returns null for a private or
  * nonexistent profile, in which case this just renders the generic card instead of
@@ -61,7 +69,9 @@ export default async function Image({ params }: { params: Promise<{ username: st
               {user.name}
             </div>
             <div style={{ display: "flex", marginTop: 16, fontSize: 32, color: "#E0552E" }}>@{user.username}</div>
-            <div style={{ display: "flex", marginTop: 28, fontSize: 28, color: "#A0A0AE" }}>Tracking immersion time on immersionlog</div>
+            <div style={{ display: "flex", marginTop: 28, fontSize: 28, color: "#A0A0AE", maxWidth: 820 }}>
+              {user.bio ? truncateBio(user.bio, 90) : "Tracking immersion time on immersionlog"}
+            </div>
           </div>
         ) : (
           <div style={{ display: "flex", fontSize: 64, fontWeight: 700, color: "#EDEDF2", letterSpacing: -1 }}>

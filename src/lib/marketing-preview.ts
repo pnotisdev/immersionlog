@@ -3,6 +3,8 @@ import { subDays, subHours, subMinutes } from "date-fns";
 import { eachDayKey, presetRange } from "@/lib/dates";
 import type { GoalWithProgress } from "@/lib/queries";
 import type { GroupTotals } from "@/lib/progression-queries";
+import { levelFromSeconds } from "@/lib/progression";
+import type { FeedItem, MemberRow } from "@/lib/social-queries";
 import { getShelves, type ShelfKey } from "@/lib/sources/browse";
 import type { SearchResult } from "@/lib/sources/types";
 import type { ActiveTimerView } from "@/components/timer/timer-card";
@@ -13,6 +15,17 @@ import type { RailItem } from "@/components/media/media-rail";
 import type { SessionView } from "@/components/sessions/types";
 import type { TopTitle } from "@/components/stats/top-titles";
 import type { TypeRow } from "@/components/stats/type-bars";
+
+/** A fictional roster of "other members" for the Community preview — distinct from
+ * "Mika Tanaka", the fabricated logged-in viewer used by the other previews. */
+const PREVIEW_MEMBERS = [
+  { username: "alex_r", name: "Alex Rivera" },
+  { username: "priya_n", name: "Priya Nair" },
+  { username: "tom_b", name: "Tom Becker" },
+  { username: "lucas_s", name: "Lucas Silva" },
+  { username: "emma_c", name: "Emma Clarke" },
+  { username: "noah_k", name: "Noah Kim" },
+] as const;
 
 /** Cheap deterministic noise in [0, 1) — reproducible, no Math.random SSR/CSR drift. */
 function noise(seed: number): number {
@@ -243,5 +256,73 @@ export function buildCommunityRail(pool: SearchResult[], count: number): RailIte
       type: item.mediaType,
       meta: `${hours[i % hours.length]}h · ${learners[i % learners.length]} learners`,
     };
+  });
+}
+
+// --- Community ---
+
+export function buildFeedItems(pool: SearchResult[], count: number): FeedItem[] {
+  const offsets = [subMinutes(new Date(), 12), subHours(new Date(), 1), subHours(new Date(), 3), subHours(new Date(), 5), subDays(new Date(), 1), subDays(new Date(), 1)];
+  const durations = [3120, 1860, 2640, 5400, 1500, 4080];
+  const notes = [null, "finally caught the joke without subs", null, null, "slow chapter but good vocab", null];
+  return Array.from({ length: count }).map((_, i) => {
+    const item = pool[(i * 5) % pool.length];
+    const member = PREVIEW_MEMBERS[i % PREVIEW_MEMBERS.length];
+    return {
+      sessionId: `preview-feed-${i}`,
+      userId: `preview-member-${i % PREVIEW_MEMBERS.length}`,
+      username: member.username,
+      name: member.name,
+      image: null,
+      mediaItemId: item.sourceId,
+      title: item.title,
+      coverUrl: item.coverUrl,
+      mediaType: item.mediaType,
+      label: null,
+      startedAt: offsets[i % offsets.length],
+      durationSeconds: durations[i % durations.length],
+      amount: item.mediaType === "manga" ? 18 : null,
+      amountUnit: item.mediaType === "manga" ? "chapters" : null,
+      notes: notes[i % notes.length],
+      kudos: [4, 1, 0, 2, 6, 0][i % 6],
+      kudosByViewer: false,
+    };
+  });
+}
+
+export function buildMemberRows(count: number): MemberRow[] {
+  const seconds = [412000, 298000, 187000, 96000, 54000, 21000];
+  const followers = [88, 61, 40, 19, 7, 2];
+  const now = new Date();
+  return Array.from({ length: count }).map((_, i) => {
+    const member = PREVIEW_MEMBERS[i % PREVIEW_MEMBERS.length];
+    const s = seconds[i % seconds.length];
+    return {
+      userId: `preview-member-${i % PREVIEW_MEMBERS.length}`,
+      username: member.username,
+      name: member.name,
+      image: null,
+      createdAt: subDays(now, 200 - i * 20),
+      seconds: s,
+      level: levelFromSeconds(s),
+      followers: followers[i % followers.length],
+      followedByViewer: false,
+    };
+  });
+}
+
+export interface PreviewLeaderboardRow {
+  rank: number;
+  username: string;
+  name: string;
+  image: string | null;
+  seconds: number;
+}
+
+export function buildMiniLeaderboard(count: number): PreviewLeaderboardRow[] {
+  const seconds = [61200, 52800, 46800, 39600, 33300, 28800];
+  return Array.from({ length: count }).map((_, i) => {
+    const member = PREVIEW_MEMBERS[i % PREVIEW_MEMBERS.length];
+    return { rank: i + 1, username: member.username, name: member.name, image: null, seconds: seconds[i % seconds.length] };
   });
 }

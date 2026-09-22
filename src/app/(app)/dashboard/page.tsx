@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { subDays } from "date-fns";
 import { dayKey, eachDayKey, presetRange } from "@/lib/dates";
-import { formatDuration, formatNumber, relativeTime } from "@/lib/format";
+import { formatDate, formatDuration, formatNumber, relativeTime } from "@/lib/format";
+import { UNIT_LABELS } from "@/lib/media";
+import { listRecentMilestones } from "@/lib/milestones-queries";
 import { getProgression } from "@/lib/progression-queries";
 import { getMyClubStandings } from "@/lib/club-queries";
-import { getDailyTotals, getGoalsWithProgress, getRecentItems, getRecentSessions, sumDuration } from "@/lib/queries";
+import { buildHeatmapDays, getDailyTotals, getGoalsWithProgress, getRecentItems, getRecentSessions, getTypeBreakdown, sumDuration } from "@/lib/queries";
 import { getFeed } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
 import { getActiveTimerView, getLibraryPicks } from "@/lib/view-models";
@@ -16,7 +18,9 @@ import { QuickLogGrid } from "@/components/sessions/quick-log-grid";
 import { SessionList } from "@/components/sessions/session-list";
 import { toSessionView } from "@/components/sessions/types";
 import { ColumnChart } from "@/components/stats/column-chart";
+import { Heatmap } from "@/components/stats/heatmap";
 import { StatStrip } from "@/components/stats/stat-strip";
+import { TypeBars } from "@/components/stats/type-bars";
 import { TimerCard } from "@/components/timer/timer-card";
 
 export const metadata = { title: "Dashboard" };
@@ -30,19 +34,24 @@ export default async function DashboardPage() {
   const week = presetRange("week", tz, now);
   const month = presetRange("month", tz, now);
   const last30 = presetRange("30d", tz, now);
+  const heatRange = presetRange("365d", tz, now);
+  const all = presetRange("all", tz, now);
 
-  const [picks, progression, todaySec, weekSec, daily, goals, recent, recentItems, standings, friends] =
+  const [picks, progression, todaySec, weekSec, daily, heat, breakdown, goals, recent, recentItems, standings, friends, milestones] =
     await Promise.all([
       getLibraryPicks(user.id),
       getProgression(user.id, tz, now),
       sumDuration(user.id, today.from, today.to),
       sumDuration(user.id, week.from, week.to),
       getDailyTotals(user.id, last30.from, last30.to, tz),
+      getDailyTotals(user.id, heatRange.from, heatRange.to, tz),
+      getTypeBreakdown(user.id, all.from, all.to),
       getGoalsWithProgress(user.id, tz),
       getRecentSessions(user.id, 5),
       getRecentItems(user.id, 6),
       getMyClubStandings(user.id, month.from, month.to),
       getFeed(user.id, { scope: "following", limit: 6 }),
+      listRecentMilestones(user.id, 5),
     ]);
   const timer = await getActiveTimerView(user.id, picks);
 
@@ -56,6 +65,10 @@ export default async function DashboardPage() {
     emphasized: k === todayKey,
   }));
   const activeChartDays = columns.filter((c) => c.seconds > 0).length;
+  const heatDaysFull = buildHeatmapDays(heat, heatRange.from, heatRange.to, tz);
+  const activeDaysInHeatRange = heatDaysFull.filter((d) => d.seconds > 0).length;
+  // Same "a light user's 52 flat weeks read as one step" trim as the profile page.
+  const heatDays = activeDaysInHeatRange < 10 ? heatDaysFull.slice(-84) : heatDaysFull;
   const activeGoals = goals.filter((g) => g.isActive).slice(0, 2);
   // Your own sessions are in this feed too; only show it when someone else is in it.
   const friendItems = friends.items.filter((i) => i.userId !== user.id).slice(0, 5);
@@ -132,6 +145,14 @@ export default async function DashboardPage() {
 
           <section>
             <SectionHeader
+              title={activeDaysInHeatRange < 10 ? "Last 12 weeks" : "Past year"}
+              action={<span className="text-xs text-muted-foreground">{activeDaysInHeatRange} active days</span>}
+            />
+            <Heatmap days={heatDays} />
+          </section>
+
+          <section>
+            <SectionHeader
               title="Recent sessions"
               action={
                 <Link href="/log" className="text-xs text-muted-foreground hover:text-foreground">
@@ -166,6 +187,33 @@ export default async function DashboardPage() {
                   <GoalCard key={g.id} goal={g} compact />
                 ))}
               </div>
+            </section>
+          )}
+
+          {breakdown.length > 0 && (
+            <section>
+              <SectionHeader title="By medium" />
+              <TypeBars rows={breakdown} limit={6} />
+            </section>
+          )}
+
+          {milestones.length > 0 && (
+            <section>
+              <SectionHeader title="Recent milestones" />
+              <ul className="grid gap-2.5">
+                {milestones.map((m) => (
+                  <li key={m.id} className="text-sm">
+                    <Link href={`/media/${m.mediaItemId}`} className="font-medium hover:underline">
+                      {m.title}
+                    </Link>
+                    <p className="text-xs text-muted-foreground">
+                      {m.mediaTitle}
+                      {m.occurredAt && ` · ${formatDate(m.occurredAt)}`}
+                      {m.progressAmount != null && m.progressUnit && ` · ${m.progressAmount} ${UNIT_LABELS[m.progressUnit]}`}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </section>
           )}
 

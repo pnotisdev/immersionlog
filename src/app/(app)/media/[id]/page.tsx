@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
+import { getDifficultyStats, getMyDifficultyVote } from "@/lib/difficulty-queries";
 import { formatDuration, formatNumber } from "@/lib/format";
 import { MEDIA_TYPE_META, SOURCE_LABELS, UNIT_LABELS } from "@/lib/media";
+import { listMilestonesForEntry } from "@/lib/milestones-queries";
 import { getLibraryEntry, getMediaItem, getSessionsForItem } from "@/lib/queries";
 import { getMediaCommunity } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
@@ -12,6 +14,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddToLibraryButton } from "@/components/library/add-to-library-button";
 import { EntryEditor } from "@/components/library/entry-editor";
+import { Milestones } from "@/components/library/milestones";
+import { DifficultyVote } from "@/components/media/difficulty-vote";
 import { isGoogleBooksImage, Poster } from "@/components/media/poster";
 import { TmdbLogo } from "@/components/media/tmdb-logo";
 import { Avatar } from "@/components/ranking/avatar";
@@ -38,13 +42,16 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
   const item = await getMediaItem(id);
   if (!item) notFound();
 
-  const [entry, sessions, picks, community] = await Promise.all([
+  const [entry, sessions, picks, community, difficulty, myVote] = await Promise.all([
     getLibraryEntry(user.id, id),
     getSessionsForItem(user.id, id),
     getLibraryPicks(user.id),
     getMediaCommunity(id),
+    getDifficultyStats(id),
+    getMyDifficultyVote(user.id, id),
   ]);
   const timer = await getActiveTimerView(user.id, picks);
+  const milestones = entry ? await listMilestonesForEntry(entry.id) : [];
 
   const totalSeconds = sessions.reduce((a, s) => a + s.durationSeconds, 0);
   const amountByUnit = new Map<string, number>();
@@ -226,6 +233,28 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
             <SessionList sessions={sessionViews} entries={picks} tz={tz} emptyText="No time logged on this yet." />
           </CardContent>
         </Card>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Difficulty</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DifficultyVote mediaItemId={item.id} initialAverage={difficulty.average} initialCount={difficulty.count} initialVote={myVote} />
+          </CardContent>
+        </Card>
+
+        {entry && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Milestones</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Milestones libraryEntryId={entry.id} mediaItemId={item.id} items={milestones} />
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

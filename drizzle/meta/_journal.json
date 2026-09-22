@@ -36,6 +36,27 @@
       "when": 1789554936593,
       "tag": "0004_adorable_senator_kelly",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790091556214,
+      "tag": "0005_great_outlaw_kid",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790093244917,
+      "tag": "0006_chief_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1790094480239,
+      "tag": "0007_purple_amphibian",
+      "breakpoints": true
     }
   ]
 }

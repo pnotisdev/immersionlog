@@ -18,6 +18,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+/** Fetches `url` and saves the response as `filename` — shared by every export button below. */
+async function downloadFile(url: string, filename: string): Promise<boolean> {
+  const res = await fetch(url);
+  if (!res.ok) return false;
+  const blob = await res.blob();
+  const objectUrl = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = objectUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(objectUrl);
+  return true;
+}
+
 /** Downloads the signed-in user's own data as a JSON file. */
 export function ExportDataButton() {
   const [pending, setPending] = useState(false);
@@ -25,20 +41,9 @@ export function ExportDataButton() {
   async function download() {
     setPending(true);
     try {
-      const res = await fetch("/api/account/export");
-      if (!res.ok) {
+      if (!(await downloadFile("/api/account/export", "immersionlog-export.json"))) {
         toast.error("Could not export your data");
-        return;
       }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "immersionlog-export.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
     } catch {
       toast.error("Could not export your data");
     } finally {
@@ -49,8 +54,48 @@ export function ExportDataButton() {
   return (
     <Button type="button" variant="outline" onClick={download} disabled={pending}>
       {pending ? <Loader2 className="animate-spin" /> : <Download />}
-      {pending ? "Preparing…" : "Export my data"}
+      {pending ? "Preparing…" : "Export my data (JSON)"}
     </Button>
+  );
+}
+
+const CSV_EXPORTS = [
+  { key: "sessions", label: "Sessions CSV", url: "/api/account/export/sessions.csv" },
+  { key: "library", label: "Library CSV", url: "/api/account/export/library.csv" },
+  { key: "milestones", label: "Milestones CSV", url: "/api/account/export/milestones.csv" },
+] as const;
+
+/** One CSV per category, same download mechanics as ExportDataButton — see src/lib/csv.ts for the format. */
+export function CsvExportButtons() {
+  const [pending, setPending] = useState<string | null>(null);
+
+  async function download(key: string, url: string, filename: string) {
+    setPending(key);
+    try {
+      if (!(await downloadFile(url, filename))) toast.error("Could not export that file");
+    } catch {
+      toast.error("Could not export that file");
+    } finally {
+      setPending(null);
+    }
+  }
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {CSV_EXPORTS.map((e) => (
+        <Button
+          key={e.key}
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => download(e.key, e.url, `immersionlog-${e.key}.csv`)}
+          disabled={pending !== null}
+        >
+          {pending === e.key ? <Loader2 className="animate-spin" /> : <Download />}
+          {e.label}
+        </Button>
+      ))}
+    </div>
   );
 }
 

@@ -169,7 +169,17 @@ export async function getUserRank(userId: string, opts: LeaderboardOptions): Pro
 export async function getPublicUser(username: string) {
   const u = await db.query.user.findFirst({
     where: eq(user.username, username),
-    columns: { id: true, username: true, name: true, image: true, timezone: true, publicProfile: true, createdAt: true },
+    columns: {
+      id: true,
+      username: true,
+      name: true,
+      image: true,
+      timezone: true,
+      publicProfile: true,
+      createdAt: true,
+      bio: true,
+      profileLinks: true,
+    },
   });
   return u && u.publicProfile ? u : null;
 }
