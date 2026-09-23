@@ -12,6 +12,7 @@
  */
 import "server-only";
 import type { MediaType } from "@/db/schema";
+import { markAdultCover } from "@/lib/adult-cover";
 import { IMPORT_HOSTS } from "./hosts";
 import { absUrl, type CheerioAPI, jsonLd, loadHtml, og, stripSiteSuffix, text, uniq } from "./html";
 import { safeFetchText } from "./http";
@@ -134,7 +135,7 @@ export function parseCmoaHtml(
     coverUrl = null;
     warnings.push("The cover image is on an unexpected host, so it wasn't imported.");
   }
-  if (adult) coverUrl = null;
+  if (adult) coverUrl = markAdultCover(coverUrl);
 
   const isbn = details.ISBN?.replace(/[^\dX]/gi, "") || null;
   const mediaType: MediaType = opts.hintType ?? (/ライトノベル|小説/.test(String(product?.category ?? "")) ? "light_novel" : "manga");

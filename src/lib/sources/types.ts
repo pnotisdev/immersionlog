@@ -155,7 +155,7 @@ export interface ImportMetadata {
   /** The same work on other sites. */
   links?: Partial<Record<MediaSource, string>>;
   jiten?: JitenStats;
-  /** Adult storefront / R18 flag. Such items never store a cover. */
+  /** Adult storefront / R18 flag. Covers are stored marked (src/lib/adult-cover.ts) and shown blurred. */
   adult?: boolean;
   importedAt?: string;
   [key: string]: unknown;

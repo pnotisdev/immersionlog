@@ -2,6 +2,7 @@ import "server-only";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { libraryEntries, mediaItems, userBanners } from "@/db/schema";
+import { isAdultCover, publicCover } from "@/lib/adult-cover";
 import { bannerUrl, type ProfileBanner } from "./banner";
 
 /** The art fields a banner can be made from — a subset of getTopItems' rows. */
@@ -51,9 +52,11 @@ export function resolveBanner(
 }
 
 export function autoBanner(top: ArtSource[]): ProfileBanner {
-  const wide = top.slice(0, 5).find((t) => t.bannerUrl);
+  // Never pick adult art automatically: it would show as a blurred smear on the profile
+  // (src/lib/adult-cover.ts). A banner the user chose explicitly is still honoured.
+  const wide = top.slice(0, 5).find((t) => publicCover(t.bannerUrl));
   if (wide) return { url: wide.bannerUrl, wide: true, source: "auto" };
-  return { url: top[0]?.coverUrl ?? null, wide: false, source: "auto" };
+  return { url: top.find((t) => !isAdultCover(t.coverUrl))?.coverUrl ?? null, wide: false, source: "auto" };
 }
 
 /** Titles in someone's library that have art to use as a banner, for the settings picker. Wide art first. */

@@ -71,6 +71,13 @@
       "when": 1790171086659,
       "tag": "0009_import_sources",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1790174479356,
+      "tag": "0010_adult_cover_pref",
+      "breakpoints": true
     }
   ]
 }

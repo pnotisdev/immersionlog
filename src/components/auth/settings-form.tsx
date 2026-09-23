@@ -38,6 +38,7 @@ export interface SettingsUser {
   publicProfile: boolean;
   username: string;
   emailNotifications: boolean;
+  showAdultCovers: boolean;
   bio: string;
   profileLinks: ProfileLink[];
 }
@@ -183,6 +184,7 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
   const [tz, setTz] = useState(user.timezone);
   const [publicProfile, setPublicProfile] = useState(user.publicProfile);
   const [emailNotifications, setEmailNotifications] = useState(user.emailNotifications);
+  const [showAdultCovers, setShowAdultCovers] = useState(user.showAdultCovers);
   const [username, setUsername] = useState(user.username);
   const [bio, setBio] = useState(user.bio);
   const [links, setLinks] = useState<ProfileLink[]>(user.profileLinks);
@@ -222,6 +224,7 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
           timezone: tz,
           publicProfile,
           emailNotifications,
+          showAdultCovers,
           bio: bio.trim(),
           // Only sent when actually changed and non-empty — an empty field never clears an
           // existing username (every account should always resolve to a profile URL).
@@ -331,6 +334,20 @@ export function SettingsForm({ user }: { user: SettingsUser }) {
         <span className="grid gap-0.5 text-sm">
           <span className="font-medium">Email notifications</span>
           <span className="text-xs text-muted-foreground">Get an email when someone new follows you. You can also turn this off from the link in that email.</span>
+        </span>
+      </label>
+      <label className="flex items-start gap-3">
+        <input
+          type="checkbox"
+          className="mt-1 size-4 accent-[var(--viz-series)]"
+          checked={showAdultCovers}
+          onChange={(e) => setShowAdultCovers(e.target.checked)}
+        />
+        <span className="grid gap-0.5 text-sm">
+          <span className="font-medium">Show adult covers</span>
+          <span className="text-xs text-muted-foreground">
+            Covers of titles flagged as adult (R18) are blurred everywhere by default. Turn this on to see them unblurred.
+          </span>
         </span>
       </label>
       <div>

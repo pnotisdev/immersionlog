@@ -561,3 +561,13 @@ body:has([data-landing]) {
     animation: none;
   }
 }
+
+/*
+ * Adult covers (src/lib/adult-cover.ts) carry a #adult fragment: raw in an <img src>,
+ * percent-encoded inside a /_next/image URL. Blurred unless the viewer opted in
+ * (Settings → "Show adult covers" sets data-adult-covers="show" on <html> and on the
+ * layout's <main>). Selector-based so no component has to remember to apply it.
+ */
+:where(html:not([data-adult-covers="show"])) :is(img[src$="#adult"], img[src*="%23adult"]):not(:where([data-adult-covers="show"] *)) {
+  filter: blur(14px) saturate(0.7);
+}

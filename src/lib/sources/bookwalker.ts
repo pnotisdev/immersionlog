@@ -12,6 +12,7 @@
  */
 import "server-only";
 import type { MediaType } from "@/db/schema";
+import { markAdultCover } from "@/lib/adult-cover";
 import { IMPORT_HOSTS } from "./hosts";
 import { absUrl, type CheerioAPI, dtDd, firstInt, jsonLd, loadHtml, normalizeDigits, og, stripSiteSuffix, text, uniq } from "./html";
 import { safeFetchText } from "./http";
@@ -150,7 +151,7 @@ export function parseBookwalkerHtml(html: string, productId: string, canonicalUr
     mediaType,
     title,
     titleNative: null,
-    coverUrl: adult ? null : coverUrl,
+    coverUrl: adult ? markAdultCover(coverUrl) : coverUrl,
     bannerUrl: null,
     year: yearFrom(release ?? null),
     description: cleanDescription(description),

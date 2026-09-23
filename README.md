@@ -62,7 +62,7 @@ Demo accounts are real accounts you can sign in as: `<handle>@demo.immersionlog.
 | `TMDB_API_KEY` | optional | Enables movie/series search. Free at themoviedb.org → Settings → API |
 | `GOOGLE_BOOKS_API_KEY` | optional | Books search works without it (rate-limited) |
 | `ENABLE_JPDB` | optional | `1` shows an "Add JPDB link" control on media pages. Link-out only: JPDB's terms forbid automated access, so it's never fetched |
-| `DMM_ALLOW_ADULT` | optional | `1` accepts links to DMM's adult storefront (`dlsoft.dmm.co.jp`). Off by default; such items are flagged adult and never store a cover |
+| `DMM_ALLOW_ADULT` | optional | `1` accepts links to DMM's adult storefront (`dlsoft.dmm.co.jp`). Off by default; DMM covers aren't imported on either host |
 
 AniList, VNDB and Jiten.moe need no keys. With `TMDB_API_KEY` unset, IMDb links fall back to reading the IMDb page itself, which IMDb usually blocks from servers.
 

@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "show_adult_covers" boolean DEFAULT false NOT NULL;

@@ -33,6 +33,9 @@ export const user = pgTable("user", {
   // password-reset/verification emails always send regardless. See
   // src/app/api/unsubscribe/route.ts for the no-login unsubscribe link.
   emailNotifications: boolean("email_notifications").notNull().default(true),
+  // Opt-in: covers of adult-flagged items render blurred unless this is on
+  // (src/lib/adult-cover.ts). Off for everyone by default, including logged-out visitors.
+  showAdultCovers: boolean("show_adult_covers").notNull().default(false),
   // Set by scripts/seed-demo.ts on demo accounts. A safety net independent of
   // `pnpm seed:demo --reset`: even if that's never run before launch, flagged users are
   // excluded from the leaderboard and the member directory's "active" sort (see

@@ -110,11 +110,11 @@ describe("BookWalker", () => {
     expect(findVolumeUrl(items, 12)).toBe("https://bookwalker.jp/v2/");
   });
 
-  it("drops the cover when the page isn't rated general", () => {
+  it("marks the cover adult when the page isn't rated general", () => {
     const html = fixture("bookwalker-lightnovel.html").replace('name="rating" content="general"', 'name="rating" content="adult"');
     const { result } = parseBookwalkerHtml(html, "x", "https://bookwalker.jp/x/");
     expect(result.metadata?.adult).toBe(true);
-    expect(result.coverUrl).toBeNull();
+    expect(result.coverUrl).toMatch(/^https:\/\/rimg\.bookwalker\.jp\/.*#adult$/);
   });
 });
 
@@ -142,10 +142,13 @@ describe("Cmoa", () => {
     expect(result.metadata?.isbn).toBe("9784088843780");
   });
 
-  it("flags the adult section and never keeps its cover", () => {
-    const { result } = parseCmoaHtml(fixture("cmoa-adult.html"), "1101238498", "https://www.cmoa.jp/title/1101238498/", { seriesLevel: true });
+  it("flags the adult section and marks its cover for blurring", () => {
+    // The fixture's cover is a placeholder on an unexpected host, so it's dropped;
+    // swap in a real-host URL to check the marking.
+    const html = fixture("cmoa-adult.html").replaceAll("https://example.invalid/placeholder.jpg", "https://cmoa.akamaized.net/data/image/x.jpg");
+    const { result } = parseCmoaHtml(html, "1101238498", "https://www.cmoa.jp/title/1101238498/", { seriesLevel: true });
     expect(result.metadata?.adult).toBe(true);
-    expect(result.coverUrl).toBeNull();
+    expect(result.coverUrl).toBe("https://cmoa.akamaized.net/data/image/x.jpg#adult");
     expect(result.title).not.toContain("NEW");
   });
 

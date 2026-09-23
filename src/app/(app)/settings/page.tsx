@@ -42,6 +42,7 @@ export default async function SettingsPage() {
           publicProfile: user.publicProfile ?? true,
           username: user.username ?? "",
           emailNotifications: user.emailNotifications ?? true,
+          showAdultCovers: user.showAdultCovers ?? false,
           bio: row?.bio ?? "",
           profileLinks: row?.profileLinks ?? [],
         }}

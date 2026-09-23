@@ -97,6 +97,7 @@ export const auth = betterAuth({
       // the no-login unsubscribe link (src/app/api/unsubscribe/route.ts) flips it off
       // directly with a `db.update` instead, since that flow has no session at all.
       emailNotifications: { type: "boolean", required: false, defaultValue: true, input: true },
+      showAdultCovers: { type: "boolean", required: false, defaultValue: false, input: true },
     },
     deleteUser: {
       enabled: true,

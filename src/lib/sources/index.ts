@@ -1,4 +1,5 @@
 import type { MediaType } from "@/db/schema";
+import { markAdultCover } from "@/lib/adult-cover";
 import { cacheGet, cacheSet } from "@/lib/cache-store";
 import { effectiveSearchSource, MEDIA_TYPE_META } from "@/lib/media";
 import { searchAniList } from "./anilist";
@@ -110,9 +111,10 @@ function finalize(out: ImportResult): ImportResult {
   const r = out.result;
   const meta: ImportMetadata = { ...r.metadata, importedAt: new Date().toISOString() };
   if (meta.adult) {
-    // Covers show up in public feeds and profiles; adult items never carry one.
-    r.coverUrl = null;
-    r.bannerUrl = null;
+    // Covers show up in public feeds and profiles: marked so they render blurred unless
+    // the viewer opted in, and are left out of server-rendered share images.
+    r.coverUrl = markAdultCover(r.coverUrl);
+    r.bannerUrl = markAdultCover(r.bannerUrl);
   }
   r.title = r.title.slice(0, 500);
   if (r.titleNative) r.titleNative = r.titleNative.slice(0, 500);
