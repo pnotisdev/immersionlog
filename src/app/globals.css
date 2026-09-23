@@ -368,17 +368,21 @@
   }
 }
 
-/* --- Data-viz tokens: light keeps its own validated blue ramp (light mode is out of
-   scope for this pass); dark uses redesign.md's validated violet ramp. --- */
+/* --- Data-viz tokens. Both themes ramp the site's own accent (redesign.md §1.6: the
+   heatmap and the activity chart are part of the identity system), so they follow
+   --primary rather than a colour of their own. Light used to keep a blue ramp from
+   before the accent change, which left every chart on a white page blue while the
+   rest of the product was vermillion. --- */
 :root {
-  --viz-series: #2a78d6;
-  --viz-series-track: #dbe8fa;
+  --viz-series: var(--primary);
+  --viz-series-track: #f6e3da;
+  /* Empty cells stay neutral grey, not a tint of the ramp, so "nothing" never reads as "a little". */
   --viz-seq-0: #eceef1;
-  --viz-seq-1: #cde2fb;
-  --viz-seq-2: #86b6ef;
-  --viz-seq-3: #3987e5;
-  --viz-seq-4: #1c5cab;
-  --viz-seq-5: #0d366b;
+  --viz-seq-1: #f7cfbd;
+  --viz-seq-2: #efa283;
+  --viz-seq-3: #e0714a;
+  --viz-seq-4: #c6491f;
+  --viz-seq-5: #8a3417;
   --viz-grid: #e3e5e9;
   --viz-axis: #c3c5cb;
   --viz-muted: #86888f;

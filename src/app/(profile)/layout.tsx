@@ -29,13 +29,13 @@ export default async function ProfileLayout({ children }: LayoutProps<"/">) {
             <div className="ml-auto flex items-center gap-1 sm:gap-2">
               <Link
                 href="/login"
-                className="rounded-full px-3 py-2.5 text-sm whitespace-nowrap text-muted-foreground hover:text-foreground sm:px-4"
+                className="inline-flex h-10 items-center rounded-sm px-3 text-sm whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground sm:px-4"
               >
                 Sign in
               </Link>
               <Link
                 href="/signup"
-                className="rounded-full bg-primary px-3.5 py-2.5 text-sm font-semibold whitespace-nowrap text-primary-foreground transition-opacity hover:opacity-90 sm:px-5"
+                className="inline-flex h-10 items-center rounded-sm bg-primary px-3.5 text-sm font-semibold whitespace-nowrap text-primary-foreground transition-colors hover:bg-accent-hover sm:px-5"
               >
                 Create account
               </Link>

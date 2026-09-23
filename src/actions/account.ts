@@ -1,12 +1,13 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import sharp from "sharp";
 import { db } from "@/db";
-import { user, userAvatars, type ProfileLink } from "@/db/schema";
+import { libraryEntries, user, userAvatars, userBanners, type ProfileLink } from "@/db/schema";
 import { requireUser } from "@/lib/session";
 import { AVATAR_CONTENT_TYPE, AVATAR_SIZE, avatarUrl, MAX_AVATAR_UPLOAD_BYTES } from "@/lib/avatar";
+import { BANNER_CONTENT_TYPE, BANNER_HEIGHT, BANNER_WIDTH, MAX_BANNER_UPLOAD_BYTES } from "@/lib/banner";
 import { sanitizeProfileLinks } from "@/lib/profile-links";
 import type { ActionResult } from "./types";
 
@@ -70,6 +71,74 @@ export async function removeAvatar(): Promise<ActionResult<{ image: null }>> {
   });
   revalidateProfile(me.username);
   return { ok: true, data: { image: null } };
+}
+
+/**
+ * Profile banner from an uploaded image. Same shape as uploadAvatar: the size cap runs
+ * before any decoding, and the image is always re-encoded server-side (to a fixed 3:1
+ * WebP, cropped around whatever sharp judges most interesting), so nothing the client
+ * sends is ever served back as-is. Replaces a library pick, if there was one.
+ */
+export async function uploadBanner(formData: FormData): Promise<ActionResult<null>> {
+  const me = await requireUser();
+
+  const file = formData.get("banner");
+  if (!(file instanceof File)) return { ok: false, error: "No file provided" };
+  if (file.size === 0) return { ok: false, error: "That file is empty" };
+  if (file.size > MAX_BANNER_UPLOAD_BYTES) {
+    return { ok: false, error: `Images must be under ${Math.round(MAX_BANNER_UPLOAD_BYTES / (1024 * 1024))}MB` };
+  }
+
+  let resized: Buffer;
+  try {
+    resized = await sharp(Buffer.from(await file.arrayBuffer()))
+      .rotate()
+      .resize(BANNER_WIDTH, BANNER_HEIGHT, { fit: "cover", position: "attention", withoutEnlargement: false })
+      .webp({ quality: 80 })
+      .toBuffer();
+  } catch {
+    return { ok: false, error: "That doesn't look like a valid image" };
+  }
+
+  const now = new Date();
+  const values = { data: resized, contentType: BANNER_CONTENT_TYPE, mediaItemId: null, updatedAt: now };
+  await db
+    .insert(userBanners)
+    .values({ userId: me.id, ...values })
+    .onConflictDoUpdate({ target: userBanners.userId, set: values });
+
+  revalidateProfile(me.username);
+  return { ok: true, data: null };
+}
+
+/** Profile banner from the art of a title in the user's own library (never an arbitrary URL). */
+export async function setBannerFromLibrary(mediaItemId: string): Promise<ActionResult<null>> {
+  const me = await requireUser();
+  if (typeof mediaItemId !== "string" || !/^[0-9a-f-]{36}$/i.test(mediaItemId)) return { ok: false, error: "Unknown title" };
+
+  const [owned] = await db
+    .select({ id: libraryEntries.id })
+    .from(libraryEntries)
+    .where(and(eq(libraryEntries.userId, me.id), eq(libraryEntries.mediaItemId, mediaItemId)))
+    .limit(1);
+  if (!owned) return { ok: false, error: "That title isn't in your library" };
+
+  const values = { data: null, contentType: null, mediaItemId, updatedAt: new Date() };
+  await db
+    .insert(userBanners)
+    .values({ userId: me.id, ...values })
+    .onConflictDoUpdate({ target: userBanners.userId, set: values });
+
+  revalidateProfile(me.username);
+  return { ok: true, data: null };
+}
+
+/** Back to automatic: art from whatever they've spent the most time on (src/lib/banner-queries.ts). */
+export async function resetBanner(): Promise<ActionResult<null>> {
+  const me = await requireUser();
+  await db.delete(userBanners).where(eq(userBanners.userId, me.id));
+  revalidateProfile(me.username);
+  return { ok: true, data: null };
 }
 
 /**

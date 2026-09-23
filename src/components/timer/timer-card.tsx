@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { Play, Plus, Square, Trash2 } from "lucide-react";
+import { History, Play, Square, Timer, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { discardTimer, startTimer, stopTimer } from "@/actions/sessions";
 import type { MediaType, Unit } from "@/db/schema";
 import { formatClock } from "@/lib/format";
-import { MEDIA_TYPE_META } from "@/lib/media";
+import { cn } from "@/lib/utils";
+import { MEDIA_TYPE_META, activityVerb } from "@/lib/media";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,7 +36,7 @@ export function TimerCard({
 }: {
   timer: ActiveTimerView | null;
   entries: LibraryPick[];
-  /** Only needed when fixedItem is set, for its "log what you watched" dialog. */
+  /** Only needed when fixedItem is set, for its "log a past session" dialog. */
   tz?: string;
   /** Lock to one item (e.g. on its detail page) instead of showing the full picker. */
   fixedItem?: { mediaItemId: string; mediaType: MediaType };
@@ -53,7 +53,7 @@ export function TimerCard({
  * The media detail page already knows exactly which item this is for, so asking
  * "what are you timing?" via the full library picker (as the dashboard's idle timer
  * does) is pure redundancy. One card, one clear pair of actions: log what you already
- * watched, or start timing now — instead of a hero button above plus a whole separate
+ * did earlier, or start timing now — instead of a hero button above plus a whole separate
  * picker card below.
  */
 function FixedItemCard({
@@ -79,16 +79,20 @@ function FixedItemCard({
     });
   }
 
+  // "Log what you read", "…listened to", "…played" — never "watched" for a book.
+  const verb = activityVerb(mediaType);
+
   return (
-    <Card className="border-primary/30 bg-accent">
-      <CardContent className="flex flex-wrap items-center gap-3">
-        <Button size="lg" onClick={() => setLogOpen(true)}>
-          <Plus /> Log what you watched
-        </Button>
-        <Button size="lg" variant="outline" onClick={start} disabled={pending} className="bg-background">
+    <TimerShell>
+      <ShellHeading title="Log a session" hint={`Time it live, or add what you ${verb} earlier.`} />
+      <div className="flex flex-wrap gap-2 sm:ml-auto">
+        <Button size="lg" onClick={start} disabled={pending} className="flex-1 sm:flex-none">
           <Play /> {pending ? "Starting…" : "Start timer"}
         </Button>
-      </CardContent>
+        <Button size="lg" variant="outline" onClick={() => setLogOpen(true)} className="flex-1 sm:flex-none">
+          <History /> Log what you {verb}
+        </Button>
+      </div>
       <SessionDialog
         open={logOpen}
         onOpenChange={setLogOpen}
@@ -98,7 +102,40 @@ function FixedItemCard({
         initial={{ mediaItemId, mediaType }}
         onDone={() => setLogOpen(false)}
       />
-    </Card>
+    </TimerShell>
+  );
+}
+
+/**
+ * The timer's frame: the same hairline surface as every Panel, with the accent kept for
+ * the one thing that matters here, the Start button. It used to be a brown-tinted,
+ * shadowed card — the only such surface left in the app, and it read as a different
+ * product from everything around it.
+ */
+function TimerShell({ children, live = false }: { children: React.ReactNode; live?: boolean }) {
+  return (
+    <section
+      className={cn(
+        "flex flex-col gap-4 rounded-lg border bg-surface p-4 sm:flex-row sm:items-center sm:gap-5 sm:p-5",
+        live ? "border-primary/50" : "border-border",
+      )}
+    >
+      {children}
+    </section>
+  );
+}
+
+function ShellHeading({ title, hint }: { title: string; hint: string }) {
+  return (
+    <div className="flex shrink-0 items-center gap-3">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-accent text-accent-foreground">
+        <Timer className="size-5" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-h3 font-semibold">{title}</p>
+        <p className="text-meta text-dim">{hint}</p>
+      </div>
+    </div>
   );
 }
 
@@ -127,16 +164,19 @@ function IdleTimer({ entries, tz }: { entries: LibraryPick[]; tz: string }) {
   }
 
   return (
-    <Card className="border-primary/30 bg-accent py-4">
-      <CardContent className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-end">
-        <ItemPicker entries={entries} value={pick} onChange={setPick} idPrefix="timer" />
-        <Button size="lg" onClick={start} disabled={pending} className="w-full sm:w-auto">
+    <TimerShell>
+      <ShellHeading title="Start a session" hint="Pick what you're about to read, watch or listen to." />
+      <div className="min-w-0 flex-1">
+        <ItemPicker entries={entries} value={pick} onChange={setPick} idPrefix="timer" hideLabel />
+      </div>
+      <div className="flex shrink-0 gap-2 sm:self-start">
+        <Button size="lg" onClick={start} disabled={pending} className="flex-1 sm:flex-none">
           <Play /> Start timer
         </Button>
-        <Button size="lg" variant="ghost" onClick={() => setLogOpen(true)} className="w-full sm:w-auto">
-          Log manually
+        <Button size="lg" variant="outline" onClick={() => setLogOpen(true)} className="flex-1 sm:flex-none">
+          <History /> Log past session
         </Button>
-      </CardContent>
+      </div>
 
       <SessionDialog
         open={logOpen}
@@ -149,7 +189,7 @@ function IdleTimer({ entries, tz }: { entries: LibraryPick[]; tz: string }) {
         }
         onDone={() => setLogOpen(false)}
       />
-    </Card>
+    </TimerShell>
   );
 }
 
@@ -189,9 +229,9 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
   }
 
   return (
-    <Card className="border-primary/40 bg-accent">
-      <CardContent className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-3">
+    <TimerShell live>
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3">
           <span className="relative flex size-3">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
             <span className="relative inline-flex size-3 rounded-full bg-primary" />
@@ -210,7 +250,7 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
             <Trash2 />
           </Button>
         </div>
-      </CardContent>
+      </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
@@ -237,6 +277,6 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </Card>
+    </TimerShell>
   );
 }

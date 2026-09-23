@@ -5,6 +5,7 @@ import { Check, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { followUser, unfollowUser } from "@/actions/social";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 /** Optimistic follow toggle. Reverts and explains itself if the action fails. */
 export function FollowButton({
@@ -33,23 +34,20 @@ export function FollowButton({
     });
   }
 
+  // The shared Button, not a hand-rolled pill: it sits beside Edit profile / Share on a
+  // profile and has to be the same height, radius and type as they are.
   return (
-    <button
+    <Button
       type="button"
       onClick={toggle}
       disabled={pending}
       aria-pressed={following}
-      className={cn(
-        "inline-flex shrink-0 items-center gap-1.5 rounded-full border font-medium transition-colors disabled:opacity-60",
-        size === "sm" ? "h-8 px-3 text-xs" : "h-9 px-4 text-sm",
-        following
-          ? "border-border bg-transparent text-muted-foreground hover:border-destructive/40 hover:text-destructive"
-          : "border-transparent bg-primary text-primary-foreground hover:opacity-90",
-        className,
-      )}
+      variant={following ? "outline" : "default"}
+      size={size === "sm" ? "sm" : "default"}
+      className={cn(following && "text-muted-foreground hover:border-destructive/40 hover:text-destructive", className)}
     >
-      {following ? <Check className="size-3.5" /> : <UserPlus className="size-3.5" />}
+      {following ? <Check /> : <UserPlus />}
       {following ? "Following" : "Follow"}
-    </button>
+    </Button>
   );
 }

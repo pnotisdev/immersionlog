@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // PGlite ships WASM and postgres.js opens sockets — keep both out of the server bundle.
   serverExternalPackages: ["@electric-sql/pglite", "postgres"],
+  experimental: {
+    serverActions: {
+      // Next's default is 1MB, which silently capped avatar uploads (advertised as 2MB,
+      // src/lib/avatar.ts) and would reject most banner photos (4MB, src/lib/banner.ts).
+      // Both actions still enforce their own, smaller caps before decoding anything;
+      // this leaves headroom over the larger of them for multipart overhead.
+      bodySizeLimit: "5mb",
+    },
+  },
   async headers() {
     return [
       {

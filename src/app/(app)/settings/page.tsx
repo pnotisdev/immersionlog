@@ -1,7 +1,10 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
+import { autoBanner, getBannerChoice, listBannerOptions, resolveBanner } from "@/lib/banner-queries";
+import { getTopItems } from "@/lib/queries";
 import { requireUser } from "@/lib/session";
+import { BannerField } from "@/components/auth/banner-field";
 import { CsvExportButtons, DeleteAccountDialog, ExportDataButton } from "@/components/auth/account-actions";
 import { SettingsForm } from "@/components/auth/settings-form";
 import { PageHeader, SectionHeader } from "@/components/layout/page-header";
@@ -12,13 +15,24 @@ export default async function SettingsPage() {
   const user = await requireUser();
   // profileLinks (and, defensively, bio) aren't part of better-auth's session shape —
   // only additionalFields are — so they're read straight from the row.
-  const row = await db.query.user.findFirst({
-    where: eq(userTable.id, user.id),
-    columns: { bio: true, profileLinks: true },
-  });
+  const [row, bannerChoice, bannerOptions, top] = await Promise.all([
+    db.query.user.findFirst({
+      where: eq(userTable.id, user.id),
+      columns: { bio: true, profileLinks: true },
+    }),
+    getBannerChoice(user.id),
+    listBannerOptions(user.id),
+    getTopItems(user.id, new Date(0), new Date(), 5),
+  ]);
   return (
     <div>
       <PageHeader title="Settings" />
+
+      {/* scroll-mt: the profile's "Edit banner" button links here past the sticky nav. */}
+      <section id="banner" className="mb-10 max-w-2xl scroll-mt-24">
+        <SectionHeader title="Profile banner" />
+        <BannerField current={resolveBanner(user.id, bannerChoice, top)} automatic={autoBanner(top)} options={bannerOptions} />
+      </section>
       <SettingsForm
         user={{
           name: user.name,

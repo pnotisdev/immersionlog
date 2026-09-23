@@ -62,8 +62,11 @@ export function ColumnChart({ columns, height = 160 }: { columns: Column[]; heig
   const plotW = width - LEFT;
   const band = plotW / Math.max(1, columns.length);
   const barW = Math.min(24, band * 0.6);
-  // Skip some x labels when bands get too narrow to fit them.
-  const labelEvery = band >= 22 ? 1 : band >= 12 ? 2 : Math.ceil(24 / band);
+  // Skip x labels so none overlap: sized from the longest label (~6px a character at
+  // 10px), not a fixed guess — a week-bucketed year has "12-29"-style labels, which
+  // the old fixed thresholds (tuned for 2-digit day numbers) packed on top of each other.
+  const labelW = Math.max(...columns.map((c) => c.label.length), 1) * 6 + 8;
+  const labelEvery = Math.max(1, Math.ceil(labelW / band));
 
   const y = (seconds: number) => TOP + plotH - (seconds / 3600 / maxH) * plotH;
   // Only dim non-emphasized bars when something *is* emphasized (e.g. "today") —

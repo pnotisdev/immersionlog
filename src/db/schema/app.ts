@@ -210,6 +210,24 @@ export const userAvatars = pgTable("user_avatars", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+/**
+ * A user's chosen profile banner — one row per user, absent means "automatic" (art from
+ * whatever they've spent the most time on, see src/lib/banner.ts). Exactly one of the two
+ * sources is set: `data` for an uploaded image (resized server-side, served by
+ * src/app/api/banner/[userId]/route.ts, same no-object-storage reasoning as
+ * userAvatars), or `mediaItemId` for art picked from their own library. A picked title
+ * that's later deleted falls back to automatic rather than a dead image.
+ */
+export const userBanners = pgTable("user_banners", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  data: bytea("data"),
+  contentType: text("content_type"),
+  mediaItemId: uuid("media_item_id").references(() => mediaItems.id, { onDelete: "set null" }),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // --- Relations (for db.query.* relational API) ---
 
 export const mediaItemsRelations = relations(mediaItems, ({ many }) => ({

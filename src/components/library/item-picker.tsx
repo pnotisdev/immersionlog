@@ -39,11 +39,14 @@ export function ItemPicker({
   value,
   onChange,
   idPrefix = "picker",
+  hideLabel = false,
 }: {
   entries: LibraryPick[];
   value: PickerValue;
   onChange: (v: PickerValue) => void;
   idPrefix?: string;
+  /** For a caller whose own heading already says what this is (the dashboard timer bar). */
+  hideLabel?: boolean;
 }) {
   const [pending, startTransition] = useTransition();
   // Titles added via search this session — the Select needs a label for them even
@@ -77,7 +80,9 @@ export function ItemPicker({
   return (
     <div className="grid gap-3">
       <div className="grid gap-1.5">
-        <Label htmlFor={`${idPrefix}-item`}>What</Label>
+        <Label htmlFor={`${idPrefix}-item`} className={hideLabel ? "sr-only" : undefined}>
+          Title
+        </Label>
         <Select
           items={itemLabels}
           value={value.mediaItemId ?? NO_ITEM}

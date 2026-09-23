@@ -57,6 +57,13 @@
       "when": 1790094480239,
       "tag": "0007_purple_amphibian",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790161660851,
+      "tag": "0008_user_banners",
+      "breakpoints": true
     }
   ]
 }

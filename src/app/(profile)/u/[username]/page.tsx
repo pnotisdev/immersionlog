@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Link2 } from "lucide-react";
+import { ImageIcon, Link2 } from "lucide-react";
+import { getBannerChoice, resolveBanner } from "@/lib/banner-queries";
 import { dayKey, presetRange } from "@/lib/dates";
 import { formatDuration, formatMonthYear, formatNumber } from "@/lib/format";
 import { listRecentMilestones } from "@/lib/milestones-queries";
@@ -50,7 +51,7 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
   const month = presetRange("month", tz, now);
   const all = presetRange("all", tz, now);
 
-  const [progression, heat, breakdown, top, rank, counts, following, feed, library, followers, highlights] = await Promise.all([
+  const [progression, heat, breakdown, top, rank, counts, following, feed, library, followers, highlights, bannerChoice] = await Promise.all([
     getProgression(u.id, tz, now),
     getHeatmapActivity(u.id, tz, now),
     getTypeBreakdown(u.id, all.from, all.to),
@@ -64,14 +65,15 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
     getLibrary(u.id),
     listFollowConnections(u.id, "followers", 10),
     listRecentMilestones(u.id, 6),
+    getBannerChoice(u.id),
   ]);
 
   const active = library.filter((e) => e.status === "active");
   const finished = library
     .filter((e) => e.status === "finished")
     .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0) || (b.finishedAt ?? "").localeCompare(a.finishedAt ?? ""));
-  // The header art is whatever they've sunk the most hours into — one title, one image.
-  const heroArt = top[0]?.bannerUrl ?? top[0]?.coverUrl ?? null;
+  // Their own pick, or art from whatever they've sunk the most hours into.
+  const banner = resolveBanner(u.id, bannerChoice, top);
   const firstName = u.name.split(" ")[0];
   const currentYear = dayKey(now, tz).slice(0, 4);
 
@@ -113,16 +115,26 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
   return (
     <div className="grid gap-6">
       <header>
-        {/* Header art comes from what they actually watch and read. */}
-        <ArtBanner image={heroArt} height="h-32 sm:h-48" className="rounded-lg border border-border" />
+        <ArtBanner banner={banner} priority>
+          {isSelf && (
+            <Link
+              href="/settings#banner"
+              aria-label="Edit banner"
+              className="absolute top-3 right-3 inline-flex h-8 items-center gap-1.5 rounded-sm bg-black/45 px-2.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/60 sm:px-3"
+            >
+              {/* Icon-only on phones, where a label would sit on top of a centred cover. */}
+              <ImageIcon className="size-3.5" /> <span className="hidden sm:inline">Edit banner</span>
+            </Link>
+          )}
+        </ArtBanner>
 
         {/* relative: the banner's scrim is absolutely positioned and would paint over this row. */}
-        <div className="relative z-10 -mt-10 flex items-end justify-between gap-3 px-1 sm:-mt-12 sm:px-5">
+        <div className="relative z-10 -mt-10 flex items-end justify-between gap-3 px-3 sm:-mt-12 sm:px-6">
           <Avatar name={u.name} image={u.image} size="xl" className="size-20 ring-4 ring-background sm:size-24" />
           <div className="pb-1">{actions}</div>
         </div>
 
-        <div className="mt-3 px-1 sm:px-5">
+        <div className="mt-3 px-3 sm:px-6">
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
             <h1 className="text-h1 font-semibold sm:text-[1.75rem] sm:leading-9">{u.name}</h1>
             {/* One level chip, not three — reading/listening levels are a tooltip away, not

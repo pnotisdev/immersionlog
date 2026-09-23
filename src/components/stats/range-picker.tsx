@@ -48,9 +48,9 @@ export function RangePicker({
             href={href(p.key)}
             aria-current={current === p.key ? "page" : undefined}
             className={cn(
-              "shrink-0 rounded-full border px-3 py-1 text-xs transition-colors",
+              "shrink-0 rounded-sm border px-3 py-1 text-xs transition-colors",
               current === p.key
-                ? "border-transparent bg-foreground text-background"
+                ? "border-primary bg-accent text-accent-foreground"
                 : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground",
             )}
           >
@@ -62,9 +62,9 @@ export function RangePicker({
           onClick={() => setShowCustom((v) => !v)}
           aria-expanded={showCustom}
           className={cn(
-            "shrink-0 rounded-full border px-3 py-1 text-xs transition-colors",
+            "shrink-0 rounded-sm border px-3 py-1 text-xs transition-colors",
             current === "custom"
-              ? "border-transparent bg-foreground text-background"
+              ? "border-primary bg-accent text-accent-foreground"
               : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground",
           )}
         >
@@ -87,7 +87,7 @@ export function RangePicker({
             defaultValue={from}
             required
             aria-label="From"
-            className="h-8 min-w-0 flex-1 rounded-full border bg-transparent px-3 outline-none focus-visible:border-ring sm:flex-none"
+            className="h-8 min-w-0 flex-1 rounded-sm border bg-transparent px-3 outline-none focus-visible:border-ring sm:flex-none"
           />
           <span className="text-muted-foreground">–</span>
           <input
@@ -96,14 +96,14 @@ export function RangePicker({
             defaultValue={to}
             required
             aria-label="To"
-            className="h-8 min-w-0 flex-1 rounded-full border bg-transparent px-3 outline-none focus-visible:border-ring sm:flex-none"
+            className="h-8 min-w-0 flex-1 rounded-sm border bg-transparent px-3 outline-none focus-visible:border-ring sm:flex-none"
           />
           <button
             type="submit"
             className={cn(
-              "h-8 shrink-0 rounded-full border px-3.5 text-xs transition-colors hover:bg-muted",
+              "h-8 shrink-0 rounded-sm border px-3.5 text-xs transition-colors hover:bg-muted",
               current === "custom" &&
-                "border-transparent bg-foreground text-background",
+                "border-primary bg-accent text-accent-foreground",
             )}
           >
             Go

@@ -65,7 +65,6 @@ export default async function StatsPage(props: PageProps<"/stats">) {
   const amounts = new Map<string, number>();
   for (const s of sessions) if (s.amount && s.amountUnit) amounts.set(s.amountUnit, (amounts.get(s.amountUnit) ?? 0) + s.amount);
 
-  const nonZeroChartDays = columns.filter((c) => c.seconds > 0).length;
 
   return (
     <div>
@@ -86,11 +85,16 @@ export default async function StatsPage(props: PageProps<"/stats">) {
       </div>
 
       <Panel className="mt-6" title={bucket === "day" ? "Per day" : bucket === "week" ? "Per week" : "Per month"}>
-        {/* Never an axis with nothing on it (redesign.md §7). */}
-        {nonZeroChartDays >= 3 ? (
+        {/* Never an axis with nothing on it (redesign.md §7). Counted in *days*, not
+            columns: on a week- or month-bucketed range, three active days in one week are
+            a single column, which used to hide the chart behind a "log 3 days" message
+            that was plainly untrue. */}
+        {activeDays >= 3 ? (
           <ColumnChart columns={columns} height={200} />
         ) : (
-          <p className="py-10 text-center text-sm text-muted-foreground">Log 3 days to see your trend.</p>
+          <p className="py-10 text-center text-sm text-muted-foreground">
+            {activeDays === 0 ? "Nothing logged in this range." : "Log 3 days to see your trend."}
+          </p>
         )}
       </Panel>
 
