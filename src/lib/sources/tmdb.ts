@@ -1,3 +1,4 @@
+import type { MediaType } from "@/db/schema";
 import { cleanDescription, FETCH_TIMEOUT_MS, type SearchResponse, type SearchResult, yearFrom } from "./types";
 
 const API = "https://api.themoviedb.org/3";
@@ -25,6 +26,38 @@ interface TmdbTv {
   overview: string | null;
 }
 
+export type { TmdbMovie, TmdbTv };
+
+/**
+ * The one TMDB → row mapping. Shared with the IMDb importer (./imdb.ts), which resolves
+ * IMDb ids through TMDB's /find endpoint: both paths must produce the same
+ * (source, sourceId) so an IMDb link and a TMDB search for the same film are one row.
+ */
+export function tmdbToResult(r: TmdbMovie | TmdbTv, kind: "movie" | "series", mediaType: MediaType = kind): SearchResult {
+  const isMovie = kind === "movie";
+  const m = r as TmdbMovie;
+  const t = r as TmdbTv;
+  const title = isMovie ? m.title : t.name;
+  const original = isMovie ? m.original_title : t.original_name;
+  const date = isMovie ? m.release_date : t.first_air_date;
+  return {
+    source: "tmdb",
+    sourceId: `${isMovie ? "movie" : "tv"}:${r.id}`,
+    mediaType,
+    title,
+    // Only treat the original title as "native" when it's actually Japanese.
+    titleNative: r.original_language === "ja" && original !== title ? original : null,
+    coverUrl: r.poster_path ? `${IMG}${r.poster_path}` : null,
+    bannerUrl: r.backdrop_path ? `${BACKDROP}${r.backdrop_path}` : null,
+    year: yearFrom(date),
+    description: cleanDescription(r.overview),
+    externalUrl: `https://www.themoviedb.org/${isMovie ? "movie" : "tv"}/${r.id}`,
+    totalAmount: null,
+    totalUnit: null,
+    metadata: { originalLanguage: r.original_language },
+  };
+}
+
 export async function searchTmdb(kind: "movie" | "series", q: string): Promise<SearchResponse> {
   const key = process.env.TMDB_API_KEY;
   if (!key) {
@@ -40,29 +73,6 @@ export async function searchTmdb(kind: "movie" | "series", q: string): Promise<S
   if (!res.ok) throw new Error(`TMDB responded ${res.status}`);
   const json = (await res.json()) as { results: (TmdbMovie | TmdbTv)[] };
 
-  const results: SearchResult[] = json.results.slice(0, 12).map((r) => {
-    const isMovie = kind === "movie";
-    const m = r as TmdbMovie;
-    const t = r as TmdbTv;
-    const title = isMovie ? m.title : t.name;
-    const original = isMovie ? m.original_title : t.original_name;
-    const date = isMovie ? m.release_date : t.first_air_date;
-    return {
-      source: "tmdb",
-      sourceId: `${isMovie ? "movie" : "tv"}:${r.id}`,
-      mediaType: kind,
-      title,
-      // Only treat the original title as "native" when it's actually Japanese.
-      titleNative: r.original_language === "ja" && original !== title ? original : null,
-      coverUrl: r.poster_path ? `${IMG}${r.poster_path}` : null,
-      bannerUrl: r.backdrop_path ? `${BACKDROP}${r.backdrop_path}` : null,
-      year: yearFrom(date),
-      description: cleanDescription(r.overview),
-      externalUrl: `https://www.themoviedb.org/${isMovie ? "movie" : "tv"}/${r.id}`,
-      totalAmount: null,
-      totalUnit: null,
-      metadata: { originalLanguage: r.original_language },
-    };
-  });
+  const results: SearchResult[] = json.results.slice(0, 12).map((r) => tmdbToResult(r, kind));
   return { results };
 }

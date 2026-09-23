@@ -11,23 +11,25 @@ export interface MediaTypeMeta {
   defaultUnit: Unit | null;
   /** Which external source can search this type. null = manual entry only. */
   searchSource: Exclude<MediaSource, "manual"> | null;
+  /** Sites a pasted link can be imported from, in the order the UI suggests them. */
+  importSources: Exclude<MediaSource, "manual">[];
 }
 
 export const MEDIA_TYPE_META: Record<MediaType, MediaTypeMeta> = {
-  anime: { label: "Anime", group: "listening", defaultUnit: "episodes", searchSource: "anilist" },
-  manga: { label: "Manga", group: "reading", defaultUnit: "chapters", searchSource: "anilist" },
-  light_novel: { label: "Light novel", group: "reading", defaultUnit: "pages", searchSource: "anilist" },
-  visual_novel: { label: "Visual novel", group: "reading", defaultUnit: "characters", searchSource: "vndb" },
-  movie: { label: "Movie", group: "listening", defaultUnit: null, searchSource: "tmdb" },
-  series: { label: "Series", group: "listening", defaultUnit: "episodes", searchSource: "tmdb" },
-  book: { label: "Book", group: "reading", defaultUnit: "pages", searchSource: "google_books" },
-  graded_reader: { label: "Graded reader", group: "reading", defaultUnit: "pages", searchSource: "google_books" },
-  youtube: { label: "YouTube", group: "listening", defaultUnit: null, searchSource: null },
-  podcast: { label: "Podcast", group: "listening", defaultUnit: null, searchSource: null },
-  drama_cd: { label: "Drama CD", group: "listening", defaultUnit: null, searchSource: null },
-  game: { label: "Game", group: "other", defaultUnit: null, searchSource: null },
-  news: { label: "News", group: "reading", defaultUnit: "items", searchSource: null },
-  other: { label: "Other", group: "other", defaultUnit: null, searchSource: null },
+  anime: { label: "Anime", group: "listening", defaultUnit: "episodes", searchSource: "anilist", importSources: ["jiten", "imdb"] },
+  manga: { label: "Manga", group: "reading", defaultUnit: "chapters", searchSource: "anilist", importSources: ["bookwalker", "cmoa", "shonenjumpplus", "jiten"] },
+  light_novel: { label: "Light novel", group: "reading", defaultUnit: "pages", searchSource: "anilist", importSources: ["bookwalker", "bookmeter", "jiten"] },
+  visual_novel: { label: "Visual novel", group: "reading", defaultUnit: "characters", searchSource: "vndb", importSources: ["jiten", "dmm"] },
+  movie: { label: "Movie", group: "listening", defaultUnit: null, searchSource: "tmdb", importSources: ["imdb", "jiten"] },
+  series: { label: "Series", group: "listening", defaultUnit: "episodes", searchSource: "tmdb", importSources: ["imdb", "jiten"] },
+  book: { label: "Book", group: "reading", defaultUnit: "pages", searchSource: "google_books", importSources: ["bookmeter", "bookwalker", "jiten"] },
+  graded_reader: { label: "Graded reader", group: "reading", defaultUnit: "pages", searchSource: "google_books", importSources: ["bookmeter"] },
+  youtube: { label: "YouTube", group: "listening", defaultUnit: null, searchSource: null, importSources: [] },
+  podcast: { label: "Podcast", group: "listening", defaultUnit: null, searchSource: null, importSources: ["jiten"] },
+  drama_cd: { label: "Drama CD", group: "listening", defaultUnit: null, searchSource: null, importSources: ["jiten"] },
+  game: { label: "Game", group: "other", defaultUnit: null, searchSource: null, importSources: ["backloggd", "dmm", "jiten"] },
+  news: { label: "News", group: "reading", defaultUnit: "items", searchSource: null, importSources: [] },
+  other: { label: "Other", group: "other", defaultUnit: null, searchSource: null, importSources: [] },
 };
 
 export const UNIT_LABELS: Record<Unit, string> = {
@@ -59,7 +61,28 @@ export const SOURCE_LABELS: Record<MediaSource, string> = {
   vndb: "VNDB",
   tmdb: "TMDB",
   google_books: "Google Books",
+  imdb: "IMDb",
+  jiten: "Jiten.moe",
+  bookmeter: "Bookmeter",
+  bookwalker: "BOOK☆WALKER",
+  cmoa: "コミックシーモア (Cmoa)",
+  shonenjumpplus: "少年ジャンプ+",
+  backloggd: "Backloggd",
+  dmm: "DMM Games",
+  jpdb: "JPDB",
 };
+
+/**
+ * Types with no primary search API that Jiten.moe's deck search covers well enough
+ * to offer instead of "manual only". Kept apart from searchSource so the primary
+ * routing for every other type is unchanged.
+ */
+const JITEN_SEARCH_TYPES: readonly MediaType[] = ["game", "drama_cd"];
+
+/** The source the search box queries for this type: its own, else Jiten, else none. */
+export function effectiveSearchSource(type: MediaType): Exclude<MediaSource, "manual"> | null {
+  return MEDIA_TYPE_META[type].searchSource ?? (JITEN_SEARCH_TYPES.includes(type) ? "jiten" : null);
+}
 
 export function mediaTypeLabel(type: MediaType) {
   return MEDIA_TYPE_META[type].label;

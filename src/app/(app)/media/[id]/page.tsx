@@ -9,13 +9,19 @@ import { listMilestonesForEntry } from "@/lib/milestones-queries";
 import { getLibraryEntry, getMediaItem, getSessionsForItem } from "@/lib/queries";
 import { getMediaCommunity } from "@/lib/social-queries";
 import { requireUser } from "@/lib/session";
+import { jpdbEnabled } from "@/lib/sources/jpdb";
+import type { JitenStats } from "@/lib/sources/types";
 import { getActiveTimerView, getLibraryPicks } from "@/lib/view-models";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddToLibraryButton } from "@/components/library/add-to-library-button";
 import { EntryEditor } from "@/components/library/entry-editor";
 import { Milestones } from "@/components/library/milestones";
+import { DetailsList } from "@/components/media/details-list";
 import { DifficultyVote } from "@/components/media/difficulty-vote";
+import { ExternalLinks, safeLinks } from "@/components/media/external-links";
+import { JitenCard } from "@/components/media/jiten-card";
+import { JpdbLinkControl } from "@/components/media/jpdb-link";
 import { isGoogleBooksImage, Poster } from "@/components/media/poster";
 import { TmdbLogo } from "@/components/media/tmdb-logo";
 import { Avatar } from "@/components/ranking/avatar";
@@ -73,6 +79,20 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
 
   const meta = MEDIA_TYPE_META[item.type];
   const art = item.bannerUrl ?? item.coverUrl;
+
+  // Written by the URL importers and the Jiten link (src/lib/sources/types.ts ImportMetadata).
+  const md = item.metadata ?? {};
+  const jitenDetailKeys = ["Character count", "Word count", "Unique kanji", "Jiten difficulty"];
+  const details = Object.fromEntries(
+    Object.entries(md.details && typeof md.details === "object" ? (md.details as Record<string, string>) : {})
+      // The Jiten card below shows these already.
+      .filter(([k]) => !(md.jiten && jitenDetailKeys.includes(k))),
+  );
+  const links = safeLinks(md.links, item.externalUrl);
+  const jiten = md.jiten && typeof md.jiten === "object" ? (md.jiten as JitenStats) : null;
+  const jitenUrl = safeLinks(md.links).find(([s]) => s === "jiten")?.[1] ?? (item.source === "jiten" ? item.externalUrl : null);
+  const jpdbUrl = safeLinks(md.links).find(([s]) => s === "jpdb")?.[1] ?? null;
+  const showJpdb = jpdbEnabled();
 
   return (
     <div className="grid gap-6">
@@ -151,6 +171,18 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
 
       {item.description && (
         <p className="line-clamp-5 max-w-prose text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+      )}
+
+      {(Object.keys(details).length > 0 || links.length > 0 || showJpdb) && (
+        <div className="grid max-w-prose gap-3">
+          <DetailsList details={details} />
+          {(links.length > 0 || showJpdb) && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <ExternalLinks links={links} />
+              {showJpdb && <JpdbLinkControl mediaItemId={item.id} current={jpdbUrl} />}
+            </div>
+          )}
+        </div>
       )}
 
       {community.learners > 0 && (
@@ -242,6 +274,21 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
           </CardHeader>
           <CardContent>
             <DifficultyVote mediaItemId={item.id} initialAverage={difficulty.average} initialCount={difficulty.count} initialVote={myVote} />
+            {/* Jiten's own estimate, labelled as such and kept apart from the community vote. */}
+            {jiten?.difficulty != null && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Jiten.moe estimate: <span className="font-medium text-foreground tabular-nums">{jiten.difficulty.toFixed(2)} / 5</span>
+              </p>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Jiten.moe</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <JitenCard mediaItemId={item.id} stats={jiten} deckUrl={jitenUrl} defaultQuery={item.titleNative ?? item.title} />
           </CardContent>
         </Card>
 

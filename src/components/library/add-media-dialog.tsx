@@ -6,8 +6,9 @@ import { Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { addFromSearch, addManual } from "@/actions/library";
 import { ENTRY_STATUSES, MEDIA_TYPES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
-import { MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
+import { effectiveSearchSource, MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
 import type { SearchResult } from "@/lib/sources";
+import { LinkHint, LinkImport, supportedSourcesLine } from "@/components/library/link-import";
 import { useMediaSearch } from "@/lib/use-media-search";
 import { TmdbLogo } from "@/components/media/tmdb-logo";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,7 @@ export function AddMediaDialog({ defaultType = "anime" }: { defaultType?: MediaT
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
           <DialogHeader>
             <DialogTitle>Add to library</DialogTitle>
-            <DialogDescription>Search AniList, VNDB, TMDB or Google Books, or add something by hand.</DialogDescription>
+            <DialogDescription>Search AniList, VNDB, TMDB or Google Books, paste a link from a store or database, or add something by hand.</DialogDescription>
           </DialogHeader>
           {open && <AddMediaBody defaultType={defaultType} onDone={() => setOpen(false)} />}
         </DialogContent>
@@ -42,10 +43,27 @@ export function AddMediaDialog({ defaultType = "anime" }: { defaultType?: MediaT
   );
 }
 
+type Mode = "search" | "link" | "manual";
+
 function AddMediaBody({ defaultType, onDone }: { defaultType: MediaType; onDone: () => void }) {
+  const router = useRouter();
   const [type, setType] = useState<MediaType>(defaultType);
   const [status, setStatus] = useState<EntryStatus>("planning");
-  const searchable = MEDIA_TYPE_META[type].searchSource !== null;
+  const [mode, setMode] = useState<Mode>("search");
+  const [url, setUrl] = useState("");
+  // What a failed import did manage to read, pre-filled into the manual form.
+  const [prefill, setPrefill] = useState<{ n: number; data: Partial<SearchResult> } | null>(null);
+  const searchSource = effectiveSearchSource(type);
+  const importable = MEDIA_TYPE_META[type].importSources.length > 0;
+  // A type without the chosen mode falls through to the next one that exists.
+  const tab: Mode = mode === "search" && !searchSource ? (importable ? "link" : "manual") : mode === "link" && !importable ? "manual" : mode;
+  const supported = supportedSourcesLine(type);
+
+  function fallBackToManual(partial: Partial<SearchResult>) {
+    setPrefill((p) => ({ n: (p?.n ?? 0) + 1, data: partial }));
+    setMode("manual");
+    toast.message("Couldn't read everything from that page. The site may have changed; check the details and add it manually.");
+  }
 
   return (
     <div className="grid gap-4">
@@ -82,18 +100,48 @@ function AddMediaBody({ defaultType, onDone }: { defaultType: MediaType; onDone:
         </div>
       </div>
 
-      <Tabs defaultValue={searchable ? "search" : "manual"} key={searchable ? "s" : "m"}>
+      <Tabs value={tab} onValueChange={(v) => setMode(v as Mode)}>
         <TabsList>
-          <TabsTrigger value="search" disabled={!searchable}>
-            Search {searchable && `(${SOURCE_LABELS[MEDIA_TYPE_META[type].searchSource!]})`}
+          <TabsTrigger value="search" disabled={!searchSource}>
+            Search {searchSource && `(${SOURCE_LABELS[searchSource]})`}
+          </TabsTrigger>
+          <TabsTrigger value="link" disabled={!importable}>
+            Paste a link
           </TabsTrigger>
           <TabsTrigger value="manual">Manual</TabsTrigger>
         </TabsList>
         <TabsContent value="search" className="pt-3">
           <SearchTab type={type} status={status} onDone={onDone} />
         </TabsContent>
+        <TabsContent value="link" className="pt-3">
+          <div className="grid gap-3">
+            <div className="grid gap-1.5">
+              <Input
+                autoFocus
+                type="url"
+                inputMode="url"
+                aria-label="Link to the title's page"
+                placeholder="https://…"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+              {supported && <p className="text-xs text-muted-foreground">Supported: {supported}</p>}
+              <LinkHint url={url} />
+            </div>
+            <LinkImport
+              url={url}
+              type={type}
+              status={status}
+              onFallback={fallBackToManual}
+              onAdded={({ mediaItemId }) => {
+                onDone();
+                router.push(`/media/${mediaItemId}`);
+              }}
+            />
+          </div>
+        </TabsContent>
         <TabsContent value="manual" className="pt-3">
-          <ManualTab key={type} type={type} status={status} onDone={onDone} />
+          <ManualTab key={`${type}:${prefill?.n ?? 0}`} type={type} status={status} onDone={onDone} prefill={prefill?.data} />
         </TabsContent>
       </Tabs>
     </div>
@@ -129,7 +177,13 @@ function SearchTab({ type, status, onDone }: { type: MediaType; status: EntrySta
     <div className="grid gap-3">
       <div className="relative">
         <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input autoFocus placeholder={`Search ${MEDIA_TYPE_META[type].label.toLowerCase()}…`} value={q} onChange={(e) => setQ(e.target.value)} className="pl-8" />
+        <Input
+          autoFocus
+          placeholder={`Search ${effectiveSearchSource(type) === "jiten" ? "Jiten.moe" : MEDIA_TYPE_META[type].label.toLowerCase()}…`}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          className="pl-8"
+        />
       </div>
       {/* TMDB's terms require visible attribution wherever their data appears, not just
           a text mention in the tab label — see src/components/media/tmdb-logo.tsx. */}
@@ -141,7 +195,7 @@ function SearchTab({ type, status, onDone }: { type: MediaType; status: EntrySta
       {active && warning && <p className="text-sm text-muted-foreground">{warning}</p>}
       {active && loading && <p className="text-sm text-muted-foreground">Searching…</p>}
       {active && !loading && results.length === 0 && !warning && (
-        <p className="text-sm text-muted-foreground">No results. Try the Manual tab.</p>
+        <p className="text-sm text-muted-foreground">No results. Try pasting a link, or the Manual tab.</p>
       )}
       <ul className="grid gap-1">
         {(active ? results : []).map((r) => (
@@ -170,10 +224,20 @@ function SearchTab({ type, status, onDone }: { type: MediaType; status: EntrySta
   );
 }
 
-function ManualTab({ type, status, onDone }: { type: MediaType; status: EntryStatus; onDone: () => void }) {
+function ManualTab({
+  type,
+  status,
+  onDone,
+  prefill,
+}: {
+  type: MediaType;
+  status: EntryStatus;
+  onDone: () => void;
+  prefill?: Partial<SearchResult>;
+}) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [unit, setUnit] = useState<Unit | null>(MEDIA_TYPE_META[type].defaultUnit);
+  const [unit, setUnit] = useState<Unit | null>(prefill?.totalUnit ?? MEDIA_TYPE_META[type].defaultUnit);
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -204,26 +268,26 @@ function ManualTab({ type, status, onDone }: { type: MediaType; status: EntrySta
     <form onSubmit={submit} className="grid gap-3">
       <div className="grid gap-1.5">
         <Label htmlFor="m-title">Title</Label>
-        <Input id="m-title" name="title" required maxLength={500} />
+        <Input id="m-title" name="title" required maxLength={500} defaultValue={prefill?.title ?? ""} />
       </div>
       <div className="grid gap-1.5">
         <Label htmlFor="m-native">Japanese title (optional)</Label>
-        <Input id="m-native" name="titleNative" lang="ja" maxLength={500} />
+        <Input id="m-native" name="titleNative" lang="ja" maxLength={500} defaultValue={prefill?.titleNative ?? ""} />
       </div>
       <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-3">
         <div className="grid gap-1.5">
           <Label htmlFor="m-cover">Cover image URL (optional)</Label>
-          <Input id="m-cover" name="coverUrl" type="url" placeholder="https://…" />
+          <Input id="m-cover" name="coverUrl" type="url" placeholder="https://…" defaultValue={prefill?.coverUrl ?? ""} />
         </div>
         <div className="grid gap-1.5">
           <Label htmlFor="m-year">Year</Label>
-          <Input id="m-year" name="year" type="number" min={1800} max={2200} />
+          <Input id="m-year" name="year" type="number" min={1800} max={2200} defaultValue={prefill?.year ?? ""} />
         </div>
       </div>
       <div className="grid gap-1.5">
         <Label htmlFor="m-total">Total length (optional)</Label>
         <div className="grid grid-cols-2 gap-2">
-          <Input id="m-total" name="totalAmount" type="number" min={1} placeholder="e.g. 12" />
+          <Input id="m-total" name="totalAmount" type="number" min={1} placeholder="e.g. 12" defaultValue={prefill?.totalAmount ?? ""} />
           <Select items={UNIT_ITEMS} value={unit ?? NONE} onValueChange={(v) => setUnit(v === NONE ? null : (v as Unit))}>
             <SelectTrigger aria-label="Unit" className="w-full">
               <SelectValue />

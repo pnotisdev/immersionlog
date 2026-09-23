@@ -4,13 +4,20 @@ import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/db";
-import { ENTRY_STATUSES, MEDIA_SOURCES, MEDIA_TYPES, UNITS, libraryEntries, mediaItems } from "@/db/schema";
+import { ENTRY_STATUSES, MEDIA_TYPES, UNITS, libraryEntries, mediaItems, type MediaSource } from "@/db/schema";
 import { MEDIA_TYPE_META } from "@/lib/media";
+import { ensureEntry, upsertExternalItem } from "@/lib/media-upsert";
 import { requireUser } from "@/lib/session";
+import type { SearchResult } from "@/lib/sources/types";
 import type { ActionResult } from "./types";
 
+// Only sources with a search API. This action trusts a client-supplied hit, so the
+// scraped paste-a-link sources are deliberately not accepted here: those rows are only
+// ever built server-side (addFromUrl in ./import.ts).
+const SEARCH_SOURCES = ["anilist", "vndb", "tmdb", "google_books", "jiten"] as const satisfies readonly MediaSource[];
+
 const searchResultSchema = z.object({
-  source: z.enum(MEDIA_SOURCES.filter((s) => s !== "manual") as [string, ...string[]]),
+  source: z.enum(SEARCH_SOURCES),
   sourceId: z.string().min(1),
   mediaType: z.enum(MEDIA_TYPES),
   title: z.string().min(1).max(500),
@@ -27,7 +34,8 @@ const searchResultSchema = z.object({
 
 /** Insert-or-update a media item from an external search hit, and put it in the user's library. */
 export async function addFromSearch(
-  input: z.infer<typeof searchResultSchema>,
+  // Typed wide for callers; the schema below is what's actually accepted.
+  input: SearchResult,
   status: (typeof ENTRY_STATUSES)[number] = "planning",
 ): Promise<ActionResult<{ mediaItemId: string }>> {
   const user = await requireUser();
@@ -35,42 +43,8 @@ export async function addFromSearch(
   if (!parsed.success) return { ok: false, error: "Invalid search result" };
   const r = parsed.data;
 
-  const [item] = await db
-    .insert(mediaItems)
-    .values({
-      type: r.mediaType,
-      title: r.title,
-      titleNative: r.titleNative,
-      coverUrl: r.coverUrl,
-      bannerUrl: r.bannerUrl ?? null,
-      year: r.year,
-      description: r.description,
-      externalUrl: r.externalUrl,
-      source: r.source as (typeof MEDIA_SOURCES)[number],
-      sourceId: r.sourceId,
-      totalAmount: r.totalAmount,
-      totalUnit: r.totalUnit,
-      metadata: r.metadata,
-      createdBy: user.id,
-    })
-    .onConflictDoUpdate({
-      target: [mediaItems.source, mediaItems.sourceId],
-      set: {
-        title: r.title,
-        titleNative: r.titleNative,
-        coverUrl: r.coverUrl,
-        bannerUrl: r.bannerUrl ?? null,
-        year: r.year,
-        description: r.description,
-        externalUrl: r.externalUrl,
-        totalAmount: r.totalAmount,
-        totalUnit: r.totalUnit,
-        metadata: r.metadata,
-      },
-    })
-    .returning({ id: mediaItems.id });
-
-  await ensureEntry(user.id, item.id, status, r.totalUnit ?? MEDIA_TYPE_META[r.mediaType].defaultUnit);
+  const item = await upsertExternalItem(db, r, user.id);
+  await ensureEntry(db, user.id, item.id, status, r.totalUnit ?? MEDIA_TYPE_META[r.mediaType].defaultUnit);
   revalidatePath("/", "layout");
   return { ok: true, data: { mediaItemId: item.id } };
 }
@@ -107,30 +81,9 @@ export async function addManual(input: z.infer<typeof manualSchema>): Promise<Ac
     })
     .returning({ id: mediaItems.id });
 
-  await ensureEntry(user.id, item.id, v.status, v.totalUnit || MEDIA_TYPE_META[v.type].defaultUnit);
+  await ensureEntry(db, user.id, item.id, v.status, v.totalUnit || MEDIA_TYPE_META[v.type].defaultUnit);
   revalidatePath("/", "layout");
   return { ok: true, data: { mediaItemId: item.id } };
-}
-
-/** Create the library entry if the user doesn't have one yet. */
-async function ensureEntry(
-  userId: string,
-  mediaItemId: string,
-  status: (typeof ENTRY_STATUSES)[number],
-  progressUnit: (typeof UNITS)[number] | null,
-) {
-  const today = new Date().toISOString().slice(0, 10);
-  await db
-    .insert(libraryEntries)
-    .values({
-      userId,
-      mediaItemId,
-      status,
-      progressUnit,
-      startedAt: status === "active" ? today : null,
-      finishedAt: status === "finished" ? today : null,
-    })
-    .onConflictDoNothing({ target: [libraryEntries.userId, libraryEntries.mediaItemId] });
 }
 
 const entryPatchSchema = z.object({
@@ -225,7 +178,7 @@ export async function addExistingToLibrary(mediaItemId: string): Promise<ActionR
   const user = await requireUser();
   const item = await db.query.mediaItems.findFirst({ where: eq(mediaItems.id, mediaItemId) });
   if (!item) return { ok: false, error: "Not found" };
-  await ensureEntry(user.id, item.id, "planning", item.totalUnit ?? MEDIA_TYPE_META[item.type].defaultUnit);
+  await ensureEntry(db, user.id, item.id, "planning", item.totalUnit ?? MEDIA_TYPE_META[item.type].defaultUnit);
   revalidatePath("/", "layout");
   return { ok: true, data: undefined };
 }

@@ -49,7 +49,24 @@ export const MEDIA_TYPES = [
 export type MediaType = (typeof MEDIA_TYPES)[number];
 export const mediaTypeEnum = pgEnum("media_type", MEDIA_TYPES);
 
-export const MEDIA_SOURCES = ["manual", "anilist", "vndb", "tmdb", "google_books"] as const;
+// Append-only: Postgres can add enum values in place but not reorder or drop them.
+// Everything after google_books is a URL-import source (src/lib/sources/index.ts).
+export const MEDIA_SOURCES = [
+  "manual",
+  "anilist",
+  "vndb",
+  "tmdb",
+  "google_books",
+  "imdb",
+  "jiten",
+  "bookmeter",
+  "bookwalker",
+  "cmoa",
+  "shonenjumpplus",
+  "backloggd",
+  "dmm",
+  "jpdb",
+] as const;
 export type MediaSource = (typeof MEDIA_SOURCES)[number];
 export const mediaSourceEnum = pgEnum("media_source", MEDIA_SOURCES);
 

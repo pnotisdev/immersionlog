@@ -5,12 +5,13 @@ import { Search } from "lucide-react";
 import { toast } from "sonner";
 import { addFromSearch } from "@/actions/library";
 import { MEDIA_TYPES, type MediaType } from "@/db/schema";
-import { MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
+import { effectiveSearchSource, MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
 import type { SearchResult } from "@/lib/sources";
 import { useMediaSearch } from "@/lib/use-media-search";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { LinkHint, LinkImport, looksLikeUrl } from "./link-import";
 import type { LibraryPick } from "./types";
 
 export const NO_ITEM = "__none__";
@@ -59,10 +60,12 @@ export function ItemPicker({
   const itemLabels: Record<string, string> = { [NO_ITEM]: "Something not in my library…", ...addedLabels };
   for (const e of entries) itemLabels[e.mediaItemId] = e.title;
 
-  const meta = MEDIA_TYPE_META[value.mediaType];
-  const searchable = meta.searchSource !== null;
+  const searchSource = effectiveSearchSource(value.mediaType);
+  const searchable = searchSource !== null;
   const query = value.label.trim();
-  const { results, warning, loading } = useMediaSearch(value.mediaType, query, value.mediaItemId === null && searchable);
+  // A pasted link is imported, not searched for.
+  const isLink = looksLikeUrl(query);
+  const { results, warning, loading } = useMediaSearch(value.mediaType, query, value.mediaItemId === null && searchable && !isLink);
 
   function add(r: SearchResult) {
     if (pending) return;
@@ -145,7 +148,7 @@ export function ItemPicker({
                 )}
                 <Input
                   id={`${idPrefix}-label`}
-                  placeholder={searchable ? `Search ${SOURCE_LABELS[meta.searchSource!]}…` : "e.g. Tutor session, NHK Easy"}
+                  placeholder={searchable ? `Search ${SOURCE_LABELS[searchSource]} or paste a link…` : "e.g. Tutor session, NHK Easy"}
                   value={value.label}
                   onChange={(e) => onChange({ ...value, label: e.target.value })}
                   maxLength={200}
@@ -155,7 +158,22 @@ export function ItemPicker({
             </div>
           </div>
 
-          {searchable && query.length >= 2 && (
+          {isLink && (
+            <div className="grid gap-2">
+              <LinkHint url={query} />
+              <LinkImport
+                url={query}
+                type={value.mediaType}
+                status="active"
+                onAdded={({ mediaItemId, title, mediaType }) => {
+                  setAddedLabels((m) => ({ ...m, [mediaItemId]: title }));
+                  onChange({ mediaItemId, mediaType, label: "" });
+                }}
+              />
+            </div>
+          )}
+
+          {searchable && !isLink && query.length >= 2 && (
             <div className="grid gap-1">
               {loading && <p className="px-1.5 text-sm text-muted-foreground">Searching…</p>}
               {warning && <p className="px-1.5 text-sm text-muted-foreground">{warning}</p>}

@@ -1,0 +1,517 @@
+{
+  "data": [
+    {
+      "deckId": 40963,
+      "creationDate": "2025-03-25T14:27:34.649244+00:00",
+      "releaseDate": "2023-09-29T00:00:00",
+      "coverName": "https://cdn.jiten.moe/40963/cover.jpg",
+      "mediaType": 1,
+      "originalTitle": "葬送のフリーレン",
+      "romajiTitle": "Sousou no Frieren",
+      "englishTitle": "Frieren: Beyond Journey’s End",
+      "description": "The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. But Frieren will long outlive the rest of her former party. How will she come to…",
+      "characterCount": 102481,
+      "wordCount": 44363,
+      "uniqueWordCount": 5246,
+      "uniqueWordUsedOnceCount": 2502,
+      "uniqueKanjiCount": 1395,
+      "uniqueKanjiUsedOnceCount": 283,
+      "difficulty": 2,
+      "difficultyRaw": 2.69,
+      "difficultyOverride": -1,
+      "difficultyAlgorithmic": 2.52,
+      "sentenceCount": 0,
+      "speechDuration": 26007157,
+      "speechMoraCount": 120974,
+      "speechSpeed": 279.09393,
+      "runtimeSeconds": null,
+      "medianChildRuntimeSeconds": null,
+      "averageSentenceLength": 0,
+      "parentDeckId": null,
+      "links": [
+        {
+          "linkId": 4875,
+          "linkType": 4,
+          "url": "https://anilist.co/anime/154587",
+          "deckId": 40963
+        },
+        {
+          "linkId": 4876,
+          "linkType": 5,
+          "url": "https://myanimelist.net/anime/52991",
+          "deckId": 40963
+        }
+      ],
+      "aliases": [
+        "Frieren at the Funeral",
+        "장송의 프리렌"
+      ],
+      "dictionaryEntries": [],
+      "childrenDeckCount": 28,
+      "selectedWordOccurrences": 0,
+      "dialoguePercentage": 100,
+      "hideDialoguePercentage": false,
+      "hideAverageSentenceLength": false,
+      "coverage": 0,
+      "uniqueCoverage": 0,
+      "youngCoverage": 0,
+      "youngUniqueCoverage": 0,
+      "externalRating": 91,
+      "popularityRank": 3,
+      "popularityGlobalRank": 8,
+      "isTrending": false,
+      "popularityCounts": {
+        "inLists": 89,
+        "favourites": 17,
+        "studyDecks": 12
+      },
+      "exampleSentence": null,
+      "genres": [
+        2,
+        4,
+        6
+      ],
+      "tags": [
+        {
+          "tagId": 195,
+          "name": "Travel",
+          "percentage": 96
+        },
+        {
+          "tagId": 142,
+          "name": "Magic",
+          "percentage": 95
+        }
+      ],
+      "relationships": [
+        {
+          "targetDeckId": 129738,
+          "targetDeck": {
+            "deckId": 129738,
+            "originalTitle": "葬送のフリーレン 第2期",
+            "romajiTitle": "Sousou no Frieren 2nd Season",
+            "englishTitle": "Frieren: Beyond Journey’s End Season 2",
+            "mediaType": 1,
+            "coverName": "https://cdn.jiten.moe/129738/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 32660,
+            "parentDeckId": null
+          },
+          "relationshipType": 101,
+          "isInverse": true
+        },
+        {
+          "targetDeckId": 104950,
+          "targetDeck": {
+            "deckId": 104950,
+            "originalTitle": "葬送のフリーレン",
+            "romajiTitle": "Sousou no Frieren",
+            "englishTitle": "Frieren: Beyond Journey’s End",
+            "mediaType": 9,
+            "coverName": "https://cdn.jiten.moe/104950/cover.jpg",
+            "difficulty": 3,
+            "characterCount": 250442,
+            "parentDeckId": null
+          },
+          "relationshipType": 105,
+          "isInverse": true
+        }
+      ],
+      "status": null,
+      "isFavourite": null,
+      "isIgnored": null,
+      "distinctVoterCount": 24,
+      "userAdjustment": 0.17,
+      "adjustmentConfidence": 0.962,
+      "originalFileName": null
+    },
+    {
+      "deckId": 104950,
+      "creationDate": "2025-04-07T13:08:34.045637+00:00",
+      "releaseDate": "2020-04-28T00:00:00",
+      "coverName": "https://cdn.jiten.moe/104950/cover.jpg",
+      "mediaType": 9,
+      "originalTitle": "葬送のフリーレン",
+      "romajiTitle": "Sousou no Frieren",
+      "englishTitle": "Frieren: Beyond Journey’s End",
+      "description": "The adventure is over but life goes on for an elf mage just beginning to learn what living is all about.\r\nElf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. With the great struggle over, they all go their separate ways to live a quiet l…",
+      "characterCount": 250442,
+      "wordCount": 109387,
+      "uniqueWordCount": 9348,
+      "uniqueWordUsedOnceCount": 4087,
+      "uniqueKanjiCount": 1845,
+      "uniqueKanjiUsedOnceCount": 248,
+      "difficulty": 3,
+      "difficultyRaw": 3.12,
+      "difficultyOverride": -1,
+      "difficultyAlgorithmic": 3.12,
+      "sentenceCount": 0,
+      "speechDuration": 0,
+      "speechMoraCount": 0,
+      "speechSpeed": 0,
+      "runtimeSeconds": null,
+      "medianChildRuntimeSeconds": null,
+      "averageSentenceLength": 0,
+      "parentDeckId": null,
+      "links": [
+        {
+          "linkId": 13069,
+          "linkType": 4,
+          "url": "https://anilist.co/manga/118586",
+          "deckId": 104950
+        }
+      ],
+      "aliases": [
+        "Frieren - Pháp sư tiễn táng",
+        "Frieren at the Funeral"
+      ],
+      "dictionaryEntries": [],
+      "childrenDeckCount": 15,
+      "selectedWordOccurrences": 0,
+      "dialoguePercentage": 100,
+      "hideDialoguePercentage": false,
+      "hideAverageSentenceLength": false,
+      "coverage": 0,
+      "uniqueCoverage": 0,
+      "youngCoverage": 0,
+      "youngUniqueCoverage": 0,
+      "externalRating": 87,
+      "popularityRank": 5,
+      "popularityGlobalRank": 55,
+      "isTrending": false,
+      "popularityCounts": {
+        "inLists": 34,
+        "favourites": 20,
+        "studyDecks": 8
+      },
+      "exampleSentence": null,
+      "genres": [
+        2,
+        4,
+        6
+      ],
+      "tags": [
+        {
+          "tagId": 142,
+          "name": "Magic",
+          "percentage": 96
+        },
+        {
+          "tagId": 195,
+          "name": "Travel",
+          "percentage": 95
+        }
+      ],
+      "relationships": [
+        {
+          "targetDeckId": 129738,
+          "targetDeck": {
+            "deckId": 129738,
+            "originalTitle": "葬送のフリーレン 第2期",
+            "romajiTitle": "Sousou no Frieren 2nd Season",
+            "englishTitle": "Frieren: Beyond Journey’s End Season 2",
+            "mediaType": 1,
+            "coverName": "https://cdn.jiten.moe/129738/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 32660,
+            "parentDeckId": null
+          },
+          "relationshipType": 5,
+          "isInverse": false
+        },
+        {
+          "targetDeckId": 40963,
+          "targetDeck": {
+            "deckId": 40963,
+            "originalTitle": "葬送のフリーレン",
+            "romajiTitle": "Sousou no Frieren",
+            "englishTitle": "Frieren: Beyond Journey’s End",
+            "mediaType": 1,
+            "coverName": "https://cdn.jiten.moe/40963/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 102481,
+            "parentDeckId": null
+          },
+          "relationshipType": 5,
+          "isInverse": false
+        },
+        {
+          "targetDeckId": 121216,
+          "targetDeck": {
+            "deckId": 121216,
+            "originalTitle": "小説 葬送のフリーレン　～前奏～",
+            "romajiTitle": "Shousetsu Sousou no Frieren ~Zensou～",
+            "englishTitle": "Frieren: Beyond Journey’s End ~Prelude~",
+            "mediaType": 4,
+            "coverName": "https://cdn.jiten.moe/121216/cover.jpg",
+            "difficulty": 3,
+            "characterCount": 152691,
+            "parentDeckId": null
+          },
+          "relationshipType": 104,
+          "isInverse": true
+        }
+      ],
+      "status": null,
+      "isFavourite": null,
+      "isIgnored": null,
+      "distinctVoterCount": 0,
+      "userAdjustment": 0.0,
+      "adjustmentConfidence": 0.0,
+      "originalFileName": null
+    },
+    {
+      "deckId": 283,
+      "creationDate": "2025-03-25T13:15:25.214458+00:00",
+      "releaseDate": "2009-10-15T00:00:00",
+      "coverName": "https://cdn.jiten.moe/283/cover.jpg",
+      "mediaType": 7,
+      "originalTitle": "STEINS;GATE",
+      "romajiTitle": "STEINS;GATE",
+      "englishTitle": "Steins;Gate",
+      "description": "-Decide The Fate Of All Mankind- CAN YOU CHANGE THE COURSE OF FATE? AND SAVE THE ONES CLOSEST TO YOU?\r\nSteins;Gate follows a rag-tag band of tech-savvy young students who discover the means of changing the past via mail, using a modified microwave. Their experiments into how far they can go with the…",
+      "characterCount": 695712,
+      "wordCount": 286016,
+      "uniqueWordCount": 16193,
+      "uniqueWordUsedOnceCount": 6469,
+      "uniqueKanjiCount": 2140,
+      "uniqueKanjiUsedOnceCount": 249,
+      "difficulty": 2,
+      "difficultyRaw": 2.9299998,
+      "difficultyOverride": -1,
+      "difficultyAlgorithmic": 2.81,
+      "sentenceCount": 36113,
+      "speechDuration": 0,
+      "speechMoraCount": 0,
+      "speechSpeed": 0,
+      "runtimeSeconds": null,
+      "medianChildRuntimeSeconds": null,
+      "averageSentenceLength": 19.264864,
+      "parentDeckId": null,
+      "links": [
+        {
+          "linkId": 186,
+          "linkType": 2,
+          "url": "https://vndb.org/v2002",
+          "deckId": 283
+        }
+      ],
+      "aliases": [
+        "シュタインズ・ゲート",
+        "シュタゲ"
+      ],
+      "dictionaryEntries": [],
+      "childrenDeckCount": 0,
+      "selectedWordOccurrences": 0,
+      "dialoguePercentage": 40.663372,
+      "hideDialoguePercentage": false,
+      "hideAverageSentenceLength": false,
+      "coverage": 0,
+      "uniqueCoverage": 0,
+      "youngCoverage": 0,
+      "youngUniqueCoverage": 0,
+      "externalRating": 90,
+      "popularityRank": 2,
+      "popularityGlobalRank": 6,
+      "isTrending": false,
+      "popularityCounts": {
+        "inLists": 83,
+        "favourites": 31,
+        "studyDecks": 18
+      },
+      "exampleSentence": null,
+      "genres": [
+        3,
+        4,
+        10,
+        12,
+        13,
+        17
+      ],
+      "tags": [
+        {
+          "tagId": 18,
+          "name": "Chuunibyou",
+          "percentage": 97
+        },
+        {
+          "tagId": 4,
+          "name": "Male Protagonist",
+          "percentage": 93
+        }
+      ],
+      "relationships": [
+        {
+          "targetDeckId": 68,
+          "targetDeck": {
+            "deckId": 68,
+            "originalTitle": "CHAOS;HEAD NOAH",
+            "romajiTitle": "CHAOS;HEAD NOAH",
+            "englishTitle": "CHAOS;HEAD NOAH",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/68/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 795246,
+            "parentDeckId": null
+          },
+          "relationshipType": 1,
+          "isInverse": false
+        },
+        {
+          "targetDeckId": 22541,
+          "targetDeck": {
+            "deckId": 22541,
+            "originalTitle": "シュタインズ・ゲート",
+            "romajiTitle": "Steins;Gate",
+            "englishTitle": "Steins;Gate",
+            "mediaType": 1,
+            "coverName": "https://cdn.jiten.moe/22541/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 116907,
+            "parentDeckId": null
+          },
+          "relationshipType": 5,
+          "isInverse": false
+        },
+        {
+          "targetDeckId": 46390,
+          "targetDeck": {
+            "deckId": 46390,
+            "originalTitle": "シュタインズ・ゲート 境界面上のミッシングリンク -Divide By Zero-",
+            "romajiTitle": "Steins;Gate: Kyoukaimenjou no Missing Link - Divide By Zero",
+            "englishTitle": "Steins;Gate 0: 23β -Divide by Zero-",
+            "mediaType": 1,
+            "coverName": "https://cdn.jiten.moe/46390/cover.jpg",
+            "difficulty": 3,
+            "characterCount": 3698,
+            "parentDeckId": null
+          },
+          "relationshipType": 5,
+          "isInverse": false
+        },
+        {
+          "targetDeckId": 124013,
+          "targetDeck": {
+            "deckId": 124013,
+            "originalTitle": "ROBOTICS;NOTES",
+            "romajiTitle": "ROBOTICS;NOTES",
+            "englishTitle": "",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/124013/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 783989,
+            "parentDeckId": null
+          },
+          "relationshipType": 8,
+          "isInverse": false
+        },
+        {
+          "targetDeckId": 106847,
+          "targetDeck": {
+            "deckId": 106847,
+            "originalTitle": "STEINS;GATE 変移空間のオクテット",
+            "romajiTitle": "STEINS;GATE: Hen'i Kuukan no Octet",
+            "englishTitle": "",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/106847/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 67990,
+            "parentDeckId": null
+          },
+          "relationshipType": 102,
+          "isInverse": true
+        },
+        {
+          "targetDeckId": 122366,
+          "targetDeck": {
+            "deckId": 122366,
+            "originalTitle": "STEINS;GATE 線形拘束のフェノグラム",
+            "romajiTitle": "STEINS;GATE: Senkei Kousoku no Phenogram",
+            "englishTitle": "STEINS;GATE: Linear Bounded Phenogram",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/122366/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 527939,
+            "parentDeckId": null
+          },
+          "relationshipType": 102,
+          "isInverse": true
+        },
+        {
+          "targetDeckId": 122367,
+          "targetDeck": {
+            "deckId": 122367,
+            "originalTitle": "STEINS;GATE 比翼恋理のだーりん",
+            "romajiTitle": "STEINS;GATE Hiyoku Renri no Darling",
+            "englishTitle": "STEINS;GATE: My Darling’s Embrace",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/122367/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 447079,
+            "parentDeckId": null
+          },
+          "relationshipType": 102,
+          "isInverse": true
+        },
+        {
+          "targetDeckId": 122365,
+          "targetDeck": {
+            "deckId": 122365,
+            "originalTitle": "STEINS;GATE 0",
+            "romajiTitle": "STEINS;GATE 0",
+            "englishTitle": "",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/122365/cover.jpg",
+            "difficulty": 3,
+            "characterCount": 586820,
+            "parentDeckId": null
+          },
+          "relationshipType": 104,
+          "isInverse": true
+        },
+        {
+          "targetDeckId": 122365,
+          "targetDeck": {
+            "deckId": 122365,
+            "originalTitle": "STEINS;GATE 0",
+            "romajiTitle": "STEINS;GATE 0",
+            "englishTitle": "",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/122365/cover.jpg",
+            "difficulty": 3,
+            "characterCount": 586820,
+            "parentDeckId": null
+          },
+          "relationshipType": 101,
+          "isInverse": true
+        },
+        {
+          "targetDeckId": 68,
+          "targetDeck": {
+            "deckId": 68,
+            "originalTitle": "CHAOS;HEAD NOAH",
+            "romajiTitle": "CHAOS;HEAD NOAH",
+            "englishTitle": "CHAOS;HEAD NOAH",
+            "mediaType": 7,
+            "coverName": "https://cdn.jiten.moe/68/cover.jpg",
+            "difficulty": 2,
+            "characterCount": 795246,
+            "parentDeckId": null
+          },
+          "relationshipType": 8,
+          "isInverse": true
+        }
+      ],
+      "status": null,
+      "isFavourite": null,
+      "isIgnored": null,
+      "distinctVoterCount": 21,
+      "userAdjustment": 0.12,
+      "adjustmentConfidence": 0.945,
+      "originalFileName": null
+    }
+  ],
+  "totalItems": 5,
+  "pageSize": 50,
+  "currentOffset": 0
+}

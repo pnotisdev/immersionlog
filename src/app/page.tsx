@@ -365,7 +365,7 @@ function SiteFooter() {
           </nav>
 
           <p className="max-w-xs leading-[1.7] text-dim sm:ml-auto">
-            Cover art and metadata from AniList, VNDB, TMDB and Google Books.
+            Cover art and metadata from AniList, VNDB, TMDB, Google Books, Jiten.moe and the stores you import from.
           </p>
         </div>
       </Frame>

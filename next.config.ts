@@ -40,6 +40,17 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "image.tmdb.org" },
       { protocol: "https", hostname: "books.google.com" },
       { protocol: "https", hostname: "api.dicebear.com" },
+      // Paste-a-link importers (src/lib/sources/*.ts). Each host was checked against real
+      // cover URLs on 2026-09-23; importers drop covers on any other host.
+      { protocol: "https", hostname: "cdn.jiten.moe" },
+      { protocol: "https", hostname: "images.igdb.com" }, // Backloggd
+      { protocol: "https", hostname: "m.media-amazon.com" }, // Bookmeter (most covers)
+      { protocol: "https", hostname: "img.bookmeter.com" }, // Bookmeter (user-registered books)
+      { protocol: "https", hostname: "rimg.bookwalker.jp" },
+      { protocol: "https", hostname: "c.bookwalker.jp" },
+      { protocol: "https", hostname: "cmoa.akamaized.net" },
+      { protocol: "https", hostname: "www.cmoa.jp" },
+      { protocol: "https", hostname: "cdn-ak-img.shonenjumpplus.com" },
     ],
   },
 };

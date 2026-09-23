@@ -27,7 +27,7 @@ export function Footer({
         <Link href={homeHref} className="text-foreground">
           <Wordmark markSize={14} textClassName="text-sm font-semibold" />
         </Link>
-        <span>Cover art and metadata from AniList, VNDB, TMDB and Google Books.</span>
+        <span>Cover art and metadata from AniList, VNDB, TMDB, Google Books, Jiten.moe and the stores you import from.</span>
         <Link href="/terms" className="hover:text-foreground">
           Terms
         </Link>
