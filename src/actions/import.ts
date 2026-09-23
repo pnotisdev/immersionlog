@@ -28,6 +28,12 @@ export type PreviewResult =
   | { ok: true; result: SearchResult; warnings: string[] }
   | { ok: false; error: string; partial?: Partial<SearchResult> };
 
+/** Log line for a failure: the user-safe message hides the upstream status/cause. */
+function describeError(err: unknown): string {
+  if (err instanceof ImportError) return `${err.code}${err.detail != null ? ` (${err.detail})` : ""}`;
+  return err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+}
+
 function limited(userId: string, limiter: typeof importRateLimit): string | null {
   const { allowed, retryAfterMs } = limiter(userId);
   return allowed ? null : `Too many imports. Try again in ${Math.ceil(retryAfterMs / 1000)}s.`;
@@ -100,7 +106,7 @@ export async function searchJitenForItem(mediaItemId: string, query?: string): P
   try {
     return { ok: true, data: await jitenCandidates(q, item.type) };
   } catch (err) {
-    console.warn("[jiten] search failed:", err instanceof Error ? err.message : err);
+    console.warn("[jiten] search failed:", q, describeError(err));
     return { ok: false, error: "Jiten.moe didn't respond. Try again in a moment." };
   }
 }
@@ -116,7 +122,7 @@ export async function listJitenSubDecks(deckId: number, offset = 0): Promise<Act
   try {
     return { ok: true, data: await jitenSubDecks(d.data, off.data) };
   } catch (err) {
-    console.warn("[jiten] sub-decks failed:", err instanceof Error ? err.message : err);
+    console.warn("[jiten] sub-decks failed:", d.data, off.data, describeError(err));
     return { ok: false, error: "Jiten.moe didn't respond. Try again in a moment." };
   }
 }
@@ -139,7 +145,7 @@ export async function linkJitenDeck(mediaItemId: string, deckId: number): Promis
     const { data } = await fetchJitenDetail(d.data);
     jiten = jitenStats(data.mainDeck, data.parentDeck);
   } catch (err) {
-    console.warn("[jiten] link failed:", mediaItemId, d.data, err instanceof Error ? err.message : err);
+    console.warn("[jiten] link failed:", mediaItemId, d.data, describeError(err));
     return { ok: false, error: err instanceof ImportError ? err.message : "Couldn't load that Jiten.moe deck." };
   }
 

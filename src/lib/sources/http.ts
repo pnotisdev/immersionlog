@@ -128,7 +128,31 @@ function decode(bytes: Uint8Array, contentType: string): string {
   }
 }
 
+const RETRY_DELAY_MS = 400;
+
+/** Worth one more try: the connection dropped or the upstream had a 5xx moment. */
+function isTransient(err: unknown): boolean {
+  if (!(err instanceof ImportError) || err.code !== "upstream_status") return false;
+  return typeof err.detail === "number" ? err.detail >= 500 : true;
+}
+
+/**
+ * Fetch with the allowlist/redirect/size rules below, retrying once (after a short
+ * pause) on a network error or 5xx. Every importer request is an idempotent GET, and
+ * one retry is gentle enough for small sites; 4xx, blocked hosts, oversized bodies and
+ * timeouts (already 8 s) are not retried.
+ */
 export async function safeFetchText(input: string | URL, opts: SafeFetchOptions): Promise<SafeFetchResult> {
+  try {
+    return await fetchOnce(input, opts);
+  } catch (err) {
+    if (!isTransient(err)) throw err;
+    await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+    return fetchOnce(input, opts);
+  }
+}
+
+async function fetchOnce(input: string | URL, opts: SafeFetchOptions): Promise<SafeFetchResult> {
   const accept = opts.accept ?? "html";
   const maxBytes = opts.maxBytes ?? (accept === "json" ? 1024 * 1024 : 3 * 1024 * 1024);
   const signal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
@@ -177,7 +201,9 @@ export async function safeFetchText(input: string | URL, opts: SafeFetchOptions)
     if (err instanceof Error && (err.name === "TimeoutError" || err.name === "AbortError")) {
       throw new ImportError("timeout", url.hostname);
     }
-    throw new ImportError("upstream_status", err instanceof Error ? err.message : String(err));
+    // Network-level failures ("fetch failed") hide the real reason in `cause`.
+    const cause = err instanceof Error && err.cause instanceof Error ? ` <- ${err.cause.message}` : "";
+    throw new ImportError("upstream_status", err instanceof Error ? `${err.name}: ${err.message}${cause}` : String(err));
   }
 }
 

@@ -75,6 +75,36 @@ describe("safeFetchText", () => {
     await expect(safeFetchText("https://example.jp/", { allowedHosts: ["example.jp"] })).rejects.toMatchObject({ code: "upstream_status", detail: 403 });
   });
 
+  it("retries once on a 5xx or network error, never on a 4xx", async () => {
+    let n = 0;
+    stubFetch(() => (++n === 1 ? new Response("busy", { status: 503 }) : html("ok")));
+    expect((await safeFetchText("https://example.jp/", { allowedHosts: ["example.jp"] })).text).toBe("ok");
+    expect(n).toBe(2);
+
+    n = 0;
+    vi.stubGlobal("fetch", vi.fn(async () => {
+      if (++n === 1) throw new TypeError("fetch failed", { cause: new Error("ECONNRESET") });
+      return html("ok");
+    }));
+    expect((await safeFetchText("https://example.jp/", { allowedHosts: ["example.jp"] })).text).toBe("ok");
+
+    n = 0;
+    stubFetch(() => {
+      n++;
+      return new Response("no", { status: 403 });
+    });
+    await expect(safeFetchText("https://example.jp/", { allowedHosts: ["example.jp"] })).rejects.toMatchObject({ detail: 403 });
+    expect(n).toBe(1);
+
+    n = 0;
+    stubFetch(() => {
+      n++;
+      return new Response("down", { status: 502 });
+    });
+    await expect(safeFetchText("https://example.jp/", { allowedHosts: ["example.jp"] })).rejects.toMatchObject({ detail: 502 });
+    expect(n).toBe(2);
+  });
+
   it("sends a truthful UA and Accept-Language", async () => {
     let headers: Record<string, string> = {};
     vi.stubGlobal(
