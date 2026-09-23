@@ -11,7 +11,8 @@ import {
   type MediaType,
   type Unit,
 } from "@/db/schema";
-import { dayEnd, dayStart, eachDayKey } from "./dates";
+import { addDays } from "date-fns";
+import { dayEnd, dayKey, dayStart, eachDayKey } from "./dates";
 
 // --- Timer ---
 
@@ -102,6 +103,27 @@ export function buildHeatmapDays(daily: Map<string, { seconds: number; count: nu
     seconds: daily.get(key)?.seconds ?? 0,
     sessions: daily.get(key)?.count ?? 0,
   }));
+}
+
+/**
+ * Every active day a user has, in their timezone, as compact `[key, seconds, sessions]`
+ * tuples for the client-side ActivityHeatmap, which slices whatever span the viewer picks
+ * (3 months … all time) out of it without another round trip. One row per *active* day,
+ * so even years of history stay a small payload.
+ */
+export async function getHeatmapActivity(userId: string, tz: string, now = new Date()): Promise<HeatmapActivity> {
+  const daily = await getDailyTotals(userId, new Date(0), addDays(now, 1), tz);
+  return {
+    today: dayKey(now, tz),
+    days: [...daily.entries()].map(([key, d]) => [key, d.seconds, d.count] as [string, number, number]),
+  };
+}
+
+export interface HeatmapActivity {
+  /** "YYYY-MM-DD" in the user's timezone — the grid ends here. */
+  today: string;
+  /** Active days only, oldest first. */
+  days: [key: string, seconds: number, sessions: number][];
 }
 
 export async function getTypeBreakdown(userId: string, from: Date, to: Date) {

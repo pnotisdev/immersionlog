@@ -19,9 +19,15 @@ export interface StripStat {
  */
 export function StatStrip({ stats, className }: { stats: StripStat[]; className?: string }) {
   return (
-    <dl className={cn("grid grid-cols-2 divide-x divide-y divide-border border-y border-border sm:grid-cols-4 sm:divide-y-0", className)}>
+    // Rules are drawn per cell rather than with divide-*: on the 2×2 phone grid a
+    // divide-x also rules the left edge of row two, and first:pl-0 only un-indents one
+    // of the two cells that start a row. Here each row starts flush and gets its own rules.
+    <dl className={cn("grid grid-cols-2 border-y border-border sm:grid-cols-4", className)}>
       {stats.map((s) => (
-        <div key={s.label} className="min-w-0 px-4 py-3 first:pl-0">
+        <div
+          key={s.label}
+          className="min-w-0 border-border py-3 pr-4 even:border-l even:pl-4 nth-[n+3]:border-t sm:nth-[n+3]:border-t-0 sm:not-first:border-l sm:not-first:pl-4"
+        >
           <dt className="section-label truncate">{s.label}</dt>
           <dd className={cn("mt-1 truncate font-semibold text-foreground", s.hero ? "text-display" : "text-h1")}>{s.value}</dd>
           {(s.hint || s.delta) && (

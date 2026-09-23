@@ -213,14 +213,10 @@ async function Pillars({ top }: { top: Awaited<ReturnType<typeof getLeaderboard>
             for.
           </p>
         </div>
-        {/* The SVG carries width/height attributes as well as a viewBox, so capping its
-            max-width is what lets a full year shrink to fit this column instead of
-            growing the horizontal scrollbar its own wrapper would otherwise show. */}
-        <div
-          data-reveal
-          className="rounded-lg border border-border bg-surface p-5 sm:p-7 [&_svg]:h-auto [&_svg]:max-w-full"
-        >
-          <Heatmap days={days} />
+        {/* minCell: a full year shrinks to fit this column, as a picture of the product,
+            instead of scrolling the way the in-app heatmap does on a phone. */}
+        <div data-reveal className="rounded-lg border border-border bg-surface p-5 sm:p-7">
+          <Heatmap days={days} minCell={3} gap={2} />
         </div>
       </div>
 

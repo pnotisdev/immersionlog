@@ -20,7 +20,7 @@ export interface QuickLogItem {
 }
 
 /**
- * "Continue": the `lg` (168px) card size, one click opens a pre-filled session form.
+ * "Continue": 144px cards, one click opens a pre-filled session form.
  * Caller only renders this once there's at least one item.
  */
 export function QuickLogGrid({
@@ -44,10 +44,10 @@ export function QuickLogGrid({
             key={it.mediaItemId}
             type="button"
             onClick={() => setActive(it)}
-            className="group block w-[168px] shrink-0 rounded-md text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="group block w-[144px] shrink-0 rounded-md text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
             title={`Log ${it.title}`}
           >
-            <Poster src={it.coverUrl} title={it.title} type={it.type} sizes="168px" />
+            <Poster src={it.coverUrl} title={it.title} type={it.type} sizes="144px" />
             <p className="mt-1.5 line-clamp-2 h-10 text-h3 leading-snug font-semibold group-hover:text-primary">{it.title}</p>
             <p className="truncate text-meta text-dim">
               {formatDuration(it.seconds)} · {it.lastLabel}

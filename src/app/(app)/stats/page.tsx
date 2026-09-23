@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Suspense } from "react";
 import { differenceInCalendarDays, subMonths } from "date-fns";
 import { eachDayKey, presetRange } from "@/lib/dates";
@@ -6,13 +5,14 @@ import { formatCompact, formatDuration, formatMonthYear, formatNumber, pluralize
 import { UNIT_LABELS } from "@/lib/media";
 import { xpFromSeconds } from "@/lib/progression";
 import { getGroupTotals, getProgression, getReadingMetrics } from "@/lib/progression-queries";
-import { getDailyTotals, getLifetimeStats, getSessionsInRange, getTopItems, getTypeBreakdown } from "@/lib/queries";
+import { getDailyTotals, getHeatmapActivity, getLifetimeStats, getSessionsInRange, getTopItems, getTypeBreakdown } from "@/lib/queries";
 import { resolveRange } from "@/lib/range-params";
 import { requireUser } from "@/lib/session";
 import { SectionHeader } from "@/components/layout/page-header";
+import { Panel } from "@/components/layout/panel";
 import { MonthCompare } from "@/components/progression/month-compare";
 import { ColumnChart } from "@/components/stats/column-chart";
-import { Heatmap } from "@/components/stats/heatmap";
+import { ActivityHeatmap } from "@/components/stats/activity-heatmap";
 import { RangePicker } from "@/components/stats/range-picker";
 import { SplitBar, StatStrip } from "@/components/stats/stat-strip";
 import { TopTitles } from "@/components/stats/top-titles";
@@ -28,7 +28,6 @@ export default async function StatsPage(props: PageProps<"/stats">) {
   const range = resolveRange({ range: str(sp.range), from: str(sp.from), to: str(sp.to) }, tz, "month");
 
   const monthRange = presetRange("month", tz, now);
-  const heatRange = presetRange("365d", tz, now);
   // Same slice of last month (1st -> now) so the comparison is like-for-like.
   const lastMonthFrom = subMonths(monthRange.from, 1);
   const lastMonthTo = subMonths(now, 1);
@@ -43,15 +42,10 @@ export default async function StatsPage(props: PageProps<"/stats">) {
       getGroupTotals(user.id, range.from, range.to),
       getReadingMetrics(user.id, range.from, range.to),
       getProgression(user.id, tz, now),
-      getDailyTotals(user.id, heatRange.from, heatRange.to, tz),
+      getHeatmapActivity(user.id, tz, now),
       getGroupTotals(user.id, monthRange.from, monthRange.to),
       getGroupTotals(user.id, lastMonthFrom, lastMonthTo),
     ]);
-  const heatDaysFull = eachDayKey(heatRange.from, heatRange.to, tz).map((k) => ({
-    key: k,
-    seconds: heat.get(k)?.seconds ?? 0,
-    sessions: heat.get(k)?.count ?? 0,
-  }));
 
   const totalSeconds = [...daily.values()].reduce((a, d) => a + d.seconds, 0);
   const sessionCount = [...daily.values()].reduce((a, d) => a + d.count, 0);
@@ -73,11 +67,6 @@ export default async function StatsPage(props: PageProps<"/stats">) {
 
   const nonZeroChartDays = columns.filter((c) => c.seconds > 0).length;
 
-  const activeDaysInHeatRange = heatDaysFull.filter((d) => d.seconds > 0).length;
-  // A light user's 52 flat weeks read as one step of the ramp; show the last 12 weeks instead (redesign.md §7).
-  const heatmapIsShortRange = activeDaysInHeatRange < 10;
-  const heatDaysShown = heatmapIsShortRange ? heatDaysFull.slice(-84) : heatDaysFull;
-
   return (
     <div>
       <Suspense>
@@ -96,14 +85,14 @@ export default async function StatsPage(props: PageProps<"/stats">) {
         </p>
       </div>
 
-      <div className="mt-6">
+      <Panel className="mt-6" title={bucket === "day" ? "Per day" : bucket === "week" ? "Per week" : "Per month"}>
         {/* Never an axis with nothing on it (redesign.md §7). */}
         {nonZeroChartDays >= 3 ? (
-          <ColumnChart columns={columns} height={190} />
+          <ColumnChart columns={columns} height={200} />
         ) : (
           <p className="py-10 text-center text-sm text-muted-foreground">Log 3 days to see your trend.</p>
         )}
-      </div>
+      </Panel>
 
       <StatStrip
         className="mt-8"
@@ -119,17 +108,15 @@ export default async function StatsPage(props: PageProps<"/stats">) {
         ]}
       />
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <section>
-          <SectionHeader title="What you spent it on" />
+      <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <Panel title="What you spent it on">
           <TopTitles
             items={top.map((t) => ({ ...t, detail: `${t.count} session${t.count === 1 ? "" : "s"}` }))}
             emptyText="No sessions tied to a library item in this range."
           />
-        </section>
+        </Panel>
 
-        <section>
-          <SectionHeader title="Reading vs listening" />
+        <Panel title="Reading vs listening">
           <SplitBar
             segments={[
               { label: "Reading", seconds: groups.reading, color: "bg-d-reading" },
@@ -139,11 +126,10 @@ export default async function StatsPage(props: PageProps<"/stats">) {
           <p className="mt-2 text-xs text-muted-foreground">
             {formatDuration(groups.reading)} reading · {formatDuration(groups.listening)} listening
           </p>
-          <div className="mt-7">
-            <SectionHeader title="By medium" />
+          <div className="mt-6">
             <TypeBars rows={breakdown} />
           </div>
-        </section>
+        </Panel>
       </div>
 
       {(reading.characters > 0 || reading.pages > 0) && (
@@ -187,21 +173,11 @@ export default async function StatsPage(props: PageProps<"/stats">) {
         <MonthCompare current={monthTotals} previous={lastMonthTotals} />
       </section>
 
-      <section className="mt-10">
-        <SectionHeader
-          title={heatmapIsShortRange ? "Last 12 weeks" : "Past year"}
-          action={
-            <Link href="/stats?range=all" className="text-xs text-muted-foreground hover:text-foreground">
-              All time
-            </Link>
-          }
-        />
-        <Heatmap days={heatDaysShown} />
-        <p className="mt-3 text-xs text-muted-foreground">
-          {progression.activeDays} active days all time
-          {lifetime.firstSession && <> · tracking since {formatMonthYear(String(lifetime.firstSession))}</>}
-        </p>
-      </section>
+      <ActivityHeatmap className="mt-10" activity={heat} />
+      <p className="mt-3 text-xs text-muted-foreground">
+        {progression.activeDays} active days all time
+        {lifetime.firstSession && <> · tracking since {formatMonthYear(String(lifetime.firstSession))}</>}
+      </p>
     </div>
   );
 }

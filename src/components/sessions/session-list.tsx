@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { deleteSession } from "@/actions/sessions";
 import { formatDuration, formatNumber } from "@/lib/format";
 import { MEDIA_TYPE_META, unitLabel } from "@/lib/media";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Thumb } from "@/components/media/poster";
 import type { LibraryPick } from "@/components/library/types";
@@ -30,12 +31,15 @@ export function SessionList({
   tz,
   groupByDay = true,
   emptyText = "No sessions yet.",
+  framed = true,
 }: {
   sessions: SessionView[];
   entries: LibraryPick[];
   tz: string;
   groupByDay?: boolean;
   emptyText?: string;
+  /** false inside a flush Panel: the panel is the frame, rows run edge to edge. */
+  framed?: boolean;
 }) {
   const router = useRouter();
   const [editing, setEditing] = useState<SessionView | null>(null);
@@ -69,7 +73,9 @@ export function SessionList({
     });
   }
 
-  if (sessions.length === 0) return <p className="text-sm text-muted-foreground">{emptyText}</p>;
+  if (sessions.length === 0) {
+    return <p className={cn("text-sm text-muted-foreground", !framed && "px-4 py-6 sm:px-5")}>{emptyText}</p>;
+  }
 
   return (
     <div className="grid gap-5">
@@ -81,11 +87,11 @@ export function SessionList({
               <span className="tabular-nums text-muted-foreground">{formatDuration(g.seconds)}</span>
             </div>
           )}
-          <ul className="divide-y rounded-md border">
+          <ul className={framed ? "divide-y rounded-md border" : "divide-y divide-border/70"}>
             {g.items.map((s) => {
               const what = s.title ?? s.label ?? MEDIA_TYPE_META[s.mediaType].label;
               return (
-                <li key={s.id} className="group flex min-h-16 items-center gap-4 px-4 py-3">
+                <li key={s.id} className={cn("group flex min-h-16 items-center gap-4 py-3", framed ? "px-4" : "px-4 sm:px-5")}>
                   <Thumb src={s.coverUrl} title={what} size="sm" />
                   <div className="min-w-0 flex-1">
                     {s.mediaItemId ? (
