@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ItemPicker, type PickerValue } from "@/components/library/item-picker";
 import type { LibraryPick } from "@/components/library/types";
+import { countChars } from "@/lib/characters";
 
 const SOURCES = {
   luna: { label: "LunaTranslator", url: "ws://localhost:2333/api/ws/text/origin", hint: "Settings → Network service: enable the HTTP/WebSocket server (default port 2333)." },
@@ -35,15 +36,6 @@ interface Line {
   chars: number;
 }
 
-/** Characters that count toward reading: everything except whitespace and punctuation. */
-export function countChars(text: string): number {
-  let n = 0;
-  for (const ch of text) {
-    if (/[\s\p{P}\p{S}]/u.test(ch)) continue;
-    n++;
-  }
-  return n;
-}
 
 /** Pull the text out of a message that may be plain text or a JSON envelope. */
 function extractText(raw: string): string {

@@ -2,15 +2,15 @@ import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site";
 
 /**
- * Every route under src/app/(app)/ requires a signed-in session (src/app/(app)/layout.tsx
- * calls requireUser(), which redirects anonymous requests to /login) — crawling any of
- * them just burns crawl budget on a redirect, so they're disallowed explicitly rather
- * than relying on that redirect alone. /forgot-password and /reset-password are
- * excluded too (meaningless without a live token; see sitemap.ts). All /api/* routes
- * are disallowed outright — data endpoints, not pages.
+ * Crawling is blocked only where it's pure waste: the signed-in app (anonymous
+ * requests get a 307 to /login from src/proxy.ts), token-only pages, and /api. Not
+ * blocked, on purpose:
+ * - /u/… profiles and reports are noindexed in their metadata instead. A robots.txt
+ *   block would stop crawlers from seeing that noindex, and X/Twitter's card fetcher
+ *   honours robots.txt, so shared profile links would lose their preview image.
+ * - /media/… sends anonymous visitors (and crawlers) to the public /titles/… page.
  *
- * Keep this list in sync with the route table `pnpm build` prints when adding a new
- * top-level page under src/app/(app)/.
+ * Keep the list in sync with PRIVATE_PREFIXES in src/proxy.ts.
  */
 const DISALLOWED_APP_ROUTES = [
   "/dashboard",
@@ -25,8 +25,6 @@ const DISALLOWED_APP_ROUTES = [
   "/settings",
   "/stats",
   "/texthooker",
-  "/media",
-  "/u",
   "/admin",
 ];
 

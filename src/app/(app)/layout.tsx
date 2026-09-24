@@ -1,9 +1,13 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { MobileTabs, Nav } from "@/components/layout/nav";
 import { MEDIA_TYPE_META } from "@/lib/media";
 import { getActiveTimer } from "@/lib/queries";
 import { requireUser } from "@/lib/session";
 import { AdultCoversPref } from "@/components/media/adult-covers-pref";
+
+// Signed-in app pages: redirected for anonymous visitors (src/proxy.ts); never indexed.
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await requireUser();

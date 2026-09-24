@@ -16,11 +16,15 @@ import { MediaCard } from "@/components/library/media-card";
 import { Poster } from "@/components/media/poster";
 import { Avatar } from "@/components/ranking/avatar";
 import { Heatmap } from "@/components/stats/heatmap";
+import type { Metadata } from "next";
+import { JsonLd, siteJsonLd } from "@/lib/seo";
 
-export const metadata = {
-  title: "immersionlog: count every hour of Japanese",
+export const metadata: Metadata = {
+  // Absolute: the root layout's "%s · immersionlog" template would repeat the name.
+  title: { absolute: "immersionlog: Japanese immersion tracker" },
   description:
-    "A tracker for Japanese immersion. Start a timer or log a session after the fact, across anime, manga, visual novels, books and podcasts, and get the hours, the characters read, the streak and a shared ranking.",
+    "A free tracker for Japanese immersion. Start a timer or log a session after the fact, across anime, manga, visual novels, books, YouTube and podcasts, and get your hours, characters read, streak and a shared ranking.",
+  alternates: { canonical: "/" },
 };
 
 const HERO_LINES = ["Count every hour", "of Japanese you put in."] as const;
@@ -38,6 +42,7 @@ export default async function LandingPage() {
   return (
     // data-landing tells the shared <body> to go dark with it (see globals.css).
     <div data-landing className="dark flex min-h-svh flex-col overflow-x-clip bg-background text-foreground">
+      <JsonLd data={siteJsonLd()} />
       <LandingMotion />
       <SiteHeader />
 
@@ -347,6 +352,15 @@ function SiteFooter() {
                 {label}
               </a>
             ))}
+          </nav>
+
+          <nav className="grid gap-3 text-muted-foreground">
+            <Link href="/titles" className="transition-colors hover:text-foreground">
+              Japanese titles
+            </Link>
+            <Link href="/tools/reading-speed" className="transition-colors hover:text-foreground">
+              Reading speed test
+            </Link>
           </nav>
 
           <nav className="grid gap-3 text-muted-foreground">

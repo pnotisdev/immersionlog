@@ -8,6 +8,7 @@ import { MEDIA_TYPE_META, SOURCE_LABELS, UNIT_LABELS } from "@/lib/media";
 import { listMilestonesForEntry } from "@/lib/milestones-queries";
 import { getLibraryEntry, getMediaItem, getSessionsForItem } from "@/lib/queries";
 import { getMediaCommunity } from "@/lib/social-queries";
+import { titlePath } from "@/lib/titles";
 import { requireUser } from "@/lib/session";
 import { jpdbEnabled } from "@/lib/sources/jpdb";
 import type { JitenStats } from "@/lib/sources/types";
@@ -148,6 +149,12 @@ export default async function MediaPage(props: PageProps<"/media/[id]">) {
                   {item.source === "tmdb" ? <TmdbLogo className="h-3.5 w-auto" /> : SOURCE_LABELS[item.source]}{" "}
                   <ExternalLink className="size-3" />
                 </a>
+              )}
+              {/* The page to share: it works for people without an account. */}
+              {item.source !== "manual" && (
+                <Link href={titlePath(item)} className="hover:text-foreground">
+                  Public page
+                </Link>
               )}
             </div>
             <h1 className="mt-1.5 text-xl font-semibold sm:text-3xl">{item.title}</h1>

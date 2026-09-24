@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: { default: "immersionlog", template: "%s · immersionlog" },
   description: "Track everything you consume in Japanese: anime, manga, VNs, books, movies, podcasts, and your hours.",
+  applicationName: "immersionlog",
+  openGraph: { siteName: "immersionlog", type: "website", locale: "en_US" },
+  twitter: { card: "summary_large_image" },
+  // Search Console / Bing Webmaster ownership, set per deployment.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -3,7 +3,7 @@
 // contact), not reviewed by a lawyer. Have counsel review before a real launch.
 import type { ReactNode } from "react";
 
-export const metadata = { title: "Privacy Policy" };
+export const metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" } };
 
 // Exported so sitemap.ts can report an accurate <lastmod> without duplicating the date.
 export const LAST_UPDATED = "2026-09-16";

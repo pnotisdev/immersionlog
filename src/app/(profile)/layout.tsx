@@ -6,7 +6,7 @@ import { Wordmark } from "@/components/layout/mark";
 import { MobileTabs, Nav } from "@/components/layout/nav";
 
 /**
- * Chrome for /u/[username] — the one part of the app a logged-out visitor can open
+ * Chrome for the public pages (/u/[username], /titles, /tools) — the parts a logged-out visitor can open
  * (see src/app/(app)/layout.tsx's requireUser() for why everything else can't: a
  * profile link is meant to work when dropped in Discord/Reddit/X by someone who has
  * never signed up). getSession() (no redirect) instead of requireUser(), and the real

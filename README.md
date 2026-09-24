@@ -61,6 +61,7 @@ Demo accounts are real accounts you can sign in as: `<handle>@demo.immersionlog.
 | `DATABASE_URL` | production | Postgres connection string. Unset = embedded PGlite in `./.pglite` |
 | `TMDB_API_KEY` | optional | Enables movie/series search. Free at themoviedb.org → Settings → API |
 | `GOOGLE_BOOKS_API_KEY` | optional | Books search works without it (rate-limited) |
+| `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` | optional | Search Console / Bing Webmaster ownership meta tags |
 | `YOUTUBE_API_KEY` | optional | YouTube links work without it (title, channel, thumbnail via oEmbed); with a Data API v3 key they also get length, publish date and description |
 | `ENABLE_JPDB` | optional | `1` shows an "Add JPDB link" control on media pages. Link-out only: JPDB's terms forbid automated access, so it's never fetched |
 | `DMM_ALLOW_ADULT` | optional | `1` accepts links to DMM's adult storefront (`dlsoft.dmm.co.jp`). Off by default; DMM covers aren't imported on either host |

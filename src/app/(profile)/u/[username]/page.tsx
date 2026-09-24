@@ -29,11 +29,18 @@ import { TypeBars } from "@/components/stats/type-bars";
 import { TopTitles } from "@/components/stats/top-titles";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { EmbedCard } from "@/components/community/embed-card";
 
 export async function generateMetadata(props: PageProps<"/u/[username]">) {
   const { username } = await props.params;
   const u = USERNAME_RE.test(username) ? await getPublicUser(username) : null;
-  return { title: u ? u.name : "Profile" };
+  // Shareable (link previews work) but kept out of search results: people chose a
+  // public profile for other learners, not for their name to show up on Google.
+  return {
+    title: u ? u.name : "Profile",
+    description: u ? `${u.name}'s Japanese immersion on immersionlog: hours, streak and what they're reading and watching.` : undefined,
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function ProfilePage(props: PageProps<"/u/[username]">) {
@@ -285,6 +292,8 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
               <MilestoneList milestones={highlights} inset />
             </Panel>
           )}
+
+          {isSelf && u.username && progression.totals.total > 0 && <EmbedCard base={getSiteUrl()} username={u.username} />}
         </div>
       </div>
     </div>

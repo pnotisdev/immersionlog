@@ -35,7 +35,11 @@ function resolveRange(year: string, tz: string, from?: string, to?: string) {
 export async function generateMetadata(props: PageProps<"/u/[username]/report/[year]">) {
   const { username, year } = await props.params;
   const u = USERNAME_RE.test(username) ? await getPublicUser(username) : null;
-  return { title: u ? `${u.name}'s ${year} Immersion Report` : "Immersion Report" };
+  return {
+    title: u ? `${u.name}'s ${year} Immersion Report` : "Immersion Report",
+    description: u ? `${u.name}'s year of Japanese immersion in ${year}, tracked on immersionlog.` : undefined,
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function ReportPage(props: PageProps<"/u/[username]/report/[year]">) {

@@ -3,7 +3,7 @@
 // real launch, especially around EU/UK consumer protection and liability caps.
 import type { ReactNode } from "react";
 
-export const metadata = { title: "Terms of Service" };
+export const metadata = { title: "Terms of Service", alternates: { canonical: "/terms" } };
 
 // Exported so sitemap.ts can report an accurate <lastmod> without duplicating the date.
 export const LAST_UPDATED = "2026-09-16";

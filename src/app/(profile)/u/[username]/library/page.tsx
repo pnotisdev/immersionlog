@@ -14,7 +14,7 @@ import { LibraryBrowser } from "@/components/library/library-browser";
 export async function generateMetadata(props: PageProps<"/u/[username]/library">) {
   const { username } = await props.params;
   const u = USERNAME_RE.test(username) ? await getPublicUser(username) : null;
-  return { title: u ? `${u.name}'s library` : "Library" };
+  return { title: u ? `${u.name}'s library` : "Library", robots: { index: false, follow: true } };
 }
 
 export default async function UserLibraryPage(props: PageProps<"/u/[username]/library">) {
