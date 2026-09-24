@@ -4,9 +4,12 @@ import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/db";
-import { MEDIA_TYPES, UNITS, activeTimers, immersionSessions, libraryEntries, mediaItems } from "@/db/schema";
+import { MEDIA_TYPES, type MediaType, UNITS, activeTimers, immersionSessions, libraryEntries, mediaItems } from "@/db/schema";
+import { importRateLimit } from "@/lib/import-rate-limit";
 import { MEDIA_TYPE_META } from "@/lib/media";
+import { upsertExternalItem } from "@/lib/media-upsert";
 import { requireUser } from "@/lib/session";
+import { findImporter, importFromUrl } from "@/lib/sources";
 import type { ActionResult } from "./types";
 
 const optionalInt = z.coerce.number().int().min(0).nullable().optional().or(z.literal(""));
@@ -36,6 +39,26 @@ function normalize(v: SessionInput) {
     amountUnit: v.amountUnit || null,
     notes: v.notes || null,
   };
+}
+
+/**
+ * A supported link typed as the label (pasted, then saved without pressing "Read link")
+ * becomes the real item instead of a URL label. Anything that fails keeps the label.
+ */
+async function resolveLinkLabel<T extends { mediaItemId: string | null; mediaType: MediaType; label: string | null }>(
+  userId: string,
+  v: T,
+): Promise<T> {
+  if (v.mediaItemId || !v.label || !findImporter(v.label)) return v;
+  if (!importRateLimit(userId).allowed) return v;
+  try {
+    const { result } = await importFromUrl(v.label, { hintType: v.mediaType });
+    const item = await upsertExternalItem(db, result, userId);
+    return { ...v, mediaItemId: item.id, mediaType: result.mediaType, label: null };
+  } catch (err) {
+    console.warn("[sessions] link label not resolved:", v.label.slice(0, 200), err instanceof Error ? err.message : err);
+    return v;
+  }
 }
 
 /** If the session references an item the user owns, make sure there's a library entry and bump its progress. */
@@ -85,7 +108,7 @@ export async function createSession(input: SessionInput): Promise<ActionResult<{
   const user = await requireUser();
   const parsed = sessionInputSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
-  const v = normalize(parsed.data);
+  const v = await resolveLinkLabel(user.id, normalize(parsed.data));
 
   const [row] = await db
     .insert(immersionSessions)
@@ -101,7 +124,7 @@ export async function updateSession(id: string, input: SessionInput): Promise<Ac
   const user = await requireUser();
   const parsed = sessionInputSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
-  const v = normalize(parsed.data);
+  const v = await resolveLinkLabel(user.id, normalize(parsed.data));
 
   const existing = await db.query.immersionSessions.findFirst({
     where: and(eq(immersionSessions.id, id), eq(immersionSessions.userId, user.id)),
@@ -162,10 +185,14 @@ export async function startTimer(input: z.infer<typeof startTimerSchema>): Promi
   const user = await requireUser();
   const parsed = startTimerSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Invalid input" };
-  const v = parsed.data;
+  const v = await resolveLinkLabel(user.id, {
+    mediaItemId: parsed.data.mediaItemId || null,
+    mediaType: parsed.data.mediaType,
+    label: parsed.data.label || null,
+  });
 
   let mediaType = v.mediaType;
-  const mediaItemId = v.mediaItemId || null;
+  const mediaItemId = v.mediaItemId;
   if (mediaItemId) {
     const item = await db.query.mediaItems.findFirst({ where: eq(mediaItems.id, mediaItemId) });
     if (!item) return { ok: false, error: "Media item not found" };

@@ -51,6 +51,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cmoa.akamaized.net" },
       { protocol: "https", hostname: "www.cmoa.jp" },
       { protocol: "https", hostname: "cdn-ak-img.shonenjumpplus.com" },
+      { protocol: "https", hostname: "i.ytimg.com" }, // YouTube thumbnails
     ],
   },
 };

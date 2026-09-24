@@ -62,6 +62,7 @@ export function ItemPicker({
 
   const searchSource = effectiveSearchSource(value.mediaType);
   const searchable = searchSource !== null;
+  const linkable = MEDIA_TYPE_META[value.mediaType].importSources.length > 0;
   const query = value.label.trim();
   // A pasted link is imported, not searched for.
   const isLink = looksLikeUrl(query);
@@ -141,14 +142,20 @@ export function ItemPicker({
               </Select>
             </div>
             <div className="grid gap-1.5">
-              <Label htmlFor={`${idPrefix}-label`}>{searchable ? "Search or type a label" : "Label"}</Label>
+              <Label htmlFor={`${idPrefix}-label`}>{searchable ? "Search or type a label" : linkable ? "Link or label" : "Label"}</Label>
               <div className="relative">
                 {searchable && (
                   <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
                 )}
                 <Input
                   id={`${idPrefix}-label`}
-                  placeholder={searchable ? `Search ${SOURCE_LABELS[searchSource]} or paste a link…` : "e.g. Tutor session, NHK Easy"}
+                  placeholder={
+                    searchable
+                      ? `Search ${SOURCE_LABELS[searchSource]} or paste a link…`
+                      : linkable
+                        ? "Paste a link, or type a label"
+                        : "e.g. Tutor session, NHK Easy"
+                  }
                   value={value.label}
                   onChange={(e) => onChange({ ...value, label: e.target.value })}
                   maxLength={200}

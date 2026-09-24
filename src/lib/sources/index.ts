@@ -2,7 +2,7 @@ import type { MediaType } from "@/db/schema";
 import { markAdultCover } from "@/lib/adult-cover";
 import { cacheGet, cacheSet } from "@/lib/cache-store";
 import { effectiveSearchSource, MEDIA_TYPE_META } from "@/lib/media";
-import { searchAniList } from "./anilist";
+import { anilistImporter, searchAniList } from "./anilist";
 import { backloggdImporter } from "./backloggd";
 import { bookmeterImporter } from "./bookmeter";
 import { bookwalkerImporter } from "./bookwalker";
@@ -23,6 +23,7 @@ import {
   type UrlImporter,
 } from "./types";
 import { searchVndb } from "./vndb";
+import { youtubeImporter } from "./youtube";
 
 export type { SearchResult, SearchResponse, ImportResult } from "./types";
 export { ImportError } from "./types";
@@ -55,6 +56,7 @@ export async function searchExternal(mediaType: MediaType, q: string): Promise<S
  * automated access, so JPDB links are stored as link-outs only (./jpdb.ts).
  */
 export const URL_IMPORTERS: readonly UrlImporter[] = [
+  anilistImporter,
   jitenImporter,
   imdbImporter,
   bookmeterImporter,
@@ -63,6 +65,7 @@ export const URL_IMPORTERS: readonly UrlImporter[] = [
   shonenJumpPlusImporter,
   backloggdImporter,
   dmmImporter,
+  youtubeImporter,
 ];
 
 export interface FoundImporter {

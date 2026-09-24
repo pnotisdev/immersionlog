@@ -28,10 +28,17 @@ describe("findImporter", () => {
 
   it("returns null for a supported host but an unsupported page", () => {
     expect(findImporter("https://bookmeter.com/users/1")).toBeNull();
+    expect(findImporter("https://anilist.co/user/someone/")).toBeNull();
+    expect(findImporter("https://www.youtube.com/@cure_dolly")).toBeNull();
+    expect(findImporter("https://www.youtube.com/playlist?list=PL123")).toBeNull();
+    expect(findImporter("https://www.youtube.com/watch?v=tooshort")).toBeNull();
     expect(findImporter("https://www.imdb.com/name/nm0000001/")).toBeNull();
   });
 
   it.each([
+    ["https://anilist.co/manga/30104/Yotsuba-to", "anilist", "30104"],
+    ["https://anilist.co/anime/7791/K-ON-Season-2/", "anilist", "7791"],
+    ["http://www.anilist.co/anime/7791", "anilist", "7791"],
     ["https://jiten.moe/decks/media/283/detail", "jiten", "283"],
     ["https://jiten.moe/decks/283", "jiten", "283"],
     ["https://www.imdb.com/de/title/tt0245429/reference?ref_=x", "imdb", "tt0245429"],
@@ -45,6 +52,12 @@ describe("findImporter", () => {
     ["https://backloggd.com/games/persona-5/", "backloggd", "persona-5"],
     ["https://www.backloggd.com/games/Persona-5", "backloggd", "persona-5"],
     ["https://dlsoft.dmm.com/detail/views_0001/", "dmm", "views_0001"],
+    ["https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=42s", "youtube", "dQw4w9WgXcQ"],
+    ["https://youtu.be/dQw4w9WgXcQ?si=abc", "youtube", "dQw4w9WgXcQ"],
+    ["https://m.youtube.com/watch?v=dQw4w9WgXcQ&list=PL123", "youtube", "dQw4w9WgXcQ"],
+    ["https://www.youtube.com/shorts/dQw4w9WgXcQ", "youtube", "dQw4w9WgXcQ"],
+    ["https://www.youtube.com/live/dQw4w9WgXcQ?feature=share", "youtube", "dQw4w9WgXcQ"],
+    ["http://youtube.com/embed/dQw4w9WgXcQ", "youtube", "dQw4w9WgXcQ"],
     ["https://dlsoft.dmm.co.jp/detail/views_0001/", "dmm", "r18:views_0001"],
   ])("routes %s", (url, source, sourceId) => {
     const found = findImporter(url);

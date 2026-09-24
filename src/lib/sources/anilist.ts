@@ -1,5 +1,14 @@
 import type { MediaType } from "@/db/schema";
-import { cleanDescription, FETCH_TIMEOUT_MS, type SearchResponse, type SearchResult } from "./types";
+import { IMPORT_HOSTS } from "./hosts";
+import {
+  cleanDescription,
+  FETCH_TIMEOUT_MS,
+  ImportError,
+  type ParsedImportUrl,
+  type SearchResponse,
+  type SearchResult,
+  type UrlImporter,
+} from "./types";
 
 const ENDPOINT = "https://graphql.anilist.co";
 
@@ -48,6 +57,16 @@ const BROWSE_QUERY = /* GraphQL */ `
       ) {
         ${MEDIA_FIELDS}
       }
+    }
+  }
+`;
+
+const BY_ID_QUERY = /* GraphQL */ `
+  query ById($id: Int) {
+    Media(id: $id) {
+      ${MEDIA_FIELDS}
+      type
+      isAdult
     }
   }
 `;
@@ -137,3 +156,52 @@ export async function browseAniList(mediaType: AniListType, sort: AniListSort, p
   const media = await query({ query: BROWSE_QUERY, variables: { sort: [sort], perPage, ...VARIABLES[mediaType] } });
   return media.map((m) => toResult(m, mediaType));
 }
+
+// --- Paste-a-link -------------------------------------------------------------------
+
+/**
+ * anilist.co/anime/7791/K-ON-Season-2/ and anilist.co/manga/30104/Yotsuba-to. Resolved
+ * through the same GraphQL API as search, so the row lands on the same
+ * (anilist, id) item a search pick would. Only the numeric id is sent upstream.
+ */
+function parseAniListUrl(url: URL): ParsedImportUrl | null {
+  const m = /^\/(anime|manga)\/(\d{1,9})(?:\/|$)/.exec(url.pathname);
+  if (!m) return null;
+  return { sourceId: m[2], canonicalUrl: `https://anilist.co/${m[1]}/${m[2]}` };
+}
+
+async function fetchAniListById(id: number): Promise<(AniListMedia & { type: "ANIME" | "MANGA"; isAdult: boolean | null }) | null> {
+  const res = await fetch(ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ query: BY_ID_QUERY, variables: { id } }),
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+  });
+  // Unknown ids come back as a 404 with a GraphQL error body.
+  if (res.status === 404) return null;
+  if (!res.ok) throw new ImportError("upstream_status", res.status);
+  const json = (await res.json()) as { data?: { Media?: (AniListMedia & { type: "ANIME" | "MANGA"; isAdult: boolean | null }) | null } };
+  return json.data?.Media ?? null;
+}
+
+export const anilistImporter: UrlImporter = {
+  source: "anilist",
+  hosts: IMPORT_HOSTS.anilist,
+  mediaTypes: ["anime", "manga", "light_novel"],
+  parse: parseAniListUrl,
+  async fetch(parsed) {
+    let media;
+    try {
+      media = await fetchAniListById(Number(parsed.sourceId));
+    } catch (err) {
+      if (err instanceof ImportError) throw err;
+      throw new ImportError(err instanceof Error && err.name === "TimeoutError" ? "timeout" : "upstream_status", String(err));
+    }
+    if (!media) throw new ImportError("not_found", parsed.sourceId);
+    // The URL's /anime/ vs /manga/ segment is cosmetic on AniList; trust the API's type.
+    const type: AniListType = media.type === "ANIME" ? "anime" : media.format === "NOVEL" ? "light_novel" : "manga";
+    const result = toResult(media, type);
+    if (media.isAdult) result.metadata = { ...result.metadata, adult: true };
+    return { result, warnings: [] };
+  },
+};

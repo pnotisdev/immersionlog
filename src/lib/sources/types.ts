@@ -51,7 +51,7 @@ export function yearFrom(dateish: string | number | null | undefined): number | 
 
 /** Sources that can turn a pasted link into a SearchResult (src/lib/sources/index.ts). */
 // JPDB is link-only (its terms forbid automated access), so it has no importer.
-export type ImportSource = Exclude<MediaSource, "manual" | "anilist" | "vndb" | "tmdb" | "google_books" | "jpdb">;
+export type ImportSource = Exclude<MediaSource, "manual" | "vndb" | "tmdb" | "google_books" | "jpdb">;
 
 export interface ParsedImportUrl {
   sourceId: string;

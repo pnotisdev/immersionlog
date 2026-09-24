@@ -8,6 +8,7 @@ import type { ImportSource } from "./types";
  * re-checks everything in findImporter() (./index.ts) before fetching.
  */
 export const IMPORT_HOSTS: Record<ImportSource, readonly string[]> = {
+  anilist: ["anilist.co", "www.anilist.co"],
   imdb: ["www.imdb.com", "imdb.com", "m.imdb.com"],
   jiten: ["jiten.moe", "www.jiten.moe"],
   bookmeter: ["bookmeter.com"],
@@ -18,6 +19,7 @@ export const IMPORT_HOSTS: Record<ImportSource, readonly string[]> = {
   backloggd: ["backloggd.com", "www.backloggd.com"],
   // The adult storefront is refused unless DMM_ALLOW_ADULT=1 (see ./dmm.ts).
   dmm: ["dlsoft.dmm.com", "dlsoft.dmm.co.jp"],
+  youtube: ["www.youtube.com", "youtube.com", "m.youtube.com", "music.youtube.com", "youtu.be"],
 };
 
 /** Hostname-only check, safe on the client. Returns the source that would handle `raw`. */

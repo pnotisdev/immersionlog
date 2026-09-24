@@ -16,16 +16,16 @@ export interface MediaTypeMeta {
 }
 
 export const MEDIA_TYPE_META: Record<MediaType, MediaTypeMeta> = {
-  anime: { label: "Anime", group: "listening", defaultUnit: "episodes", searchSource: "anilist", importSources: ["jiten", "imdb"] },
-  manga: { label: "Manga", group: "reading", defaultUnit: "chapters", searchSource: "anilist", importSources: ["bookwalker", "cmoa", "shonenjumpplus", "jiten"] },
-  light_novel: { label: "Light novel", group: "reading", defaultUnit: "pages", searchSource: "anilist", importSources: ["bookwalker", "bookmeter", "jiten"] },
+  anime: { label: "Anime", group: "listening", defaultUnit: "episodes", searchSource: "anilist", importSources: ["anilist", "jiten", "imdb"] },
+  manga: { label: "Manga", group: "reading", defaultUnit: "chapters", searchSource: "anilist", importSources: ["anilist", "bookwalker", "cmoa", "shonenjumpplus", "jiten"] },
+  light_novel: { label: "Light novel", group: "reading", defaultUnit: "pages", searchSource: "anilist", importSources: ["anilist", "bookwalker", "bookmeter", "jiten"] },
   visual_novel: { label: "Visual novel", group: "reading", defaultUnit: "characters", searchSource: "vndb", importSources: ["jiten", "dmm"] },
   movie: { label: "Movie", group: "listening", defaultUnit: null, searchSource: "tmdb", importSources: ["imdb", "jiten"] },
   series: { label: "Series", group: "listening", defaultUnit: "episodes", searchSource: "tmdb", importSources: ["imdb", "jiten"] },
   book: { label: "Book", group: "reading", defaultUnit: "pages", searchSource: "google_books", importSources: ["bookmeter", "bookwalker", "jiten"] },
   graded_reader: { label: "Graded reader", group: "reading", defaultUnit: "pages", searchSource: "google_books", importSources: ["bookmeter"] },
-  youtube: { label: "YouTube", group: "listening", defaultUnit: null, searchSource: null, importSources: [] },
-  podcast: { label: "Podcast", group: "listening", defaultUnit: null, searchSource: null, importSources: ["jiten"] },
+  youtube: { label: "YouTube", group: "listening", defaultUnit: null, searchSource: null, importSources: ["youtube"] },
+  podcast: { label: "Podcast", group: "listening", defaultUnit: null, searchSource: null, importSources: ["youtube", "jiten"] },
   drama_cd: { label: "Drama CD", group: "listening", defaultUnit: null, searchSource: null, importSources: ["jiten"] },
   game: { label: "Game", group: "other", defaultUnit: null, searchSource: null, importSources: ["backloggd", "dmm", "jiten"] },
   news: { label: "News", group: "reading", defaultUnit: "items", searchSource: null, importSources: [] },
@@ -70,6 +70,7 @@ export const SOURCE_LABELS: Record<MediaSource, string> = {
   backloggd: "Backloggd",
   dmm: "DMM Games",
   jpdb: "JPDB",
+  youtube: "YouTube",
 };
 
 /**

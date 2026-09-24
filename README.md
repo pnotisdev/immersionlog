@@ -8,7 +8,7 @@ Think Toggl for immersion, with a library attached.
 
 - **Timer + backdated logging.** Start a timer against anything in your library (or a free-form label), or log a past session with duration and native units (episodes, chapters, pages, characters…).
 - **Log in an instant** (`/log/new`): pick a medium → search your library and AniList / VNDB / TMDB / Google Books (Jiten.moe for games and drama CDs) → fill in the details. New titles are added to your library automatically, with covers, Japanese titles and known lengths.
-- **Paste a link** to add a title from Jiten.moe, IMDb (resolved through TMDB), Bookmeter, BOOK☆WALKER (with volume routing), コミックシーモア, 少年ジャンプ+, Backloggd or DMM Games. The server reads the page, shows a preview, and adds it; if a page can't be read, the manual form opens pre-filled.
+- **Paste a link** to add a title from AniList, YouTube (videos, shorts, live), Jiten.moe, IMDb (resolved through TMDB), Bookmeter, BOOK☆WALKER (with volume routing), コミックシーモア, 少年ジャンプ+, Backloggd or DMM Games. The server reads the page, shows a preview, and adds it; if a page can't be read, the manual form opens pre-filled. A supported link saved as a session's label without being read first is resolved on save.
 - **Jiten.moe stats on any title**: link a Jiten deck (or one of its volumes/episodes) from a media page to show character and word counts, unique kanji and Jiten's difficulty estimate next to the community vote. A VN with no known length gets its character count as the total.
 - **Library** with status (planning / in progress / paused / finished / dropped), progress in native units capped at the known total, ratings, notes. Sessions bump progress automatically; hitting the total auto-finishes.
 - **History**: any day, week, month, year or custom range; per-day/week/month charts; heatmap; by-type and top-item breakdowns.
@@ -61,10 +61,11 @@ Demo accounts are real accounts you can sign in as: `<handle>@demo.immersionlog.
 | `DATABASE_URL` | production | Postgres connection string. Unset = embedded PGlite in `./.pglite` |
 | `TMDB_API_KEY` | optional | Enables movie/series search. Free at themoviedb.org → Settings → API |
 | `GOOGLE_BOOKS_API_KEY` | optional | Books search works without it (rate-limited) |
+| `YOUTUBE_API_KEY` | optional | YouTube links work without it (title, channel, thumbnail via oEmbed); with a Data API v3 key they also get length, publish date and description |
 | `ENABLE_JPDB` | optional | `1` shows an "Add JPDB link" control on media pages. Link-out only: JPDB's terms forbid automated access, so it's never fetched |
 | `DMM_ALLOW_ADULT` | optional | `1` accepts links to DMM's adult storefront (`dlsoft.dmm.co.jp`). Off by default; DMM covers aren't imported on either host |
 
-AniList, VNDB and Jiten.moe need no keys. With `TMDB_API_KEY` unset, IMDb links fall back to reading the IMDb page itself, which IMDb usually blocks from servers.
+AniList, VNDB, Jiten.moe and YouTube (basic) need no keys. With `TMDB_API_KEY` unset, IMDb links fall back to reading the IMDb page itself, which IMDb usually blocks from servers.
 
 **Paste-a-link sources other than Jiten and IMDb scrape HTML** (`src/lib/sources/*.ts`) and will break when those sites change their markup. Failures are logged as `[import] <source> <id> <reason>` and the user falls back to the manual form. `LIVE=1 pnpm test` runs a smoke test against each live site. DMM only serves visitors in Japan, so it can't be read from servers elsewhere.
 

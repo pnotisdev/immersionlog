@@ -66,6 +66,7 @@ export const MEDIA_SOURCES = [
   "backloggd",
   "dmm",
   "jpdb",
+  "youtube",
 ] as const;
 export type MediaSource = (typeof MEDIA_SOURCES)[number];
 export const mediaSourceEnum = pgEnum("media_source", MEDIA_SOURCES);
