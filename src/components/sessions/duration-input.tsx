@@ -27,6 +27,7 @@ export function DurationInput({
   onChange,
   label = "Duration",
   typicalMinutes,
+  showPresets = true,
 }: {
   hours: string;
   minutes: string;
@@ -34,6 +35,8 @@ export function DurationInput({
   label?: string;
   /** This item's own average session length, if there's history — shown as a distinguished "usual" chip. */
   typicalMinutes?: number | null;
+  /** Off where the value can only shrink (trimming a timer), so a preset could only mislead. */
+  showPresets?: boolean;
 }) {
   const totalMinutes = (Number(hours) || 0) * 60 + (Number(minutes) || 0);
   const presets =
@@ -44,30 +47,32 @@ export function DurationInput({
   return (
     <div className="grid gap-1.5">
       <Label>{label}</Label>
-      <div className="flex flex-wrap gap-1.5">
-        {presets.map((m) => {
-          const isTypical = m === typicalMinutes;
-          const isSelected = totalMinutes === m;
-          return (
-            <button
-              key={m}
-              type="button"
-              onClick={() => onChange(fromMinutes(m))}
-              className={cn(
-                "rounded-sm border px-3 py-1 text-xs font-medium transition-colors",
-                isSelected
-                  ? "border-primary bg-accent text-accent-foreground"
-                  : isTypical
-                    ? "border-primary/50 text-primary hover:bg-primary/10"
-                    : "hover:bg-muted",
-              )}
-            >
-              {presetLabel(m)}
-              {isTypical && !isSelected && " · usual"}
-            </button>
-          );
-        })}
-      </div>
+      {showPresets && (
+        <div className="flex flex-wrap gap-1.5">
+          {presets.map((m) => {
+            const isTypical = m === typicalMinutes;
+            const isSelected = totalMinutes === m;
+            return (
+              <button
+                key={m}
+                type="button"
+                onClick={() => onChange(fromMinutes(m))}
+                className={cn(
+                  "rounded-sm border px-3 py-1 text-xs font-medium transition-colors",
+                  isSelected
+                    ? "border-primary bg-accent text-accent-foreground"
+                    : isTypical
+                      ? "border-primary/50 text-primary hover:bg-primary/10"
+                      : "hover:bg-muted",
+                )}
+              >
+                {presetLabel(m)}
+                {isTypical && !isSelected && " · usual"}
+              </button>
+            );
+          })}
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-2">
         <div className="relative">
           <Input

@@ -306,6 +306,7 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
             )}
             <DurationInput
               label="Time to save"
+              showPresets={false}
               hours={shown.hours}
               minutes={shown.minutes}
               onChange={setTrim}
