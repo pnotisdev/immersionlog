@@ -1,10 +1,12 @@
 "use server";
 
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, gte, lt, ne, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/db";
 import { MEDIA_TYPES, type MediaType, UNITS, activeTimers, immersionSessions, libraryEntries, mediaItems } from "@/db/schema";
+import { dayEnd, dayKey, dayStart } from "@/lib/dates";
+import { formatDate, formatDuration } from "@/lib/format";
 import { importRateLimit } from "@/lib/import-rate-limit";
 import { MEDIA_TYPE_META } from "@/lib/media";
 import { upsertExternalItem } from "@/lib/media-upsert";
@@ -39,6 +41,56 @@ function normalize(v: SessionInput) {
     amountUnit: v.amountUnit || null,
     notes: v.notes || null,
   };
+}
+
+// A session may end a few minutes "in the future" to absorb clock skew, never more.
+const FUTURE_SLACK_MS = 5 * 60_000;
+const DAY_SECONDS = 24 * 3600;
+const EARLIEST = new Date("2000-01-01T00:00:00Z");
+
+/**
+ * Rankings, streaks and goals all sum durations, so a session has to be something that
+ * could have happened: not in the future, and not pushing one calendar day (in the
+ * user's timezone) past 24 hours. `excludeId` is the session being edited.
+ */
+async function checkTimes(userId: string, tz: string, startedAt: Date, durationSeconds: number, excludeId?: string): Promise<string | null> {
+  if (startedAt < EARLIEST) return "That date is too far back.";
+  if (startedAt.getTime() + durationSeconds * 1000 > Date.now() + FUTURE_SLACK_MS) {
+    return "That session ends in the future. Check the start time and duration.";
+  }
+  const key = dayKey(startedAt, tz);
+  const [row] = await db
+    .select({ total: sql<number>`coalesce(sum(${immersionSessions.durationSeconds}), 0)::int` })
+    .from(immersionSessions)
+    .where(
+      and(
+        eq(immersionSessions.userId, userId),
+        gte(immersionSessions.startedAt, dayStart(key, tz)),
+        lt(immersionSessions.startedAt, dayEnd(key, tz)),
+        excludeId ? ne(immersionSessions.id, excludeId) : undefined,
+      ),
+    );
+  const logged = row?.total ?? 0;
+  if (logged + durationSeconds > DAY_SECONDS) {
+    const left = Math.max(0, DAY_SECONDS - logged);
+    return `You've already logged ${formatDuration(logged)} on ${formatDate(key)}; a day only has 24 hours${left >= 60 ? ` (${formatDuration(left)} left)` : ""}.`;
+  }
+  return null;
+}
+
+/**
+ * Items a user may log against: any shared (external) item, their own manual items, and
+ * anything already in their library. Someone else's manual item is private to them.
+ */
+async function canUseItem(userId: string, mediaItemId: string): Promise<typeof mediaItems.$inferSelect | null> {
+  const item = await db.query.mediaItems.findFirst({ where: eq(mediaItems.id, mediaItemId) });
+  if (!item) return null;
+  if (item.source !== "manual" || item.createdBy === userId) return item;
+  const entry = await db.query.libraryEntries.findFirst({
+    where: and(eq(libraryEntries.userId, userId), eq(libraryEntries.mediaItemId, mediaItemId)),
+    columns: { id: true },
+  });
+  return entry ? item : null;
 }
 
 /**
@@ -109,6 +161,9 @@ export async function createSession(input: SessionInput): Promise<ActionResult<{
   const parsed = sessionInputSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   const v = await resolveLinkLabel(user.id, normalize(parsed.data));
+  if (v.mediaItemId && !(await canUseItem(user.id, v.mediaItemId))) return { ok: false, error: "Media item not found" };
+  const timeError = await checkTimes(user.id, user.timezone || "UTC", v.startedAt, v.durationSeconds);
+  if (timeError) return { ok: false, error: timeError };
 
   const [row] = await db
     .insert(immersionSessions)
@@ -130,6 +185,11 @@ export async function updateSession(id: string, input: SessionInput): Promise<Ac
     where: and(eq(immersionSessions.id, id), eq(immersionSessions.userId, user.id)),
   });
   if (!existing) return { ok: false, error: "Session not found" };
+  if (v.mediaItemId && v.mediaItemId !== existing.mediaItemId && !(await canUseItem(user.id, v.mediaItemId))) {
+    return { ok: false, error: "Media item not found" };
+  }
+  const timeError = await checkTimes(user.id, user.timezone || "UTC", v.startedAt, v.durationSeconds, id);
+  if (timeError) return { ok: false, error: timeError };
 
   await db
     .update(immersionSessions)
@@ -194,7 +254,7 @@ export async function startTimer(input: z.infer<typeof startTimerSchema>): Promi
   let mediaType = v.mediaType;
   const mediaItemId = v.mediaItemId;
   if (mediaItemId) {
-    const item = await db.query.mediaItems.findFirst({ where: eq(mediaItems.id, mediaItemId) });
+    const item = await canUseItem(user.id, mediaItemId);
     if (!item) return { ok: false, error: "Media item not found" };
     mediaType = item.type;
   }
@@ -204,13 +264,49 @@ export async function startTimer(input: z.infer<typeof startTimerSchema>): Promi
     .values({ userId: user.id, mediaItemId, mediaType, label: v.label || null, startedAt: new Date() })
     .onConflictDoUpdate({
       target: activeTimers.userId,
-      set: { mediaItemId, mediaType, label: v.label || null, startedAt: new Date() },
+      set: { mediaItemId, mediaType, label: v.label || null, startedAt: new Date(), pausedAt: null, pausedSeconds: 0 },
     });
   revalidatePath("/", "layout");
   return { ok: true, data: undefined };
 }
 
+/** Seconds actually timed: wall time since start, minus every pause (including a current one). */
+function timedSeconds(timer: typeof activeTimers.$inferSelect, now = Date.now()): number {
+  const end = timer.pausedAt ? timer.pausedAt.getTime() : now;
+  return Math.max(0, Math.round((end - timer.startedAt.getTime()) / 1000) - timer.pausedSeconds);
+}
+
+export async function pauseTimer(): Promise<ActionResult> {
+  const user = await requireUser();
+  const rows = await db
+    .update(activeTimers)
+    .set({ pausedAt: new Date() })
+    .where(and(eq(activeTimers.userId, user.id), sql`${activeTimers.pausedAt} is null`))
+    .returning({ userId: activeTimers.userId });
+  if (!rows.length) return { ok: false, error: "No running timer" };
+  revalidatePath("/", "layout");
+  return { ok: true, data: undefined };
+}
+
+export async function resumeTimer(): Promise<ActionResult> {
+  const user = await requireUser();
+  // Computed in SQL so the pause length uses the same clock that stamped paused_at.
+  const rows = await db
+    .update(activeTimers)
+    .set({
+      pausedSeconds: sql`${activeTimers.pausedSeconds} + greatest(0, round(extract(epoch from (now() - ${activeTimers.pausedAt}))))::int`,
+      pausedAt: null,
+    })
+    .where(and(eq(activeTimers.userId, user.id), sql`${activeTimers.pausedAt} is not null`))
+    .returning({ userId: activeTimers.userId });
+  if (!rows.length) return { ok: false, error: "The timer isn't paused" };
+  revalidatePath("/", "layout");
+  return { ok: true, data: undefined };
+}
+
 const stopTimerSchema = z.object({
+  /** Trim a timer that ran on after you stopped (never lengthen it). */
+  durationSeconds: z.coerce.number().int().min(0).optional(),
   amount: optionalInt,
   amountUnit: optionalUnit,
   notes: z.string().trim().max(5000).nullable().optional().or(z.literal("")),
@@ -225,7 +321,14 @@ export async function stopTimer(input: z.infer<typeof stopTimerSchema>): Promise
   const timer = await db.query.activeTimers.findFirst({ where: eq(activeTimers.userId, user.id) });
   if (!timer) return { ok: false, error: "No running timer" };
 
-  const durationSeconds = Math.min(24 * 3600, Math.round((Date.now() - timer.startedAt.getTime()) / 1000));
+  const timed = timedSeconds(timer);
+  const durationSeconds = Math.min(DAY_SECONDS, timed, parsed.data.durationSeconds ?? timed);
+
+  if (durationSeconds >= 30) {
+    const timeError = await checkTimes(user.id, user.timezone || "UTC", timer.startedAt, durationSeconds);
+    // The timer stays running so the user can shorten it and try again.
+    if (timeError) return { ok: false, error: timeError };
+  }
   await db.delete(activeTimers).where(eq(activeTimers.userId, user.id));
 
   if (durationSeconds < 30) {

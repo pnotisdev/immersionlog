@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { subDays } from "date-fns";
 import { dayKey, eachDayKey, presetRange } from "@/lib/dates";
 import { formatDuration, formatNumber, relativeTime } from "@/lib/format";
@@ -22,6 +21,7 @@ import { ActivityFeed } from "@/components/community/activity-feed";
 import { ClubStandings } from "@/components/clubs/club-standings";
 import { GoalCard } from "@/components/goals/goal-card";
 import { MilestoneList } from "@/components/progression/milestone-list";
+import { FirstLog } from "@/components/sessions/first-log";
 import { QuickLogGrid } from "@/components/sessions/quick-log-grid";
 import { SessionList } from "@/components/sessions/session-list";
 import { toSessionView } from "@/components/sessions/types";
@@ -81,40 +81,34 @@ export default async function DashboardPage() {
   return (
     <div className="grid gap-6">
       {/* Above the fold: log action, current state, what to continue — never a
-          headline (redesign.md §1.5). At most one onboarding line, and it's text,
-          not a bordered card. */}
-      {!hasHistory && (
-        <p className="text-sm text-muted-foreground">
-          Start the timer below for anything, even something not in your library yet, or{" "}
-          <Link href="/discover" className="text-primary hover:underline">
-            browse Discover
-          </Link>{" "}
-          to add what you&apos;re into first.
-        </p>
-      )}
+          headline (redesign.md §1.5). Before the first session, that's one prompt to
+          log it: half of new accounts never got past a dashboard of zeroes. */}
+      {!hasHistory && !timer && <FirstLog entries={picks} tz={tz} />}
 
       <TimerCard timer={timer} entries={picks} tz={tz} />
 
-      <StatStrip
-        stats={[
-          {
-            label: "Streak",
-            value: `${progression.currentStreak}d`,
-            hint:
-              progression.currentStreak > 0
-                ? `longest ${progression.longestStreak} day${progression.longestStreak === 1 ? "" : "s"}`
-                : "log today to start one",
-          },
-          { label: "This week", value: formatDuration(weekSec), hint: `${formatDuration(progression.totals.total)} all time`, hero: true },
-          { label: "Today", value: formatDuration(todaySec) },
-          {
-            label: "Level",
-            value: progression.overall.level,
-            // The XP bar lives here as a line of text, not a full-width progress bar (redesign.md §5.1).
-            hint: `${formatNumber(progression.overall.xpForNext - progression.overall.xpIntoLevel)} XP to Lv ${progression.overall.level + 1}`,
-          },
-        ]}
-      />
+      {hasHistory && (
+        <StatStrip
+          stats={[
+            {
+              label: "Streak",
+              value: `${progression.currentStreak}d`,
+              hint:
+                progression.currentStreak > 0
+                  ? `longest ${progression.longestStreak} day${progression.longestStreak === 1 ? "" : "s"}`
+                  : "log today to start one",
+            },
+            { label: "This week", value: formatDuration(weekSec), hint: `${formatDuration(progression.totals.total)} all time`, hero: true },
+            { label: "Today", value: formatDuration(todaySec) },
+            {
+              label: "Level",
+              value: progression.overall.level,
+              // The XP bar lives here as a line of text, not a full-width progress bar (redesign.md §5.1).
+              hint: `${formatNumber(progression.overall.xpForNext - progression.overall.xpIntoLevel)} XP to Lv ${progression.overall.level + 1}`,
+            },
+          ]}
+        />
+      )}
 
       {recentItems.length > 0 && (
         <QuickLogGrid
@@ -130,38 +124,40 @@ export default async function DashboardPage() {
       {hasHistory && <ActivityHeatmap activity={heat} />}
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="grid gap-6">
-          <Panel
-            title="Last 30 days"
-            description={
-              activeChartDays > 0 ? (
-                <>
-                  <span className="font-medium text-foreground tabular-nums">{formatDuration(last30Total)}</span> across{" "}
-                  {activeChartDays} day{activeChartDays === 1 ? "" : "s"}
-                </>
-              ) : undefined
-            }
-            action={<PanelLink href="/stats">All stats</PanelLink>}
-          >
-            {/* Never an axis with nothing on it (redesign.md §7). */}
-            {activeChartDays >= 3 ? (
-              <ColumnChart columns={columns} height={180} />
-            ) : (
-              <p className="py-10 text-center text-sm text-muted-foreground">Log 3 days to see your trend.</p>
-            )}
-          </Panel>
+        {hasHistory && (
+          <div className="grid gap-6">
+            <Panel
+              title="Last 30 days"
+              description={
+                activeChartDays > 0 ? (
+                  <>
+                    <span className="font-medium text-foreground tabular-nums">{formatDuration(last30Total)}</span> across{" "}
+                    {activeChartDays} day{activeChartDays === 1 ? "" : "s"}
+                  </>
+                ) : undefined
+              }
+              action={<PanelLink href="/stats">All stats</PanelLink>}
+            >
+              {/* Never an axis with nothing on it (redesign.md §7). */}
+              {activeChartDays >= 3 ? (
+                <ColumnChart columns={columns} height={180} />
+              ) : (
+                <p className="py-10 text-center text-sm text-muted-foreground">Log 3 days to see your trend.</p>
+              )}
+            </Panel>
 
-          <Panel title="Recent sessions" action={<PanelLink href="/log">Full log</PanelLink>} flush>
-            <SessionList
-              sessions={recent.map(toSessionView)}
-              entries={picks}
-              tz={tz}
-              groupByDay={false}
-              framed={false}
-              emptyText="Start the timer or log a session to see it here."
-            />
-          </Panel>
-        </div>
+            <Panel title="Recent sessions" action={<PanelLink href="/log">Full log</PanelLink>} flush>
+              <SessionList
+                sessions={recent.map(toSessionView)}
+                entries={picks}
+                tz={tz}
+                groupByDay={false}
+                framed={false}
+                emptyText="Start the timer or log a session to see it here."
+              />
+            </Panel>
+          </div>
+        )}
 
         <div className="grid gap-6">
           {/* Omitted entirely when empty, not filled with a prompt (redesign.md §7). */}

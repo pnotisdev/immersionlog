@@ -1,5 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
+import { escapeHtml } from "./email-layout";
 
 // Cached the same way as src/db/index.ts: `next dev` hot reloads shouldn't
 // construct a new client (or re-check env) on every module re-evaluation.
@@ -14,8 +15,13 @@ function getClient(): Resend | null {
 export type SendEmailInput = {
   to: string;
   subject: string;
-  /** Plain text body. Also used (with minimal escaping/line-break handling) as the HTML body. */
+  /** Plain text body, always sent alongside the HTML. */
   text: string;
+  /** Designed HTML body (src/lib/emails.ts). Without one, `text` is converted naively. */
+  html?: string;
+  /** For notification emails: one-click unsubscribe (RFC 8058) via List-Unsubscribe headers. */
+  unsubscribeUrl?: string;
+  replyTo?: string;
 };
 
 /**
@@ -25,7 +31,7 @@ export type SendEmailInput = {
  * throwing, so auth flows that depend on email (password reset, email
  * verification) keep working without any provider configured.
  */
-export async function sendEmail({ to, subject, text }: SendEmailInput): Promise<void> {
+export async function sendEmail({ to, subject, text, html, unsubscribeUrl, replyTo }: SendEmailInput): Promise<void> {
   const client = getClient();
   const from = process.env.EMAIL_FROM || "immersionlog <onboarding@resend.dev>";
 
@@ -40,12 +46,17 @@ export async function sendEmail({ to, subject, text }: SendEmailInput): Promise<
     return;
   }
 
-  const html = text
-    .split("\n")
-    .map((line) => (line.trim() ? `<p>${line}</p>` : ""))
-    .join("\n");
+  const body =
+    html ??
+    text
+      .split("\n")
+      .map((line) => (line.trim() ? `<p>${escapeHtml(line)}</p>` : ""))
+      .join("\n");
+  const headers = unsubscribeUrl
+    ? { "List-Unsubscribe": `<${unsubscribeUrl}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" }
+    : undefined;
 
-  const { error } = await client.emails.send({ from, to, subject, text, html });
+  const { error } = await client.emails.send({ from, to, subject, text, html: body, headers, ...(replyTo ? { replyTo } : {}) });
   if (error) {
     console.error(`[email] Resend failed to send "${subject}" to ${to}:`, error);
     throw new Error(`Failed to send email: ${error.message}`);

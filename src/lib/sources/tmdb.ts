@@ -58,6 +58,19 @@ export function tmdbToResult(r: TmdbMovie | TmdbTv, kind: "movie" | "series", me
   };
 }
 
+/** One title by our sourceId ("movie:603" / "tv:1396"), or null. */
+export async function getTmdb(sourceId: string): Promise<SearchResult | null> {
+  const key = process.env.TMDB_API_KEY;
+  const m = /^(movie|tv):(\d{1,9})$/.exec(sourceId);
+  if (!key || !m) return null;
+  const url = new URL(`${API}/${m[1]}/${m[2]}`);
+  url.searchParams.set("api_key", key);
+  const res = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`TMDB responded ${res.status}`);
+  return tmdbToResult((await res.json()) as TmdbMovie | TmdbTv, m[1] === "movie" ? "movie" : "series");
+}
+
 export async function searchTmdb(kind: "movie" | "series", q: string): Promise<SearchResponse> {
   const key = process.env.TMDB_API_KEY;
   if (!key) {

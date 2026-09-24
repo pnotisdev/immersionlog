@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { follows, immersionSessions, sessionKudos, user } from "@/db/schema";
 import { sendEmail } from "@/lib/email";
+import { newFollowerEmail } from "@/lib/emails";
 import { requireUser } from "@/lib/session";
 import { getSiteUrl } from "@/lib/site";
 import { createUnsubscribeToken } from "@/lib/unsubscribe-token";
@@ -16,21 +17,11 @@ import type { ActionResult } from "./types";
  * in src/lib/sources/browse.ts's cache writes). Skips demo accounts (see
  * src/db/schema/auth.ts) — their @demo.immersionlog.com addresses aren't real inboxes.
  */
-async function sendNewFollowerEmail(target: { id: string; name: string; email: string }, followerName: string) {
-  const unsubscribeUrl = `${getSiteUrl()}/api/unsubscribe?token=${createUnsubscribeToken(target.id)}`;
-  await sendEmail({
-    to: target.email,
-    subject: `${followerName} started following you on immersionlog`,
-    text: [
-      `Hi ${target.name.split(" ")[0]},`,
-      "",
-      `${followerName} just started following you on immersionlog.`,
-      "",
-      "--",
-      "Don't want these emails? Unsubscribe here (this also turns off weekly recap emails):",
-      unsubscribeUrl,
-    ].join("\n"),
-  });
+async function sendNewFollowerEmail(target: { id: string; name: string; email: string }, follower: { name: string; username: string | null }) {
+  const base = getSiteUrl();
+  const unsubscribeUrl = `${base}/api/unsubscribe?token=${createUnsubscribeToken(target.id)}`;
+  const profileUrl = follower.username ? `${base}/u/${encodeURIComponent(follower.username)}` : null;
+  await sendEmail({ to: target.email, unsubscribeUrl, ...newFollowerEmail(target.name, follower.name, profileUrl, unsubscribeUrl) });
 }
 
 /** Follow a public profile. Following yourself, or a private profile, is a no-op error. */
@@ -59,7 +50,7 @@ export async function followUser(targetId: string): Promise<ActionResult<{ follo
   if (target.username) revalidatePath(`/u/${target.username}`);
 
   if (target.emailNotifications && !target.isDemo) {
-    sendNewFollowerEmail(target, me.name).catch((err) => {
+    sendNewFollowerEmail(target, { name: me.name, username: me.username ?? null }).catch((err) => {
       console.error(`[social] failed to send new-follower email to ${target.id}:`, err);
     });
   }

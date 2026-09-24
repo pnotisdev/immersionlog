@@ -39,6 +39,8 @@ export async function getActiveTimerView(userId: string, picks?: LibraryPick[]):
     mediaType: t.mediaType,
     label: t.label,
     startedAt: t.startedAt.toISOString(),
+    pausedAt: t.pausedAt?.toISOString() ?? null,
+    pausedSeconds: t.pausedSeconds,
     title: t.mediaItem?.title ?? null,
     progressUnit: pick?.progressUnit ?? t.mediaItem?.totalUnit ?? null,
   };

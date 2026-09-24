@@ -77,7 +77,7 @@ export function ItemPicker({
         return;
       }
       setAddedLabels((m) => ({ ...m, [res.data.mediaItemId]: r.title }));
-      onChange({ mediaItemId: res.data.mediaItemId, mediaType: r.mediaType, label: "" });
+      onChange({ mediaItemId: res.data.mediaItemId, mediaType: res.data.mediaType, label: "" });
     });
   }
 

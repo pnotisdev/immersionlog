@@ -31,3 +31,15 @@ export async function GET(request: NextRequest) {
   await db.update(user).set({ emailNotifications: false }).where(eq(user.id, userId));
   return page("You&rsquo;ve been unsubscribed from immersionlog emails. You can turn them back on anytime from Settings.", 200);
 }
+
+/**
+ * RFC 8058 one-click unsubscribe: mail clients (Gmail's "Unsubscribe" button) POST to
+ * the List-Unsubscribe URL with no user interaction, so this only needs the token.
+ */
+export async function POST(request: NextRequest) {
+  const token = request.nextUrl.searchParams.get("token");
+  const userId = token ? verifyUnsubscribeToken(token) : null;
+  if (!userId) return new NextResponse(null, { status: 400 });
+  await db.update(user).set({ emailNotifications: false }).where(eq(user.id, userId));
+  return new NextResponse(null, { status: 200 });
+}

@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { History, Play, Square, Timer, Trash2 } from "lucide-react";
+import { History, Pause, Play, Square, Timer, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { discardTimer, startTimer, stopTimer } from "@/actions/sessions";
+import { discardTimer, pauseTimer, resumeTimer, startTimer, stopTimer } from "@/actions/sessions";
 import type { MediaType, Unit } from "@/db/schema";
-import { formatClock } from "@/lib/format";
+import { formatClock, formatDuration } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { MEDIA_TYPE_META, activityVerb } from "@/lib/media";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ItemPicker, type PickerValue } from "@/components/library/item-picker";
 import type { LibraryPick } from "@/components/library/types";
 import { AmountInput } from "@/components/sessions/amount-input";
+import { DurationInput } from "@/components/sessions/duration-input";
 import { SessionDialog } from "@/components/sessions/session-dialog";
 import { useElapsed } from "./use-elapsed";
 
@@ -24,6 +25,8 @@ export interface ActiveTimerView {
   mediaType: MediaType;
   label: string | null;
   startedAt: string; // ISO
+  pausedAt: string | null; // ISO, set while paused
+  pausedSeconds: number;
   title: string | null;
   progressUnit: Unit | null;
 }
@@ -193,20 +196,47 @@ function IdleTimer({ entries, tz }: { entries: LibraryPick[]; tz: string }) {
   );
 }
 
+// Past this, a timer was probably left running; the stop dialog asks before saving it all.
+const LONG_TIMER_SECONDS = 3 * 3600;
+
 function RunningTimer({ timer }: { timer: ActiveTimerView }) {
   const router = useRouter();
-  const elapsed = useElapsed(timer.startedAt);
+  const elapsed = useElapsed(timer);
+  const paused = timer.pausedAt !== null;
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
   const [amount, setAmount] = useState("");
   const [unit, setUnit] = useState<Unit | null>(timer.progressUnit ?? MEDIA_TYPE_META[timer.mediaType].defaultUnit);
   const [notes, setNotes] = useState("");
+  // Only sent when the user edits it: otherwise the server's own to-the-second count is saved.
+  const [trim, setTrim] = useState<{ hours: string; minutes: string } | null>(null);
 
   const what = timer.title ?? timer.label ?? MEDIA_TYPE_META[timer.mediaType].label;
+  const long = elapsed >= LONG_TIMER_SECONDS;
+  const shown = trim ?? { hours: String(Math.floor(elapsed / 3600)), minutes: String(Math.floor((elapsed % 3600) / 60)) };
+
+  function openStop() {
+    setTrim(null);
+    setOpen(true);
+  }
+
+  function togglePause() {
+    startTransition(async () => {
+      const res = paused ? await resumeTimer() : await pauseTimer();
+      if (!res.ok) toast.error(res.error);
+      router.refresh();
+    });
+  }
 
   function stop() {
+    const durationSeconds = trim ? (Number(trim.hours) || 0) * 3600 + (Number(trim.minutes) || 0) * 60 : undefined;
     startTransition(async () => {
-      const res = await stopTimer({ amount: amount === "" ? null : Number(amount), amountUnit: amount === "" ? null : unit, notes });
+      const res = await stopTimer({
+        durationSeconds,
+        amount: amount === "" ? null : Number(amount),
+        amountUnit: amount === "" ? null : unit,
+        notes,
+      });
       if (!res.ok) {
         toast.error(res.error);
         return;
@@ -229,21 +259,28 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
   }
 
   return (
-    <TimerShell live>
+    <TimerShell live={!paused}>
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <span className="relative flex size-3">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex size-3 rounded-full bg-primary" />
+            {!paused && <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />}
+            <span className={cn("relative inline-flex size-3 rounded-full", paused ? "bg-muted-foreground" : "bg-primary")} />
           </span>
           <div className="min-w-0">
             <div className="truncate text-base font-semibold">{what}</div>
-            <div className="text-xs text-muted-foreground">{MEDIA_TYPE_META[timer.mediaType].label}</div>
+            <div className="text-xs text-muted-foreground">
+              {paused ? "Paused" : MEDIA_TYPE_META[timer.mediaType].label}
+            </div>
           </div>
         </div>
-        <div className="ml-auto font-mono text-4xl font-medium tabular-nums tracking-tight">{formatClock(elapsed)}</div>
+        <div className={cn("ml-auto font-mono text-4xl font-medium tabular-nums tracking-tight", paused && "text-muted-foreground")}>
+          {formatClock(elapsed)}
+        </div>
         <div className="flex w-full gap-2 sm:w-auto">
-          <Button onClick={() => setOpen(true)} className="flex-1 sm:flex-none">
+          <Button variant="outline" onClick={togglePause} disabled={pending} className="flex-1 sm:flex-none">
+            {paused ? <Play /> : <Pause />} {paused ? "Resume" : "Pause"}
+          </Button>
+          <Button onClick={openStop} className="flex-1 sm:flex-none">
             <Square /> Stop
           </Button>
           <Button variant="ghost" size="icon" aria-label="Discard timer" onClick={discard} disabled={pending}>
@@ -261,6 +298,18 @@ function RunningTimer({ timer }: { timer: ActiveTimerView }) {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
+            {long && !trim && (
+              <p className="rounded-md border border-primary/40 bg-accent/50 p-3 text-sm">
+                The timer has been running for {formatDuration(elapsed)}. If you stopped earlier and forgot about it, set how
+                long you actually went for below.
+              </p>
+            )}
+            <DurationInput
+              label="Time to save"
+              hours={shown.hours}
+              minutes={shown.minutes}
+              onChange={setTrim}
+            />
             <AmountInput amount={amount} unit={unit} onChange={(v) => { setAmount(v.amount); setUnit(v.unit); }} idPrefix="stop-amount" />
             <div className="grid gap-1.5">
               <Label htmlFor="stop-notes">Notes (optional)</Label>

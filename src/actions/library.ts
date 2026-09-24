@@ -4,49 +4,60 @@ import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/db";
-import { ENTRY_STATUSES, MEDIA_TYPES, UNITS, libraryEntries, mediaItems, type MediaSource } from "@/db/schema";
-import { MEDIA_TYPE_META } from "@/lib/media";
+import { ENTRY_STATUSES, MEDIA_TYPES, UNITS, libraryEntries, mediaItems, type MediaType } from "@/db/schema";
+import { MEDIA_TYPE_META, SOURCE_LABELS } from "@/lib/media";
 import { ensureEntry, upsertExternalItem } from "@/lib/media-upsert";
 import { requireUser } from "@/lib/session";
+import { type LookupSource, lookupExternal } from "@/lib/sources";
 import type { SearchResult } from "@/lib/sources/types";
 import type { ActionResult } from "./types";
 
-// Only sources with a search API. This action trusts a client-supplied hit, so the
-// scraped paste-a-link sources are deliberately not accepted here: those rows are only
-// ever built server-side (addFromUrl in ./import.ts).
-const SEARCH_SOURCES = ["anilist", "vndb", "tmdb", "google_books", "jiten"] as const satisfies readonly MediaSource[];
+// Only sources with a search API. The client says which hit it picked; the row itself
+// is re-read from the source by id (lookupExternal), so nothing a client sends ends up
+// in a shared media row.
+const SEARCH_SOURCES = ["anilist", "vndb", "tmdb", "google_books", "jiten"] as const satisfies readonly LookupSource[];
 
-const searchResultSchema = z.object({
+const pickedHitSchema = z.object({
   source: z.enum(SEARCH_SOURCES),
-  sourceId: z.string().min(1),
+  sourceId: z.string().min(1).max(100),
   mediaType: z.enum(MEDIA_TYPES),
-  title: z.string().min(1).max(500),
-  titleNative: z.string().max(500).nullable(),
-  coverUrl: z.string().url().nullable(),
-  bannerUrl: z.string().url().nullable().optional(),
-  year: z.number().int().nullable(),
-  description: z.string().max(2000).nullable(),
-  externalUrl: z.string().url().nullable(),
-  totalAmount: z.number().int().positive().nullable(),
-  totalUnit: z.enum(UNITS).nullable(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
-/** Insert-or-update a media item from an external search hit, and put it in the user's library. */
+/** Put a search hit (search box, Discover tile) in the user's library, creating the shared item if needed. */
 export async function addFromSearch(
-  // Typed wide for callers; the schema below is what's actually accepted.
-  input: SearchResult,
+  // Typed wide for callers; only source, sourceId and mediaType are read.
+  input: Pick<SearchResult, "source" | "sourceId" | "mediaType">,
   status: (typeof ENTRY_STATUSES)[number] = "planning",
-): Promise<ActionResult<{ mediaItemId: string }>> {
+): Promise<ActionResult<{ mediaItemId: string; mediaType: MediaType }>> {
   const user = await requireUser();
-  const parsed = searchResultSchema.safeParse(input);
+  const parsed = pickedHitSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Invalid search result" };
-  const r = parsed.data;
+  const { source, sourceId, mediaType } = parsed.data;
 
-  const item = await upsertExternalItem(db, r, user.id);
-  await ensureEntry(db, user.id, item.id, status, r.totalUnit ?? MEDIA_TYPE_META[r.mediaType].defaultUnit);
+  // Already known: no need to ask the source again.
+  const existing = await db.query.mediaItems.findFirst({
+    where: and(eq(mediaItems.source, source), eq(mediaItems.sourceId, sourceId)),
+  });
+  let itemId = existing?.id;
+  let type = existing?.type ?? mediaType;
+  let unit = existing ? (existing.totalUnit ?? MEDIA_TYPE_META[existing.type].defaultUnit) : null;
+  if (!existing) {
+    let r: SearchResult | null;
+    try {
+      r = await lookupExternal(source, sourceId, mediaType);
+    } catch (err) {
+      console.warn("[library] lookup failed:", source, sourceId, err instanceof Error ? err.message : err);
+      return { ok: false, error: `Couldn't reach ${SOURCE_LABELS[source]}. Try again in a moment.` };
+    }
+    if (!r) return { ok: false, error: `${SOURCE_LABELS[source]} doesn't have that title any more.` };
+    itemId = (await upsertExternalItem(db, r, user.id)).id;
+    type = r.mediaType;
+    unit = r.totalUnit ?? MEDIA_TYPE_META[r.mediaType].defaultUnit;
+  }
+
+  await ensureEntry(db, user.id, itemId!, status, unit);
   revalidatePath("/", "layout");
-  return { ok: true, data: { mediaItemId: item.id } };
+  return { ok: true, data: { mediaItemId: itemId!, mediaType: type } };
 }
 
 const manualSchema = z.object({

@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "seed:demo": "node --conditions=react-server -r tsx/cjs scripts/seed-demo.ts",
-    "backfill:usernames": "node --conditions=react-server -r tsx/cjs scripts/backfill-usernames.ts"
+    "backfill:usernames": "node --conditions=react-server -r tsx/cjs scripts/backfill-usernames.ts",
+    "email:first-log": "node --conditions=react-server -r tsx/cjs scripts/send-first-log-emails.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

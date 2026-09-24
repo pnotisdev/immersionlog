@@ -33,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogSessionEntry } from "@/components/sessions/log-session-entry";
+import { TimerPill, type TimerPillData } from "@/components/timer/timer-pill";
 
 export interface NavUser {
   id: string;
@@ -75,7 +76,7 @@ function useIsActive() {
     [l.href, ...(l.also ?? [])].some((p) => pathname === p || pathname.startsWith(p + "/"));
 }
 
-export function Nav({ user }: { user: NavUser }) {
+export function Nav({ user, timer = null }: { user: NavUser; timer?: TimerPillData | null }) {
   const isActive = useIsActive();
 
   return (
@@ -101,6 +102,7 @@ export function Nav({ user }: { user: NavUser }) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <TimerPill timer={timer} />
           <LogSessionEntry />
           <AccountMenu user={user} />
         </div>

@@ -39,6 +39,8 @@ export function buildTimer(pool: SearchResult[]): ActiveTimerView {
     mediaType: item?.mediaType ?? "anime",
     label: null,
     startedAt: subMinutes(subMinutes(new Date(), 27), 0).toISOString(),
+    pausedAt: null,
+    pausedSeconds: 0,
     title: item?.title ?? null,
     progressUnit: "episodes",
   };

@@ -4,7 +4,8 @@ import { db } from "@/db";
 import { user } from "@/db/schema";
 import { sendEmail } from "@/lib/email";
 import { getSiteUrl } from "@/lib/site";
-import { formatWeeklyRecapEmail, getWeeklyRecap } from "@/lib/recap";
+import { weeklyRecapEmail } from "@/lib/emails";
+import { getWeeklyRecap } from "@/lib/recap";
 import { createUnsubscribeToken } from "@/lib/unsubscribe-token";
 
 /**
@@ -47,8 +48,7 @@ export async function GET(request: NextRequest) {
     try {
       const recap = await getWeeklyRecap(recipient.id, recipient.timezone ?? "UTC");
       const unsubscribeUrl = `${base}/api/unsubscribe?token=${createUnsubscribeToken(recipient.id)}`;
-      const { subject, text } = formatWeeklyRecapEmail(recipient.name, recap, unsubscribeUrl);
-      await sendEmail({ to: recipient.email, subject, text });
+      await sendEmail({ to: recipient.email, unsubscribeUrl, ...weeklyRecapEmail(recipient.name, recap, unsubscribeUrl) });
       sent++;
     } catch (err) {
       failed++;

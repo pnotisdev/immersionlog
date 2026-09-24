@@ -8,11 +8,11 @@ import { bookmeterImporter } from "./bookmeter";
 import { bookwalkerImporter } from "./bookwalker";
 import { cmoaImporter } from "./cmoa";
 import { dmmImporter } from "./dmm";
-import { searchGoogleBooks } from "./google-books";
+import { getGoogleBook, searchGoogleBooks } from "./google-books";
 import { imdbImporter } from "./imdb";
-import { jitenImporter, searchJiten } from "./jiten";
+import { deckToResult, fetchJitenDetail, jitenImporter, searchJiten } from "./jiten";
 import { shonenJumpPlusImporter } from "./shonenjumpplus";
-import { searchTmdb } from "./tmdb";
+import { getTmdb, searchTmdb } from "./tmdb";
 import {
   type ImportMetadata,
   type ImportOptions,
@@ -20,9 +20,10 @@ import {
   ImportError,
   type ParsedImportUrl,
   type SearchResponse,
+  type SearchResult,
   type UrlImporter,
 } from "./types";
-import { searchVndb } from "./vndb";
+import { getVndb, searchVndb } from "./vndb";
 import { youtubeImporter } from "./youtube";
 
 export type { SearchResult, SearchResponse, ImportResult } from "./types";
@@ -47,6 +48,66 @@ export async function searchExternal(mediaType: MediaType, q: string): Promise<S
     default:
       return { results: [], warning: `${MEDIA_TYPE_META[mediaType].label} has no search source; add it manually.` };
   }
+}
+
+// --- Lookup by id ------------------------------------------------------------------
+
+export type LookupSource = "anilist" | "vndb" | "tmdb" | "google_books" | "jiten";
+
+const LOOKUP_TTL_MS = 24 * 3600 * 1000;
+
+/**
+ * Re-read a search hit from its source by id, so what's stored in a shared row is what
+ * the source says, never what a client sent. The picked media type is kept when that
+ * type searches this source (book vs graded reader, game vs drama CD); AniList's own
+ * anime/manga/LN split always wins. Cached for a day; misses (null) are not cached.
+ */
+export async function lookupExternal(source: LookupSource, sourceId: string, mediaType: MediaType): Promise<SearchResult | null> {
+  const key = `lookup:v1:${source}:${sourceId}:${mediaType}`;
+  const cached = await cacheGet<SearchResult>(key, LOOKUP_TTL_MS).catch(() => undefined);
+  if (cached) return cached;
+
+  const typeFits = effectiveSearchSource(mediaType) === source;
+  let result: SearchResult | null = null;
+  switch (source) {
+    case "anilist": {
+      if (!/^\d{1,9}$/.test(sourceId)) return null;
+      try {
+        result = (await anilistImporter.fetch({ sourceId, canonicalUrl: `https://anilist.co/anime/${sourceId}` }, {})).result;
+      } catch (err) {
+        if (err instanceof ImportError && err.code === "not_found") return null;
+        throw err;
+      }
+      break;
+    }
+    case "vndb":
+      result = await getVndb(sourceId);
+      break;
+    case "tmdb":
+      result = await getTmdb(sourceId);
+      if (result && typeFits) result = { ...result, mediaType };
+      break;
+    case "google_books":
+      result = await getGoogleBook(sourceId, mediaType === "graded_reader" ? "graded_reader" : "book");
+      break;
+    case "jiten": {
+      const deckId = Number(sourceId);
+      if (!Number.isInteger(deckId) || deckId <= 0) return null;
+      try {
+        const { data } = await fetchJitenDetail(deckId);
+        result = deckToResult(data.mainDeck, data.parentDeck, typeFits ? mediaType : undefined).result;
+      } catch (err) {
+        if (err instanceof ImportError && err.code === "not_found") return null;
+        throw err;
+      }
+      break;
+    }
+  }
+  if (result) {
+    result = finalize({ result, warnings: [] }).result;
+    cacheSet(key, result).catch((err) => console.error("[lookup] failed to cache", key, err));
+  }
+  return result;
 }
 
 // --- Import from URL ----------------------------------------------------------------

@@ -187,6 +187,10 @@ export const activeTimers = pgTable("active_timers", {
   mediaType: mediaTypeEnum("media_type").notNull(),
   label: text("label"),
   startedAt: timestamp("started_at", { withTimezone: true }).notNull(),
+  // Set while paused. Running time = (pausedAt ?? now) - startedAt - pausedSeconds.
+  pausedAt: timestamp("paused_at", { withTimezone: true }),
+  // Total length of every finished pause so far.
+  pausedSeconds: integer("paused_seconds").notNull().default(0),
 });
 
 /** "1000 hours in 2026", "2M characters of VNs this month", etc. */

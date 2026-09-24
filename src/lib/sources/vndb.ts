@@ -50,6 +50,13 @@ export async function searchVndb(q: string): Promise<SearchResponse> {
   return { results: results.map(toResult) };
 }
 
+/** One VN by id ("v17"), or null. */
+export async function getVndb(id: string): Promise<SearchResult | null> {
+  if (!/^v\d{1,7}$/.test(id)) return null;
+  const [vn] = await post({ filters: ["id", "=", id], results: 1 });
+  return vn ? toResult(vn) : null;
+}
+
 /** Most-voted Japanese-original VNs — the Discover shelf. Callers cache. */
 export async function browseVndb(limit = 24): Promise<SearchResult[]> {
   const results = await post({

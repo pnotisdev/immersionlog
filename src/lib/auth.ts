@@ -5,6 +5,7 @@ import { admin, username } from "better-auth/plugins";
 import { and, asc, eq, like, ne } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { sendEmail } from "@/lib/email";
+import { resetPasswordEmail, verificationEmail } from "@/lib/emails";
 import { dedupeUsername, slugifyUsername, USERNAME_MAX, USERNAME_MIN, USERNAME_RE } from "@/lib/username";
 
 // __Secure- prefixed cookies (see useSecureCookies below) are rejected by browsers
@@ -66,21 +67,13 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     async sendResetPassword({ user, url }) {
-      await sendEmail({
-        to: user.email,
-        subject: "Reset your immersionlog password",
-        text: `Hi ${user.name},\n\nSomeone (hopefully you) asked to reset the password for your immersionlog account.\n\nReset it here: ${url}\n\nThis link expires in 1 hour. If you didn't request this, you can ignore this email.`,
-      });
+      await sendEmail({ to: user.email, ...resetPasswordEmail(user.name, url) });
     },
     requireEmailVerification: true,
   },
   emailVerification: {
     async sendVerificationEmail({ user, url }) {
-      await sendEmail({
-        to: user.email,
-        subject: "Verify your immersionlog email",
-        text: `Hi ${user.name},\n\nConfirm this is your email address to finish setting up your immersionlog account.\n\nVerify it here: ${url}\n\nThis link expires in 1 hour. If you didn't create this account, you can ignore this email.`,
-      });
+      await sendEmail({ to: user.email, ...verificationEmail(user.name, url) });
     },
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
