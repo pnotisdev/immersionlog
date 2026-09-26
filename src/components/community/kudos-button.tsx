@@ -3,20 +3,24 @@
 import { useState, useTransition } from "react";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
+import { togglePostKudos } from "@/actions/posts";
 import { toggleKudos } from "@/actions/social";
 import { cn } from "@/lib/utils";
 
-/** The one reaction in the app: a heart on someone's session. */
+/** The one reaction in the app: a heart on someone's session or journal post. */
 export function KudosButton({
   sessionId,
+  kind = "session",
   initialCount,
   initialGiven,
   disabled = false,
 }: {
+  /** The session's id, or the post's when kind is "post". */
   sessionId: string;
+  kind?: "session" | "post";
   initialCount: number;
   initialGiven: boolean;
-  /** Your own sessions can't be hearted; the count still shows. */
+  /** Your own sessions and posts can't be hearted; the count still shows. */
   disabled?: boolean;
 }) {
   const [given, setGiven] = useState(initialGiven);
@@ -28,7 +32,7 @@ export function KudosButton({
     setGiven(next);
     setCount((c) => c + (next ? 1 : -1));
     startTransition(async () => {
-      const res = await toggleKudos(sessionId);
+      const res = await (kind === "post" ? togglePostKudos : toggleKudos)(sessionId);
       if (!res.ok) {
         setGiven(!next);
         setCount((c) => c + (next ? -1 : 1));

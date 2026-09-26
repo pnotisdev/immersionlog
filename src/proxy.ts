@@ -24,6 +24,7 @@ const PRIVATE_PREFIXES = [
   "/settings",
   "/stats",
   "/texthooker",
+  "/write",
   "/admin",
 ];
 

@@ -10,6 +10,7 @@ import {
   Library,
   LogOut,
   Moon,
+  PenLine,
   Settings,
   Sun,
   Target,
@@ -59,13 +60,14 @@ const LINKS: NavLink[] = [
   { href: "/dashboard", label: "Home", icon: House },
   { href: "/library", label: "Library", icon: Library, also: ["/media"] },
   { href: "/discover", label: "Discover", icon: Compass },
-  { href: "/community", label: "Community", icon: Users, also: ["/ranking", "/clubs", "/members", "/u"] },
+  { href: "/community", label: "Community", icon: Users, also: ["/ranking", "/clubs", "/members", "/u", "/write"] },
   { href: "/stats", label: "Stats", icon: ChartNoAxesColumn },
 ];
 
 const MENU_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/log", label: "Session log", icon: Timer },
   { href: "/goals", label: "Goals", icon: Target },
+  { href: "/write", label: "Write a post", icon: PenLine },
   { href: "/texthooker", label: "Texthooker", icon: Terminal },
   { href: "/settings", label: "Settings", icon: Settings },
 ];

@@ -2,6 +2,7 @@ import { TabLinks } from "@/components/layout/tab-links";
 
 const TABS = [
   { href: "/community", label: "Activity" },
+  { href: "/community/journal", label: "Journal" },
   { href: "/ranking", label: "Leaderboard" },
   { href: "/members", label: "Members" },
   { href: "/clubs", label: "Clubs" },

@@ -5,3 +5,4 @@ export * from "./social";
 export * from "./cache";
 export * from "./milestones";
 export * from "./difficulty";
+export * from "./posts";

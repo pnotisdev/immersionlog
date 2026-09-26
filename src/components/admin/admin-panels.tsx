@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
 import { toast } from "sonner";
 import { banUserAction, setClubHidden, setSessionHidden, setUserRoleAction, unbanUserAction } from "@/actions/admin";
+import { dismissPostReports, setPostHidden } from "@/actions/posts";
 import type { AdminClubRow, AdminSessionNoteRow, AdminUserRow } from "@/lib/admin-queries";
+import type { AdminPostRow } from "@/lib/post-queries";
+import { postPath } from "@/lib/posts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -179,6 +182,61 @@ export function ClubsList({ clubs }: { clubs: AdminClubRow[] }) {
         </div>
       ))}
       {clubs.length === 0 && <p className="text-sm text-muted-foreground">No clubs yet.</p>}
+    </div>
+  );
+}
+
+export function PostsList({ posts }: { posts: AdminPostRow[] }) {
+  const router = useRouter();
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  const [, startTransition] = useTransition();
+
+  function run(id: string, action: () => Promise<{ ok: boolean; error?: string }>) {
+    setPendingId(id);
+    startTransition(async () => {
+      const res = await action();
+      setPendingId(null);
+      if (!res.ok) toast.error(res.error ?? "Something went wrong");
+      else router.refresh();
+    });
+  }
+
+  return (
+    <div className="grid gap-2">
+      {posts.map((p) => (
+        <div key={p.id} className="flex items-start gap-3 rounded-lg border p-3">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <a href={postPath(p.username, p.slug)} target="_blank" rel="noreferrer" className="text-sm font-medium hover:underline">
+                {p.title}
+              </a>
+              {p.reports > 0 && <Badge variant="destructive">{p.reports} report{p.reports === 1 ? "" : "s"}</Badge>}
+              {p.hidden && <Badge variant="outline">hidden</Badge>}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {p.userName} · {p.publishedAt ? new Date(p.publishedAt).toLocaleString() : "draft"}
+            </div>
+            {p.reasons.length > 0 && (
+              <ul className="mt-1 grid gap-0.5 text-sm text-muted-foreground">
+                {p.reasons.map((r, i) => (
+                  <li key={i}>“{r}”</li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="flex shrink-0 gap-2">
+            {p.reports > 0 && (
+              <Button type="button" variant="ghost" size="sm" disabled={pendingId === p.id} onClick={() => run(p.id, () => dismissPostReports(p.id))}>
+                Dismiss
+              </Button>
+            )}
+            <Button type="button" variant="outline" size="sm" disabled={pendingId === p.id} onClick={() => run(p.id, () => setPostHidden(p.id, !p.hidden))}>
+              {p.hidden ? "Unhide" : "Hide"}
+            </Button>
+          </div>
+        </div>
+      ))}
+      {posts.length === 0 && <p className="text-sm text-muted-foreground">No posts yet.</p>}
     </div>
   );
 }

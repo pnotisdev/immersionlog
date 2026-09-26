@@ -5,6 +5,7 @@ import { getBannerChoice, resolveBanner } from "@/lib/banner-queries";
 import { dayKey, presetRange } from "@/lib/dates";
 import { formatDuration, formatMonthYear, formatNumber } from "@/lib/format";
 import { listRecentMilestones } from "@/lib/milestones-queries";
+import { countPublishedPosts, listPosts } from "@/lib/post-queries";
 import { platformLabel } from "@/lib/profile-links";
 import { getProgression } from "@/lib/progression-queries";
 import { getHeatmapActivity, getLibrary, getTopItems, getTypeBreakdown } from "@/lib/queries";
@@ -30,6 +31,7 @@ import { TopTitles } from "@/components/stats/top-titles";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { EmbedCard } from "@/components/community/embed-card";
+import { PostList } from "@/components/posts/post-list";
 
 export async function generateMetadata(props: PageProps<"/u/[username]">) {
   const { username } = await props.params;
@@ -58,7 +60,7 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
   const month = presetRange("month", tz, now);
   const all = presetRange("all", tz, now);
 
-  const [progression, heat, breakdown, top, rank, counts, following, feed, library, followers, highlights, bannerChoice] = await Promise.all([
+  const [progression, heat, breakdown, top, rank, counts, following, feed, library, followers, highlights, bannerChoice, recentPosts, postCount] = await Promise.all([
     getProgression(u.id, tz, now),
     getHeatmapActivity(u.id, tz, now),
     getTypeBreakdown(u.id, all.from, all.to),
@@ -73,6 +75,8 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
     listFollowConnections(u.id, "followers", 10),
     listRecentMilestones(u.id, 6),
     getBannerChoice(u.id),
+    listPosts(viewer?.id ?? "", { authorId: u.id, limit: 3 }),
+    countPublishedPosts(u.id),
   ]);
 
   const active = library.filter((e) => e.status === "active");
@@ -207,7 +211,7 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
           </div>
         </div>
 
-        <ProfileTabs username={u.username!} active="overview" year={currentYear} libraryCount={library.length} />
+        <ProfileTabs username={u.username!} active="overview" year={currentYear} libraryCount={library.length} postCount={postCount} />
       </header>
 
       <StatStrip
@@ -239,6 +243,16 @@ export default async function ProfilePage(props: PageProps<"/u/[username]">) {
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <div className="grid gap-6">
+          {recentPosts.items.length > 0 && (
+            <Panel
+              title="Posts"
+              action={postCount > recentPosts.items.length ? <PanelLink href={`/u/${u.username}/posts`}>All {postCount}</PanelLink> : undefined}
+              bodyClassName="py-0"
+            >
+              <PostList posts={recentPosts.items} viewerId={viewer?.id ?? ""} showAuthor={false} emptyText="" />
+            </Panel>
+          )}
+
           <Panel title="Most time spent on" description="All time">
             <TopTitles
               items={top.map((t) => ({ ...t, detail: `${t.count} session${t.count === 1 ? "" : "s"}` }))}

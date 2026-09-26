@@ -1,7 +1,8 @@
 import { adminListClubs, adminListSessionNotes, adminListUsers } from "@/lib/admin-queries";
 import { requireAdmin } from "@/lib/admin";
+import { adminListPosts } from "@/lib/post-queries";
 import { PageHeader, SectionHeader } from "@/components/layout/page-header";
-import { ClubsList, SessionNotesList, UsersTable } from "@/components/admin/admin-panels";
+import { ClubsList, PostsList, SessionNotesList, UsersTable } from "@/components/admin/admin-panels";
 
 export const metadata = { title: "Admin" };
 
@@ -11,7 +12,7 @@ export default async function AdminPage(props: PageProps<"/admin">) {
   const sp = await props.searchParams;
   const q = str(sp.q)?.trim();
 
-  const [users, sessions, clubs] = await Promise.all([adminListUsers({ q }), adminListSessionNotes(), adminListClubs()]);
+  const [users, posts, sessions, clubs] = await Promise.all([adminListUsers({ q }), adminListPosts(), adminListSessionNotes(), adminListClubs()]);
 
   return (
     <div className="grid gap-8">
@@ -29,6 +30,12 @@ export default async function AdminPage(props: PageProps<"/admin">) {
           />
         </form>
         <UsersTable users={users} viewerId={admin.id} />
+      </section>
+
+      <section>
+        <SectionHeader title="Journal posts" />
+        <p className="mb-3 text-sm text-muted-foreground">Reported posts first, then the newest. Hiding one removes it for everyone but its author.</p>
+        <PostsList posts={posts} />
       </section>
 
       <section>
