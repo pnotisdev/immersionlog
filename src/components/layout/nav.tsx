@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
+  BookOpen,
   ChartNoAxesColumn,
   Compass,
   House,
@@ -69,6 +70,7 @@ const MENU_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/goals", label: "Goals", icon: Target },
   { href: "/write", label: "Write a post", icon: PenLine },
   { href: "/texthooker", label: "Texthooker", icon: Terminal },
+  { href: "/guide", label: "Learning guide", icon: BookOpen },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 

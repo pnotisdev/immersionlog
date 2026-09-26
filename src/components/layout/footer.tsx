@@ -28,6 +28,9 @@ export function Footer({
           <Wordmark markSize={14} textClassName="text-sm font-semibold" />
         </Link>
         <span>Cover art and metadata from AniList, VNDB, TMDB, Google Books, Jiten.moe and the stores you import from.</span>
+        <Link href="/guide" className="hover:text-foreground">
+          Learning guide
+        </Link>
         <Link href="/titles" className="hover:text-foreground">
           Titles
         </Link>

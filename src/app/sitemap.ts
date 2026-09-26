@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const titles = await listPublicTitles({ limit: 45_000 });
   return [
     { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/guide`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/titles`, lastModified: titles[0]?.updatedAt ?? new Date(), changeFrequency: "daily", priority: 0.8 },
     { url: `${base}/signup`, changeFrequency: "monthly", priority: 0.6 },
     ...titles.map((t) => ({
