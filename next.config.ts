@@ -52,6 +52,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.cmoa.jp" },
       { protocol: "https", hostname: "cdn-ak-img.shonenjumpplus.com" },
       { protocol: "https", hostname: "i.ytimg.com" }, // YouTube thumbnails
+      { protocol: "https", hostname: "i.scdn.co" }, // Spotify podcast covers
     ],
   },
 };

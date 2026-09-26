@@ -32,6 +32,8 @@ describe("findImporter", () => {
     expect(findImporter("https://www.youtube.com/@cure_dolly")).toBeNull();
     expect(findImporter("https://www.youtube.com/playlist?list=PL123")).toBeNull();
     expect(findImporter("https://www.youtube.com/watch?v=tooshort")).toBeNull();
+    expect(findImporter("https://open.spotify.com/artist/0TWRqowC0TPhXlG79M0qzv")).toBeNull();
+    expect(findImporter("https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M")).toBeNull();
     expect(findImporter("https://www.imdb.com/name/nm0000001/")).toBeNull();
   });
 
@@ -58,6 +60,9 @@ describe("findImporter", () => {
     ["https://www.youtube.com/shorts/dQw4w9WgXcQ", "youtube", "dQw4w9WgXcQ"],
     ["https://www.youtube.com/live/dQw4w9WgXcQ?feature=share", "youtube", "dQw4w9WgXcQ"],
     ["http://youtube.com/embed/dQw4w9WgXcQ", "youtube", "dQw4w9WgXcQ"],
+    ["https://open.spotify.com/show/0TWRqowC0TPhXlG79M0qzv", "spotify", "show:0TWRqowC0TPhXlG79M0qzv"],
+    ["https://open.spotify.com/intl-ja/show/0TWRqowC0TPhXlG79M0qzv?si=abc", "spotify", "show:0TWRqowC0TPhXlG79M0qzv"],
+    ["https://open.spotify.com/episode/1RsOzR92w5v0eFLgroaE05", "spotify", "episode:1RsOzR92w5v0eFLgroaE05"],
     ["https://dlsoft.dmm.co.jp/detail/views_0001/", "dmm", "r18:views_0001"],
   ])("routes %s", (url, source, sourceId) => {
     const found = findImporter(url);

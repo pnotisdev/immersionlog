@@ -12,6 +12,7 @@ import { getGoogleBook, searchGoogleBooks } from "./google-books";
 import { imdbImporter } from "./imdb";
 import { deckToResult, fetchJitenDetail, jitenImporter, searchJiten } from "./jiten";
 import { shonenJumpPlusImporter } from "./shonenjumpplus";
+import { spotifyImporter } from "./spotify";
 import { getTmdb, searchTmdb } from "./tmdb";
 import {
   type ImportMetadata,
@@ -127,6 +128,7 @@ export const URL_IMPORTERS: readonly UrlImporter[] = [
   backloggdImporter,
   dmmImporter,
   youtubeImporter,
+  spotifyImporter,
 ];
 
 export interface FoundImporter {

@@ -20,6 +20,7 @@ export const IMPORT_HOSTS: Record<ImportSource, readonly string[]> = {
   // The adult storefront is refused unless DMM_ALLOW_ADULT=1 (see ./dmm.ts).
   dmm: ["dlsoft.dmm.com", "dlsoft.dmm.co.jp"],
   youtube: ["www.youtube.com", "youtube.com", "m.youtube.com", "music.youtube.com", "youtu.be"],
+  spotify: ["open.spotify.com"],
 };
 
 /** Hostname-only check, safe on the client. Returns the source that would handle `raw`. */

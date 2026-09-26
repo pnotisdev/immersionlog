@@ -8,6 +8,7 @@ const LIVE = process.env.LIVE === "1";
 const CASES: [string, string, boolean][] = [
   ["anilist", "https://anilist.co/manga/30104/Yotsuba-to", true],
   ["youtube", "https://youtu.be/dQw4w9WgXcQ", true],
+  ["spotify", "https://open.spotify.com/episode/1RsOzR92w5v0eFLgroaE05", true],
   ["jiten", "https://jiten.moe/decks/media/283/detail", true],
   // IMDb title pages are WAF-blocked from datacenter IPs; the TMDB path needs the key.
   ["imdb", "https://www.imdb.com/title/tt0245429/", !!process.env.TMDB_API_KEY],
