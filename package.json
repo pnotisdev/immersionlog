@@ -15,6 +15,7 @@
     "test": "vitest run",
     "seed:demo": "node --conditions=react-server -r tsx/cjs scripts/seed-demo.ts",
     "backfill:usernames": "node --conditions=react-server -r tsx/cjs scripts/backfill-usernames.ts",
+    "resolve:link-labels": "node --conditions=react-server -r tsx/cjs scripts/resolve-link-labels.ts",
     "email:first-log": "node --conditions=react-server -r tsx/cjs scripts/send-first-log-emails.ts"
   },
   "dependencies": {
