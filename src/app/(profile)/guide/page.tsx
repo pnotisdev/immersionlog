@@ -3,6 +3,15 @@ import Link from "next/link";
 import { DAKUTEN, GOJUON, YOON } from "@/lib/kana";
 import { getSession } from "@/lib/session";
 import { absoluteUrl, breadcrumbs, JsonLd } from "@/lib/seo";
+import {
+  GUIDE_IMAGE_CREDITS,
+  IntervalsDiagram,
+  KanjiAnatomyDiagram,
+  Photo,
+  PitchAccentDiagram,
+  SentenceDiagram,
+  SweetSpotDiagram,
+} from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, KanaChart, List, Table } from "@/components/guide/guide-parts";
 import { Button } from "@/components/ui/button";
 
@@ -29,6 +38,7 @@ export const metadata: Metadata = {
 const TOC = [
   { id: "short-version", label: "The short version" },
   { id: "expectations", label: "What to expect" },
+  { id: "how-japanese-works", label: "How Japanese works" },
   { id: "kana", label: "1. Hiragana and katakana" },
   { id: "anki", label: "2. Anki and your first words" },
   { id: "kanji", label: "3. Kanji" },
@@ -41,6 +51,7 @@ const TOC = [
   { id: "output", label: "Speaking, writing, pitch accent" },
   { id: "mistakes", label: "Common mistakes" },
   { id: "faq", label: "Questions" },
+  { id: "credits", label: "Image credits" },
 ];
 
 const FAQ = [
@@ -63,6 +74,14 @@ const FAQ = [
   {
     q: "Should I watch anime with English subtitles?",
     a: "Not for immersion time. With English subtitles you read English. Use Japanese subtitles, or none, and keep English for things you're watching purely for fun.",
+  },
+  {
+    q: "What is the JLPT, and do I need it?",
+    a: "The Japanese-Language Proficiency Test certifies reading and listening at five levels, from N5 (some basic Japanese) to N1 (Japanese in a wide range of situations). It's held twice a year, in July and December, and doesn't test speaking or writing. You only need it if a school, visa or employer asks for it; as a learning plan it's optional.",
+  },
+  {
+    q: "What is pitch accent?",
+    a: "Japanese words have a pattern of high and low pitch across their syllables, and some words are told apart only by it: in Tokyo speech 箸 (chopsticks) starts high, 橋 (bridge) rises and drops after the word, and 端 (edge) rises and stays up. You can be understood without studying it, but it's what makes an accent sound natural.",
   },
   {
     q: "What is comprehensible input?",
@@ -120,7 +139,7 @@ export default async function GuidePage() {
           is free.
         </p>
         <p className="mt-3 text-meta text-dim">
-          Updated {new Date(UPDATED).toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })} · about 20
+          Updated {new Date(UPDATED).toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })} · about 30
           minutes to read
         </p>
       </header>
@@ -187,6 +206,28 @@ export default async function GuidePage() {
               and you are &ldquo;not a beginner anymore&rdquo;. Time spent is the input; what you&apos;ve understood is the
               result.
             </p>
+            <H3>The JLPT, and how many hours</H3>
+            <p>
+              The <Ext href="https://www.jlpt.jp/e/about/levelsummary.html">Japanese-Language Proficiency Test</Ext> is the
+              standard certificate: five levels, from N5 to N1, sat in July and December. It tests reading and listening
+              only, and its organisers no longer publish word or kanji lists for each level. The Japanese Language Education
+              Center&apos;s survey of learners (2010–2015, as cited on Wikipedia) gives a feel for the hours involved:
+            </p>
+            <Table
+              head={["Level", "What it certifies", "Study hours, no kanji background"]}
+              rows={[
+                ["N5", "Some basic Japanese: kana, basic kanji, slow short conversations", "325–600"],
+                ["N4", "Basic Japanese on familiar daily topics", "575–1,000"],
+                ["N3", "Everyday Japanese to a certain degree; newspaper headlines", "950–1,700"],
+                ["N2", "Everyday situations and newspaper articles; near-natural-speed speech", "1,600–2,800"],
+                ["N1", "Japanese in a wide range of situations, including abstract and complex texts", "3,000–4,800"],
+              ]}
+            />
+            <p>
+              Learners who already read Chinese characters need less: about half as long for N1. Those numbers
+              include classroom time and homework; the point isn&apos;t the exact figure, it&apos;s that the path is measured
+              in thousands of hours, and daily immersion is how people fit thousands of hours into a life.
+            </p>
             <Callout title="Measure what matters">
               <p>
                 Hours are the one number every method agrees on. <In href="/">immersionlog</In> exists to count them: time per
@@ -194,6 +235,54 @@ export default async function GuidePage() {
                 <In href="/tools/reading-speed">reading speed test</In> result is a good baseline to beat in three months.
               </p>
             </Callout>
+          </GuideSection>
+
+          <GuideSection id="how-japanese-works" title="How Japanese works, in five minutes">
+            <p>
+              A little orientation before step one makes everything after it less mysterious.
+            </p>
+            <Photo
+              src="/guide/station-sign.webp"
+              alt="A train station sign reading 坂本 in kanji, さかもと in hiragana and SAKAMOTO in romaji"
+              width={1200}
+              height={896}
+              caption="One sign, three scripts: the station name 坂本 in kanji, its reading さかもと in hiragana, and SAKAMOTO in romaji for visitors. Photo: トレインファン, CC BY 4.0."
+            />
+            <List>
+              <li>
+                <strong>Three scripts, mixed in every sentence.</strong> Kanji carry the meaning of most nouns and the stems of
+                verbs and adjectives; hiragana writes grammar, endings and particles; katakana writes loanwords, names and
+                emphasis. Romaji, the Latin alphabet, is for foreigners and isn&apos;t used in normal writing.
+              </li>
+              <li>
+                <strong>No spaces.</strong> Words run together, and the switch between kanji and hiragana is what shows you where
+                they begin and end. This is one reason a pop-up dictionary is so useful early on.
+              </li>
+              <li>
+                <strong>Five vowels, few sounds.</strong> a, i, u, e, o, and every kana is one beat (a <em>mora</em>).
+                Pronunciation is the easy part of Japanese for most English speakers.
+              </li>
+              <li>
+                <strong>The verb comes last.</strong> The basic order is subject, object, verb, and small words called particles
+                after each piece mark its role.
+              </li>
+              <li>
+                <strong>Less grammar than you&apos;d fear in some places.</strong> Nouns have no gender, no articles (a, the) and
+                usually no plural. Subjects are dropped whenever context makes them obvious: 日本に行きました is simply
+                &ldquo;(I) went to Japan.&rdquo;
+              </li>
+              <li>
+                <strong>Politeness is built into verbs.</strong> 食べます and 食べる both mean &ldquo;eat&rdquo;; the first is
+                polite, the second plain. Textbooks start polite; anime and manga are mostly plain.
+              </li>
+            </List>
+            <SentenceDiagram />
+            <p>
+              The particle you&apos;ll wonder about most is <strong>は</strong> (wa) versus <strong>が</strong> (ga). Roughly,
+              は marks what you&apos;re talking about and が marks who or what does something: 犬は魚を食べている is &ldquo;as for
+              the dog, it&apos;s eating fish&rdquo;, 犬が魚を食べている is &ldquo;a dog is eating fish.&rdquo; Don&apos;t
+              expect it to click from a rule; it clicks from seeing thousands of examples.
+            </p>
           </GuideSection>
 
           <GuideSection id="kana" step="Step 1" title="Hiragana and katakana">
@@ -234,6 +323,39 @@ export default async function GuidePage() {
               <span lang="ja">{YOON.map((y) => `${y.hiragana} ${y.romaji}`).join("、")}</span>. A small っ doubles the next
               consonant (きって kitte, stamp). In katakana a dash lengthens a vowel (コーヒー kōhī).
             </p>
+            <H3>Spelling quirks to know</H3>
+            <List>
+              <li>
+                Three particles keep old spellings: <strong>は</strong> is read <em>wa</em>, <strong>へ</strong> is read{" "}
+                <em>e</em>, and <strong>を</strong> is read <em>o</em> when they&apos;re particles. こんにちは ends in は for this
+                reason.
+              </li>
+              <li>
+                Long vowels in hiragana are written with an extra vowel: おかあさん (okāsan), and often う after o (ありがとう,
+                arigatō) or い after e (せんせい, sensei).
+              </li>
+              <li>
+                Pairs that look alike and trip up everyone at first: <span lang="ja">シ・ツ</span> and{" "}
+                <span lang="ja">ソ・ン</span> (the stroke direction differs), <span lang="ja">ぬ・め</span>,{" "}
+                <span lang="ja">ね・れ・わ</span>, <span lang="ja">る・ろ</span>, <span lang="ja">さ・ち</span>. They sort
+                themselves out with reading volume.
+              </li>
+            </List>
+            <H3>Where kana came from</H3>
+            <p>
+              Both scripts grew out of kanji used for their sounds (<em>man&apos;yōgana</em>). Hiragana came from cursive
+              brush forms of whole characters, and was long associated with women&apos;s writing; katakana came from pieces of
+              characters, used by monks to annotate Chinese texts. You don&apos;t need this to read, but it explains why あ
+              looks like 安.
+            </p>
+            <Photo
+              src="/guide/hiragana-origin.webp"
+              alt="Chart showing each hiragana in black, the cursive kanji it came from in red, and the original kanji above"
+              width={1000}
+              height={1245}
+              className="mx-auto max-w-md"
+              caption="Each hiragana (bottom of each cell) with the cursive kanji it came from (red) and the original kanji (top): 安 → あ, 加 → か, 左 → さ. Chart: 合略仮名, CC0."
+            />
             <Callout title="Drop romaji early" tone="warn">
               <p>
                 Romaji is a crutch that stops working the moment you open anything Japanese, and different romanisation systems
@@ -249,6 +371,7 @@ export default async function GuidePage() {
               pick up from context. <strong>Anki</strong> is free flashcard software that shows each card just before
               you&apos;d forget it, so a few minutes a day keeps hundreds of words alive.
             </p>
+            <IntervalsDiagram />
             <H3>Install</H3>
             <p>
               Get <Ext href="https://apps.ankiweb.net/">Anki</Ext>: free on Windows, macOS and Linux, free as AnkiDroid on
@@ -288,6 +411,27 @@ export default async function GuidePage() {
                 Do your reviews every day, even when you add no new cards. Skipped reviews pile up fast.
               </li>
             </List>
+            <H3>Cards that won&apos;t stick</H3>
+            <p>
+              A card you&apos;ve failed eight times becomes a <strong>leech</strong>: Anki tags it and suspends it by default.
+              The manual&apos;s advice is to change how the card is presented (add a picture, a mnemonic, a clearer sentence)
+              or delete it if the word isn&apos;t worth the time. Some words only stick once you&apos;ve met them in a story.
+            </p>
+            <H3>Useful settings later</H3>
+            <List>
+              <li>
+                <strong>Easy Days</strong> lets you mark days of the week as lighter; Anki nudges due dates away from them.
+                Handy if your weekends are busy.
+              </li>
+              <li>
+                <strong>AnkiConnect</strong>, an add-on, lets Yomitan and asbplayer add cards to Anki for you. You&apos;ll want
+                it once you start mining (step 8).
+              </li>
+              <li>
+                Read cards in both directions only if you have a reason to. For understanding Japanese, Japanese → meaning is
+                the direction that matters.
+              </li>
+            </List>
             <p>
               At 15 new words a day Kaishi takes a little over three months. You don&apos;t need to finish it before
               immersing; start watching and reading in the first week.
@@ -306,6 +450,31 @@ export default async function GuidePage() {
               teaches you 日本 and 学生 as words, and the characters come along with them. Reading with a pop-up dictionary
               then shows you each word&apos;s reading on hover, so an unknown kanji never blocks you.
             </p>
+            <KanjiAnatomyDiagram />
+            <H3>Readings</H3>
+            <p>
+              Most kanji have two kinds of reading. <strong>On&apos;yomi</strong> are borrowed from Chinese pronunciations and
+              show up mostly in compound words (先生, <em>sensei</em>). <strong>Kun&apos;yomi</strong> are native Japanese words
+              attached to the character, often with hiragana endings called <strong>okurigana</strong> (生きる,{" "}
+              <em>ikiru</em>; 見る, <em>miru</em>). A few words ignore the characters&apos; usual readings altogether: 今日 is{" "}
+              <em>kyō</em>, &ldquo;today&rdquo;. None of this needs memorising up front; you learn the reading with each
+              word.
+            </p>
+            <Photo
+              src="/guide/furigana.webp"
+              alt="The word furigana written in kanji, 振り仮名, with its reading in small hiragana above each kanji"
+              width={900}
+              height={420}
+              className="mx-auto max-w-md"
+              caption="Furigana: small kana over kanji giving the reading. Common in manga for younger readers, children's books and many visual novels. Image: public domain."
+            />
+            <Photo
+              src="/guide/kanji-drill.webp"
+              alt="A child writing kanji in a practice drill book"
+              width={1200}
+              height={900}
+              caption="Japanese children work through kanji drill books for years at school. You don't have to: as a reader you need to recognise kanji, not produce them. Photo: Tatsuo Yamashita, CC BY 2.0."
+            />
             <List>
               <li>
                 If similar-looking kanji keep blurring together, a short component course helps: learn the building blocks
@@ -359,6 +528,7 @@ export default async function GuidePage() {
               Merrill Swain have argued that producing language matters too. But the practical core is what every immersion
               guide is built on: <strong>lots of Japanese that you understand</strong>, over a long time.
             </p>
+            <SweetSpotDiagram />
             <H3>How much should you understand?</H3>
             <p>
               Reading research suggests comfortable, unassisted reading needs around <strong>98% of the words</strong> on a page
@@ -366,6 +536,14 @@ export default async function GuidePage() {
               exist: a pop-up dictionary closes the gap, and easier content keeps the gap small. VN Club&apos;s rule of thumb is
               good: aim to understand most of what you read <em>with some effort</em>. Not nearly nothing, not everything
               easily.
+            </p>
+            <H3>Two ways to read</H3>
+            <p>
+              <strong>Intensive reading</strong> is slow and careful: look up everything, pick sentences apart. It&apos;s how
+              you get through your first native texts. <strong>Extensive reading</strong> (多読, <em>tadoku</em>) is reading
+              lots of easier text quickly, for the story, without stopping for every word. Research on extensive reading
+              associates the jump to easy, pleasurable reading with knowing a few thousand word families. Do intensive reading
+              when you must and extensive reading as soon as you can; volume is what builds speed.
             </p>
             <H3>Listening and reading</H3>
             <List>
@@ -451,6 +629,14 @@ export default async function GuidePage() {
                 ],
               ]}
             />
+            <Photo
+              src="/guide/visual-novel.webp"
+              alt="A visual novel scene: an empty classroom with a Japanese dialogue box at the bottom"
+              width={640}
+              height={480}
+              className="mx-auto max-w-lg"
+              caption="A visual novel: pictures, often voice, and text in a box. A texthooker copies each line out of the game so a pop-up dictionary can read it. Screenshot: 31NOVA, CC0."
+            />
             <Callout title="Don't let setup eat your time" tone="warn">
               <p>
                 VN Club&apos;s warning is worth repeating: tools are a means to read, not a hobby. Get Yomitan working, pick one
@@ -460,6 +646,13 @@ export default async function GuidePage() {
           </GuideSection>
 
           <GuideSection id="what-to-immerse-in" step="Step 7" title="What to immerse in">
+            <Photo
+              src="/guide/manga-bookshop.webp"
+              alt="Shelves of manga volumes in a Japanese bookshop"
+              width={1200}
+              height={900}
+              caption="There's no shortage of material. The hard part is picking the right first things. Anime and manga bookshop in Kyoto; photo: Marek Ślusarczyk (Tupungato), CC BY 3.0."
+            />
             <p>
               The single most important rule: <strong>pick things you actually want to finish</strong>. Something you care
               about carries you through confusion that a &ldquo;perfect-level&rdquo; textbook story never will. Past that, a
@@ -507,6 +700,44 @@ export default async function GuidePage() {
                 ],
               ]}
             />
+            <H3>Made for learners</H3>
+            <Table
+              head={["Resource", "What it is", "Cost"]}
+              rows={[
+                [
+                  <Ext key="t" href="https://tadoku.org/japanese/en/free-books-en/">Tadoku graded readers</Ext>,
+                  "Short illustrated books in levels Start to 5, PDF, many with audio.",
+                  "Free",
+                ],
+                [
+                  <Ext key="n" href="https://nihongoconteppei.com/">Nihongo con Teppei</Ext>,
+                  "A long-running podcast in natural, slow Japanese about daily life, with a beginners series.",
+                  "Free",
+                ],
+                [
+                  "NHK News Web Easy",
+                  "Current news rewritten in simple Japanese, with furigana and audio.",
+                  "Free",
+                ],
+                [
+                  <Ext key="s" href="https://www.satorireader.com/">Satori Reader</Ext>,
+                  "Serialised stories and articles for intermediate learners, with native audio, adjustable furigana and explanations.",
+                  "Subscription",
+                ],
+              ]}
+            />
+            <H3>Finding native content at your level</H3>
+            <List>
+              <li>
+                <Ext href="https://jiten.moe/">Jiten.moe</Ext> analyses thousands of anime, novels, visual novels and manga:
+                difficulty, length, the vocabulary you&apos;ll meet, and, if you import your Anki words, what share of a title
+                you already know. It also exports a title&apos;s vocabulary as an Anki deck to prep with.
+              </li>
+              <li>
+                <Ext href="https://learnnatively.com/">Natively</Ext> has community difficulty ratings for books, manga and
+                shows.
+              </li>
+            </List>
             <p>
               To find titles at your level, <In href="/titles">browse titles on immersionlog</In>: each page shows length and
               Jiten.moe&apos;s difficulty estimate, and with your <In href="/tools/reading-speed">reading speed</In> you can see
@@ -564,10 +795,19 @@ export default async function GuidePage() {
               Most guides now suggest starting some output early instead of waiting until you&apos;re &ldquo;ready&rdquo;: talk
               to a tutor or language-exchange partner, keep a short diary, shadow lines from shows you like.
             </p>
+            <H3>Pitch accent</H3>
             <p>
-              Pitch accent, the rise and fall that distinguishes words like 箸 (chopsticks) and 橋 (bridge), is worth learning if
-              you want to sound natural. If you don&apos;t mind an accent, it can wait. Kaishi can show pitch accent on its
-              cards when you&apos;re ready to pay attention to it.
+              Japanese has no stress accent like English; instead each word has a pattern of high and low pitch across its
+              beats. Tokyo speech has four pattern types (heiban, flat; atamadaka, high first; nakadaka, drop in the middle;
+              odaka, drop after the word), and a handful of words are told apart by pitch alone:
+            </p>
+            <PitchAccentDiagram />
+            <p>
+              It&apos;s worth learning if you want to sound natural, and it can wait if you don&apos;t mind an accent. Accents
+              also differ by region, so &ldquo;correct&rdquo; usually means Tokyo standard. The University of Tokyo&apos;s free{" "}
+              <Ext href="https://www.gavo.t.u-tokyo.ac.jp/ojad/eng/pages/home">OJAD</Ext> shows the pitch of words and all
+              their conjugations, and its Suzuki-kun tool marks the pitch of any sentence you paste. Kaishi can show pitch
+              accent on its cards when you&apos;re ready.
             </p>
           </GuideSection>
 
@@ -606,6 +846,30 @@ export default async function GuidePage() {
               </div>
             ))}
           </GuideSection>
+
+          <section id="credits" className="scroll-mt-24">
+            <h2 className="text-h3 font-semibold">Image credits</h2>
+            <p className="mt-1 text-meta text-dim">
+              Photos and charts from Wikimedia Commons, resized for this page. Diagrams by immersionlog.
+            </p>
+            <ul className="mt-3 grid gap-1.5 text-meta text-muted-foreground">
+              {GUIDE_IMAGE_CREDITS.map((c) => (
+                <li key={c.src}>
+                  <a href={c.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+                    {c.what}
+                  </a>{" "}
+                  by {c.author},{" "}
+                  {c.licenseUrl ? (
+                    <a href={c.licenseUrl} target="_blank" rel="noopener noreferrer license" className="underline underline-offset-2 hover:text-foreground">
+                      {c.license}
+                    </a>
+                  ) : (
+                    c.license
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
 
           <section className="rounded-lg border border-border bg-surface px-6 py-6">
             <h2 className="text-h2 font-semibold">Further reading</h2>
