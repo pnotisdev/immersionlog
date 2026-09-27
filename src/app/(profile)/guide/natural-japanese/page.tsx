@@ -154,7 +154,7 @@ export default function NaturalJapaneseChapter() {
         <Callout title="Gendered speech in real life">
           <p>
             Fiction exaggerates it. Researchers have long noted that individual Japanese men and women don&apos;t necessarily
-            speak the way their gender is supposed to: few young women today end sentences with わ or かしら, and many men never
+            speak the way their gender is supposed to: many young women never end sentences with わ or かしら, and many men never
             say ぜ. Learn the particles so you understand them, then copy how people around your age and gender actually talk.
           </p>
         </Callout>
