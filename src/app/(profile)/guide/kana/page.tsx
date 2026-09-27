@@ -1,4 +1,5 @@
 import { DAKUTEN, GOJUON, YOON } from "@/lib/kana";
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, MoraDiagram, Photo } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, KanaChart, List, Table } from "@/components/guide/guide-parts";
@@ -107,7 +108,7 @@ export default function KanaChapter() {
           Japanese pronunciation is kind to English speakers: most of its sounds exist in English, the vowels never change, and
           spelling matches sound almost perfectly. You can be understood with an English accent. But a few minutes on the points
           below now saves years of an accent you&apos;d later want to fix, and, more importantly, helps you <em>hear</em> Japanese
-          correctly. As Refold&apos;s Matt puts it in an interview quoted in <em>A Year to Learn Japanese</em>, you can&apos;t
+          correctly. As Refold&apos;s Matt puts it in an interview quoted in <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext>, you can&apos;t
           pronounce things more accurately than you can hear them.
         </p>
         <H3>Rhythm: every kana is one beat</H3>

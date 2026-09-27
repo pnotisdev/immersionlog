@@ -1,3 +1,4 @@
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
 
@@ -89,7 +90,7 @@ export default function RoutineChapter() {
             <strong>Set a floor, not a target.</strong> &ldquo;Reviews plus one episode&rdquo; on a bad day, more on a good one.
           </li>
           <li>
-            <strong>Spread learning out.</strong> <em>A Year to Learn Japanese</em> distinguishes &ldquo;horizontal&rdquo; time
+            <strong>Spread learning out.</strong> <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext> distinguishes &ldquo;horizontal&rdquo; time
             (how many days) from &ldquo;vertical&rdquo; time (hours in one sitting). Memory rewards horizontal: five minutes a day
             beats an hour once a week.
           </li>

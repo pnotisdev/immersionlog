@@ -1,3 +1,4 @@
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, KanjiAnatomyDiagram, Photo } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, In, List, Table } from "@/components/guide/guide-parts";
@@ -75,7 +76,7 @@ export default function KanjiChapter() {
 
       <GuideSection id="routes" title="Three routes through the kanji">
         <p>
-          Learners argue endlessly about this, and people have succeeded with every approach. <em>A Year to Learn Japanese</em>{" "}
+          Learners argue endlessly about this, and people have succeeded with every approach. <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext>{" "}
           sorts them into three routes, which is a useful way to choose:
         </p>
         <Table

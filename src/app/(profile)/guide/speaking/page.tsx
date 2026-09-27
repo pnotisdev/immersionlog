@@ -1,3 +1,4 @@
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { PitchAccentDiagram } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
@@ -21,7 +22,7 @@ export default function SpeakingChapter() {
           ]}
         />
         <p>
-          The author of <em>A Year to Learn Japanese</em> tried both extremes across four languages. The language they had read
+          The author of <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext> tried both extremes across four languages. The language they had read
           the most in, Japanese, was the one they could express themselves in most precisely; but the one they&apos;d spoken from
           day one, Russian, was the one they felt most comfortable speaking. Their conclusion: input builds what you <em>could</em>{" "}
           say, and only speaking makes it come out smoothly.

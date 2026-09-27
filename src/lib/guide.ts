@@ -6,6 +6,9 @@
 
 export const GUIDE_UPDATED = "2026-09-27";
 
+/** u/SuikaCider's "A Year to Learn Japanese", cited throughout the guide. */
+export const A_YEAR_TO_LEARN_JAPANESE = "https://docs.google.com/document/d/10bRzVblKVOsQJjTc2PIi1Gbj_LrsJCkMkh0SutXCZdI/edit";
+
 export interface GuideChapter {
   /** "" for the overview at /guide. */
   slug: string;

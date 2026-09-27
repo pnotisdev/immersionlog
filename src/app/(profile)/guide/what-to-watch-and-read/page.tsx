@@ -1,4 +1,5 @@
 import { GUIDE_ANIME, GUIDE_BOOKS, GUIDE_FILMS, GUIDE_GAMES, GUIDE_MANGA, GUIDE_VISUAL_NOVELS } from "@/lib/guide-media";
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, Photo } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
@@ -197,7 +198,7 @@ export default function MediaChapter() {
         <MediaTable items={GUIDE_BOOKS} />
         <p>
           For free classics, <Ext href="https://www.aozora.gr.jp/">Aozora Bunko</Ext> has thousands of out-of-copyright works,
-          though most are old-fashioned and hard. <em>A Year to Learn Japanese</em> recommends short horror stories by Otsuichi
+          though most are old-fashioned and hard. <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext> recommends short horror stories by Otsuichi
           (乙一) as a first step into adult fiction: plot-driven, simple and short.
         </p>
         <Callout title="Track what you finish">

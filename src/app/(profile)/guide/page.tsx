@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GUIDE_CHAPTERS, guidePath } from "@/lib/guide";
+import { GUIDE_CHAPTERS, guidePath, A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, Photo, SentenceDiagram } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
@@ -78,7 +78,7 @@ export default function GuideOverviewPage() {
             The common mistake is doing the steps in sequence: all the kana, then all the words, then all the grammar, and only
             then touching real Japanese. The immersion guides agree on the opposite. Words from Anki make sense when you see them
             in a show; grammar clicks when you meet it in a sentence you care about. Even guides built around textbooks, like{" "}
-            <em>A Year to Learn Japanese</em>, tell you to check in with real content regularly so you notice the day it becomes
+            <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext>, tell you to check in with real content regularly so you notice the day it becomes
             bearable.
           </p>
         </Callout>
@@ -235,7 +235,7 @@ export default function GuideOverviewPage() {
             <Ext href="https://guidetojapanese.org/learn/grammar">Tae Kim</Ext>: the classic free grammar guide.
           </li>
           <li>
-            <em>A Year to Learn Japanese</em> by u/SuikaCider: a long reflection on learning, with graded reading and listening
+            <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext> by u/SuikaCider: a long reflection on learning, with graded reading and listening
             ladders.
           </li>
           <li>

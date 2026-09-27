@@ -1,3 +1,4 @@
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { SentenceDiagram } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
@@ -14,7 +15,7 @@ export default function GrammarChapter() {
           patterns, not to master them.
         </p>
         <p>
-          <em>A Year to Learn Japanese</em> describes learning grammar in passes, and it matches what most learners report:
+          <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext> describes learning grammar in passes, and it matches what most learners report:
         </p>
         <List ordered>
           <li>

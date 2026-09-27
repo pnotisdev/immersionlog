@@ -1,3 +1,4 @@
+import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, Photo, SweetSpotDiagram } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
@@ -23,7 +24,7 @@ export default function ImmersionChapter() {
         </p>
         <SweetSpotDiagram />
         <p>
-          One way to think about the balance, from <em>A Year to Learn Japanese</em>: input sets your ceiling (what you could
+          One way to think about the balance, from <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext>: input sets your ceiling (what you could
           understand or say), output sets your floor (what you can actually produce smoothly). You need both eventually, but
           input comes first and does most of the work.
         </p>
