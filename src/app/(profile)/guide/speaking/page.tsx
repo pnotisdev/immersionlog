@@ -56,6 +56,10 @@ export default function SpeakingChapter() {
             <strong>Learn a few lifelines.</strong> もう一度お願いします (once more, please), ゆっくり話してください (please speak
             slowly), 〜ってどういう意味ですか (what does ... mean?), 日本語で何と言いますか (how do you say it in Japanese?).
           </li>
+          <li>
+            <strong>Know plain from polite.</strong> The <In href="/guide/natural-japanese">sounding natural</In> chapter covers
+            when to use which, and the casual forms you&apos;ll hear back.
+          </li>
         </List>
       </GuideSection>
 

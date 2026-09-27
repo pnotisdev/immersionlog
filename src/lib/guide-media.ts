@@ -230,3 +230,225 @@ export const GUIDE_BOOKS: GuideMedia[] = [
 export function jitenUrl(deckId: number): string {
   return `https://jiten.moe/decks/media/${deckId}/detail`;
 }
+
+/**
+ * Recommendations for the intermediate, upper-intermediate and advanced chapters. Same
+ * sources and date as above (Jiten difficulty; VNDB length and youngest Japanese rating),
+ * grouped by the level where each title is a comfortable stretch rather than by genre.
+ */
+export interface LevelMedia {
+  anime: GuideMedia[];
+  dramas: GuideMedia[];
+  manga: GuideMedia[];
+  books: GuideMedia[];
+  visualNovels: GuideVisualNovel[];
+  games: GuideMedia[];
+}
+
+export const INTERMEDIATE_MEDIA: LevelMedia = {
+  anime: [
+    { ja: "響け！ユーフォニアム", en: "Sound! Euphonium", difficulty: 2.02, chars: 59_396, jiten: 27787, note: "School band drama; natural dialogue between classmates." },
+    { ja: "【推しの子】", en: "Oshi no Ko", difficulty: 2.38, chars: 76_125, jiten: 19790, note: "Showbiz vocabulary, but mostly everyday speech." },
+    { ja: "モブサイコ100", en: "Mob Psycho 100", difficulty: 2.56, chars: 54_574, jiten: 19711, note: "Action with a lot of ordinary school and office talk." },
+    { ja: "鬼滅の刃", en: "Demon Slayer", difficulty: 2.59, chars: 86_722, jiten: 38122, note: "Some old-fashioned and sword-art terms; clear delivery." },
+    { ja: "氷菓", en: "Hyouka", difficulty: 2.62, chars: 112_972, jiten: 13874, note: "School mysteries told through long conversations." },
+    { ja: "四月は君の嘘", en: "Your Lie in April", difficulty: 2.7, chars: 73_177, jiten: 13708, note: "Music and inner monologue; emotional, not technical." },
+    { ja: "ヴァイオレット・エヴァーガーデン", en: "Violet Evergarden", difficulty: 2.72, chars: 46_562, jiten: 6034, note: "Formal speech and letters; good polite-Japanese practice." },
+    { ja: "ダンジョン飯", en: "Delicious in Dungeon", difficulty: 2.79, chars: 123_852, jiten: 35709, note: "Fantasy and cooking vocabulary, lots of explanation." },
+    { ja: "魔法少女まどか☆マギカ", en: "Puella Magi Madoka Magica", difficulty: 2.79, chars: 46_897, jiten: 32245, note: "Short, tightly written; a few abstract conversations." },
+    { ja: "呪術廻戦", en: "Jujutsu Kaisen", difficulty: 2.97, chars: 95_986, jiten: 13769, note: "Battle jargon and fast casual speech." },
+  ],
+  dramas: [
+    { ja: "ブラッシュアップライフ", en: "Brush Up Life", difficulty: 1.62, chars: 108_805, jiten: 58999, note: "Everyday life and friendship. The easiest drama here, and very natural speech." },
+    { ja: "深夜食堂", en: "Midnight Diner", difficulty: 2.03, chars: 89_514, jiten: 62462, note: "Short, self-contained episodes set in a late-night diner." },
+    { ja: "逃げるは恥だが役に立つ", en: "We Married as a Job", difficulty: 2.16, chars: 113_666, jiten: 78852, note: "Romantic comedy with office and home life." },
+    { ja: "カルテット", en: "Quartet", difficulty: 2.16, chars: 67_517, jiten: 76777, note: "Four adults talking, a lot, in natural modern Japanese." },
+    { ja: "silent", en: "Silent", difficulty: 2.16, chars: 49_187, jiten: 66779, note: "Quiet romance; some scenes in Japanese Sign Language." },
+    { ja: "テラスハウス Tokyo 2019-2020", en: "Terrace House: Tokyo 2019–2020", difficulty: 2.35, chars: 217_608, jiten: 116359, note: "Reality TV: largely unscripted casual conversation, as people actually talk." },
+    { ja: "孤独のグルメ", en: "Solitary Gourmet", difficulty: 2.65, chars: 351_326, jiten: 71467, note: "A man eats alone and narrates his thoughts. Food vocabulary galore." },
+  ],
+  manga: [
+    { ja: "違国日記", en: "Journal with Witch", difficulty: 2.06, chars: 138_974, jiten: 96487, note: "Quiet everyday drama between an author and her niece." },
+    { ja: "ダンジョン飯", en: "Delicious in Dungeon", difficulty: 2.21, chars: 246_903, jiten: 99403, note: "Easier as a manga than as an anime, with pictures for every ingredient." },
+    { ja: "よふかしのうた", en: "Call of the Night", difficulty: 2.45, chars: 301_123, jiten: 119106, note: "Casual teenage speech and night-time Tokyo." },
+    { ja: "チェンソーマン", en: "Chainsaw Man", difficulty: 2.64, chars: 200_005, jiten: 97316, note: "Rough, casual speech; action carries a lot." },
+    { ja: "寄生獣", en: "Parasyte", difficulty: 2.65, chars: 141_290, jiten: 100122, note: "A classic; some science talk." },
+    { ja: "3月のライオン", en: "March Comes in Like a Lion", difficulty: 2.69, chars: 505_286, jiten: 102793, note: "Shogi and family life; long." },
+    { ja: "銀の匙", en: "Silver Spoon", difficulty: 2.81, chars: 406_713, jiten: 105142, note: "Farming school; lots of agricultural vocabulary, explained in the story." },
+  ],
+  books: [
+    { ja: "かがみの孤城", en: "Lonely Castle in the Mirror", difficulty: 1.78, chars: 247_817, jiten: 114855, note: "Long but easy: teenagers, plain modern prose." },
+    { ja: "変な家", en: "Strange Houses", difficulty: 1.84, chars: 62_322, jiten: 129194, note: "A mystery told through floor plans and conversation. A quick read." },
+    { ja: "火花", en: "Spark", difficulty: 2.45, chars: 80_198, jiten: 62581, note: "Short prize-winning novel about two comedians." },
+    { ja: "告白", en: "Confessions", difficulty: 2.77, chars: 127_046, jiten: 95468, note: "Minato Kanae's thriller, told in monologues." },
+    { ja: "容疑者Xの献身", en: "The Devotion of Suspect X", difficulty: 2.93, chars: 169_662, jiten: 114848, note: "Higashino Keigo's mystery; clear, plot-driven prose." },
+    { ja: "正欲", en: "Seiyoku", difficulty: 2.94, chars: 205_738, jiten: 130033, note: "Asai Ryō's novel about hidden desires; modern and direct." },
+    { ja: "海辺のカフカ", en: "Kafka on the Shore", difficulty: 2.97, chars: 441_368, jiten: 107619, note: "Scores easier than Norwegian Wood on Jiten, despite its length." },
+    { ja: "ようこそ実力至上主義の教室へ", en: "Classroom of the Elite (light novel)", difficulty: 2.63, chars: 1_797_953, jiten: 54767, note: "Light novel series; school scheming, lots of dialogue." },
+    { ja: "狼と香辛料", en: "Spice and Wolf (light novel)", difficulty: 2.85, chars: 2_618_286, jiten: 55005, note: "Medieval trade and economics, at a gentle pace." },
+  ],
+  visualNovels: [
+    {
+      ja: "リトルバスターズ！",
+      en: "Little Busters!",
+      difficulty: 2.42,
+      chars: 1_344_622,
+      jiten: 113385,
+      note: "Key's school comedy-drama. Very long, very casual.",
+      hours: 83,
+      vndb: "v5",
+      voiced: "Full (later editions)",
+      platforms: "Switch, PS3, PS Vita, Windows",
+      rating: "All ages",
+    },
+    {
+      ja: "428 〜封鎖された渋谷で〜",
+      en: "428: Shibuya Scramble",
+      difficulty: 2.75,
+      chars: 600_994,
+      jiten: 127014,
+      note: "Live-action photo thriller with several intertwined characters.",
+      hours: 33.5,
+      vndb: "v1299",
+      voiced: "Partial",
+      platforms: "PS4, Windows, mobile and more",
+      rating: "All ages",
+    },
+    {
+      ja: "かまいたちの夜",
+      en: "Banshee's Last Cry",
+      difficulty: 2.79,
+      chars: 330_972,
+      jiten: 134146,
+      note: "Classic snowbound murder mystery; the score is for the recent remake.",
+      hours: 15,
+      vndb: "v1241",
+      voiced: "Varies by edition",
+      platforms: "Switch, PS4, Windows, mobile and more",
+      rating: "12+",
+    },
+    {
+      ja: "Ever17 -the out of infinity-",
+      en: "Ever17",
+      difficulty: 2.91,
+      chars: 626_352,
+      jiten: 118931,
+      note: "Sci-fi mystery set in an underwater theme park.",
+      hours: 33,
+      vndb: "v17",
+      voiced: "Full (console and later editions)",
+      platforms: "Windows, PS2, PSP, mobile and more",
+      rating: "12+",
+    },
+  ],
+  games: [
+    { ja: "龍が如く0 誓いの場所", en: "Yakuza 0", difficulty: 2.23, chars: 654_692, jiten: 129207, note: "Gangster drama and side stories; lots of rough casual speech." },
+    { ja: "ゼノブレイド ディフィニティブ・エディション", en: "Xenoblade Chronicles: Definitive Edition", difficulty: 2.72, chars: 981_251, jiten: 114914, note: "Huge RPG; fantasy terms, clearly voiced cutscenes." },
+  ],
+};
+
+export const UPPER_INTERMEDIATE_MEDIA: LevelMedia = {
+  anime: [
+    { ja: "僕のヒーローアカデミア", en: "My Hero Academia", difficulty: 3.06, chars: 50_680, jiten: 30082, note: "Hero jargon and shouting, but the story is easy to follow." },
+    { ja: "進撃の巨人", en: "Attack on Titan", difficulty: 3.21, chars: 96_454, jiten: 412, note: "Military and political vocabulary." },
+    { ja: "銀魂", en: "Gintama", difficulty: 3.32, chars: 1_097_329, jiten: 21013, note: "Rapid comedy, parody and wordplay. A real test of listening." },
+    { ja: "ゴールデンカムイ", en: "Golden Kamuy", difficulty: 3.62, chars: 46_340, jiten: 39296, note: "Historical Hokkaido, Ainu words and military speech." },
+    { ja: "新世紀エヴァンゲリオン", en: "Neon Genesis Evangelion", difficulty: 3.68, chars: 115_407, jiten: 34427, note: "Technical jargon and psychological monologue." },
+  ],
+  dramas: [
+    { ja: "ドクターX 〜外科医・大門未知子〜", en: "Doctor-X", difficulty: 2.97, chars: 617_277, jiten: 75775, note: "Hospital drama; medical terms, formal and blunt speech side by side." },
+    { ja: "アンナチュラル", en: "Unnatural", difficulty: 2.97, chars: 105_857, jiten: 87890, note: "Forensic mysteries; specialist vocabulary, excellent writing." },
+    { ja: "MIU404", en: "MIU404", difficulty: 2.98, chars: 107_143, jiten: 86701, note: "Police procedural with fast, natural banter." },
+    { ja: "半沢直樹", en: "Hanzawa Naoki", difficulty: 3.27, chars: 253_775, jiten: 64085, note: "Banking drama: business Japanese and keigo at full volume." },
+    { ja: "リーガル・ハイ", en: "Legal High", difficulty: 3.59, chars: 246_555, jiten: 88422, note: "Courtroom comedy with very fast legal monologues." },
+  ],
+  manga: [
+    { ja: "進撃の巨人", en: "Attack on Titan", difficulty: 3.01, chars: 414_864, jiten: 101900, note: "Long and dense, but pictures carry the action." },
+    { ja: "DEATH NOTE", en: "Death Note", difficulty: 3.26, chars: 569_454, jiten: 102273, note: "Page after page of reasoning; text-heavy for a manga." },
+    { ja: "ゴールデンカムイ", en: "Golden Kamuy", difficulty: 3.33, chars: 450_292, jiten: 100522, note: "History, hunting, cooking and Ainu culture." },
+    { ja: "鬼滅の刃", en: "Demon Slayer", difficulty: 3.49, chars: 303_580, jiten: 104809, note: "Harder than the anime: old-fashioned narration and kanji-heavy terms." },
+  ],
+  books: [
+    { ja: "博士の愛した数式", en: "The Housekeeper and the Professor", difficulty: 3.17, chars: 112_584, jiten: 127718, note: "Short, gentle novel with a little mathematics." },
+    { ja: "1Q84", en: "1Q84", difficulty: 3.28, chars: 963_296, jiten: 125141, note: "Murakami at length; readable sentences, huge book." },
+    { ja: "舟を編む", en: "The Great Passage", difficulty: 3.3, chars: 132_413, jiten: 125510, note: "About making a dictionary; a love letter to words." },
+    { ja: "新世界より", en: "From the New World", difficulty: 3.38, chars: 550_212, jiten: 107300, note: "Kishi Yūsuke's sci-fi; invented terms and a big world." },
+    { ja: "薬屋のひとりごと", en: "The Apothecary Diaries (light novel)", difficulty: 3.42, chars: 1_878_436, jiten: 55132, note: "Court intrigue and medicine; lots of historical vocabulary." },
+    { ja: "十角館の殺人", en: "The Decagon House Murders", difficulty: 3.61, chars: 149_573, jiten: 107426, note: "Classic mystery; formal narration and puzzle detail." },
+    { ja: "三体", en: "The Three-Body Problem (Japanese edition)", difficulty: 3.7, chars: 1_297_687, jiten: 128938, note: "Translated hard science fiction. Physics and history vocabulary." },
+  ],
+  visualNovels: [
+    {
+      ja: "マブラヴ",
+      en: "Muv-Luv",
+      difficulty: 3.25,
+      chars: 783_374,
+      jiten: 95422,
+      note: "School comedy that turns into something else. Get the all-ages version.",
+      hours: 46,
+      vndb: "v93",
+      voiced: "Full",
+      platforms: "Windows, mobile",
+      rating: "All ages",
+    },
+    {
+      ja: "うみねこのなく頃に",
+      en: "Umineko: When They Cry",
+      difficulty: 3.29,
+      chars: 1_188_581,
+      jiten: 105993,
+      note: "Locked-room mystery on an island; enormous and wordy.",
+      hours: 76,
+      vndb: "v24",
+      voiced: "Full (later editions)",
+      platforms: "Windows, macOS, Linux, iOS",
+      rating: "All ages",
+    },
+    {
+      ja: "ひぐらしのなく頃に",
+      en: "Higurashi: When They Cry",
+      difficulty: 3.44,
+      chars: 908_832,
+      jiten: 106006,
+      note: "Easy conversation, novel-like narration; a village with a dark secret.",
+      hours: 50,
+      vndb: "v67",
+      voiced: "Varies by edition",
+      platforms: "Windows, macOS, Linux, mobile",
+      rating: "All ages",
+    },
+    {
+      ja: "Fate/stay night",
+      en: "Fate/stay night",
+      difficulty: 3.75,
+      chars: 1_587_146,
+      jiten: 233,
+      note: "Very long, dense with lore and battle narration. Réalta Nua is the all-ages edition.",
+      hours: 89,
+      vndb: "v11",
+      voiced: "Full (Réalta Nua)",
+      platforms: "Windows, PS Vita, mobile",
+      rating: "12+",
+    },
+  ],
+  games: [
+    { ja: "ニーア オートマタ", en: "NieR:Automata", difficulty: 3.05, chars: 257_117, jiten: 327, note: "Philosophical themes and sci-fi terms." },
+    { ja: "ゼノブレイド 3", en: "Xenoblade Chronicles 3", difficulty: 3.2, chars: 873_372, jiten: 140593, note: "Long, lore-heavy RPG, fully voiced." },
+  ],
+};
+
+export const ADVANCED_MEDIA: Pick<LevelMedia, "anime" | "books"> = {
+  anime: [
+    { ja: "攻殻機動隊 S.A.C. 2nd GIG", en: "Ghost in the Shell: S.A.C. 2nd GIG", difficulty: 3.75, chars: 109_719, jiten: 35829, note: "Politics, cyber-crime and military jargon." },
+    { ja: "薬屋のひとりごと", en: "The Apothecary Diaries", difficulty: 3.84, chars: 93_913, jiten: 50274, note: "Popular, but historical court language and medicine make it one of the harder shows." },
+    { ja: "コードギアス 反逆のルルーシュ", en: "Code Geass", difficulty: 3.91, chars: 130_641, jiten: 17119, note: "Grand speeches, strategy and politics." },
+    { ja: "化物語", en: "Bakemonogatari", difficulty: 4.09, chars: 88_826, jiten: 38564, note: "Wordplay and rapid-fire dialogue that native viewers pause to read." },
+    { ja: "PSYCHO-PASS サイコパス", en: "Psycho-Pass", difficulty: 4.47, chars: 90_314, jiten: 52739, note: "Philosophy quotes and abstract debate. The hardest anime we measured." },
+  ],
+  books: [
+    { ja: "仮面の告白", en: "Confessions of a Mask (Mishima)", difficulty: 4.02, chars: 132_907, jiten: 123924, note: "Dense, ornate post-war literary prose." },
+    { ja: "こころ", en: "Kokoro (Sōseki)", difficulty: 4.03, chars: 154_412, jiten: 124797, note: "Sōseki's 1914 classic; older vocabulary and spellings. Free on Aozora Bunko." },
+    { ja: "Re:ゼロから始める異世界生活", en: "Re:Zero (light novel)", difficulty: 4.28, chars: 5_956_122, jiten: 54904, note: "Popular light novel with unusually dense, flowery narration." },
+    { ja: "人間失格", en: "No Longer Human (Dazai)", difficulty: 4.37, chars: 70_987, jiten: 54631, note: "Short but hard: 1940s prose and introspection. Free on Aozora Bunko." },
+  ],
+};

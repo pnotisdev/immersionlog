@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { formatNumber } from "@/lib/format";
-import { jitenUrl, type GuideMedia, type GuideVisualNovel } from "@/lib/guide-media";
+import { jitenUrl, type GuideMedia, type GuideVisualNovel, type LevelMedia } from "@/lib/guide-media";
 import { cn } from "@/lib/utils";
 
 /** Jiten's 0–5 score as a short bar, so a column of them reads as a ranking at a glance. */
@@ -63,5 +63,31 @@ export function VnFacts({ vn }: { vn: GuideVisualNovel }) {
         VNDB <ArrowUpRight className="size-3" />
       </a>
     </p>
+  );
+}
+
+const LEVEL_GROUPS: { key: keyof LevelMedia; title: string }[] = [
+  { key: "anime", title: "Anime" },
+  { key: "dramas", title: "Live-action dramas and TV" },
+  { key: "manga", title: "Manga" },
+  { key: "books", title: "Novels and light novels" },
+  { key: "visualNovels", title: "Visual novels" },
+  { key: "games", title: "Games" },
+];
+
+/** A level chapter's recommendations, one ranked list per medium it has titles for. */
+export function LevelRecommendations({ media }: { media: Partial<LevelMedia> }) {
+  return (
+    <div className="grid gap-6">
+      {LEVEL_GROUPS.filter((g) => media[g.key]?.length).map((g) => (
+        <div key={g.key} className="grid gap-3">
+          <h3 className="mt-2 text-h3 font-semibold">{g.title}</h3>
+          <MediaTable
+            items={media[g.key]!}
+            extra={g.key === "visualNovels" ? (vn) => <VnFacts vn={vn} /> : undefined}
+          />
+        </div>
+      ))}
+    </div>
   );
 }

@@ -145,7 +145,9 @@ export default function RoutineChapter() {
         <H3>Where to go from here</H3>
         <p>
           Back to the <In href="/guide">overview</In>, or straight to <In href="/guide/what-to-watch-and-read">what to watch and
-          read</In> if you&apos;re ready to pick your first title. The community guides this is built on (
+          read</In> if you&apos;re ready to pick your first title. When beginner material starts to feel easy, the{" "}
+          <In href="/guide/intermediate">intermediate</In>, <In href="/guide/upper-intermediate">upper-intermediate</In> and{" "}
+          <In href="/guide/advanced">advanced</In> chapters pick up from there. The community guides this is built on (
           <Ext href="https://learnjapanese.moe/guide/">TheMoeWay</Ext>, <Ext href="https://vnclub.org/guide/">VN Club</Ext>,{" "}
           <Ext href="https://donkuri.github.io/learn-japanese/">Donkuri</Ext>) are worth reading in full too.
         </p>

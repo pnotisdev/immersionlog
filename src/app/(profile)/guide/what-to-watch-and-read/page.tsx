@@ -51,6 +51,12 @@ export default function MediaChapter() {
             comparison, not a verdict. Numbers were fetched on 27 September 2026.
           </p>
         </Callout>
+        <p>
+          This chapter covers the beginner end, roughly 0 to 3. Harder titles are in the{" "}
+          <In href="/guide/intermediate#recommendations">intermediate</In>,{" "}
+          <In href="/guide/upper-intermediate#recommendations">upper-intermediate</In> and{" "}
+          <In href="/guide/advanced#recommendations">advanced</In> chapters, including live-action dramas.
+        </p>
       </GuideSection>
 
       <GuideSection id="learner" title="Made for learners">
