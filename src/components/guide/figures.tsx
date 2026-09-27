@@ -300,3 +300,106 @@ export function IntervalsDiagram() {
     </Diagram>
   );
 }
+
+/**
+ * Text coverage by vocabulary size, from Nation (2006), "How large a vocabulary is
+ * needed for reading and listening?", combined novel corpus: 2,000 families 87.83%,
+ * 4,000 + proper nouns 94.8%, 9,000 + proper nouns 98.24%. English data; the point is
+ * the shape of the curve.
+ */
+export function CoverageDiagram() {
+  const bars = [
+    { words: "2,000", pct: 87.8 },
+    { words: "4,000", pct: 94.8 },
+    { words: "9,000", pct: 98.2 },
+  ];
+  // Scale from 70% so the differences that matter are visible.
+  const w = (pct: number) => `${((pct - 70) / 30) * 100}%`;
+  return (
+    <Diagram
+      label="Text coverage of English novels: 2,000 word families 88 percent, 4,000 about 95 percent, 9,000 about 98 percent"
+      caption={
+        <>
+          Share of the words in English novels covered by the most common 2,000, 4,000 and 9,000 word families (the last two
+          counting names as known). From Nation (2006). Going from 95% to 98% means going from one unknown word in twenty to one
+          in fifty, and costs five thousand more word families.
+        </>
+      }
+    >
+      <div className="grid gap-3">
+        {bars.map((b) => (
+          <div key={b.words} className="grid grid-cols-[4.5rem_1fr_3.5rem] items-center gap-3 text-sm">
+            <span className="text-right tabular-nums text-muted-foreground">{b.words}</span>
+            <div className="h-5 overflow-hidden rounded-sm bg-background">
+              <div className="h-full rounded-sm bg-primary" style={{ width: w(b.pct) }} />
+            </div>
+            <span className="tabular-nums">{b.pct}%</span>
+          </div>
+        ))}
+        <p className="pl-[5.25rem] text-meta text-dim">Axis starts at 70%.</p>
+      </div>
+    </Diagram>
+  );
+}
+
+/** Syllables vs morae: English hears to-kyo, Japanese counts to-o-kyo-o. */
+export function MoraDiagram() {
+  const words = [
+    { word: "東京", morae: ["と", "う", "きょ", "う"], romaji: "Tōkyō" },
+    { word: "漢字", morae: ["か", "ん", "じ"], romaji: "kanji" },
+    { word: "切手", morae: ["き", "っ", "て"], romaji: "kitte" },
+  ];
+  return (
+    <Diagram
+      label="Mora counting: Tokyo is four beats, kanji is three, kitte is three"
+      caption="Every kana is one beat of the same length, including ん, the small っ (a held pause) and the second half of a long vowel. English speakers tend to squeeze 東京 into two beats; Japanese gives it four."
+    >
+      <div className="grid gap-4 sm:grid-cols-3" lang="ja">
+        {words.map((w) => (
+          <div key={w.word} className="text-center">
+            <div className="text-2xl">{w.word}</div>
+            <div className="mt-2 flex justify-center gap-1">
+              {w.morae.map((m, i) => (
+                <span key={i} className="grid size-9 place-items-center rounded-sm border border-border bg-background text-base">
+                  {m}
+                </span>
+              ))}
+            </div>
+            <div className="mt-1.5 text-meta text-dim" lang="en">
+              {w.romaji} · {w.morae.length} beats
+            </div>
+          </div>
+        ))}
+      </div>
+    </Diagram>
+  );
+}
+
+/** Credits for the photos used on one chapter, at its foot (CC BY needs them on the page). */
+export function ImageCredits({ srcs }: { srcs: string[] }) {
+  const credits = GUIDE_IMAGE_CREDITS.filter((c) => srcs.includes(c.src));
+  if (credits.length === 0) return null;
+  return (
+    <section className="border-t border-border pt-6">
+      <h2 className="text-meta font-semibold text-muted-foreground">Image credits</h2>
+      <ul className="mt-2 grid gap-1 text-meta text-dim">
+        {credits.map((c) => (
+          <li key={c.src}>
+            <a href={c.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+              {c.what}
+            </a>{" "}
+            by {c.author},{" "}
+            {c.licenseUrl ? (
+              <a href={c.licenseUrl} target="_blank" rel="noopener noreferrer license" className="underline underline-offset-2 hover:text-foreground">
+                {c.license}
+              </a>
+            ) : (
+              c.license
+            )}
+            , resized.
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
