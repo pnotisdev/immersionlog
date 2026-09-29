@@ -1,5 +1,6 @@
 import { withKanaSpellings } from "../spellings";
 import type { GrammarDeck, GrammarPoint } from "../types";
+import { N3 } from "./n3";
 import { N4 } from "./n4";
 import { N5 } from "./n5";
 
@@ -7,7 +8,7 @@ import { N5 } from "./n5";
  * Every deck, easiest first. A new level is a data file plus one line here: routes,
  * sitemap, the learn queue and stats all read from this list.
  */
-export const DECKS: GrammarDeck[] = withKanaSpellings([N5, N4]);
+export const DECKS: GrammarDeck[] = withKanaSpellings([N5, N4, N3]);
 
 const POINTS = new Map<string, GrammarPoint>(DECKS.flatMap((d) => d.points.map((p) => [p.id, p] as const)));
 
