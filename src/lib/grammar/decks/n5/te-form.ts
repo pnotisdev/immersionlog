@@ -527,7 +527,7 @@ The は here is the particle, so it's pronounced wa, even inside this long endin
     meaning: "must, have to",
     structure: "Verb ない-stem + なければならない / なりません",
     register: "なければいけない means the same; なきゃ is the casual shortcut.",
-    related: ["n5-nakute-mo-ii", "n5-te-wa-ikenai"],
+    related: ["n5-nakute-mo-ii", "n5-te-wa-ikenai", "n5-nakute-wa-ikenai"],
     explanation: `
 **なければならない** means "must" or "have to": 薬を飲まなければならない, "I have to take my medicine". It's built from the ない form: ない → なければ ("if not") + ならない ("it won't do"). So, literally, "if I don't take it, it won't do".
 
@@ -567,6 +567,52 @@ For "don't have to", see the next point.
         conj: { word: word("帰る"), form: "ba-negative", tail: "なりません" },
         accept: ["帰らなければいけません", "かえらなければいけません"],
         near: [["帰らなきゃ", "That's the casual shortcut. This sentence is polite: なければなりません."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-nakute-wa-ikenai",
+    title: "〜なくてはいけない",
+    meaning: "must, have to",
+    structure: "Verb ない-form − い + くてはいけない / いけません",
+    register: "Spoken shortcut: なくちゃ (行かなくちゃ).",
+    related: ["n5-nakereba-naranai", "n5-te-wa-ikenai", "n5-nakute-mo-ii"],
+    explanation: `
+**なくてはいけない** is another "must", built from the ない form: 来ない → 来なくて ("if (you) don't come") + は + いけない ("it won't do"). 薬を飲まなくてはいけません, "I have to take my medicine".
+
+It means the same as なければならない. It sounds a little more personal and spoken, where なければならない leans towards rules and general obligations.
+
+In speech it shrinks to **なくちゃ**: 行かなくちゃ, "I've got to go". Along with なきゃ and ないと, these short forms are what you'll hear most in conversation and anime.
+
+Be careful to build it on ない → なくて, not ないで: 行かないではいけない is wrong.
+`,
+    sentences: [
+      s("明日は早く{起きなくてはいけません}。", "あしたははやく{おきなくてはいけません}。", "I have to get up early tomorrow.", {
+        hint: "起きる",
+        conj: { word: word("起きる"), form: "negative", cut: "い", tail: "くてはいけません" },
+        near: [["起きなくちゃ", "That's the casual shortcut. This sentence is polite."]],
+      }),
+      s("もう{帰らなくてはいけない}。", "もう{かえらなくてはいけない}。", "I have to go home now.", {
+        hint: "帰る, casual",
+        conj: { word: word("帰る"), form: "negative", cut: "い", tail: "くてはいけない" },
+        accept: ["帰らなくちゃいけない", "かえらなくちゃいけない"],
+        near: [["帰らなくてはいけません", "Right, but that's polite. This sentence is casual."]],
+      }),
+      s("今日は宿題を{しなくてはいけません}。", "きょうはしゅくだいを{しなくてはいけません}。", "I have to do my homework today.", {
+        hint: "する",
+        conj: { word: word("する"), form: "negative", cut: "い", tail: "くてはいけません" },
+        near: [["しなければなりません", "That means the same. This point practises なくてはいけません."]],
+      }),
+      s("明日、病院に{行かなくてはいけません}。", "あした、びょういんに{いかなくてはいけません}。", "I have to go to the hospital tomorrow.", {
+        hint: "行く",
+        conj: { word: word("行く"), form: "negative", cut: "い", tail: "くてはいけません" },
+        near: [["行かないではいけません", "Build it on ない → なくて: 行かなくては."]],
+      }),
+      s("毎日、犬と{散歩しなくてはいけない}。", "まいにち、いぬと{さんぽしなくてはいけない}。", "I have to walk the dog every day.", {
+        hint: "散歩する, casual",
+        conj: { word: word("散歩する"), form: "negative", cut: "い", tail: "くてはいけない" },
+        near: [["散歩しなきゃ", "That's the casual shortcut. This point practises the full form."]],
       }),
     ],
   }),

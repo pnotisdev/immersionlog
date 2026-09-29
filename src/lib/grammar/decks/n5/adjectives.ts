@@ -416,11 +416,45 @@ Before a verb, they take に: 上手に話す, "speak well".
   }),
 
   point({
+    id: "n5-wa-ga",
+    title: "〜は〜が",
+    meaning: "A's B is… (describing a feature)",
+    structure: "Topic は + part / aspect が + adjective",
+    related: ["n5-wa", "n5-ga", "n5-ga-suki"],
+    explanation: `
+A very common shape: the topic with **は**, then a part or aspect of it with **が**, then an adjective. 象は鼻が長い, "elephants have long trunks", is literally "as for elephants, the trunk is long".
+
+は sets up who or what you're talking about; が picks out the feature. So 田中さんは背が高い is "Mr Tanaka is tall" (as for him, height is high).
+
+English folds this into "has" or a single adjective, so learners reach for の: 田中さんの背が高い. That's grammatical, but it's a statement about the height, not about Tanaka.
+
+The same pattern gives you 私は頭が痛い, "I have a headache", and この町は人が多い, "this town is crowded".
+`,
+    sentences: [
+      s("象は鼻{が}長いです。", "ぞうははな{が}ながいです。", "Elephants have long trunks.", {
+        near: [["は", "A second は would contrast the trunk with something else. For the feature of the topic, use が."]],
+      }),
+      s("田中さんは背{が}高いです。", "たなかさんはせ{が}たかいです。", "Mr Tanaka is tall.", {
+        near: [["を", "を marks an object, and there's no action here. The feature takes が."]],
+      }),
+      s("今日は頭{が}痛いです。", "きょうはあたま{が}いたいです。", "I have a headache today.", {
+        near: [["を", "を marks an object, and there's no action here. What hurts takes が."]],
+      }),
+      s("この町は人{が}多いです。", "このまちはひと{が}おおいです。", "This town is crowded.", {
+        near: [["は", "A second は would contrast people with something else. For the feature of the topic, use が."]],
+      }),
+      s("姉は髪{が}長いです。", "あねはかみ{が}ながいです。", "My older sister has long hair.", {
+        near: [["の", "姉の髪は長い also works, but it describes the hair. To describe your sister, use は…が."]],
+      }),
+    ],
+  }),
+
+  point({
     id: "n5-ga-wakaru",
     title: "〜が分かる",
     meaning: "understand",
     structure: "Thing + が + 分かる",
-    related: ["n5-ga", "n5-ga-suki"],
+    related: ["n5-ga", "n5-ga-suki", "n5-ga-dekiru"],
     explanation: `
 **分かる** means "understand" or "be clear", and like 好き it puts the thing understood before **が**: 日本語が分かります, "I understand Japanese". The person who understands is the topic: 私は少し日本語が分かります.
 
@@ -445,6 +479,47 @@ Don't swap it with 知る, "come to know a fact". 知っています is "I know 
       }),
       s("すみません、道{が}分からないんですが。", "すみません、みち{が}わからないんですが。", "Excuse me, I'm lost.", {
         near: [["を", "分かる takes が for the thing understood, not を."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-ga-dekiru",
+    title: "〜ができる",
+    meaning: "can (do), be able to",
+    structure: "Noun + が + できる",
+    related: ["n5-ga-wakaru", "n5-ga-jouzu"],
+    explanation: `
+**できる** means "can do" or "be able to", and like 分かる it puts the thing you can do before **が**: 日本語ができます, "I can speak Japanese"; テニスができますか, "can you play tennis?"
+
+With する-nouns it takes the place of する: 運転する → 運転ができる, "can drive".
+
+It's a regular ichidan verb (できない, できた), and it has two other everyday meanings:
+
+- "be ready, be done": ご飯ができましたよ, "dinner's ready!"
+- "come into being": 駅の前に新しい店ができました, "a new shop has opened in front of the station"
+
+For "can" with other verbs, Japanese uses the potential form (食べられる) or ことができる, both at N4.
+`,
+    sentences: [
+      s("私は日本語{が}少しできます。", "わたしはにほんご{が}すこしできます。", "I can speak a little Japanese.", {
+        near: [["を", "できる takes が for the thing you can do, not を."]],
+      }),
+      s("兄は料理{が}できません。", "あにはりょうり{が}できません。", "My older brother can't cook.", {
+        near: [["を", "できる takes が for the thing you can do, not を."]],
+      }),
+      s("テニス{が}できますか。", "テニス{が}できますか。", "Can you play tennis?", {
+        near: [["を", "テニスをしますか asks whether you play. With できる, the sport takes が."]],
+      }),
+      s("ご飯が{できました}よ。", "ごはんが{できました}よ。", "Dinner's ready!", {
+        hint: "できる",
+        conj: { word: word("できる", "できる", "ichidan"), form: "polite-past", marker: "ました" },
+        near: [["作りました", "作りました is \"I made it\". For \"it's ready\", use できました."]],
+      }),
+      s("駅の前に新しい店が{できました}。", "えきのまえにあたらしいみせが{できました}。", "A new shop has opened in front of the station.", {
+        hint: "できる",
+        conj: { word: word("できる", "できる", "ichidan"), form: "polite-past", marker: "ました" },
+        near: [["開きました", "開きました is \"opened (for the day)\". For a new shop appearing, use できました."]],
       }),
     ],
   }),
@@ -536,7 +611,7 @@ Like ほしい, たい is for your own wants, or for asking someone else directl
     title: "あまり・全然 〜ない",
     meaning: "not very, not at all",
     structure: "あまり / 全然 + negative",
-    related: ["n5-i-adj-negative", "n5-masen"],
+    related: ["n5-i-adj-negative", "n5-masen", "n5-frequency"],
     explanation: `
 **あまり** with a negative softens it to "not very" or "not much": あまり高くない, "not very expensive"; あまり見ません, "I don't watch it much". **全然** makes it total: 全然分からない, "I don't understand at all".
 
@@ -569,6 +644,53 @@ In casual speech, 全然 sometimes appears with a positive to mean "totally": �
       s("魚は{あまり}好きじゃないです。", "さかなは{あまり}すきじゃないです。", "I'm not a big fan of fish.", {
         hint: "not very",
         near: [["とても", "とても goes with positive sentences. With a negative, use あまり."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-frequency",
+    title: "いつも・よく・時々・たまに",
+    meaning: "always, often, sometimes, once in a while",
+    structure: "Frequency adverb + verb",
+    related: ["n5-amari-zenzen", "n5-adverbs"],
+    explanation: `
+Four adverbs say how often, from most to least:
+
+- **いつも**: always
+- **よく**: often
+- **時々** (ときどき): sometimes
+- **たまに**: once in a while
+
+Below those come あまり〜ない (not often) and 全然〜ない (never), which need a negative verb.
+
+They usually sit early in the sentence, before the object: いつも朝ご飯を食べます, "I always eat breakfast".
+
+よく also means "well" (よく寝ました, "I slept well"), since it comes from いい; context sorts it out. 々 in 時々 is the repeat mark: the same kanji twice.
+`,
+    sentences: [
+      s("父は{いつも}七時に起きます。", "ちちは{いつも}しちじにおきます。", "My father always gets up at seven.", {
+        hint: "always",
+        near: [
+          ["いつ", "いつ asks \"when\". For \"always\", use いつも."],
+          ["よく", "よく is \"often\". For \"always\", use いつも."],
+        ],
+      }),
+      s("週末は{よく}映画を見ます。", "しゅうまつは{よく}えいがをみます。", "I often watch films at weekends.", {
+        hint: "often",
+        near: [["いつも", "いつも is \"always\". For \"often\", use よく."]],
+      }),
+      s("{時々}友達と料理を作ります。", "{ときどき}ともだちとりょうりをつくります。", "Sometimes I cook with friends.", {
+        hint: "sometimes",
+        near: [["たまに", "たまに is \"once in a while\", less often. For \"sometimes\", use 時々."]],
+      }),
+      s("{たまに}お酒を飲みます。", "{たまに}おさけをのみます。", "I have a drink once in a while.", {
+        hint: "once in a while",
+        near: [["時々", "時々 is \"sometimes\", a bit more often. For \"once in a while\", use たまに."]],
+      }),
+      s("雨の日は{いつも}バスで行きます。", "あめのひは{いつも}バスでいきます。", "On rainy days I always go by bus.", {
+        hint: "always",
+        near: [["よく", "よく is \"often\". For \"always\", use いつも."]],
       }),
     ],
   }),

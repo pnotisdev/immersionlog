@@ -197,7 +197,7 @@ Before a noun, "what kind of" is どんな, the next point. どう itself never 
     title: "どんな",
     meaning: "what kind of, what … like",
     structure: "どんな + Noun",
-    related: ["n5-dou", "n5-kono-sono-ano"],
+    related: ["n5-dou", "n5-kono-sono-ano", "n5-konna"],
     explanation: `
 **どんな** asks what kind of thing something is, and it always comes right before a noun: どんな音楽が好きですか, "what kind of music do you like?"; 新しい先生はどんな人ですか, "what's the new teacher like?"
 
@@ -224,6 +224,49 @@ Compare its neighbours:
       }),
       s("昨日は{どんな}料理を作りましたか。", "きのうは{どんな}りょうりをつくりましたか。", "What kind of food did you make yesterday?", {
         near: [["どの", "どの picks one from a set. For \"what kind\", use どんな."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-konna",
+    title: "こんな・そんな・あんな",
+    meaning: "this kind of, that kind of",
+    structure: "こんな / そんな / あんな + Noun",
+    related: ["n5-donna", "n5-kono-sono-ano", "n5-sou"],
+    explanation: `
+**こんな, そんな, あんな** (and どんな) describe the kind of thing, with the usual こ・そ・あ・ど split. They always come right before a noun:
+
+- こんな本: a book like this
+- そんな事: that sort of thing (that you mentioned)
+- あんな人: a person like that (over there, or that we both know)
+
+そんな is often used to push back: そんなことはありません, "that's not true at all", literally "there's no such thing".
+
+あんな can carry surprise or criticism: あんな所にはもう行きたくない, "I never want to go to a place like that again".
+
+The matching adverbs are こう, そう, ああ and どう: こうやって, "like this".
+`,
+    sentences: [
+      s("{こんな}かばんがほしいです。", "{こんな}かばんがほしいです。", "I want a bag like this.", {
+        hint: "like this",
+        near: [["この", "この is \"this (one)\". For \"one like this\", use こんな."]],
+      }),
+      s("いいえ、{そんな}ことはありません。", "いいえ、{そんな}ことはありません。", "No, that's not the case at all.", {
+        hint: "like that (what you said)",
+        near: [["その", "そのこと is \"that particular thing\". To deny what was said, use そんなこと."]],
+      }),
+      s("{あんな}人は初めて見ました。", "{あんな}ひとははじめてみました。", "I've never seen anyone like that.", {
+        hint: "like that (over there)",
+        near: [["あの", "あの人 is \"that person\". For \"someone like that\", use あんな."]],
+      }),
+      s("{こんな}時間にどこへ行くの？", "{こんな}じかんにどこへいくの？", "Where are you going at this hour?", {
+        hint: "like this",
+        near: [["この", "この時間 works too. For the feeling of \"at an hour like this\", use こんな."]],
+      }),
+      s("私も{そんな}服がほしいな。", "わたしも{そんな}ふくがほしいな。", "I'd like clothes like that too.", {
+        hint: "like yours",
+        near: [["その", "その服 would be those exact clothes. For clothes like them, use そんな."]],
       }),
     ],
   }),
@@ -392,7 +435,7 @@ The counter usually goes after the thing and its particle, right before the verb
     title: "〜人",
     meaning: "counter for people",
     structure: "一人 (ひとり), 二人 (ふたり), 三人 (さんにん) …",
-    related: ["n5-counter-tsu", "n5-imasu"],
+    related: ["n5-counter-tsu", "n5-imasu", "n5-tachi"],
     explanation: `
 People are counted with **人**. The first two are irregular and the rest are regular:
 
@@ -427,6 +470,40 @@ In restaurants you'll be asked 何名様ですか; 名 is the polite counter for
       s("クラスに学生は{何人}いますか。", "クラスにがくせいは{なんにん}いますか。", "How many students are in the class?", {
         hint: "how many",
         near: [["いくつ", "いくつ counts things. For people, 何人."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-tachi",
+    title: "〜たち",
+    meaning: "plural (people)",
+    structure: "Person noun + たち",
+    related: ["n5-counter-nin"],
+    explanation: `
+Japanese nouns don't change for plural: 本 is "a book" or "books". For people, though, **たち** marks a group: 子どもたち, "the children"; 私たち, "we"; 学生たち, "the students".
+
+It often means "and the others" rather than a strict plural: 田中さんたち is "Tanaka and his group", not several Tanakas.
+
+たち is for people, and sometimes animals, never things: 本たち only happens in poetry and children's stories.
+
+A rougher alternative is ら (僕ら, "us guys"), and a politer one is 方 (かた), as in あなた方.
+`,
+    sentences: [
+      s("子ども{たち}が公園で遊んでいます。", "こども{たち}がこうえんであそんでいます。", "The children are playing in the park.", {
+        near: [["ら", "子どもら works, but it's rougher. The everyday plural is たち."]],
+      }),
+      s("私{たち}は学生です。", "わたし{たち}はがくせいです。", "We're students.", {
+        near: [["ら", "私ら is casual and regional. The everyday \"we\" is 私たち."]],
+      }),
+      s("田中さん{たち}はもう帰りました。", "たなかさん{たち}はもうかえりました。", "Tanaka and the others have already gone home.", {
+        near: [["と", "と would need another name after it. For \"Tanaka and the others\", use たち."]],
+      }),
+      s("友達{たち}と海へ行きました。", "ともだち{たち}とうみへいきました。", "I went to the sea with my friends.", {
+        near: [["ら", "友達ら works, but it's rougher. The everyday plural is たち."]],
+      }),
+      s("学生{たち}は教室にいます。", "がくせい{たち}はきょうしつにいます。", "The students are in the classroom.", {
+        near: [["ら", "学生ら sounds like a news report. The everyday plural is たち."]],
       }),
     ],
   }),
@@ -652,6 +729,49 @@ Don't swap in で: 一日で三回 would mean "three times within a (single) day
       }),
       s("一時間{に}何本電車がありますか。", "いちじかん{に}なんぼんでんしゃがありますか。", "How many trains are there an hour?", {
         near: [["で", "で would be \"within an hour\". For \"per hour\", use に."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-juu-chuu",
+    title: "〜中 (じゅう・ちゅう)",
+    meaning: "throughout / in the middle of",
+    structure: "Time or place + 中 (じゅう) / activity + 中 (ちゅう)",
+    related: ["n5-ni-per"],
+    explanation: `
+**中** after a word has two readings with two meanings:
+
+- **じゅう**, "throughout, all over": 一日中, "all day long"; 世界中, "all over the world".
+- **ちゅう**, "in the middle of (an activity)": 授業中, "during class"; 電話中, "on the phone".
+
+A rough rule: after a stretch of time or a place, じゅう; after an activity, ちゅう.
+
+今日中 (きょうじゅう) is worth learning as a word: it means "by the end of today", a common deadline.
+
+In these sentences the blank is written in kana, so type the reading you'd use.
+`,
+    sentences: [
+      s("昨日は一日{じゅう}寝ていました。", "きのうはいちにち{じゅう}ねていました。", "I was in bed all day yesterday.", {
+        near: [
+          ["ちゅう", "ちゅう is \"in the middle of an activity\". For \"all day long\", it's じゅう."],
+          ["中", "Right kanji. Type the reading here: is it じゅう or ちゅう?"],
+        ],
+      }),
+      s("授業{ちゅう}に寝てはいけません。", "じゅぎょう{ちゅう}にねてはいけません。", "You mustn't sleep during class.", {
+        near: [
+          ["じゅう", "じゅう is \"throughout\". During an activity like class, it's ちゅう."],
+          ["中", "Right kanji. Type the reading here: is it じゅう or ちゅう?"],
+        ],
+      }),
+      s("この歌は世界{じゅう}で有名です。", "このうたはせかい{じゅう}でゆうめいです。", "This song is famous all over the world.", {
+        near: [["ちゅう", "ちゅう is \"in the middle of an activity\". For \"all over\", it's じゅう."]],
+      }),
+      s("父は今、電話{ちゅう}です。", "ちちはいま、でんわ{ちゅう}です。", "My father's on the phone right now.", {
+        near: [["じゅう", "じゅう is \"throughout\". In the middle of a call, it's ちゅう."]],
+      }),
+      s("宿題は今日{じゅう}に出してください。", "しゅくだいはきょう{じゅう}にだしてください。", "Please hand in your homework by the end of today.", {
+        near: [["ちゅう", "今日中 is read きょうじゅう: \"by the end of today\"."]],
       }),
     ],
   }),

@@ -51,7 +51,7 @@ Two things surprise English speakers. First, です never changes with the subje
     meaning: "is, am, are (casual)",
     structure: "Noun / な-adjective + だ",
     register: "Casual: friends and family, and the standard in writing that isn't addressed to anyone (novels, diaries, news).",
-    related: ["n5-desu", "n5-yo"],
+    related: ["n5-desu", "n5-yo", "n5-datta"],
     explanation: `
 **だ** is the casual version of です: 学生だ, "(I'm) a student". Between friends it's normal, and in writing that isn't talking to a reader directly (novels, manga narration, news articles) it's the standard.
 
@@ -212,7 +212,7 @@ Each has a では version too (ではありません, ではないです).
     meaning: "was, were (polite)",
     structure: "Noun / な-adjective + でした",
     register: "Polite. The casual version is だった.",
-    related: ["n5-desu", "n5-ja-nakatta", "n5-i-adj-past"],
+    related: ["n5-desu", "n5-ja-nakatta", "n5-i-adj-past", "n5-datta"],
     explanation: `
 **でした** is the past of です: 学生でした, "(I) was a student". Japanese marks the past at the end of the sentence, so it's でした whoever you're talking about.
 
@@ -245,6 +245,49 @@ Japanese doesn't need a time word to use the past, but it often has one: 昨日 
       s("先週は休み{でした}。", "せんしゅうはやすみ{でした}。", "I was off last week.", {
         hint: "polite, past",
         near: [["だった", "Right tense, but casual. This sentence is polite."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-datta",
+    title: "だった",
+    meaning: "was, were (casual)",
+    structure: "Noun / な-adjective + だった",
+    register: "Casual. The polite version is でした.",
+    related: ["n5-da", "n5-deshita", "n5-ja-nakatta"],
+    explanation: `
+**だった** is the past of だ, and the casual version of でした: 昨日は雨だった, "it rained yesterday".
+
+Like だ, it goes after nouns and な-adjectives: 静かだった, "it was quiet". い-adjectives never take it: the past of 高い is 高かった, not 高いだった.
+
+You'll meet it constantly in novels and manga narration, which are written in plain style even when the characters speak politely.
+
+It also turns up inside longer sentences that end politely, because the part before から, けど or a noun is usually plain: 雨だったから、行きませんでした, "it was raining, so I didn't go".
+`,
+    sentences: [
+      s("昨日は雨{だった}。", "きのうはあめ{だった}。", "It rained yesterday.", {
+        hint: "casual, past",
+        near: [
+          ["でした", "Right tense, but polite. This sentence is casual."],
+          ["だ", "だ is present. 昨日 puts this in the past."],
+        ],
+      }),
+      s("子どもの時、野球が好き{だった}。", "こどものとき、やきゅうがすき{だった}。", "I loved baseball as a kid.", {
+        hint: "casual, past",
+        near: [["でした", "Right tense, but polite. This sentence is casual."]],
+      }),
+      s("昨日の町はすごく静か{だった}よ。", "きのうのまちはすごくしずか{だった}よ。", "The town was really quiet yesterday.", {
+        hint: "casual, past",
+        near: [["でした", "Right tense, but polite. This sentence is casual."]],
+      }),
+      s("昔、ここは公園{だった}。", "むかし、ここはこうえん{だった}。", "This used to be a park.", {
+        hint: "casual, past",
+        near: [["だ", "だ is present. 昔 puts this in the past."]],
+      }),
+      s("雨{だった}から、行きませんでした。", "あめ{だった}から、いきませんでした。", "It was raining, so I didn't go.", {
+        hint: "past, before から",
+        near: [["でした", "でしたから works too. Before から, the plain だった is the more natural choice."]],
       }),
     ],
   }),
@@ -465,7 +508,7 @@ Two extras worth knowing. あの also points at something both speakers know abo
     title: "ここ・そこ・あそこ・どこ",
     meaning: "here, there, over there, where",
     structure: "ここ / そこ / あそこ / どこ",
-    related: ["n5-kore-sore-are"],
+    related: ["n5-kore-sore-are", "n5-kochira"],
     explanation: `
 Places follow the same こ・そ・あ・ど pattern:
 
@@ -509,11 +552,51 @@ As with これ and それ, the line between そこ and あそこ is about the li
   }),
 
   point({
+    id: "n5-kochira",
+    title: "こちら・そちら・あちら",
+    meaning: "this way, that way (and polite here, there)",
+    structure: "こちら / そちら / あちら / どちら",
+    register: "Polite. Casual versions: こっち, そっち, あっち, どっち.",
+    related: ["n5-koko-soko-asoko", "n5-dochira"],
+    explanation: `
+**こちら・そちら・あちら・どちら** started out as directions: "this way, that way, that way over there, which way". They're also the polite versions of ここ, そこ, あそこ and どこ, which is why you hear them all day in shops, stations and hotels: お手洗いはあちらです, "the restrooms are over there".
+
+こちら also introduces people politely: こちらは田中さんです, "this is Mr Tanaka". これ would treat him like an object.
+
+どちら is the polite "where": お国はどちらですか, "where are you from?"
+
+Among friends, the casual versions are こっち, そっち, あっち and どっち.
+`,
+    sentences: [
+      s("お手洗いは{あちら}です。", "おてあらいは{あちら}です。", "The restrooms are over there.", {
+        hint: "over there, polite",
+        near: [["あそこ", "あそこ is fine, but in a shop or station the polite word is あちら."]],
+      }),
+      s("{こちら}は田中さんです。", "{こちら}はたなかさんです。", "This is Mr Tanaka.", {
+        hint: "introducing someone",
+        near: [["これ", "これ is for things. To introduce a person, use こちら."]],
+      }),
+      s("お国は{どちら}ですか。", "おくには{どちら}ですか。", "Where are you from?", {
+        hint: "where, polite",
+        near: [["どこ", "どこ is fine among friends. Asked politely, it's どちら."]],
+      }),
+      s("出口は{こちら}です。", "でぐちは{こちら}です。", "The exit is this way.", {
+        hint: "this way",
+        near: [["ここ", "ここ is \"here\". For \"this way\", especially politely, use こちら."]],
+      }),
+      s("駅は{そちら}ですか。", "えきは{そちら}ですか。", "Is the station that way, where you're pointing?", {
+        hint: "that way, near you",
+        near: [["あちら", "あちら is far from both of you. For the way near the listener, use そちら."]],
+      }),
+    ],
+  }),
+
+  point({
     id: "n5-ne",
     title: "ね",
     meaning: "…, isn't it? right? (shared feeling)",
     structure: "Sentence + ね",
-    related: ["n5-yo", "n5-ka"],
+    related: ["n5-yo", "n5-ka", "n5-sou"],
     explanation: `
 **ね** at the end of a sentence invites the listener to agree, or shows you share their feeling: いい天気ですね, "nice weather, isn't it?" It assumes the other person knows or feels the same, so it sounds warm and conversational. You'll hear it constantly.
 
@@ -574,11 +657,47 @@ It combines with ね as **よね**, which asks for agreement on something you're
   }),
 
   point({
+    id: "n5-sou",
+    title: "そう",
+    meaning: "so, like that, that's right",
+    structure: "そうです / そうですか / そうですね / そう思う",
+    related: ["n5-ne", "n5-kore-sore-are", "n5-konna"],
+    explanation: `
+**そう** means "so" or "like that", pointing back at what someone just said, the same こ・そ・あ pattern as それ. It's the heart of the most common replies in Japanese:
+
+- **そうです**: "that's right"
+- **そうですか**: "oh, is that so? I see", said with a falling tone, not really a question
+- **そうですね**: "that's true", or, drawn out, "hmm, let me think"
+
+Casually: そう, そうか, そうだね.
+
+It also works as an adverb: 私もそう思います, "I think so too". Its partners こう (like this), ああ (like that) and どう (how) complete the set.
+`,
+    sentences: [
+      s("学生ですか。はい、{そう}です。", "がくせいですか。はい、{そう}です。", "Are you a student? Yes, I am.", {
+        near: [["それ", "それです would be \"it's that one\". For \"that's right\", use そうです."]],
+      }),
+      s("「明日は休みですよ。」「あ、{そう}ですか。」", "「あしたはやすみですよ。」「あ、{そう}ですか。」", "\"Tomorrow's a holiday, you know.\" \"Oh, is it?\"", {
+        near: [["どう", "どうですか asks how something is. For \"oh, is that so?\", use そうですか."]],
+      }),
+      s("私も{そう}思います。", "わたしも{そう}おもいます。", "I think so too.", {
+        near: [["それ", "それを思う doesn't work. \"Think so\" is そう思う."]],
+      }),
+      s("「いい天気ですね。」「{そう}ですね。」", "「いいてんきですね。」「{そう}ですね。」", "\"Nice weather, isn't it?\" \"It is.\"", {
+        near: [["こう", "こう is \"like this\". To agree, use そう."]],
+      }),
+      s("{そう}ですね…、じゃあ、このケーキにします。", "{そう}ですね…、じゃあ、このケーキにします。", "Hmm, let me see… okay, I'll have this cake.", {
+        near: [["どう", "どうですね isn't a phrase. For \"let me think\", use そうですね."]],
+      }),
+    ],
+  }),
+
+  point({
     id: "n5-to-and",
     title: "と (and)",
     meaning: "and (joining nouns)",
     structure: "Noun + と + Noun",
-    related: ["n5-ya", "n5-to-with"],
+    related: ["n5-ya", "n5-to-with", "n5-ka-or"],
     explanation: `
 **と** joins nouns: 犬と猫, "dogs and cats". It gives a complete list, "A and B" and nothing else. For "A, B and so on", Japanese uses や instead.
 
@@ -606,6 +725,42 @@ The same と after a person means "with" (友達と行きます, "I'm going with
       }),
       s("机の上に本{と}ペンがあります。", "つくえのうえにほん{と}ペンがあります。", "There's a book and a pen on the desk.", {
         near: [["や", "や suggests other things are there too. For just these two, use と."]],
+      }),
+    ],
+  }),
+  point({
+    id: "n5-ka-or",
+    title: "か (or)",
+    meaning: "or",
+    structure: "Noun + か + Noun",
+    related: ["n5-to-and", "n5-ya", "n5-ka"],
+    explanation: `
+Between nouns, **か** means "or": コーヒーか紅茶, "coffee or tea". It offers a choice, and like と it only joins nouns and numbers: 二つか三つ, "two or three".
+
+In speech the last item often gets か too: 月曜日か火曜日か, "(either) Monday or Tuesday".
+
+For "or" between two whole questions, Japanese starts the second one with それとも: 行きますか、それとも帰りますか, "are you going, or heading home?"
+
+Don't confuse it with the か that ends a question, or the か in 何か ("something"). All three are the same word doing neighbouring jobs: marking something as open or undecided.
+`,
+    sentences: [
+      s("コーヒー{か}紅茶はいかがですか。", "コーヒー{か}こうちゃはいかがですか。", "Would you like coffee or tea?", {
+        near: [
+          ["と", "と would offer both together. For a choice, use か."],
+          ["や", "や lists examples. For \"one or the other\", use か."],
+        ],
+      }),
+      s("月曜日{か}火曜日に行きます。", "げつようび{か}かようびにいきます。", "I'll go on Monday or Tuesday.", {
+        near: [["と", "と would mean both days. For one or the other, use か."]],
+      }),
+      s("ペン{か}鉛筆で書いてください。", "ペン{か}えんぴつでかいてください。", "Please write in pen or pencil.", {
+        near: [["と", "と would mean both at once. For a choice, use か."]],
+      }),
+      s("毎朝、パン{か}ご飯を食べます。", "まいあさ、パン{か}ごはんをたべます。", "Every morning I have bread or rice.", {
+        near: [["と", "と would mean both every morning. For one or the other, use か."]],
+      }),
+      s("りんごを二つ{か}三つ買ってください。", "りんごをふたつ{か}みっつかってください。", "Please buy two or three apples.", {
+        near: [["と", "二つと三つ would be two and then three more. For \"two or three\", use か."]],
       }),
     ],
   }),

@@ -10,7 +10,7 @@ export const verbs = [
     title: "が",
     meaning: "subject (who or what)",
     structure: "Noun + が",
-    related: ["n5-wa", "n5-arimasu", "n5-ga-suki"],
+    related: ["n5-wa", "n5-arimasu", "n5-ga-suki", "n5-wa-ga"],
     explanation: `
 **が** marks the subject: who does something, or what is or exists. Where は says "as for X", が points straight at X.
 
@@ -612,7 +612,7 @@ For the thing you do something with, a tool or a means, it's で, not と: 箸�
     title: "や",
     meaning: "and (among other things)",
     structure: "Noun + や + Noun (+ など)",
-    related: ["n5-to-and"],
+    related: ["n5-to-and", "n5-nado", "n5-ka-or"],
     explanation: `
 **や** joins nouns like と, but hints that the list isn't complete: パンや卵を買いました, "I bought bread, eggs and so on". と says "these and nothing else"; や says "things like these".
 
@@ -635,6 +635,41 @@ Use it when the items are examples. If someone asks exactly what's in your bag a
       }),
       s("朝はパン{や}果物を食べます。", "あさはパン{や}くだものをたべます。", "In the mornings I have things like bread and fruit.", {
         near: [["と", "と would say it's only bread and fruit. To give examples, use や."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-nado",
+    title: "など",
+    meaning: "and so on, things like",
+    structure: "Noun (や Noun) + など",
+    register: "なんか and とか are the casual equivalents.",
+    related: ["n5-ya"],
+    explanation: `
+**など** after a noun or a list means "and so on" or "things like": 京都や奈良などに行きました, "I went to places like Kyoto and Nara".
+
+It usually closes a や list, but it can follow a single noun to soften a suggestion: お茶などいかがですか, "how about some tea or something?"
+
+Particles attach after it as normal: などに, などを, などが.
+
+In casual speech, なんか and とか do the same job: ゲームとか, "games and stuff". Both are accepted as near misses here, since this point practises など.
+`,
+    sentences: [
+      s("京都や奈良{など}に行きました。", "きょうとやなら{など}にいきました。", "I went to places like Kyoto and Nara.", {
+        near: [["とか", "とか means the same and is casual. This point practises など."]],
+      }),
+      s("スーパーで肉や野菜{など}を買いました。", "スーパーでにくややさい{など}をかいました。", "I bought meat, vegetables and so on at the supermarket.", {
+        near: [["も", "も would be \"vegetables too\". To say \"and so on\", use など."]],
+      }),
+      s("かばんの中に財布やかぎ{など}が入っています。", "かばんのなかにさいふやかぎ{など}がはいっています。", "My bag has my wallet, keys and so on in it.", {
+        near: [["とか", "とか means the same and is casual. This point practises など."]],
+      }),
+      s("お茶{など}いかがですか。", "おちゃ{など}いかがですか。", "How about some tea or something?", {
+        near: [["も", "お茶も would be \"tea as well\". To soften the offer, use など."]],
+      }),
+      s("週末は掃除や洗濯{など}をします。", "しゅうまつはそうじやせんたく{など}をします。", "At weekends I do the cleaning, laundry and so on.", {
+        near: [["なんか", "なんか means the same and is casual. This point practises など."]],
       }),
     ],
   }),

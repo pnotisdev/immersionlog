@@ -186,7 +186,7 @@ Both actions have to be yours. For "while someone else was doing something", Jap
     title: "〜から (reason)",
     meaning: "because, so",
     structure: "Sentence + から, result",
-    related: ["n5-doushite", "n5-kara-made", "n5-te-kara"],
+    related: ["n5-doushite", "n5-kara-made", "n5-te-kara", "n5-n-desu"],
     explanation: `
 After a full clause, **から** gives a reason: 暑いから、窓を開けてください, "it's hot, so please open the window".
 
@@ -216,6 +216,50 @@ After nouns and な-adjectives, the だ stays: 雨だから, 暇だから. Polit
       }),
       s("危ないです{から}、触らないでください。", "あぶないです{から}、さわらないでください。", "It's dangerous, so please don't touch it.", {
         near: [["けど", "けど is \"but\". For a reason, use から."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-n-desu",
+    title: "〜んです・〜の",
+    meaning: "(explaining, or asking for an explanation)",
+    structure: "Plain form + んです (casual: の) · Noun / な-adjective + なんです",
+    register: "んです in conversation, のです in writing, の between friends.",
+    related: ["n5-kara-because", "n5-doushite", "n5-ka"],
+    explanation: `
+**んです** after a plain form presents a sentence as an explanation or background, not a bare fact: すみません、頭が痛いんです, "sorry, (it's that) I have a headache", said when explaining why you're leaving early.
+
+As a question it asks for an explanation: どうしたんですか, "what's wrong?"; 行かないんですか, "aren't you going? (how come?)".
+
+Nouns and な-adjectives take な before it: 学生なんです, 暇なんです.
+
+Between friends it's just **の**: どうしたの? 頭が痛いの.
+
+It's one of the most used patterns in spoken Japanese. A bare 痛いです can sound oddly flat where a native speaker would say 痛いんです.
+`,
+    sentences: [
+      s("すみません、頭が痛い{んです}。", "すみません、あたまがいたい{んです}。", "Sorry, I have a headache.", {
+        hint: "explaining",
+        near: [["です", "です states a bare fact. To explain (why you're leaving, say), use んです."]],
+      }),
+      s("どうした{んですか}。", "どうした{んですか}。", "What's wrong?", {
+        near: [["ですか", "Verbs don't take ですか directly. To ask what happened, use んですか."]],
+      }),
+      s("明日はテストがある{んです}。", "あしたはテストがある{んです}。", "It's just that I have a test tomorrow.", {
+        hint: "explaining",
+        near: [["です", "Verbs don't take です directly. To explain, use んです."]],
+      }),
+      s("実は、私、学生{なんです}。", "じつは、わたし、がくせい{なんです}。", "Actually, I'm a student.", {
+        hint: "after a noun",
+        near: [
+          ["んです", "After a noun, add な: 学生なんです."],
+          ["です", "です states it flatly. After 実は (\"actually\"), explaining, use なんです."],
+        ],
+      }),
+      s("どこへ行く{の}？", "どこへいく{の}？", "Where are you off to?", {
+        hint: "casual",
+        near: [["んですか", "Right idea, but this sentence is casual: の."]],
       }),
     ],
   }),
@@ -498,7 +542,7 @@ The dictionary form (寝るほうがいい) is also heard, and tends to compare 
     title: "より",
     meaning: "than",
     structure: "A は B より + adjective",
-    related: ["n5-yori-no-hou-ga", "n5-ichiban"],
+    related: ["n5-yori-no-hou-ga", "n5-ichiban", "n5-motto"],
     explanation: `
 **より** marks what something is being compared against: 東京は大阪より大きいです, "Tokyo is bigger than Osaka". It goes after B, the thing being beaten.
 
@@ -615,7 +659,7 @@ Its family is こちら・そちら・あちら, "this way, that way", which you
     title: "一番",
     meaning: "the most, -est",
     structure: "(Group の中で) A が 一番 + adjective",
-    related: ["n5-yori", "n5-yori-no-hou-ga"],
+    related: ["n5-yori", "n5-yori-no-hou-ga", "n5-motto"],
     explanation: `
 **一番** (いちばん), literally "number one", makes a superlative: 富士山は日本で一番高い山です, "Mount Fuji is the highest mountain in Japan".
 
@@ -642,6 +686,45 @@ Before a noun it works like any adverb: 一番好きな食べ物, "my favourite 
       }),
       s("この店のラーメンが{一番}おいしいです。", "このみせのラーメンが{いちばん}おいしいです。", "This place's ramen is the best.", {
         near: [["もっと", "もっと is \"more\". For \"the best\", use 一番."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n5-motto",
+    title: "もっと",
+    meaning: "more",
+    structure: "もっと + adjective / verb",
+    related: ["n5-yori", "n5-ichiban", "n5-mou"],
+    explanation: `
+**もっと** means "more": もっと食べてください, "please eat more"; もっと安いのはありますか, "do you have a cheaper one?", literally "a more cheap one".
+
+Japanese adjectives have no -er form, so もっと is how you ask for a bigger, cheaper or quieter version of something. When the comparison is obvious, no より is needed.
+
+With a verb, it's more of the action: もっと勉強したい, "I want to study more".
+
+Don't mix it up with もう. もう一つ is "one more (item)"; もっと is "more" in degree or amount. もっと and 一番 are the two ends of Japanese comparison: more, and most.
+`,
+    sentences: [
+      s("{もっと}ゆっくり話してください。", "{もっと}ゆっくりはなしてください。", "Please speak more slowly.", {
+        hint: "more",
+        near: [["もう", "もう is \"already\" or \"one more\". For \"more slowly\", use もっと."]],
+      }),
+      s("{もっと}安いのはありますか。", "{もっと}やすいのはありますか。", "Do you have a cheaper one?", {
+        hint: "more",
+        near: [["一番", "一番安い is \"the cheapest\". For \"cheaper\", use もっと."]],
+      }),
+      s("{もっと}日本語を勉強したいです。", "{もっと}にほんごをべんきょうしたいです。", "I want to study Japanese more.", {
+        hint: "more",
+        near: [["もう", "もう is \"already\". For \"more\", use もっと."]],
+      }),
+      s("{もっと}大きい声で言ってください。", "{もっと}おおきいこえでいってください。", "Please say it louder.", {
+        hint: "more",
+        near: [["とても", "とても is \"very\". For \"louder\", use もっと."]],
+      }),
+      s("どうぞ、{もっと}食べてください。", "どうぞ、{もっと}たべてください。", "Go on, have some more.", {
+        hint: "more",
+        near: [["もう", "もう一つ is \"one more (item)\". For \"more\" in general, use もっと."]],
       }),
     ],
   }),
