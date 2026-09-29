@@ -21,6 +21,8 @@ export interface ConjugationSpec {
   form: FormId;
   head?: string;
   tail?: string;
+  cut?: string;
+  first?: boolean;
   /** Defaults to the tail. */
   marker?: string;
 }
@@ -41,10 +43,13 @@ export function s(japanese: string, reading: string, english: string, options?: 
   return [japanese, reading, english, options];
 }
 
-function conjugated(spec: ConjugationSpec): string[] {
+/** Every answer a conjugated blank accepts, kanji and kana. Shared with the deck test. */
+export function conjugatedAnswers(spec: Omit<ConjugationSpec, "marker">): string[] {
   const head = spec.head ?? "";
   const tail = spec.tail ?? "";
-  return conjugate(spec.word, spec.form).flatMap((a) => [`${head}${a.kanji}${tail}`, `${head}${a.kana}${tail}`]);
+  const cut = (s: string) => (spec.cut && s.endsWith(spec.cut) ? s.slice(0, -spec.cut.length) : s);
+  const forms = conjugate(spec.word, spec.form);
+  return (spec.first ? forms.slice(0, 1) : forms).flatMap((a) => [a.kanji, a.kana].map((f) => `${head}${cut(f)}${tail}`));
 }
 
 function buildSentence(pointId: string, index: number, [japanese, reading, english, o = {}]: SentenceSpec): GrammarSentence {
@@ -52,7 +57,7 @@ function buildSentence(pointId: string, index: number, [japanese, reading, engli
     ? { ...o.conj, marker: o.conj.marker ?? o.conj.tail ?? "" }
     : undefined;
   const acceptedAnswers = [
-    ...new Set([blankOf(japanese), blankOf(reading), ...(o.conj ? conjugated(o.conj) : []), ...(o.accept ?? [])].filter(Boolean)),
+    ...new Set([blankOf(japanese), blankOf(reading), ...(o.conj ? conjugatedAnswers(o.conj) : []), ...(o.accept ?? [])].filter(Boolean)),
   ];
   const nearMisses: NearMiss[] = (o.near ?? []).map(([answer, nudge]) => ({ answer, nudge }));
   return {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { conjugate } from "@/lib/conjugation";
+import { conjugatedAnswers } from "./build";
 import { checkAnswer, normalizeInput } from "./check";
 import { DECKS, allPoints, getPoint } from "./decks";
 import { alignReading, blankOf, parseMarked, readingPenalty } from "./sentence";
@@ -80,8 +80,7 @@ describe.each(points.map((p) => [p.id, p] as const))("%s", (_id, point) => {
     }
 
     if (s.conjugation) {
-      const { word, form, head = "", tail = "" } = s.conjugation;
-      const generated = conjugate(word, form).flatMap((a) => [a.kanji, a.kana].map((x) => normalizeInput(`${head}${x}${tail}`)));
+      const generated = conjugatedAnswers(s.conjugation).map(normalizeInput);
       expect(generated, "the marked answer is one the conjugation engine produces").toContain(normalizeInput(blankOf(s.japanese)));
     }
   });

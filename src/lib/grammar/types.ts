@@ -27,6 +27,13 @@ export interface Conjugation {
   /** Fixed text inside the blank after it: ください in {開けてください}. */
   tail?: string;
   /**
+   * Cut from the end of each form before the tail goes on, for patterns built on a stem:
+   * polite 買います minus ます, plus に, is 買いに (〜に行く).
+   */
+  cut?: string;
+  /** Only the textbook form, when the engine's alternatives don't fit the pattern (行かないですか isn't an invitation). */
+  first?: boolean;
+  /**
    * What an answer ends with when it has the grammar right: an answer that ends with
    * this and starts with the right word, but isn't accepted, has a conjugation slip and
    * is treated as a near miss rather than a wrong answer.

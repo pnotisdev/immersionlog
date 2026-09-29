@@ -114,7 +114,7 @@ function conjugationNearMiss(sentence: GrammarSentence, n: string): string | nul
   const dictionary = c.word.kanji;
 
   // The same word in its other register: 食べている where the sentence is polite.
-  const twin = REGISTER_TWIN[c.form];
+  const twin = c.cut ? undefined : REGISTER_TWIN[c.form];
   if (twin) {
     const forms = conjugate(c.word, twin).flatMap((a) => [a.kanji, a.kana].map(wrap));
     if (forms.some((f) => n === `${head}${f}${tail}` || n === `${head}${f}`)) {
