@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function GrammarSettingsForm({ initial }: { initial: GrammarSettingsValues }) {
+export function GrammarSettingsForm({ initial, onSaved }: { initial: GrammarSettingsValues; onSaved?: () => void }) {
   const router = useRouter();
   const [values, setValues] = useState(initial);
   const [pending, startTransition] = useTransition();
@@ -24,6 +24,7 @@ export function GrammarSettingsForm({ initial }: { initial: GrammarSettingsValue
       }
       toast.success("Grammar settings saved");
       router.refresh();
+      onSaved?.();
     });
   }
 
