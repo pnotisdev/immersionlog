@@ -1,6 +1,7 @@
 import { deck } from "../build";
 import { conditionals } from "./n4/conditionals";
 import { connecting } from "./n4/connecting";
+import { everyday } from "./n4/everyday";
 import { forms } from "./n4/forms";
 import { giving } from "./n4/giving";
 import { hearsay } from "./n4/hearsay";
@@ -30,6 +31,7 @@ export const N4 = deck(
     { title: "What the て-form builds", points: tePatterns },
     { title: "Aims, decisions and change", points: purpose },
     { title: "Connecting, timing and nuance", points: connecting },
+    { title: "More everyday patterns", points: everyday },
     { title: "Polite speech (keigo)", points: keigo },
   ],
 );
