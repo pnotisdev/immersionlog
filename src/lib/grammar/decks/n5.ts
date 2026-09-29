@@ -1,4 +1,4 @@
-import { deck } from "../build";
+import { deck, inWrittenOrder } from "../build";
 import { adjectives } from "./n5/adjectives";
 import { basics } from "./n5/basics";
 import { connecting } from "./n5/connecting";
@@ -18,12 +18,12 @@ export const N5 = deck(
     description:
       "The grammar of a first Japanese textbook: です and だ, the core particles, verbs and adjectives in plain and polite forms, the て-form and what it builds, and the patterns for wanting, comparing, permission and giving reasons.",
   },
-  [
+  ...inWrittenOrder([
     { title: "First sentences", points: basics },
     { title: "Verbs and the particles around them", points: verbs },
     { title: "Adjectives, likes and wants", points: adjectives },
     { title: "Questions and counting", points: questions },
     { title: "Plain forms and the て-form", points: teForm },
     { title: "Joining, comparing and planning", points: connecting },
-  ],
+  ]),
 );

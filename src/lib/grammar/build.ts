@@ -106,8 +106,34 @@ export function point(spec: PointSpec): PointDraft {
   };
 }
 
-/** A deck, in sections: order numbers come from position, so reordering is moving a line. */
-export function deck(meta: Omit<GrammarDeck, "points" | "sections">, sections: { title: string; points: PointDraft[] }[]): GrammarDeck {
-  const points = sections.flatMap((s) => s.points).map((p, i) => ({ ...p, deck: meta.id, order: i + 1 }));
-  return { ...meta, sections: sections.map((s) => ({ title: s.title, pointIds: s.points.map((p) => p.id) })), points };
+export interface Stage {
+  title: string;
+  ids: string[];
+}
+
+/**
+ * A deck in learning order, easiest first. Points are written in topical files (every
+ * way to give a reason side by side), but learners meet them in stages ordered by
+ * difficulty, so the order is its own list of ids. Every written point must be placed
+ * exactly once: a typo, a duplicate or a forgotten point fails here, loudly. Order
+ * numbers come from position, so reordering is moving an id.
+ */
+export function deck(meta: Omit<GrammarDeck, "points" | "sections">, written: PointDraft[][], stages: Stage[]): GrammarDeck {
+  const all = written.flat();
+  const byId = new Map(all.map((p) => [p.id, p]));
+  const placed = stages.flatMap((s) => s.ids);
+  const problems = [
+    ...all.filter((p, i) => all.findIndex((q) => q.id === p.id) !== i).map((p) => `written twice: ${p.id}`),
+    ...placed.filter((id) => !byId.has(id)).map((id) => `unknown: ${id}`),
+    ...placed.filter((id, i) => placed.indexOf(id) !== i).map((id) => `placed twice: ${id}`),
+    ...all.filter((p) => !placed.includes(p.id)).map((p) => `not placed: ${p.id}`),
+  ];
+  if (problems.length) throw new Error(`${meta.id} learning order: ${problems.join(", ")}`);
+  const points = placed.map((id, i) => ({ ...byId.get(id)!, deck: meta.id, order: i + 1 }));
+  return { ...meta, sections: stages.map((s) => ({ title: s.title, pointIds: s.ids })), points };
+}
+
+/** Stages that keep the written order, one per topical section. */
+export function inWrittenOrder(sections: { title: string; points: PointDraft[] }[]): [PointDraft[][], Stage[]] {
+  return [sections.map((s) => s.points), sections.map((s) => ({ title: s.title, ids: s.points.map((p) => p.id) }))];
 }

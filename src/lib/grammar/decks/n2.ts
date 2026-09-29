@@ -1,4 +1,4 @@
-import { deck } from "../build";
+import { deck, inWrittenOrder } from "../build";
 import { adverbs } from "./n2/adverbs";
 import { cause } from "./n2/cause";
 import { concession } from "./n2/concession";
@@ -21,7 +21,7 @@ export const N2 = deck(
     description:
       "The grammar of newspapers, essays, business and fiction: reasons with a stance, scope and basis, timing, degree and emphasis, likelihood and necessity, concession, viewpoints, manner, and the adverbs that colour a whole sentence.",
   },
-  [
+  ...inWrittenOrder([
     { title: "Reasons with a stance", points: cause },
     { title: "Scope, basis and limits", points: scope },
     { title: "Occasions and timing", points: time },
@@ -31,5 +31,5 @@ export const N2 = deck(
     { title: "Viewpoints and verdicts", points: viewpoint },
     { title: "Manner, appearance and verb compounds", points: manner },
     { title: "Adverbs with a point of view", points: adverbs },
-  ],
+  ]),
 );

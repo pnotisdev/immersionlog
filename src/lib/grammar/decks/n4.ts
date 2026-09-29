@@ -1,4 +1,4 @@
-import { deck } from "../build";
+import { deck, inWrittenOrder } from "../build";
 import { conditionals } from "./n4/conditionals";
 import { connecting } from "./n4/connecting";
 import { everyday } from "./n4/everyday";
@@ -22,7 +22,7 @@ export const N4 = deck(
     description:
       "The grammar that takes you from textbook sentences to real conversation: potential, volitional, passive and causative forms, giving and receiving, conditionals, guessing and hearsay, the て-form patterns, and polite speech.",
   },
-  [
+  ...inWrittenOrder([
     { title: "Can, let's and commands", points: forms },
     { title: "Giving and receiving", points: giving },
     { title: "Conditionals", points: conditionals },
@@ -33,5 +33,5 @@ export const N4 = deck(
     { title: "Connecting, timing and nuance", points: connecting },
     { title: "More everyday patterns", points: everyday },
     { title: "Polite speech (keigo)", points: keigo },
-  ],
+  ]),
 );

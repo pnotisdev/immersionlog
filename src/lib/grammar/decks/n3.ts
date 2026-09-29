@@ -1,4 +1,4 @@
-import { deck } from "../build";
+import { deck, inWrittenOrder } from "../build";
 import { attitude } from "./n3/attitude";
 import { cause } from "./n3/cause";
 import { contrast } from "./n3/contrast";
@@ -21,7 +21,7 @@ export const N3 = deck(
     description:
       "The grammar of real books, news and work: giving causes and results, talking about topics and sources, time and change, degree and emphasis, judging how things are, contrast and concession, and the attitudes behind what people say.",
   },
-  [
+  ...inWrittenOrder([
     { title: "Cause, reason and result", points: cause },
     { title: "Topics, sources and standpoints", points: topics },
     { title: "Defining, reporting and casual speech", points: saying },
@@ -31,5 +31,5 @@ export const N3 = deck(
     { title: "Suppositions, contrast and concession", points: contrast },
     { title: "Intentions, feelings and risks", points: intent },
     { title: "Words that carry an attitude", points: attitude },
-  ],
+  ]),
 );
