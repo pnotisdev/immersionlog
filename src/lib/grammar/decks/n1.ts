@@ -7,6 +7,7 @@ import { endings } from "./n1/endings";
 import { extent } from "./n1/extent";
 import { time } from "./n1/time";
 import { verdict } from "./n1/verdict";
+import { viewpoint } from "./n1/viewpoint";
 
 /**
  * JLPT N1 grammar: the literary, formal and rhetorical patterns of essays, news, speeches
@@ -21,7 +22,17 @@ export const N1 = deck(
     description:
       "The grammar of editorials, speeches, literature and formal writing: attitude adverbs, timing, reasons and purpose, concession, conditions, degree and emphasis, verdicts, standpoints and manner.",
   },
-  [adverbs, time, cause, concession, condition, extent, verdict, endings],
+  [
+    adverbs,
+    time,
+    cause,
+    concession,
+    condition,
+    extent,
+    verdict,
+    endings,
+    viewpoint,
+  ],
   [
     { title: "1 · Adverbs with an attitude", ids: adverbs.map((p) => p.id) },
     { title: "2 · Timing and sequence", ids: time.map((p) => p.id) },
@@ -36,6 +47,10 @@ export const N1 = deck(
     {
       title: "8 · Obligation, tendency and inference",
       ids: endings.map((p) => p.id),
+    },
+    {
+      title: "9 · Standpoints and set phrases",
+      ids: viewpoint.map((p) => p.id),
     },
   ],
 );
