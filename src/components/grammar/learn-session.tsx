@@ -33,7 +33,7 @@ type Stage = { kind: "lesson"; index: number } | { kind: "quiz" } | { kind: "sav
  * sends that point to the back of the quiz with another sentence; once every point has
  * been answered right, they all enter the review schedule together.
  */
-export function LearnSession({ lessons, showFurigana, moreAfter }: { lessons: Lesson[]; showFurigana: boolean; moreAfter: boolean }) {
+export function LearnSession({ lessons, showFurigana, moreAfter, moreHref = "/grammar/learn" }: { lessons: Lesson[]; showFurigana: boolean; moreAfter: boolean; moreHref?: string }) {
   const [stage, setStage] = useState<Stage>({ kind: "lesson", index: 0 });
   const [furigana, setFurigana] = useState(showFurigana);
 
@@ -64,7 +64,7 @@ export function LearnSession({ lessons, showFurigana, moreAfter }: { lessons: Le
                 Back to Grammar
               </Button>
               {moreAfter && (
-                <Button variant="outline" nativeButton={false} render={<Link href="/grammar/learn" prefetch={false} />}>
+                <Button variant="outline" nativeButton={false} render={<Link href={moreHref} prefetch={false} />}>
                   Learn more
                 </Button>
               )}

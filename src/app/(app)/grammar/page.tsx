@@ -92,7 +92,15 @@ export default async function GrammarPage() {
           {DECKS.map((d) => {
             const counts = o.decks.find((x) => x.deckId === d.id)!;
             return (
-              <Panel key={d.id} title={d.title} description={`${d.points.length} points`} action={<PanelLink href={deckPath(d)}>All points</PanelLink>}>
+              <Panel key={d.id} title={d.title} description={`${d.points.length} points`} action={
+                  <span className="flex items-center gap-3">
+                    {o.newAvailable > 0 && counts.unlearned > 0 && (
+                      <PanelLink href={`/grammar/learn?deck=${d.id}`}>Learn {d.level}</PanelLink>
+                    )}
+                    <PanelLink href={deckPath(d)}>All points</PanelLink>
+                  </span>
+                }
+              >
                 <StageBar counts={counts.counts} total={counts.total} />
               </Panel>
             );

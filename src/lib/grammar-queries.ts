@@ -3,7 +3,7 @@ import { and, asc, count, eq, gte, isNotNull, lt, lte, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { grammarProgress, grammarReviews, grammarSettings } from "@/db/schema";
 import { dayKey, dayStart } from "./dates";
-import { allPoints, DECKS, getPoint } from "./grammar/decks";
+import { allPoints, DECKS, getDeck, getPoint } from "./grammar/decks";
 import { GRAMMAR_DEFAULTS, type GrammarSettingsValues } from "./grammar/settings";
 import { dueCount, forecast, forecastHours, nextDue, pickSentence, stageGroup, STAGE_GROUPS, type StageGroupId } from "./grammar/srs";
 import type { GrammarPoint, GrammarSentence } from "./grammar/types";
@@ -51,11 +51,11 @@ export async function getGrammarDueCount(userId: string, now = new Date()): Prom
   return rows.filter((r) => getPoint(r.pointId)).length;
 }
 
-/** The next points to learn, in deck order, skipping any already learned. */
-export function nextNewPoints(learned: Set<string>, limit: number): GrammarPoint[] {
+/** The next points to learn, in deck order (or from just `deckId`), skipping any already learned. */
+export function nextNewPoints(learned: Set<string>, limit: number, deckId?: string): GrammarPoint[] {
   if (limit <= 0) return [];
   const out: GrammarPoint[] = [];
-  for (const p of allPoints()) {
+  for (const p of deckId ? getDeck(deckId)?.points ?? [] : allPoints()) {
     if (learned.has(p.id)) continue;
     out.push(p);
     if (out.length >= limit) break;
@@ -66,6 +66,8 @@ export function nextNewPoints(learned: Set<string>, limit: number): GrammarPoint
 export interface DeckStageCounts {
   deckId: string;
   total: number;
+  /** Points in this deck not yet in the user's reviews. */
+  unlearned: number;
   counts: Record<StageGroupId, number>;
 }
 
@@ -98,7 +100,7 @@ export async function getGrammarOverview(userId: string, tz: string, now = new D
     const counts = Object.fromEntries(STAGE_GROUPS.map((g) => [g.id, 0])) as Record<StageGroupId, number>;
     const byId = new Map(known.map((r) => [r.pointId, r]));
     for (const p of d.points) counts[stageGroup(byId.get(p.id)?.stage ?? 0).id]++;
-    return { deckId: d.id, total: d.points.length, counts };
+    return { deckId: d.id, total: d.points.length, unlearned: d.points.filter((p) => !learned.has(p.id)).length, counts };
   });
 
   const days = forecast(known, 7, now, tz);
