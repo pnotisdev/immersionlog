@@ -51,7 +51,7 @@ export default async function SettingsPage() {
       <div className="mt-10 max-w-md">
         <SectionHeader title="Your data" />
         <p className="mb-3 text-sm text-muted-foreground">
-          Download everything tied to your account (profile, sessions, library, goals, follows and club activity)
+          Download everything tied to your account (profile, sessions, library, goals, follows, club activity and grammar reviews)
           as one JSON file, or as separate CSVs per category.
         </p>
         <div className="grid gap-2">

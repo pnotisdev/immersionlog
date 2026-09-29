@@ -4,6 +4,7 @@ import { formatDuration, formatNumber, relativeTime } from "@/lib/format";
 import { listRecentMilestones } from "@/lib/milestones-queries";
 import { getProgression } from "@/lib/progression-queries";
 import { getMyClubStandings } from "@/lib/club-queries";
+import { getGrammarDueCount } from "@/lib/grammar-queries";
 import {
   getDailyTotals,
   getGoalsWithProgress,
@@ -20,6 +21,7 @@ import { Panel, PanelLink } from "@/components/layout/panel";
 import { ActivityFeed } from "@/components/community/activity-feed";
 import { ClubStandings } from "@/components/clubs/club-standings";
 import { GoalCard } from "@/components/goals/goal-card";
+import { GrammarDueCard } from "@/components/grammar/grammar-due-card";
 import { MilestoneList } from "@/components/progression/milestone-list";
 import { FirstLog } from "@/components/sessions/first-log";
 import { QuickLogGrid } from "@/components/sessions/quick-log-grid";
@@ -44,7 +46,7 @@ export default async function DashboardPage() {
   const last30 = presetRange("30d", tz, now);
   const all = presetRange("all", tz, now);
 
-  const [picks, progression, todaySec, weekSec, daily, heat, breakdown, goals, recent, recentItems, standings, friends, milestones] =
+  const [picks, progression, todaySec, weekSec, daily, heat, breakdown, goals, recent, recentItems, standings, friends, milestones, grammarDue] =
     await Promise.all([
       getLibraryPicks(user.id),
       getProgression(user.id, tz, now),
@@ -59,6 +61,7 @@ export default async function DashboardPage() {
       getMyClubStandings(user.id, month.from, month.to),
       getFeed(user.id, { scope: "following", limit: 6 }),
       listRecentMilestones(user.id, 4),
+      getGrammarDueCount(user.id, now),
     ]);
   const timer = await getActiveTimerView(user.id, picks);
 
@@ -86,6 +89,8 @@ export default async function DashboardPage() {
       {!hasHistory && !timer && <FirstLog entries={picks} tz={tz} />}
 
       <TimerCard timer={timer} entries={picks} tz={tz} />
+
+      <GrammarDueCard due={grammarDue} />
 
       {hasHistory && (
         <StatStrip

@@ -41,5 +41,11 @@ describe("proxy", () => {
     expect(isPrivate("/u/pnotis")).toBe(false);
     expect(isPrivate("/titles")).toBe(false);
     expect(isPrivate("/tools/reading-speed")).toBe(false);
+    expect(isPrivate("/grammar")).toBe(true);
+    expect(isPrivate("/grammar/")).toBe(true);
+    expect(isPrivate("/grammar/review")).toBe(true);
+    expect(isPrivate("/grammar/learn")).toBe(true);
+    expect(isPrivate("/grammar/n5")).toBe(false);
+    expect(isPrivate("/grammar/n5/n5-desu")).toBe(false);
   });
 });

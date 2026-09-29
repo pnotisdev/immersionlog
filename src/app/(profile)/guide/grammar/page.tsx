@@ -48,6 +48,15 @@ export default function GrammarChapter() {
           method. The exception is conjugation, which is worth drilling until it&apos;s automatic; the{" "}
           <In href="/tools/conjugation">conjugation drill</In> is there for that.
         </p>
+        <p>
+          If you want your first pass laid out for you, the <In href="/grammar/n5">N5 grammar list</In> goes through the
+          beginner points in the order you&apos;ll meet them, a short explanation and a handful of sentences each, and the{" "}
+          <In href="/grammar/n4">N4</In>, <In href="/grammar/n3">N3</In>, <In href="/grammar/n2">N2</In> and{" "}
+          <In href="/grammar/n1">N1</In> lists pick up from there. Signed in,
+          you can learn a few a day and have them come back for review just before you&apos;d forget them. Keep it to a few
+          minutes a day: it&apos;s there so the patterns look familiar when you meet them in your reading, not to replace the
+          reading.
+        </p>
         <Callout title="Explain Japanese as Japanese">
           <p>
             Tae Kim&apos;s guide is built on one idea worth borrowing whatever resource you use: explain Japanese from a Japanese

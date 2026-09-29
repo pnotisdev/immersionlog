@@ -1,7 +1,7 @@
 import "server-only";
-import { desc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { immersionSessions, libraryEntries, mediaItems, milestones } from "@/db/schema";
+import { grammarProgress, grammarReviews, grammarSettings, immersionSessions, libraryEntries, mediaItems, milestones } from "@/db/schema";
 
 /**
  * Shared source of truth for both the JSON export (src/app/api/account/export/route.ts)
@@ -69,4 +69,43 @@ export async function getExportMilestones(userId: string) {
     .innerJoin(mediaItems, eq(libraryEntries.mediaItemId, mediaItems.id))
     .where(eq(milestones.userId, userId))
     .orderBy(desc(milestones.createdAt));
+}
+
+/**
+ * Grammar trainer state: settings, a row per learned point, and every answered review.
+ * The reviews' `previous` snapshot is internal bookkeeping for undo, so it's left out.
+ */
+export async function getExportGrammar(userId: string) {
+  const [settings, progress, reviews] = await Promise.all([
+    db.query.grammarSettings.findFirst({ where: eq(grammarSettings.userId, userId), columns: { userId: false } }),
+    db
+      .select({
+        pointId: grammarProgress.pointId,
+        stage: grammarProgress.stage,
+        nextReviewAt: grammarProgress.nextReviewAt,
+        lastReviewedAt: grammarProgress.lastReviewedAt,
+        timesCorrect: grammarProgress.timesCorrect,
+        timesWrong: grammarProgress.timesWrong,
+        streak: grammarProgress.streak,
+        unlockedAt: grammarProgress.unlockedAt,
+        burned: grammarProgress.burned,
+      })
+      .from(grammarProgress)
+      .where(eq(grammarProgress.userId, userId))
+      .orderBy(asc(grammarProgress.unlockedAt)),
+    db
+      .select({
+        pointId: grammarReviews.pointId,
+        sentenceId: grammarReviews.sentenceId,
+        correct: grammarReviews.correct,
+        answerGiven: grammarReviews.answerGiven,
+        stageBefore: grammarReviews.stageBefore,
+        stageAfter: grammarReviews.stageAfter,
+        reviewedAt: grammarReviews.reviewedAt,
+      })
+      .from(grammarReviews)
+      .where(eq(grammarReviews.userId, userId))
+      .orderBy(asc(grammarReviews.reviewedAt)),
+  ]);
+  return { settings: settings ?? null, progress, reviews };
 }

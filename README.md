@@ -18,13 +18,14 @@ Think Toggl for immersion, with a library attached.
 - **Community**: an activity feed (everyone, or just the people you follow), follows, kudos on sessions, a member directory, and public profile pages showing what someone is on right now.
 - **Ranking**: global and per-medium leaderboards (week / month / year / all time), rankable against everyone or only the people you follow; opt out in settings.
 - **Clubs**: public or private (join code), tagged, up to 100 members, member leaderboard, and voting on what to consume together next.
+- **Grammar**: a spaced-repetition grammar trainer, with decks for JLPT N5 (137 points), N4 (111 points), N3 (142 points), N2 (137 points) and N1 (188 points), each laid out in stages from easiest to hardest. Learn a few a day (a short explanation, examples with furigana, a quick quiz), then review them as fill-in-the-blank sentences on a growing schedule (4 hours up to 4 months, then "burned"). Type in romaji or kana; near misses (a real alternative, a conjugation slip, は typed as わ) get a nudge instead of a fail, and a typo can be undone. The decks and every point page are public at `/grammar/n5`, `/grammar/n4`, `/grammar/n3`, `/grammar/n2` and `/grammar/n1`. Grammar reviews are study, not immersion: they never create sessions or earn XP.
 - **Texthooker**: connect **LunaTranslator** (`ws://localhost:2333/api/ws/text/origin`) or **Textractor** (`ws://localhost:6677`) from the browser; lines stream in, characters and *active* time (idle gaps excluded) are counted, and one click saves the session against your VN.
 
 ## Navigation
 
-Five destinations — **Home, Library, Discover, Community, Stats** — plus one **Log** button. Everything else (session log, goals, texthooker, settings, your profile) lives in the account menu. On phones the same five become a bottom tab bar with logging in the middle.
+Five destinations — **Home, Library, Discover, Community, Stats** — plus one **Log** button. Everything else (session log, goals, texthooker, grammar, settings, your profile) lives in the account menu. On phones the same five become a bottom tab bar with logging in the middle.
 
-Signed-out visitors get a public landing page at `/` with live community numbers; everything else redirects to `/login`.
+Signed-out visitors get a public landing page at `/` with live community numbers, plus the public guide, tools, title pages and grammar decks; the rest of the app redirects to `/login`.
 
 ## Stack
 
@@ -99,9 +100,20 @@ goals                metric (time | unit), optional media type, date range, targ
 follows              directed, no approval; private profiles never appear in feeds or rankings
 session_kudos        one heart per (session, user)
 clubs / club_members / club_picks / club_pick_votes
+grammar_progress     user × grammar point: stage (1-10, 11 = burned), next review, streak, right/wrong counts
+grammar_reviews      append-only log of answered reviews (stats, heatmap, undo)
+grammar_settings     daily new-point limit, review batch size, furigana and translation toggles
 ```
 
 Time is the common denominator (all sessions have a duration); native units stay per-medium. Days are bucketed in the **user's timezone** (captured at signup, editable in settings).
+
+## Grammar notes
+
+Grammar content lives in code, not the database: `src/lib/grammar/decks/` holds each deck (points are written by topic in section files under `decks/n5/`, `decks/n4/`, `decks/n3/`, `decks/n2/` and `decks/n1/`, and each deck file lists them in learning-order stages, easiest first; `deck()` refuses a point that is missing from the stages or placed twice), written with the helpers in `src/lib/grammar/build.ts`. Each sentence is written twice, in normal Japanese and in kana, with the tested part in braces (`窓を{開けてください}。` / `まどを{あけてください}。`); furigana is aligned from the pair. Where a point is a verb or adjective form, accepted answers come from the conjugation engine (`src/lib/conjugation.ts`) rather than being listed by hand. Near misses are written in normal Japanese; their kana spellings, which is what romaji typing produces, are worked out from the decks' own furigana (`src/lib/grammar/spellings.ts`), and the deck test fails if one can't be. The database only stores each user's progress against the stable point and sentence ids.
+
+To add a level (N1), write a deck file and add it to `DECKS` in `src/lib/grammar/decks/index.ts`; routes, sitemap, the learn queue and stats all read from that list. `src/lib/grammar/decks.test.ts` checks every entry (unique ids, markup, furigana alignment, accepted answers, near misses, related ids). Append new sentences at the end of a point so existing sentence ids don't shift.
+
+The schedule (`src/lib/grammar/srs.ts`) and answer checking (`src/lib/grammar/check.ts`) are pure and unit-tested; the server actions in `src/actions/grammar.ts` are the only place stages change, and they never take a stage or due time from the client.
 
 ## Texthooker notes
 

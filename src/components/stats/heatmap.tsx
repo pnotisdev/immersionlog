@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { formatDuration, pluralize } from "@/lib/format";
+import { formatDuration, formatNumber, pluralize } from "@/lib/format";
 import { quantileStep } from "@/lib/heatmap-scale";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +9,17 @@ export interface HeatmapDay {
   key: string; // YYYY-MM-DD
   seconds: number;
   sessions?: number;
+}
+
+/**
+ * For a heatmap of something other than time (grammar reviews): `seconds` then holds a
+ * count, named by `one`/`many` in the tooltip, and `sessions` a secondary count named by
+ * `detail` ("12 reviews · 10 right").
+ */
+export interface HeatmapUnit {
+  one: string;
+  many: string;
+  detail?: string;
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -40,6 +51,8 @@ export function Heatmap({
   gap = 3,
   highlightKey,
   tour = false,
+  unit,
+  label = "Daily immersion heatmap",
   className,
 }: {
   days: HeatmapDay[];
@@ -53,6 +66,9 @@ export function Heatmap({
   highlightKey?: string;
   /** Show off the tooltip on its own once in view (see above). */
   tour?: boolean;
+  /** Counts instead of durations; see HeatmapUnit. */
+  unit?: HeatmapUnit;
+  label?: string;
   className?: string;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -153,7 +169,7 @@ export function Heatmap({
       <div className="no-scrollbar -m-[2px] flex flex-row-reverse overflow-x-auto p-[2px]" onPointerLeave={() => setTip(null)}>
         <div
           role="img"
-          aria-label="Daily immersion heatmap"
+          aria-label={label}
           className="grid w-full flex-none justify-start text-[10px] leading-none text-[var(--viz-muted)] select-none"
           style={gridStyle}
           onPointerOver={show}
@@ -203,7 +219,7 @@ export function Heatmap({
           // Clamped so it never hangs off either end of the grid.
           style={{ left: Math.min(Math.max(tip.x, 100), Math.max(100, tip.w - 100)), top: tip.y - 6 }}
         >
-          <TooltipBody day={tipDay} />
+          <TooltipBody day={tipDay} unit={unit} />
         </div>
       )}
     </div>
@@ -224,13 +240,22 @@ export function HeatmapLegend({ className }: { className?: string }) {
 }
 
 /** "1h 13m · 3 sessions · Sat 20 Sep 2026" (redesign.md §3.3). */
-function TooltipBody({ day }: { day: HeatmapDay }) {
+function TooltipBody({ day, unit }: { day: HeatmapDay; unit?: HeatmapUnit }) {
   const d = new Date(day.key + "T00:00:00Z");
   const date = `${WEEKDAY.format(d)} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
   if (day.seconds <= 0) {
     return (
       <>
-        <span className="text-muted-foreground">{date}</span> · nothing logged
+        <span className="text-muted-foreground">{date}</span> · {unit ? `no ${unit.many}` : "nothing logged"}
+      </>
+    );
+  }
+  if (unit) {
+    return (
+      <>
+        <span className="font-semibold tabular-nums">{pluralize(day.seconds, unit.one, unit.many)}</span>
+        {unit.detail && <span className="text-muted-foreground"> · {formatNumber(day.sessions ?? 0)} {unit.detail}</span>}
+        <span className="text-muted-foreground"> · {date}</span>
       </>
     );
   }
