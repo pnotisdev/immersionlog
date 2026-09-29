@@ -1,5 +1,6 @@
 import { deck } from "../build";
 import { cause } from "./n2/cause";
+import { extent } from "./n2/extent";
 import { scope } from "./n2/scope";
 import { time } from "./n2/time";
 
@@ -19,5 +20,6 @@ export const N2 = deck(
     { title: "Reasons with a stance", points: cause },
     { title: "Scope, basis and limits", points: scope },
     { title: "Occasions and timing", points: time },
+    { title: "Degree, addition and emphasis", points: extent },
   ],
 );
