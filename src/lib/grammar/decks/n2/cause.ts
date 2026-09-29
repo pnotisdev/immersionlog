@@ -122,7 +122,7 @@ Compare ばかりに, which blames one thing for a bad result, and だけで, "j
     title: "〜だけあって・〜だけのことはある",
     meaning: "as you'd expect from, lives up to",
     structure: "Plain form + だけあって / だけのことはある (な-adj + な · Noun directly)",
-    related: ["n2-dake-ni", "n3-sasuga"],
+    related: ["n2-dake-ni", "n3-sasuga", "n1-nara-de-wa"],
     explanation: `
 **だけあって** praises something for living up to what you'd expect from it: プロだけあって、さすがに上手だ, "as you'd expect from a professional, they're really good".
 
@@ -262,7 +262,7 @@ It's only for people (or sometimes organisations) whose habits you know well, no
     title: "〜あげく(に)",
     meaning: "after all that, in the end (with a bad result)",
     structure: "Verb た-form + あげく(に) · Noun + の + あげく",
-    related: ["n2-sue-ni", "n3-kekka"],
+    related: ["n2-sue-ni", "n3-kekka", "n1-shimatsu-da"],
     explanation: `
 **あげく** describes a long, troublesome process that ends badly: さんざん迷ったあげく、何も買わなかった, "after dithering endlessly, I ended up buying nothing".
 

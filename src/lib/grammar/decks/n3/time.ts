@@ -8,7 +8,7 @@ export const time = [
     title: "〜たとたん(に)",
     meaning: "the moment, just as",
     structure: "Verb た-form + とたん(に)",
-    related: ["n3-to-douji-ni", "n4-ta-bakari"],
+    related: ["n3-to-douji-ni", "n4-ta-bakari", "n1-ga-hayai-ka", "n1-ya-ina-ya"],
     explanation: `
 **とたん** says the second thing happened the instant the first one did: 家を出たとたん、雨が降り出した, "the moment I left the house, it started raining".
 

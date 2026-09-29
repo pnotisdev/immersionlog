@@ -8,7 +8,7 @@ export const time = [
     title: "〜次第",
     meaning: "as soon as; depends on",
     structure: "Verb ます-stem + 次第 · Noun + 次第だ / 次第で",
-    related: ["n3-ta-totan", "n3-ni-yotte"],
+    related: ["n3-ta-totan", "n3-ni-yotte", "n1-ikan"],
     explanation: `
 **次第** has two common uses.
 
@@ -120,7 +120,7 @@ The first half is something significant: starting a job, opening an event, writi
     title: "〜に先立って",
     meaning: "prior to, ahead of",
     structure: "Noun / Verb dictionary form + に先立って / に先立ち",
-    related: ["n2-ni-atatte", "n5-mae-ni"],
+    related: ["n2-ni-atatte", "n5-mae-ni", "n1-ni-sakigakete"],
     explanation: `
 **に先立って** means "before", for something done in preparation for, or ahead of, a main event: 試合に先立って、開会式が行われた, "an opening ceremony was held before the match".
 
@@ -159,7 +159,7 @@ In formal writing, it's に先立ち. Before a noun, it's に先立つ.
     title: "〜をきっかけに・〜を契機に",
     meaning: "prompted by, taking (X) as a turning point",
     structure: "Noun / Plain form + の + をきっかけに · を契機に",
-    related: ["n3-te-irai", "n2-te-kara-to-iu-mono"],
+    related: ["n3-te-irai", "n2-te-kara-to-iu-mono", "n1-wo-ki-ni", "n1-wo-sakai-ni"],
     explanation: `
 **をきっかけに** names the event that triggered a change or a new start: 留学をきっかけに、国際関係に興味を持った, "studying abroad got me interested in international relations".
 
@@ -305,7 +305,7 @@ The meaning overlaps with たとたん and と同時に, but it stresses how inc
     title: "〜つつ・〜つつも",
     meaning: "while (doing); although",
     structure: "Verb ます-stem + つつ / つつも",
-    related: ["n5-nagara", "n3-nagara-mo", "n3-tsutsu-aru"],
+    related: ["n5-nagara", "n3-nagara-mo", "n3-tsutsu-aru", "n1-tsu-tsu"],
     explanation: `
 **つつ** is a written, literary version of ながら, with the same two meanings.
 

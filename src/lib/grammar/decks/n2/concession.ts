@@ -81,7 +81,7 @@ The も is essential: without it, にかかわらず means "regardless of". At t
     title: "〜とはいえ",
     meaning: "that said, even though, it's true … but",
     structure: "Plain form / Noun + とはいえ · Sentence。とはいえ、…",
-    related: ["n3-to-ittemo", "n2-mono-no"],
+    related: ["n3-to-ittemo", "n2-mono-no", "n1-to-iedomo", "n1-to-wa-iu-mono-no"],
     explanation: `
 **とはいえ** grants a point, then qualifies it: 春とはいえ、まだ寒い, "it may be spring, but it's still cold". The first half is true, but it doesn't lead where you'd expect.
 
@@ -120,7 +120,7 @@ It's a more formal relative of といっても (N3). とはいうものの means
     title: "〜にしろ・〜にせよ",
     meaning: "whether … or; even if; whatever",
     structure: "Noun / Plain form + にしろ / にせよ · A にしろ B にしろ",
-    related: ["n3-ni-shitemo", "n3-to-shitemo"],
+    related: ["n3-ni-shitemo", "n3-to-shitemo", "n1-de-are"],
     explanation: `
 **にしろ** and **にせよ** are formal versions of にしても (N3). They grant a point, then say it doesn't change the conclusion: 冗談にせよ、言っていいことと悪いことがある, "even as a joke, there are things you shouldn't say".
 
@@ -159,7 +159,7 @@ The set phrase **いずれにせよ** means "either way, in any case", and is co
     title: "〜たところで",
     meaning: "even if (it'd be pointless)",
     structure: "Verb た-form + ところで",
-    related: ["n3-to-shitemo", "n3-ta-tokoro"],
+    related: ["n3-to-shitemo", "n3-ta-tokoro", "n1-to-shita-tokoro-de"],
     explanation: `
 **たところで** means "even if you did", with the strong implication that it wouldn't help: 今から急いだところで、間に合わない, "even if we hurry now, we won't make it".
 
@@ -310,7 +310,7 @@ Don't confuse it with ないうちに ("before") or ことに ("to my surprise")
     title: "〜抜きで・〜抜きには",
     meaning: "without, leaving out",
     structure: "Noun + 抜きで / 抜きに / 抜きの · 抜きには + negative",
-    related: ["n4-zu-ni"],
+    related: ["n4-zu-ni", "n1-naku-shite"],
     explanation: `
 **抜きで** means leaving out something that would normally be included: 朝ご飯抜きで学校に行った, "I went to school without breakfast". 抜く means "to pull out".
 
@@ -383,7 +383,7 @@ Compare ても ("even if"), which is neutral. てでも says "I'm prepared to go
     title: "〜も構わず",
     meaning: "without caring about, heedless of",
     structure: "Noun / Plain form + の + も構わず",
-    related: ["n2-wo-towazu", "n4-temo-kamawanai"],
+    related: ["n2-wo-towazu", "n4-temo-kamawanai", "n1-wo-yoso-ni"],
     explanation: `
 **も構わず** means doing something without caring about something that would normally hold you back: 人目も構わず、泣き出した, "she burst into tears, not caring who saw".
 

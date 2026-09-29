@@ -77,7 +77,7 @@ Compare らしい, "typical of, as it should be": 子どもらしい is a compli
     title: "〜がち",
     meaning: "tend to, be prone to (something bad)",
     structure: "Verb ます-stem / Noun + がち (+ だ · の Noun)",
-    related: ["n3-gimi", "n3-ppoi", "n4-yasui-nikui"],
+    related: ["n3-gimi", "n3-ppoi", "n4-yasui-nikui", "n1-kirai-ga-aru"],
     explanation: `
 **がち** says something tends to happen, usually something unwelcome: 冬は風邪をひきがちだ, "people tend to catch colds in winter". It attaches to a ます-stem or a noun.
 
@@ -191,7 +191,7 @@ Compare っぽい, which is "-ish" and often negative: 子どもっぽい is "ch
     title: "〜に違いない",
     meaning: "must be, surely",
     structure: "Plain form + に違いない (な-adj, Noun: no だ)",
-    related: ["n4-hazu", "n3-ni-kimatteiru", "n4-kamoshirenai"],
+    related: ["n4-hazu", "n3-ni-kimatteiru", "n4-kamoshirenai", "n1-ni-soui-nai"],
     explanation: `
 **に違いない** expresses a strong conviction: あの人は日本人に違いない, "that person must be Japanese". Literally, "there's no mistake that".
 
@@ -602,7 +602,7 @@ Don't confuse it with ことがない, which after a dictionary form means "neve
     title: "〜べき",
     meaning: "should, ought to",
     structure: "Verb dictionary form + べきだ / べきではない (する → するべき / すべき)",
-    related: ["n5-hou-ga-ii", "n3-koto-da", "n3-mono-da"],
+    related: ["n5-hou-ga-ii", "n3-koto-da", "n3-mono-da", "n1-beku", "n1-beshi"],
     explanation: `
 **べき** says what's right or proper: 約束は守るべきだ, "you should keep your promises". It's stronger than ほうがいい, which is friendly advice; べき is about duty, principle or common sense.
 

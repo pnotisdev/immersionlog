@@ -115,7 +115,7 @@ The detail is usually something basic or first: a name, a title, an attitude, a 
     title: "〜からすると・〜から見ると",
     meaning: "judging from; from the standpoint of",
     structure: "Noun + からすると / からすれば / から見ると / から言うと",
-    related: ["n2-kara-shite", "n2-ni-shite-mireba", "n3-ni-totte"],
+    related: ["n2-kara-shite", "n2-ni-shite-mireba", "n3-ni-totte", "n1-tokoro-wo-miru-to"],
     explanation: `
 **からすると** has two uses.
 
@@ -412,7 +412,7 @@ Don't confuse it with ことがある, "sometimes" or "have (done)". ものが�
     title: "〜に越したことはない",
     meaning: "it's best to, you can't go wrong with",
     structure: "Plain form / Noun + に越したことはない",
-    related: ["n2-ni-kagiru", "n5-hou-ga-ii"],
+    related: ["n2-ni-kagiru", "n5-hou-ga-ii", "n1-ni-shiku-wa-nai"],
     explanation: `
 **に越したことはない** means nothing could be better than this: 用心するに越したことはない, "it's best to be careful". 越す means "to go beyond", so it's "nothing goes beyond this".
 

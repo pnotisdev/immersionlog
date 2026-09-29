@@ -8,7 +8,7 @@ export const intent = [
     title: "〜ようとする",
     meaning: "try to; be about to; (not) willing to",
     structure: "Verb volitional form + とする / としない",
-    related: ["n4-volitional", "n4-you-to-omou", "n4-te-miru"],
+    related: ["n4-volitional", "n4-you-to-omou", "n4-te-miru", "n1-n-to-suru"],
     explanation: `
 The volitional form plus **とする** describes an attempt, often one that doesn't succeed: 何度も思い出そうとしたが、だめだった, "I tried again and again to remember, but it was no good".
 
@@ -310,7 +310,7 @@ Compare てはじめて, which looks back ("I only realised after"). てから�
     title: "〜てたまらない・〜てしょうがない",
     meaning: "unbearably, terribly, dying to",
     structure: "い-adj くて · な-adj で · Verb て-form + たまらない / しょうがない / しかたがない",
-    related: ["n4-sugiru", "n5-tai", "n2-te-naranai"],
+    related: ["n4-sugiru", "n5-tai", "n2-te-naranai", "n1-te-yamanai"],
     explanation: `
 **てたまらない** says a feeling or sensation is so strong you can't stand it: 暑くてたまらない, "it's unbearably hot". たまる means "to bear", so it's literally "can't bear it".
 

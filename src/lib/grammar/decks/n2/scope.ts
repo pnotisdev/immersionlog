@@ -192,7 +192,7 @@ Before a noun, it becomes に応じた: 能力に応じた仕事, "work that mat
     title: "〜に基づいて",
     meaning: "based on, in accordance with",
     structure: "Noun + に基づいて / に基づき · に基づく + Noun",
-    related: ["n2-wo-moto-ni", "n2-ni-sotte"],
+    related: ["n2-wo-moto-ni", "n2-ni-sotte", "n1-ni-sokushite"],
     explanation: `
 **に基づいて** says something is grounded in facts, rules or data: この映画は実話に基づいて作られた, "this film is based on a true story".
 
@@ -379,7 +379,7 @@ Its opposite is に限らず, "not only".
     title: "〜に限らず",
     meaning: "not only, not limited to",
     structure: "Noun + に限らず … も",
-    related: ["n2-ni-kagitte", "n3-dake-de-naku", "n2-nomi-narazu"],
+    related: ["n2-ni-kagitte", "n3-dake-de-naku", "n2-nomi-narazu", "n1-ni-todomarazu"],
     explanation: `
 **に限らず** means "not limited to", widening the scope: この店は若者に限らず、お年寄りにも人気がある, "this shop is popular not only with young people but with older people too".
 
@@ -456,7 +456,7 @@ Compare によって, "depending on", which is the opposite: the factor does mak
     title: "〜にかかわらず",
     meaning: "regardless of, whether or not",
     structure: "Noun · Verb dictionary form + ないか · A か B か + にかかわらず",
-    related: ["n2-wo-towazu", "n2-ni-mo-kakawarazu"],
+    related: ["n2-wo-towazu", "n2-ni-mo-kakawarazu", "n1-ikan-ni-yorazu", "n1-ni-kakawaru"],
     explanation: `
 **にかかわらず** says something is unaffected by a factor: 天候にかかわらず、試合は行われます, "the match will go ahead regardless of the weather".
 
@@ -495,7 +495,7 @@ Be careful with **にもかかわらず**: the extra も changes it to "despite,
     title: "〜に反して",
     meaning: "contrary to, against",
     structure: "Noun + に反して / に反し · に反する + Noun",
-    related: ["n3-ni-taishite", "n2-ni-kotaete"],
+    related: ["n3-ni-taishite", "n2-ni-kotaete", "n1-to-wa-urahara-ni"],
     explanation: `
 **に反して** means an outcome goes against an expectation, a wish or a rule: 予想に反して、試験は簡単だった, "contrary to expectations, the exam was easy".
 

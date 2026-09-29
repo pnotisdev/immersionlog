@@ -8,7 +8,7 @@ export const manner = [
     title: "〜かのように",
     meaning: "as if (though it isn't so)",
     structure: "Plain form + かのように / かのようだ / かのような + Noun",
-    related: ["n4-you-da", "n3-you-ni-mieru"],
+    related: ["n4-you-da", "n3-you-ni-mieru", "n1-gotoku", "n1-n-bakari"],
     explanation: `
 **かのように** describes something as if it were true, when it isn't: 彼は何も知らないかのように、平気な顔をしている, "he's acting calm, as if he knew nothing". The speaker knows, or suspects, that he does know.
 
@@ -180,7 +180,7 @@ Before a noun, it's を込めた: 心を込めたプレゼント, "a heartfelt p
     title: "〜なりに・〜なりの",
     meaning: "in one's own way, as best one can",
     structure: "Noun / Plain form + なりに · なりの + Noun",
-    related: ["n3-rashii-typical", "n3-to-shite"],
+    related: ["n3-rashii-typical", "n3-to-shite", "n1-nari"],
     explanation: `
 **なりに** means "in a way that fits who or what someone is", accepting their limits: 私なりに、一生懸命頑張った, "I tried my best, in my own way". It's modest: maybe not perfect, but sincere.
 
@@ -214,7 +214,7 @@ Compare らしく, "like a proper X should", which judges against an ideal. な�
     title: "〜ことなく",
     meaning: "without (ever) doing",
     structure: "Verb dictionary form + ことなく",
-    related: ["n4-zu-ni", "n2-zu-ni-sumu"],
+    related: ["n4-zu-ni", "n2-zu-ni-sumu", "n1-koto-nashi-ni"],
     explanation: `
 **ことなく** means "without doing", like ずに and ないで, but more formal and emphatic: 彼は休むことなく働き続けた, "he kept working without a single break".
 
@@ -332,7 +332,7 @@ Don't confuse it with てみる, "try and see". みせる is about other people 
     title: "〜やら〜やら",
     meaning: "what with … and …; all sorts of",
     structure: "Noun / Plain form + やら + Noun / Plain form + やら",
-    related: ["n4-toka", "n5-ya"],
+    related: ["n4-toka", "n5-ya", "n1-dano"],
     explanation: `
 **やら〜やら** lists examples from a chaotic or overwhelming situation: 引っ越しやら仕事やらで、忙しい, "what with the move and work, I'm really busy".
 

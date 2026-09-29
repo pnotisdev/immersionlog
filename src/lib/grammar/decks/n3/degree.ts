@@ -47,7 +47,7 @@ After a number, ほど means "about", a little more formal than ぐらい: 駅�
     title: "〜くらい・〜ぐらい (at least, to the extent)",
     meaning: "at least, even just; so … that; no one as … as",
     structure: "Noun / Plain form + くらい / ぐらい",
-    related: ["n3-hodo", "n5-gurai", "n3-sae"],
+    related: ["n3-hodo", "n5-gurai", "n3-sae", "n1-kurai-no-mono-da"],
     explanation: `
 At N5, ぐらい meant "about" with numbers. It has more uses.
 
@@ -124,7 +124,7 @@ It's close to につれて, but more about proportion than gradual change over t
     title: "〜さえ・〜でさえ",
     meaning: "even",
     structure: "Noun + さえ / でさえ · Noun + に/と + さえ",
-    related: ["n3-sae-ba", "n5-mo"],
+    related: ["n3-sae-ba", "n5-mo", "n1-sura"],
     explanation: `
 **さえ** means "even", picking out an extreme example to make a point: 忙しくて、ご飯を食べる時間さえない, "I'm so busy I don't even have time to eat". If even that is true, everything else surely is.
 
@@ -387,7 +387,7 @@ Compare なければならない, which is obligation. しかない says the oth
     title: "〜だらけ",
     meaning: "covered in, full of (something unwanted)",
     structure: "Noun + だらけ (+ の Noun · + だ · + になる)",
-    related: ["n4-bakari", "n2-mamire"],
+    related: ["n4-bakari", "n2-mamire", "n1-zukume"],
     explanation: `
 **だらけ** says something is covered in or full of something, usually something unwelcome: 泥だらけ, "covered in mud"; 間違いだらけ, "full of mistakes"; 傷だらけ, "covered in cuts".
 

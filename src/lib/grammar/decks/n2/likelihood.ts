@@ -129,7 +129,7 @@ Other useful combinations: 考え得る, "conceivable"; 起こり得る, "could 
     title: "〜ざるを得ない",
     meaning: "have no choice but to, can't help but",
     structure: "Verb ない-form minus ない + ざるを得ない (する → せざる)",
-    related: ["n3-shika-nai-verb", "n2-zu-ni-wa-irarenai"],
+    related: ["n3-shika-nai-verb", "n2-zu-ni-wa-irarenai", "n1-wo-yoginaku"],
     explanation: `
 **ざるを得ない** means you're forced to do something, usually against your wishes: 雨なので、試合を中止せざるを得ない, "it's raining, so we have no choice but to cancel the match".
 
@@ -171,7 +171,7 @@ With 認める and 言う, it's a common way to concede a point: 認めざるを
     title: "〜ずにはいられない",
     meaning: "can't help (doing), can't stop oneself",
     structure: "Verb ない-form minus ない + ずにはいられない (する → せずには)",
-    related: ["n2-zaru-wo-enai", "n3-te-tamaranai"],
+    related: ["n2-zaru-wo-enai", "n3-te-tamaranai", "n1-zu-ni-wa-okanai", "n1-wo-kinjienai"],
     explanation: `
 **ずにはいられない** says an urge is too strong to resist: あの映画を見ると、泣かずにはいられない, "I can't help crying when I watch that film".
 
@@ -338,7 +338,7 @@ It usually goes with things that simply can't happen given the circumstances: wi
     title: "〜まい",
     meaning: "will not (resolve); probably not",
     structure: "Verb dictionary form + まい (する → するまい / すまい)",
-    related: ["n4-volitional", "n5-deshou"],
+    related: ["n4-volitional", "n5-deshou", "n1-you-ga-mai-ga", "n1-dewa-arumai-shi"],
     explanation: `
 **まい** is an old negative volitional, and it has two uses.
 
@@ -496,7 +496,7 @@ Watch the similar pair: なくてはならない means "must", and てならな�
     title: "〜ずに済む・〜ないで済む",
     meaning: "get away without, not have to",
     structure: "Verb ない-form minus ない + ずに済む · ない-form + で済む",
-    related: ["n4-zu-ni", "n5-nakute-mo-ii"],
+    related: ["n4-zu-ni", "n5-nakute-mo-ii", "n1-zu-ni-wa-sumanai"],
     explanation: `
 **ずに済む** means you managed to avoid something you expected to have to do, usually with relief: 友達が車で送ってくれたので、タクシーを使わずに済んだ, "a friend gave me a lift, so I didn't have to take a taxi". 済む means "to be settled, to end".
 

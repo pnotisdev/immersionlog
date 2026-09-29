@@ -8,7 +8,7 @@ export const extent = [
     title: "〜どころか",
     meaning: "far from; let alone, not even",
     structure: "Plain form / Noun + どころか (な-adj + な)",
-    related: ["n2-dokoro-de-wa-nai", "n2-bakari-ka"],
+    related: ["n2-dokoro-de-wa-nai", "n2-bakari-ka", "n1-wa-oroka"],
     explanation: `
 **どころか** rejects an expectation and replaces it with something more extreme: 彼は謝るどころか、怒り出した, "far from apologising, he got angry". The truth goes in the opposite direction from what you'd expect.
 
@@ -198,7 +198,7 @@ Compare どころか, which rejects the first idea ("far from"). ばかりか ke
     title: "〜のみならず",
     meaning: "not only (formal)",
     structure: "Noun / Plain form + のみならず … も",
-    related: ["n2-bakari-ka", "n3-dake-de-naku", "n2-ni-kagirazu"],
+    related: ["n2-bakari-ka", "n3-dake-de-naku", "n2-ni-kagirazu", "n1-tada-nomi"],
     explanation: `
 **のみ** is a formal word for "only", and **のみならず** means "not only": この問題は日本のみならず、世界の問題だ, "this is a problem not only for Japan but for the whole world".
 
@@ -271,7 +271,7 @@ Don't confuse it with 上で ("after, based on") or 上は ("now that"). Compare
     title: "〜はもちろん・〜はもとより",
     meaning: "not to mention, let alone, of course",
     structure: "Noun + はもちろん / はもとより … も",
-    related: ["n2-wa-tomokaku", "n3-dake-de-naku"],
+    related: ["n2-wa-tomokaku", "n3-dake-de-naku", "n1-mo-sarukoto-nagara"],
     explanation: `
 **はもちろん** takes one item as obvious and adds another: 彼は英語はもちろん、中国語も話せる, "he speaks Chinese, not to mention English". The first item is the expected one; the second, with も, is the addition.
 

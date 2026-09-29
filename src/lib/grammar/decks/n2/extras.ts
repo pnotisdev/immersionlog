@@ -246,7 +246,7 @@ Compare てはいけない ("mustn't", a rule) and ずにはいられない ("ca
     title: "〜がてら",
     meaning: "while (doing), on the way (two things at once)",
     structure: "Noun (often a する-noun) / Verb ます-stem + がてら",
-    related: ["n3-tsuide-ni", "n5-nagara"],
+    related: ["n3-tsuide-ni", "n5-nagara", "n1-katagata"],
     explanation: `
 **がてら** means doing one thing while taking the chance to do another: 散歩がてら、パンを買ってきた, "I bought some bread while I was out for a walk".
 
@@ -470,7 +470,7 @@ Compare 的 (N3), which makes a な-adjective (教育的な). 上 marks a viewpo
     title: "〜かいがある・〜がいがある",
     meaning: "(it) was worth it, paid off; rewarding",
     structure: "Verb た-form + かいがある / かいもなく · Verb ます-stem + がいがある",
-    related: ["n3-okage-de", "n2-sue-ni"],
+    related: ["n3-okage-de", "n2-sue-ni", "n1-kai-mo-naku"],
     explanation: `
 **かいがある** means an effort was worth it, because it brought results: 頑張ったかいがあって、合格できた, "my hard work paid off, and I passed". かい (甲斐) means "worth, effect".
 

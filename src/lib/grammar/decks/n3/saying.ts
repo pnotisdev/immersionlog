@@ -375,7 +375,7 @@ These are normal speech, not slang, but they don't belong in writing or formal s
     title: "〜のではないか・〜んじゃない",
     meaning: "I think maybe; isn't it the case that",
     structure: "Plain form + のではないか / んじゃない(か) (な-adj, Noun + な)",
-    related: ["n4-kamoshirenai", "n5-deshou", "n3-ni-chigainai"],
+    related: ["n4-kamoshirenai", "n5-deshou", "n3-ni-chigainai", "n1-de-wa-nakarou-ka"],
     explanation: `
 **のではないか** puts forward an opinion tentatively, as a question that expects "yes": 彼はもう帰ったのではないかと思う, "I think he may have gone home already". It's softer than stating it and firmer than かもしれない.
 

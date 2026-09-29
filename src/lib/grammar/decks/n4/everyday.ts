@@ -57,7 +57,7 @@ It comes from なさる, the respectful する, which is why it still sounds a l
     title: "〜ずに",
     meaning: "without doing",
     structure: "Verb ない-form minus ない + ずに (する → せずに)",
-    related: ["n4-naide", "n5-naide-kudasai"],
+    related: ["n4-naide", "n5-naide-kudasai", "n1-zu-shite", "n1-zu-tomo"],
     explanation: `
 **ずに** means "without doing", like ないで: 朝ご飯を食べずに出かけた, "I went out without eating breakfast". Build it by dropping ない from the negative and adding ずに: 食べない → 食べずに, 行かない → 行かずに.
 
