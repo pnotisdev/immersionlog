@@ -1,5 +1,6 @@
 import { deck } from "../build";
 import { cause } from "./n3/cause";
+import { saying } from "./n3/saying";
 import { topics } from "./n3/topics";
 
 /**
@@ -17,5 +18,6 @@ export const N3 = deck(
   [
     { title: "Cause, reason and result", points: cause },
     { title: "Topics, sources and standpoints", points: topics },
+    { title: "Defining, reporting and casual speech", points: saying },
   ],
 );
