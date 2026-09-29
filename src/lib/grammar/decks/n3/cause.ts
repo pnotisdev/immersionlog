@@ -115,7 +115,7 @@ The に is optional in the cause meaning, and is often left off: 工事のため
     title: "〜ものだから・〜もので",
     meaning: "because, you see (an excuse)",
     structure: "Plain form + ものだから / もので (な-adj, Noun + な)",
-    related: ["n4-node", "n5-kara-because"],
+    related: ["n4-node", "n5-kara-because", "n3-mon"],
     explanation: `
 **ものだから** gives a reason as an excuse or a personal explanation: 目覚ましが鳴らなかったものですから、遅れてしまいました, "my alarm didn't go off, you see, so I was late". It says "it couldn't be helped".
 
@@ -222,7 +222,7 @@ It sounds determined, a little formal, and is common in speeches and resolutions
     title: "〜からといって",
     meaning: "just because … (doesn't mean)",
     structure: "Plain form + からといって + negative",
-    related: ["n5-kara-because", "n4-temo"],
+    related: ["n5-kara-because", "n4-temo", "n3-wake-de-wa-nai", "n3-to-wa-kagiranai"],
     explanation: `
 **からといって** heads off a conclusion someone might jump to: 高いからといって、いい物とは限らない, "just because it's expensive doesn't mean it's good".
 

@@ -181,7 +181,7 @@ You're not doing anything, so を doesn't fit: 音をする is wrong. For making
     title: "〜ほど〜ない",
     meaning: "not as … as",
     structure: "A は B ほど + negative",
-    related: ["n5-yori", "n5-yori-no-hou-ga"],
+    related: ["n5-yori", "n5-yori-no-hou-ga", "n3-hodo"],
     explanation: `
 **ほど** with a negative says something doesn't reach a level: 今年の夏は去年ほど暑くない, "this summer isn't as hot as last year". A is compared with B and falls short.
 
@@ -218,7 +218,7 @@ A related pattern, 〜ほど〜はない, means "there's nothing as … as": 家
     title: "〜はずがない",
     meaning: "there's no way that, can't possibly",
     structure: "Plain form + はずがない (な-adj + な · Noun + の)",
-    related: ["n4-hazu", "n4-kamoshirenai"],
+    related: ["n4-hazu", "n4-kamoshirenai", "n3-wake-ga-nai"],
     explanation: `
 **はずがない** turns はず, "should be", into a firm denial: 彼がそんなことを言うはずがない, "there's no way he'd say something like that". From what they know, the speaker is sure it can't be true.
 
@@ -292,7 +292,7 @@ With nouns, 必要 works as a な-adjective with が in front: パスポート�
     meaning: "(casual) they said; (casual topic) what's …",
     structure: "Plain form + って · Noun + って",
     register: "Casual: everyday speech with friends and family.",
-    related: ["n4-to-iu", "n4-sou-hearsay"],
+    related: ["n4-to-iu", "n4-sou-hearsay", "n3-to-iu-no-wa"],
     explanation: `
 **って** is the casual stand-in for the quoting と and for という, and you'll hear it constantly in conversation.
 

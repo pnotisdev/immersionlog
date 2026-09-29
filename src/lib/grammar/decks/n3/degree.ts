@@ -47,7 +47,7 @@ After a number, ほど means "about", a little more formal than ぐらい: 駅�
     title: "〜くらい・〜ぐらい (at least, to the extent)",
     meaning: "at least, even just; so … that; no one as … as",
     structure: "Noun / Plain form + くらい / ぐらい",
-    related: ["n3-hodo", "n5-gurai"],
+    related: ["n3-hodo", "n5-gurai", "n3-sae"],
     explanation: `
 At N5, ぐらい meant "about" with numbers. It has more uses.
 

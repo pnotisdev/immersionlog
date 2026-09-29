@@ -46,7 +46,7 @@ After a whole clause, というのは means "the fact that", often when checking
     title: "〜ということだ",
     meaning: "I'm told that; that means",
     structure: "Plain form + ということだ",
-    related: ["n4-sou-hearsay", "n3-ni-yoru-to", "n4-to-iu"],
+    related: ["n4-sou-hearsay", "n3-ni-yoru-to", "n4-to-iu", "n3-wake-da"],
     explanation: `
 **ということだ** has two jobs.
 
@@ -80,7 +80,7 @@ After a noun, the だ is often left out in the conclusion use: 休みという�
     title: "〜というより",
     meaning: "rather than, not so much … as",
     structure: "Plain form / Noun + というより",
-    related: ["n5-yori", "n3-to-ittemo"],
+    related: ["n5-yori", "n3-to-ittemo", "n3-mushiro"],
     explanation: `
 **というより** corrects a description to a better one: 彼は友達というより、家族のような存在だ, "he's not so much a friend as family".
 
@@ -191,7 +191,7 @@ The fixed phrase **そういえば** means "that reminds me" or "come to think o
     title: "〜ように (as)",
     meaning: "as, just as",
     structure: "Verb plain form + ように · Noun + のように · 次のように",
-    related: ["n4-you-da", "n4-you-ni"],
+    related: ["n4-you-da", "n4-you-ni", "n3-toori"],
     explanation: `
 **ように** also means "as", pointing to something already said, known or shown: 前にも言ったように、明日は休みです, "as I said before, tomorrow's a day off".
 
@@ -375,7 +375,7 @@ These are normal speech, not slang, but they don't belong in writing or formal s
     title: "〜のではないか・〜んじゃない",
     meaning: "I think maybe; isn't it the case that",
     structure: "Plain form + のではないか / んじゃない(か) (な-adj, Noun + な)",
-    related: ["n4-kamoshirenai", "n5-deshou"],
+    related: ["n4-kamoshirenai", "n5-deshou", "n3-ni-chigainai"],
     explanation: `
 **のではないか** puts forward an opinion tentatively, as a question that expects "yes": 彼はもう帰ったのではないかと思う, "I think he may have gone home already". It's softer than stating it and firmer than かもしれない.
 

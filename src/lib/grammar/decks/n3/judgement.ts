@@ -43,7 +43,7 @@ In casual speech, みたいに見える does the same job, without の after nou
     meaning: "-ish, -like; tends to",
     structure: "Noun / Verb ます-stem / い-adj stem + っぽい",
     register: "Casual.",
-    related: ["n3-rashii-typical", "n4-mitai"],
+    related: ["n3-rashii-typical", "n4-mitai", "n3-gachi"],
     explanation: `
 **っぽい** makes an い-adjective meaning "-ish" or "having the feel of": 子どもっぽい, "childish"; 白っぽい, "whitish"; 風邪っぽい, "like I'm coming down with a cold".
 

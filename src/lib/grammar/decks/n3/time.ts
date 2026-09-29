@@ -119,7 +119,7 @@ The meaning is close to the past と or たら of discovery (電話したら、�
     title: "〜際(に)",
     meaning: "when, at the time of (formal)",
     structure: "Verb plain form / Noun + の + 際(に) · 際は",
-    related: ["n5-toki", "n3-saichuu"],
+    related: ["n5-toki", "n3-saichuu", "n3-baai"],
     explanation: `
 **際** is a formal word for "occasion", and it works like とき: お帰りの際は、忘れ物にご注意ください, "when leaving, please take care not to forget your belongings".
 
@@ -261,7 +261,7 @@ It's a little formal. In conversation, てから、ずっと often does the same
     title: "〜てはじめて",
     meaning: "only after, not until",
     structure: "Verb て-form + はじめて",
-    related: ["n5-te-kara", "n3-te-irai"],
+    related: ["n5-te-kara", "n3-te-irai", "n3-te-kara-de-nai-to"],
     explanation: `
 **てはじめて** means you only realised, understood or could do something after a particular experience: 病気になってはじめて、健康の大切さがわかった, "only when I got ill did I realise how important health is".
 
@@ -334,7 +334,7 @@ Both are a little formal and common at work. After a noun, use の: 相談の上
     title: "〜一方だ",
     meaning: "keeps (getting more / less), only ever",
     structure: "Verb dictionary form + 一方だ",
-    related: ["n3-tsutsu-aru", "n4-you-ni-naru"],
+    related: ["n3-tsutsu-aru", "n4-you-ni-naru", "n3-ippou-de"],
     explanation: `
 **一方だ** describes a trend that keeps going in one direction: 物価は上がる一方だ, "prices just keep going up". 一方 means "one way", so it's literally "only the one way".
 

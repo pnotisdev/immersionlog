@@ -8,7 +8,7 @@ export const purpose = [
     title: "〜ために",
     meaning: "in order to, for (the sake of)",
     structure: "Verb dictionary form + ために · Noun + のために",
-    related: ["n4-you-ni", "n5-ni-iku"],
+    related: ["n4-you-ni", "n5-ni-iku", "n3-tame-reason"],
     explanation: `
 **ために** gives a purpose: 日本の大学に入るために勉強しています, "I'm studying to get into a Japanese university".
 
@@ -163,7 +163,7 @@ Compare ようになる (a change that happened) and ことにする (a decision
     title: "〜ことにする",
     meaning: "decide to",
     structure: "Verb dictionary / ない form + ことにする",
-    related: ["n4-koto-ni-naru", "n5-ni-suru", "n5-tsumori"],
+    related: ["n4-koto-ni-naru", "n5-ni-suru", "n5-tsumori", "n3-koto-ni-shiteiru"],
     explanation: `
 **ことにする** is deciding to do something: 来年、日本へ留学することにしました, "I've decided to study in Japan next year". It's the verb version of にする ("decide on", with nouns).
 

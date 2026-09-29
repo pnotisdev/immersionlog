@@ -223,7 +223,7 @@ Don't confuse it with にとって: 私にとって is "from my point of view", 
     title: "〜として",
     meaning: "as (a role, status or purpose)",
     structure: "Noun + として · としては · としても",
-    related: ["n3-ni-totte"],
+    related: ["n3-ni-totte", "n3-ni-shite-wa"],
     explanation: `
 **として** gives the role, status or capacity in which someone acts or something is used: 通訳として会議に参加した, "I took part in the meeting as an interpreter".
 
@@ -297,7 +297,7 @@ In formal writing, it shortens to に比べ.
     title: "〜に代わって",
     meaning: "in place of, on behalf of",
     structure: "Noun + に代わって / に代わり",
-    related: ["n3-to-shite"],
+    related: ["n3-to-shite", "n3-kawari-ni"],
     explanation: `
 **に代わって** means someone or something takes another's place: 社長に代わって、私がご挨拶いたします, "I will give the greeting on behalf of the president".
 
