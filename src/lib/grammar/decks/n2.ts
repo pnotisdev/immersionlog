@@ -1,6 +1,7 @@
 import { deck } from "../build";
 import { cause } from "./n2/cause";
 import { scope } from "./n2/scope";
+import { time } from "./n2/time";
 
 /**
  * JLPT N2 grammar: the patterns of newspapers, essays, business and fiction.
@@ -17,5 +18,6 @@ export const N2 = deck(
   [
     { title: "Reasons with a stance", points: cause },
     { title: "Scope, basis and limits", points: scope },
+    { title: "Occasions and timing", points: time },
   ],
 );
