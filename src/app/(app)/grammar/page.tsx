@@ -4,11 +4,11 @@ import { DECKS, deckPath } from "@/lib/grammar/decks";
 import { getGrammarOverview } from "@/lib/grammar-queries";
 import { requireUser } from "@/lib/session";
 import { PageHeader } from "@/components/layout/page-header";
-import { Panel, PanelLink } from "@/components/layout/panel";
+import { Panel } from "@/components/layout/panel";
 import { StatStrip } from "@/components/stats/stat-strip";
 import { ForecastBars } from "@/components/grammar/forecast-bars";
 import { GrammarSettingsForm } from "@/components/grammar/settings-form";
-import { StageBar } from "@/components/grammar/stage-bar";
+import { DeckCard } from "@/components/grammar/deck-card";
 import { Button } from "@/components/ui/button";
 
 export const metadata = { title: "Grammar" };
@@ -71,42 +71,29 @@ export default async function GrammarPage() {
         ]}
       />
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="grid gap-6">
-          <Panel
-            title="Next 24 hours"
-            description={
-              next24 > 0 ? (
-                <>
-                  {pluralize(next24, "review")} coming up
-                  {o.nextDueAt && <> · next at {clock.format(o.nextDueAt)}</>}
-                </>
-              ) : (
-                "Nothing new comes due in the next day"
-              )
-            }
-          >
-            <ForecastBars hours={o.hours} />
-          </Panel>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {DECKS.map((d) => {
+          const c = o.decks.find((x) => x.deckId === d.id)!;
+          return <DeckCard key={d.id} deck={d} total={c.total} learned={c.total - c.unlearned} canLearn={o.newAvailable > 0 && c.unlearned > 0} />;
+        })}
+      </div>
 
-          {DECKS.map((d) => {
-            const counts = o.decks.find((x) => x.deckId === d.id)!;
-            return (
-              <Panel key={d.id} title={d.title} description={`${d.points.length} points`} action={
-                  <span className="flex items-center gap-3">
-                    {o.newAvailable > 0 && counts.unlearned > 0 && (
-                      <PanelLink href={`/grammar/learn?deck=${d.id}`}>Learn {d.level}</PanelLink>
-                    )}
-                    <PanelLink href={deckPath(d)}>All points</PanelLink>
-                  </span>
-                }
-              >
-                <StageBar counts={counts.counts} total={counts.total} />
-              </Panel>
-            );
-          })}
-        </div>
-
+      <div className="grid items-start gap-6 lg:grid-cols-2">
+        <Panel
+          title="Next 24 hours"
+          description={
+            next24 > 0 ? (
+              <>
+                {pluralize(next24, "review")} coming up
+                {o.nextDueAt && <> · next at {clock.format(o.nextDueAt)}</>}
+              </>
+            ) : (
+              "Nothing new comes due in the next day"
+            )
+          }
+        >
+          <ForecastBars hours={o.hours} />
+        </Panel>
         <Panel title="Settings" description="Pace and display">
           <GrammarSettingsForm initial={o.settings} />
         </Panel>
