@@ -132,8 +132,3 @@ export function deck(meta: Omit<GrammarDeck, "points" | "sections">, written: Po
   const points = placed.map((id, i) => ({ ...byId.get(id)!, deck: meta.id, order: i + 1 }));
   return { ...meta, sections: stages.map((s) => ({ title: s.title, pointIds: s.ids })), points };
 }
-
-/** Stages that keep the written order, one per topical section. */
-export function inWrittenOrder(sections: { title: string; points: PointDraft[] }[]): [PointDraft[][], Stage[]] {
-  return [sections.map((s) => s.points), sections.map((s) => ({ title: s.title, ids: s.points.map((p) => p.id) }))];
-}
