@@ -580,7 +580,7 @@ Adjectives work the same way: 日本語で難しいのは漢字です.
 
   point({
     id: "n4-kana",
-    title: "〜かな",
+    title: "〜かな・〜かしら",
     meaning: "I wonder",
     structure: "Plain form + かな (feminine, older: かしら)",
     register: "Casual, often said to yourself. Politely: でしょうか.",
@@ -611,6 +611,10 @@ With a negative, it's a wish: 誰か手伝ってくれないかな, "I wish some
       }),
       s("誰か手伝ってくれない{かな}。", "だれかてつだってくれない{かな}。", "I wish someone would help me.", {
         near: [["か", "くれないか is a direct request. For a wish half to yourself, use かな."]],
+      }),
+      s("明日は晴れる{かしら}。", "あしたははれる{かしら}。", "I wonder if it'll be sunny tomorrow.", {
+        accept: ["かな"],
+        near: [["か", "か alone is a plain question. For \"I wonder\", use かしら."]],
       }),
     ],
   }),
