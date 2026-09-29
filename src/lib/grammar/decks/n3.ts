@@ -1,7 +1,9 @@
 import { deck } from "../build";
+import { attitude } from "./n3/attitude";
 import { cause } from "./n3/cause";
 import { contrast } from "./n3/contrast";
 import { degree } from "./n3/degree";
+import { intent } from "./n3/intent";
 import { judgement } from "./n3/judgement";
 import { saying } from "./n3/saying";
 import { time } from "./n3/time";
@@ -27,5 +29,7 @@ export const N3 = deck(
     { title: "Degree, emphasis and limits", points: degree },
     { title: "Appearance, certainty and judgement", points: judgement },
     { title: "Suppositions, contrast and concession", points: contrast },
+    { title: "Intentions, feelings and risks", points: intent },
+    { title: "Words that carry an attitude", points: attitude },
   ],
 );
