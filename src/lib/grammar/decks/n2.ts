@@ -3,6 +3,7 @@ import { cause } from "./n2/cause";
 import { concession } from "./n2/concession";
 import { extent } from "./n2/extent";
 import { likelihood } from "./n2/likelihood";
+import { manner } from "./n2/manner";
 import { scope } from "./n2/scope";
 import { time } from "./n2/time";
 import { viewpoint } from "./n2/viewpoint";
@@ -27,5 +28,6 @@ export const N2 = deck(
     { title: "Could, couldn't and must", points: likelihood },
     { title: "Concession and conditions", points: concession },
     { title: "Viewpoints and verdicts", points: viewpoint },
+    { title: "Manner, appearance and verb compounds", points: manner },
   ],
 );
