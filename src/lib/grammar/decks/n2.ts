@@ -1,6 +1,7 @@
 import { deck } from "../build";
 import { cause } from "./n2/cause";
 import { extent } from "./n2/extent";
+import { likelihood } from "./n2/likelihood";
 import { scope } from "./n2/scope";
 import { time } from "./n2/time";
 
@@ -21,5 +22,6 @@ export const N2 = deck(
     { title: "Scope, basis and limits", points: scope },
     { title: "Occasions and timing", points: time },
     { title: "Degree, addition and emphasis", points: extent },
+    { title: "Could, couldn't and must", points: likelihood },
   ],
 );
