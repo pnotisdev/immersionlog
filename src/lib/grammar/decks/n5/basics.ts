@@ -342,7 +342,7 @@ Say it twice for "both … and": 犬も猫も好きです, "I like both dogs and
     title: "の",
     meaning: "'s, of (linking nouns)",
     structure: "Noun + の + Noun",
-    related: ["n5-na-adjective", "n5-no-one"],
+    related: ["n5-na-adjectives", "n5-no-one"],
     explanation: `
 **の** joins two nouns so that the first describes the second. Often it's possession, like 's: 私の本, "my book"; 田中さんの車, "Mr Tanaka's car".
 

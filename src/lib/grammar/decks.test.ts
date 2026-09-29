@@ -22,6 +22,13 @@ describe("decks", () => {
     }
   });
 
+  it("list every point in exactly one section", () => {
+    for (const d of DECKS) {
+      const listed = d.sections.flatMap((s) => s.pointIds);
+      expect(listed).toEqual(d.points.map((p) => p.id));
+    }
+  });
+
   it("give every point a unique, prefixed slug and a sequential order", () => {
     const ids = points.map((p) => p.id);
     expect(new Set(ids).size).toBe(ids.length);
@@ -46,6 +53,11 @@ describe.each(points.map((p) => [p.id, p] as const))("%s", (_id, point) => {
     expect(words, "explanation length in words").toBeLessThanOrEqual(200);
     expect(point.sentences.length).toBeGreaterThanOrEqual(5);
     expect(point.related).not.toContain(point.id);
+  });
+
+  it("only relates to points that exist", () => {
+    for (const id of point.related) expect(getPoint(id), `related point ${id}`).toBeDefined();
+    expect(new Set(point.related).size).toBe(point.related.length);
   });
 
   it("lists its common near misses", () => {
