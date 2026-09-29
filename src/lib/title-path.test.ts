@@ -45,6 +45,9 @@ describe("proxy", () => {
     expect(isPrivate("/grammar/")).toBe(true);
     expect(isPrivate("/grammar/review")).toBe(true);
     expect(isPrivate("/grammar/learn")).toBe(true);
+    expect(isPrivate("/kanji")).toBe(true);
+    expect(isPrivate("/kanji/review")).toBe(true);
+    expect(isPrivate("/guide/kanji")).toBe(false);
     expect(isPrivate("/grammar/n5")).toBe(false);
     expect(isPrivate("/grammar/n5/n5-desu")).toBe(false);
   });

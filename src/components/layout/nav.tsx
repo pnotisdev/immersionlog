@@ -9,6 +9,7 @@ import {
   Compass,
   Dumbbell,
   House,
+  Brush,
   Languages,
   Library,
   LogOut,
@@ -74,6 +75,7 @@ const MENU_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/texthooker", label: "Texthooker", icon: Terminal },
   { href: "/guide", label: "Learning guide", icon: BookOpen },
   { href: "/grammar", label: "Grammar", icon: Languages },
+  { href: "/kanji", label: "Kanji", icon: Brush },
   { href: "/tools", label: "Practice tools", icon: Dumbbell },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
@@ -180,7 +182,7 @@ function AccountMenu({ user }: { user: NavUser }) {
  * Pages that want the whole screen on a phone: a grammar session types into a box that
  * the on-screen keyboard and a fixed tab bar would otherwise squeeze between them.
  */
-const FOCUS_ROUTES = ["/grammar/review", "/grammar/learn"];
+const FOCUS_ROUTES = ["/grammar/review", "/grammar/learn", "/kanji/review", "/kanji/learn"];
 
 /** Mobile tab bar. Five targets, thumb-reachable, with logging in the middle. */
 export function MobileTabs() {

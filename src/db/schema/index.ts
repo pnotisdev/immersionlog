@@ -7,3 +7,4 @@ export * from "./milestones";
 export * from "./difficulty";
 export * from "./posts";
 export * from "./grammar";
+export * from "./kanji";

@@ -113,6 +113,13 @@
       "when": 1790686573551,
       "tag": "0015_grammar_srs",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1790710236860,
+      "tag": "0016_kanji_srs",
+      "breakpoints": true
     }
   ]
 }

@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { clubMembers, clubPickVotes, clubPicks, follows, goals, sessionKudos } from "@/db/schema";
-import { getExportGrammar, getExportLibrary, getExportSessions } from "@/lib/export-queries";
+import { getExportGrammar, getExportKanji, getExportLibrary, getExportSessions } from "@/lib/export-queries";
 import { getSession } from "@/lib/session";
 
 /**
@@ -26,6 +26,7 @@ export async function GET() {
     picksProposed,
     votesCast,
     grammar,
+    kanji,
   ] = await Promise.all([
     getExportSessions(userId),
     getExportLibrary(userId),
@@ -57,6 +58,7 @@ export async function GET() {
     db.select({ pickId: clubPickVotes.pickId, createdAt: clubPickVotes.createdAt }).from(clubPickVotes).where(eq(clubPickVotes.userId, userId)),
 
     getExportGrammar(userId),
+    getExportKanji(userId),
   ]);
 
   const payload = {
@@ -85,6 +87,7 @@ export async function GET() {
       votesCast,
     },
     grammar,
+    kanji,
   };
 
   return new NextResponse(JSON.stringify(payload, null, 2), {

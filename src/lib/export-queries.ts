@@ -1,7 +1,7 @@
 import "server-only";
 import { asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { grammarProgress, grammarReviews, grammarSettings, immersionSessions, libraryEntries, mediaItems, milestones } from "@/db/schema";
+import { grammarProgress, grammarReviews, grammarSettings, immersionSessions, kanjiProgress, kanjiReviews, kanjiSettings, libraryEntries, mediaItems, milestones } from "@/db/schema";
 
 /**
  * Shared source of truth for both the JSON export (src/app/api/account/export/route.ts)
@@ -106,6 +106,43 @@ export async function getExportGrammar(userId: string) {
       .from(grammarReviews)
       .where(eq(grammarReviews.userId, userId))
       .orderBy(asc(grammarReviews.reviewedAt)),
+  ]);
+  return { settings: settings ?? null, progress, reviews };
+}
+
+/** Kanji trainer state: settings, a row per learned kanji, and every answered review. */
+export async function getExportKanji(userId: string) {
+  const [settings, progress, reviews] = await Promise.all([
+    db.query.kanjiSettings.findFirst({ where: eq(kanjiSettings.userId, userId), columns: { userId: false } }),
+    db
+      .select({
+        kanji: kanjiProgress.kanji,
+        stage: kanjiProgress.stage,
+        nextReviewAt: kanjiProgress.nextReviewAt,
+        lastReviewedAt: kanjiProgress.lastReviewedAt,
+        timesCorrect: kanjiProgress.timesCorrect,
+        timesWrong: kanjiProgress.timesWrong,
+        streak: kanjiProgress.streak,
+        unlockedAt: kanjiProgress.unlockedAt,
+        burned: kanjiProgress.burned,
+      })
+      .from(kanjiProgress)
+      .where(eq(kanjiProgress.userId, userId))
+      .orderBy(asc(kanjiProgress.unlockedAt)),
+    db
+      .select({
+        kanji: kanjiReviews.kanji,
+        correct: kanjiReviews.correct,
+        meaningOk: kanjiReviews.meaningOk,
+        onOk: kanjiReviews.onOk,
+        kunOk: kanjiReviews.kunOk,
+        stageBefore: kanjiReviews.stageBefore,
+        stageAfter: kanjiReviews.stageAfter,
+        reviewedAt: kanjiReviews.reviewedAt,
+      })
+      .from(kanjiReviews)
+      .where(eq(kanjiReviews.userId, userId))
+      .orderBy(asc(kanjiReviews.reviewedAt)),
   ]);
   return { settings: settings ?? null, progress, reviews };
 }

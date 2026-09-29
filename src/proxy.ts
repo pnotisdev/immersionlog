@@ -28,6 +28,7 @@ const PRIVATE_PREFIXES = [
   "/admin",
   "/grammar/learn",
   "/grammar/review",
+  "/kanji",
 ];
 
 /** Private only as themselves: /grammar is the signed-in dashboard, /grammar/n5 and its points are public. */
