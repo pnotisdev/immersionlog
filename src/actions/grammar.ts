@@ -1,6 +1,6 @@
 "use server";
 
-import { and, desc, eq, gt } from "drizzle-orm";
+import { and, desc, eq, gt, lte } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
 import { grammarProgress, grammarReviews, grammarSettings, type GrammarProgressSnapshot } from "@/db/schema";
@@ -153,7 +153,14 @@ export async function submitReview(input: ReviewInput): Promise<ActionResult<Rev
         streak: correct ? row.streak + 1 : 0,
         burned: stageAfter >= BURNED_STAGE,
       })
-      .where(and(eq(grammarProgress.id, row.id), eq(grammarProgress.stage, row.stage), eq(grammarProgress.nextReviewAt, row.nextReviewAt!)))
+      // Still at the same stage and still due: a double submit finds it rescheduled into the future.
+      .where(
+        and(
+          eq(grammarProgress.id, row.id),
+          eq(grammarProgress.stage, row.stage),
+          lte(grammarProgress.nextReviewAt, new Date(now.getTime() + DUE_GRACE_MS)),
+        ),
+      )
       .returning({ id: grammarProgress.id });
     if (updated.length === 0) return null;
     const [log] = await tx
