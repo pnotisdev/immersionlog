@@ -40,7 +40,8 @@ export function SentenceText({
         }
         const text =
           t.ruby && furigana ? (
-            <ruby>
+            // Centred, so a reading wider than its kanji (先週, せんしゅう) doesn't pull the kanji apart.
+            <ruby className="[ruby-align:center]">
               {t.text}
               <rt className="text-[0.5em] font-normal text-muted-foreground">{t.ruby}</rt>
             </ruby>

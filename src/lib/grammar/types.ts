@@ -77,5 +77,7 @@ export interface GrammarDeck {
   level: string;
   title: string;
   description: string;
+  /** Headings for the deck page, in order; together they list every point once. */
+  sections: { title: string; pointIds: string[] }[];
   points: GrammarPoint[];
 }

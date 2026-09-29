@@ -13,5 +13,5 @@ export const N5 = deck(
     description:
       "The grammar of a first Japanese textbook: です and だ, the core particles, verbs and adjectives in plain and polite forms, the て-form and what it builds, and the patterns for wanting, comparing, permission and giving reasons.",
   },
-  [...basics],
+  [{ title: "First sentences", points: basics }],
 );

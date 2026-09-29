@@ -41,6 +41,8 @@ export default async function LearnPage() {
 
   return (
     <LearnSession
+      // Keyed on the batch, so "Learn more" mounts a fresh session rather than reusing the finished one.
+      key={points.map((p) => p.id).join()}
       lessons={points.map((point) => ({ point, explanation: <GrammarExplanation markdown={point.explanation} /> }))}
       showFurigana={settings.showFurigana}
       moreAfter={upcoming.length > points.length}

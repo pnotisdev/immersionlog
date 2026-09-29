@@ -93,7 +93,8 @@ export function point(spec: PointSpec): PointDraft {
   };
 }
 
-/** A deck: order numbers come from position, so reordering is moving a line. */
-export function deck(meta: Omit<GrammarDeck, "points">, points: PointDraft[]): GrammarDeck {
-  return { ...meta, points: points.map((p, i) => ({ ...p, deck: meta.id, order: i + 1 })) };
+/** A deck, in sections: order numbers come from position, so reordering is moving a line. */
+export function deck(meta: Omit<GrammarDeck, "points" | "sections">, sections: { title: string; points: PointDraft[] }[]): GrammarDeck {
+  const points = sections.flatMap((s) => s.points).map((p, i) => ({ ...p, deck: meta.id, order: i + 1 }));
+  return { ...meta, sections: sections.map((s) => ({ title: s.title, pointIds: s.points.map((p) => p.id) })), points };
 }

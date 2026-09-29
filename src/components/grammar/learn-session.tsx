@@ -64,7 +64,7 @@ export function LearnSession({ lessons, showFurigana, moreAfter }: { lessons: Le
                 Back to Grammar
               </Button>
               {moreAfter && (
-                <Button variant="outline" nativeButton={false} render={<a href="/grammar/learn" />}>
+                <Button variant="outline" nativeButton={false} render={<Link href="/grammar/learn" prefetch={false} />}>
                   Learn more
                 </Button>
               )}

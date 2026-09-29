@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { LAST_UPDATED as PRIVACY_UPDATED } from "@/app/(legal)/privacy/page";
 import { LAST_UPDATED as TERMS_UPDATED } from "@/app/(legal)/terms/page";
+import { DECKS, deckPath, pointPath } from "@/lib/grammar/decks";
 import { GUIDE_CHAPTERS, GUIDE_UPDATED, guidePath } from "@/lib/guide";
 import { getSiteUrl } from "@/lib/site";
 import { listPublicTitles, titlePath } from "@/lib/titles";
@@ -30,6 +31,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    ...DECKS.flatMap((d) => [
+      { url: `${base}${deckPath(d)}`, changeFrequency: "monthly" as const, priority: 0.8 },
+      ...d.points.map((p) => ({ url: `${base}${pointPath(p)}`, changeFrequency: "monthly" as const, priority: 0.6 })),
+    ]),
     { url: `${base}/titles`, lastModified: titles[0]?.updatedAt ?? new Date(), changeFrequency: "daily", priority: 0.8 },
     { url: `${base}/signup`, changeFrequency: "monthly", priority: 0.6 },
     ...titles.map((t) => ({

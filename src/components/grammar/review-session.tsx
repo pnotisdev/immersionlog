@@ -407,8 +407,8 @@ function Summary({
 
       <div className="flex flex-wrap gap-2">
         {moreDue > 0 && (
-          // A plain link, not a client navigation: a fresh page load builds a fresh queue.
-          <Button nativeButton={false} render={<a href="/grammar/review" />}>
+          // The page keys the session on render time, so this remounts with a fresh queue.
+          <Button nativeButton={false} render={<Link href="/grammar/review" prefetch={false} />}>
             {moreDue} more due: keep going
           </Button>
         )}
