@@ -1,5 +1,6 @@
 import { deck } from "../build";
 import { cause } from "./n2/cause";
+import { concession } from "./n2/concession";
 import { extent } from "./n2/extent";
 import { likelihood } from "./n2/likelihood";
 import { scope } from "./n2/scope";
@@ -23,5 +24,6 @@ export const N2 = deck(
     { title: "Occasions and timing", points: time },
     { title: "Degree, addition and emphasis", points: extent },
     { title: "Could, couldn't and must", points: likelihood },
+    { title: "Concession and conditions", points: concession },
   ],
 );
