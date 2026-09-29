@@ -5,6 +5,7 @@ import { concession } from "./n1/concession";
 import { condition } from "./n1/condition";
 import { endings } from "./n1/endings";
 import { extent } from "./n1/extent";
+import { extras } from "./n1/extras";
 import { manner } from "./n1/manner";
 import { time } from "./n1/time";
 import { verdict } from "./n1/verdict";
@@ -34,6 +35,7 @@ export const N1 = deck(
     endings,
     viewpoint,
     manner,
+    extras,
   ],
   [
     { title: "1 · Adverbs with an attitude", ids: adverbs.map((p) => p.id) },
@@ -55,5 +57,9 @@ export const N1 = deck(
       ids: viewpoint.map((p) => p.id),
     },
     { title: "10 · Manner and appearance", ids: manner.map((p) => p.id) },
+    {
+      title: "11 · Paired lists and set phrases",
+      ids: extras.map((p) => p.id),
+    },
   ],
 );
