@@ -1,6 +1,7 @@
 import { deck } from "../build";
 import { cause } from "./n3/cause";
 import { degree } from "./n3/degree";
+import { judgement } from "./n3/judgement";
 import { saying } from "./n3/saying";
 import { time } from "./n3/time";
 import { topics } from "./n3/topics";
@@ -23,5 +24,6 @@ export const N3 = deck(
     { title: "Defining, reporting and casual speech", points: saying },
     { title: "Time, change and occasions", points: time },
     { title: "Degree, emphasis and limits", points: degree },
+    { title: "Appearance, certainty and judgement", points: judgement },
   ],
 );
