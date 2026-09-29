@@ -1,5 +1,6 @@
 import { deck } from "../build";
 import { adverbs } from "./n1/adverbs";
+import { cause } from "./n1/cause";
 import { time } from "./n1/time";
 
 /**
@@ -15,9 +16,10 @@ export const N1 = deck(
     description:
       "The grammar of editorials, speeches, literature and formal writing: attitude adverbs, timing, reasons and purpose, concession, conditions, degree and emphasis, verdicts, standpoints and manner.",
   },
-  [adverbs, time],
+  [adverbs, time, cause],
   [
     { title: "1 · Adverbs with an attitude", ids: adverbs.map((p) => p.id) },
     { title: "2 · Timing and sequence", ids: time.map((p) => p.id) },
+    { title: "3 · Reasons and purpose", ids: cause.map((p) => p.id) },
   ],
 );
