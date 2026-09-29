@@ -157,6 +157,16 @@ describe("sentence markup", () => {
     ]);
   });
 
+  it("picks the plausible split when the particle after a kanji also appears in its reading", () => {
+    const tokens = alignReading("昨日の夜、町は{静か}でした。", "きのうのよる、まちは{しずか}でした。");
+    expect(tokens?.filter((t) => t.ruby).map((t) => [t.text, t.ruby])).toEqual([
+      ["昨日", "きのう"],
+      ["夜", "よる"],
+      ["町", "まち"],
+      ["静", "しず"],
+    ]);
+  });
+
   it("keeps katakana and numbers", () => {
     const tokens = alignReading("コーヒーを{3杯}飲みました。", "コーヒーを{さんばい}のみました。");
     expect(tokens?.find((t) => t.text === "3杯")).toEqual({ text: "3杯", ruby: "さんばい", blank: true });

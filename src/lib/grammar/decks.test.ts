@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { conjugate } from "@/lib/conjugation";
 import { checkAnswer, normalizeInput } from "./check";
 import { DECKS, allPoints, getPoint } from "./decks";
-import { alignReading, blankOf, parseMarked } from "./sentence";
+import { alignReading, blankOf, parseMarked, readingPenalty } from "./sentence";
 
 /**
  * Every deck entry, checked the way a careful editor would: ids, markup, furigana,
@@ -62,7 +62,11 @@ describe.each(points.map((p) => [p.id, p] as const))("%s", (_id, point) => {
     expect(parseMarked(s.japanese), s.japanese).not.toBeNull();
     expect(parseMarked(s.reading), s.reading).not.toBeNull();
     expect(s.reading, "reading is kana only").toMatch(KANA_ONLY);
-    expect(alignReading(s.japanese, s.reading), `${s.japanese} / ${s.reading}`).not.toBeNull();
+    const tokens = alignReading(s.japanese, s.reading);
+    expect(tokens, `${s.japanese} / ${s.reading}`).not.toBeNull();
+    for (const t of tokens ?? []) {
+      if (t.ruby) expect(readingPenalty(t.text, t.ruby), `${t.text} read as ${t.ruby}`).toBe(0);
+    }
     expect(s.english.trim()).toMatch(/[.?!"”]$/);
 
     expect(s.acceptedAnswers.length).toBeGreaterThan(0);

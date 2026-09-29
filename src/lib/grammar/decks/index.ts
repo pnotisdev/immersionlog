@@ -22,10 +22,4 @@ export function allPoints(): GrammarPoint[] {
   return DECKS.flatMap((d) => d.points);
 }
 
-export function deckPath(deck: Pick<GrammarDeck, "id">): string {
-  return `/grammar/${deck.id}`;
-}
-
-export function pointPath(point: Pick<GrammarPoint, "deck" | "id">): string {
-  return `/grammar/${point.deck}/${point.id}`;
-}
+export { deckPath, pointPath } from "../paths";

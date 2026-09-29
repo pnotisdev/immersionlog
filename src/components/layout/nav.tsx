@@ -174,10 +174,18 @@ function AccountMenu({ user }: { user: NavUser }) {
   );
 }
 
+/**
+ * Pages that want the whole screen on a phone: a grammar session types into a box that
+ * the on-screen keyboard and a fixed tab bar would otherwise squeeze between them.
+ */
+const FOCUS_ROUTES = ["/grammar/review", "/grammar/learn"];
+
 /** Mobile tab bar. Five targets, thumb-reachable, with logging in the middle. */
 export function MobileTabs() {
   const isActive = useIsActive();
+  const pathname = usePathname();
   const tabs = [LINKS[0], LINKS[1], LINKS[3], LINKS[4]];
+  if (FOCUS_ROUTES.includes(pathname)) return null;
 
   return (
     <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 backdrop-blur-md md:hidden">

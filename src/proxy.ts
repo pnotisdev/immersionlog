@@ -26,10 +26,16 @@ const PRIVATE_PREFIXES = [
   "/texthooker",
   "/write",
   "/admin",
+  "/grammar/learn",
+  "/grammar/review",
 ];
 
+/** Private only as themselves: /grammar is the signed-in dashboard, /grammar/n5 and its points are public. */
+const PRIVATE_EXACT = ["/grammar"];
+
 export function isPrivate(pathname: string): boolean {
-  return PRIVATE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+  const path = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+  return PRIVATE_EXACT.includes(path) || PRIVATE_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`));
 }
 
 export function proxy(request: NextRequest) {

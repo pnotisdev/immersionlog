@@ -77,3 +77,17 @@ export function formatDate(dateKey: string): string {
   const [y, m, d] = dateKey.slice(0, 10).split("-").map(Number);
   return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(Date.UTC(y, m - 1, d)));
 }
+
+/**
+ * The future counterpart of relativeTime, for when something is next due: "now",
+ * "in 25m", "in 3h", "in 2d". Hours round down until a whole day has passed, so
+ * "in 23h" never reads as "in 1d".
+ */
+export function formatDueIn(date: Date | string, now = new Date()): string {
+  const minutes = Math.ceil((new Date(date).getTime() - now.getTime()) / 60_000);
+  if (minutes <= 0) return "now";
+  if (minutes < 60) return `in ${minutes}m`;
+  const h = Math.floor(minutes / 60);
+  if (h < 24) return `in ${h}h`;
+  return `in ${Math.floor(h / 24)}d`;
+}
