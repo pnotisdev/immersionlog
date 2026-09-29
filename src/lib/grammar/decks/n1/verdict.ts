@@ -19,72 +19,22 @@ The verb is usually one of saying, checking, going or asking. The logic is that 
 Compare ことはない (N3), "there's no need to (don't worry)", which reassures someone. までもない says the action is unnecessary because the answer is already clear.
 `,
     sentences: [
-      s(
-        "そんなことは言う{までもない}。",
-        "そんなことはいう{までもない}。",
-        "That goes without saying.",
-        {
-          near: [
-            [
-              "ことはない",
-              '言うことはない is "nothing to add". For "it goes without saying", use までもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "わざわざ行く{までもない}。電話で済む。",
-        "わざわざいく{までもない}。でんわですむ。",
-        "There's no need to go all that way. A phone call will do.",
-        {
-          accept: ["ことはない"],
-          near: [
-            [
-              "までに",
-              'までに is a deadline. For "no need to", use までもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "確認する{までもなく}、答えは明らかだ。",
-        "かくにんする{までもなく}、こたえはあきらかだ。",
-        "There's no need to check. The answer is obvious.",
-        {
-          near: [
-            [
-              "ことなく",
-              'ことなく is "without doing". For "no need to (it\'s obvious)", use までもなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "医者に診てもらう{までもない}軽いけがだ。",
-        "いしゃにみてもらう{までもない}かるいけがだ。",
-        "It's a minor injury, not worth seeing a doctor about.",
-        {
-          near: [
-            [
-              "までに",
-              'までに is a deadline. For "not worth", use までもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "言う{までもなく}、健康は何より大切だ。",
-        "いう{までもなく}、けんこうはなによりたいせつだ。",
-        "Needless to say, health matters more than anything.",
-        {
-          near: [
-            [
-              "ことなく",
-              'ことなく is "without doing". For "needless to say", use までもなく.',
-            ],
-          ],
-        },
-      ),
+      s("そんなことは言う{までもない}。", "そんなことはいう{までもない}。", "That goes without saying.", {
+        near: [["ことはない", "言うことはない is \"nothing to add\". For \"it goes without saying\", use までもない."]],
+      }),
+      s("わざわざ行く{までもない}。電話で済む。", "わざわざいく{までもない}。でんわですむ。", "There's no need to go all that way. A phone call will do.", {
+        accept: ["ことはない"],
+        near: [["までに", "までに is a deadline. For \"no need to\", use までもない."]],
+      }),
+      s("確認する{までもなく}、答えは明らかだ。", "かくにんする{までもなく}、こたえはあきらかだ。", "There's no need to check. The answer is obvious.", {
+        near: [["ことなく", "ことなく is \"without doing\". For \"no need to (it's obvious)\", use までもなく."]],
+      }),
+      s("医者に診てもらう{までもない}軽いけがだ。", "いしゃにみてもらう{までもない}かるいけがだ。", "It's a minor injury, not worth seeing a doctor about.", {
+        near: [["までに", "までに is a deadline. For \"not worth\", use までもない."]],
+      }),
+      s("言う{までもなく}、健康は何より大切だ。", "いう{までもなく}、けんこうはなによりたいせつだ。", "Needless to say, health matters more than anything.", {
+        near: [["ことなく", "ことなく is \"without doing\". For \"needless to say\", use までもなく."]],
+      }),
     ],
   }),
 
@@ -92,8 +42,7 @@ Compare ことはない (N3), "there's no need to (don't worry)", which reassure
     id: "n1-made-da",
     title: "〜までだ・〜までのことだ",
     meaning: "(I'll) just (do that); it's only that",
-    structure:
-      "Verb dictionary form + までだ (resolve) · Verb た-form + までだ (just)",
+    structure: "Verb dictionary form + までだ (resolve) · Verb た-form + までだ (just)",
     related: ["n1-made-mo-nai"],
     explanation: `
 **までだ** has two uses, depending on tense.
@@ -107,70 +56,26 @@ After the た-form, it downplays your own action: 気になったから聞いて
 Don't confuse it with までに, "by (a deadline)", or までもない, "no need to".
 `,
     sentences: [
-      s(
-        "電車がないなら、歩いて帰る{までだ}。",
-        "でんしゃがないなら、あるいてかえる{までだ}。",
-        "If there are no trains, I'll just walk home.",
-        {
-          accept: ["までのことだ", "だけだ"],
-          near: [
-            [
-              "までに",
-              'までに is a deadline. For "I\'ll just do X", use までだ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "反対されても、やる{までだ}。",
-        "はんたいされても、やる{までだ}。",
-        "Even if they oppose it, I'll just go ahead.",
-        {
-          accept: ["までのことだ", "だけだ"],
-          near: [
-            ["までに", 'までに is a deadline. For "I\'ll just", use までだ.'],
-          ],
-        },
-      ),
-      s(
-        "失敗したら、もう一度やり直す{までのことだ}。",
-        "しっぱいしたら、もういちどやりなおす{までのことだ}。",
-        "If I fail, I'll just start again. Simple as that.",
-        {
-          accept: ["までだ", "だけだ"],
-          near: [
-            [
-              "までもない",
-              'までもない is "no need to". For "I\'ll just", use までのことだ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "気になったから聞いてみた{までです}。",
-        "きになったからきいてみた{までです}。",
-        "I only asked because I was curious.",
-        {
-          accept: ["までのことです", "だけです"],
-          near: [
-            ["までに", 'までに is a deadline. For "I only", use までです.'],
-          ],
-        },
-      ),
-      s(
-        "私は本当のことを言った{までだ}。",
-        "わたしはほんとうのことをいった{までだ}。",
-        "I only told the truth.",
-        {
-          accept: ["までのことだ", "だけだ"],
-          near: [
-            [
-              "までもない",
-              'までもない is "no need to". For "I only", use までだ.',
-            ],
-          ],
-        },
-      ),
+      s("電車がないなら、歩いて帰る{までだ}。", "でんしゃがないなら、あるいてかえる{までだ}。", "If there are no trains, I'll just walk home.", {
+        accept: ["までのことだ", "だけだ"],
+        near: [["までに", "までに is a deadline. For \"I'll just do X\", use までだ."]],
+      }),
+      s("反対されても、やる{までだ}。", "はんたいされても、やる{までだ}。", "Even if they oppose it, I'll just go ahead.", {
+        accept: ["までのことだ", "だけだ"],
+        near: [["までに", "までに is a deadline. For \"I'll just\", use までだ."]],
+      }),
+      s("失敗したら、もう一度やり直す{までのことだ}。", "しっぱいしたら、もういちどやりなおす{までのことだ}。", "If I fail, I'll just start again. Simple as that.", {
+        accept: ["までだ", "だけだ"],
+        near: [["までもない", "までもない is \"no need to\". For \"I'll just\", use までのことだ."]],
+      }),
+      s("気になったから聞いてみた{までです}。", "きになったからきいてみた{までです}。", "I only asked because I was curious.", {
+        accept: ["までのことです", "だけです"],
+        near: [["までに", "までに is a deadline. For \"I only\", use までです."]],
+      }),
+      s("私は本当のことを言った{までだ}。", "わたしはほんとうのことをいった{までだ}。", "I only told the truth.", {
+        accept: ["までのことだ", "だけだ"],
+        near: [["までもない", "までもない is \"no need to\". For \"I only\", use までだ."]],
+      }),
     ],
   }),
 
@@ -191,78 +96,26 @@ Don't confuse it with までに, "by (a deadline)", or までもない, "no need
 Compare にすぎない (N2), "nothing more than".
 `,
     sentences: [
-      s(
-        "ご心配{には及びません}。",
-        "ごしんぱい{にはおよびません}。",
-        "Please don't worry.",
-        {
-          accept: ["には及ばない"],
-          near: [
-            [
-              "にすぎません",
-              'にすぎません is "nothing more than". For "there\'s no need", use には及びません.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "わざわざお越しいただく{には及びません}。",
-        "わざわざおこしいただく{にはおよびません}。",
-        "There's no need for you to come all this way.",
-        {
-          accept: ["には及ばない", "までもありません"],
-          near: [
-            [
-              "にすぎません",
-              'にすぎません is "nothing more than". For "there\'s no need", use には及びません.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "お礼{には及びません}。当然のことをしたまでです。",
-        "おれい{にはおよびません}。とうぜんのことをしたまでです。",
-        "There's no need to thank me. I only did what anyone would.",
-        {
-          accept: ["には及ばない"],
-          near: [
-            [
-              "にすぎません",
-              'にすぎません is "nothing more than". For "there\'s no need", use には及びません.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "私の料理は、まだ母の料理{には及ばない}。",
-        "わたしのりょうりは、まだははのりょうり{にはおよばない}。",
-        "My cooking is still nowhere near my mother's.",
-        {
-          accept: ["にはかなわない"],
-          near: [
-            [
-              "には限らない",
-              'とは限らない is "not necessarily". For "no match for", use には及ばない.',
-              "にはかぎらない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "英語力では、彼女{には及ばない}。",
-        "えいごりょくでは、かのじょ{にはおよばない}。",
-        "When it comes to English, I'm no match for her.",
-        {
-          accept: ["にはかなわない"],
-          near: [
-            [
-              "には限らない",
-              'とは限らない is "not necessarily". For "no match for", use には及ばない.',
-              "にはかぎらない",
-            ],
-          ],
-        },
-      ),
+      s("ご心配{には及びません}。", "ごしんぱい{にはおよびません}。", "Please don't worry.", {
+        accept: ["には及ばない"],
+        near: [["にすぎません", "にすぎません is \"nothing more than\". For \"there's no need\", use には及びません."]],
+      }),
+      s("わざわざお越しいただく{には及びません}。", "わざわざおこしいただく{にはおよびません}。", "There's no need for you to come all this way.", {
+        accept: ["には及ばない", "までもありません"],
+        near: [["にすぎません", "にすぎません is \"nothing more than\". For \"there's no need\", use には及びません."]],
+      }),
+      s("お礼{には及びません}。当然のことをしたまでです。", "おれい{にはおよびません}。とうぜんのことをしたまでです。", "There's no need to thank me. I only did what anyone would.", {
+        accept: ["には及ばない"],
+        near: [["にすぎません", "にすぎません is \"nothing more than\". For \"there's no need\", use には及びません."]],
+      }),
+      s("私の料理は、まだ母の料理{には及ばない}。", "わたしのりょうりは、まだははのりょうり{にはおよばない}。", "My cooking is still nowhere near my mother's.", {
+        accept: ["にはかなわない"],
+        near: [["には限らない", "とは限らない is \"not necessarily\". For \"no match for\", use には及ばない.", "にはかぎらない"]],
+      }),
+      s("英語力では、彼女{には及ばない}。", "えいごりょくでは、かのじょ{にはおよばない}。", "When it comes to English, I'm no match for her.", {
+        accept: ["にはかなわない"],
+        near: [["には限らない", "とは限らない is \"not necessarily\". For \"no match for\", use には及ばない.", "にはかぎらない"]],
+      }),
     ],
   }),
 
@@ -282,75 +135,25 @@ It's formal and measured, typical of commentary and essays. It's close to には
 Compare にかたくない, "not hard to (imagine)".
 `,
     sentences: [
-      s(
-        "彼が怒ったのも、驚く{には当たらない}。",
-        "かれがおこったのも、おどろく{にはあたらない}。",
-        "It's no surprise that he got angry.",
-        {
-          accept: ["には及ばない"],
-          near: [
-            [
-              "にかたくない",
-              'にかたくない is "not hard to (imagine)". For "no reason to", use には当たらない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "子どもが失敗しても、責める{には当たらない}。",
-        "こどもがしっぱいしても、せめる{にはあたらない}。",
-        "There's no reason to blame a child for failing.",
-        {
-          accept: ["には及ばない"],
-          near: [
-            [
-              "にかたくない",
-              'にかたくない is "not hard to". For "no reason to", use には当たらない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "その程度のことで、感心する{には当たらない}。",
-        "そのていどのことで、かんしんする{にはあたらない}。",
-        "Something like that is nothing to be impressed by.",
-        {
-          accept: ["には及ばない"],
-          near: [
-            [
-              "にすぎない",
-              'にすぎない is "nothing more than". For "nothing to be impressed by", use には当たらない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "よくあることだから、心配する{には当たらない}。",
-        "よくあることだから、しんぱいする{にはあたらない}。",
-        "It happens all the time, so there's no cause for concern.",
-        {
-          accept: ["には及ばない"],
-          near: [
-            [
-              "にかたくない",
-              'にかたくない is "not hard to". For "no cause for", use には当たらない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "状況を考えれば、彼の判断は非難する{には当たらない}。",
-        "じょうきょうをかんがえれば、かれのはんだんはひなんする{にはあたらない}。",
-        "Given the situation, his decision doesn't deserve criticism.",
-        {
-          near: [
-            [
-              "にすぎない",
-              'にすぎない is "nothing more than". For "doesn\'t deserve", use には当たらない.',
-            ],
-          ],
-        },
-      ),
+      s("彼が怒ったのも、驚く{には当たらない}。", "かれがおこったのも、おどろく{にはあたらない}。", "It's no surprise that he got angry.", {
+        accept: ["には及ばない"],
+        near: [["にかたくない", "にかたくない is \"not hard to (imagine)\". For \"no reason to\", use には当たらない."]],
+      }),
+      s("子どもが失敗しても、責める{には当たらない}。", "こどもがしっぱいしても、せめる{にはあたらない}。", "There's no reason to blame a child for failing.", {
+        accept: ["には及ばない"],
+        near: [["にかたくない", "にかたくない is \"not hard to\". For \"no reason to\", use には当たらない."]],
+      }),
+      s("その程度のことで、感心する{には当たらない}。", "そのていどのことで、かんしんする{にはあたらない}。", "Something like that is nothing to be impressed by.", {
+        accept: ["には及ばない"],
+        near: [["にすぎない", "にすぎない is \"nothing more than\". For \"nothing to be impressed by\", use には当たらない."]],
+      }),
+      s("よくあることだから、心配する{には当たらない}。", "よくあることだから、しんぱいする{にはあたらない}。", "It happens all the time, so there's no cause for concern.", {
+        accept: ["には及ばない"],
+        near: [["にかたくない", "にかたくない is \"not hard to\". For \"no cause for\", use には当たらない."]],
+      }),
+      s("状況を考えれば、彼の判断は非難する{には当たらない}。", "じょうきょうをかんがえれば、かれのはんだんはひなんする{にはあたらない}。", "Given the situation, his decision doesn't deserve criticism.", {
+        near: [["にすぎない", "にすぎない is \"nothing more than\". For \"doesn't deserve\", use には当たらない."]],
+      }),
     ],
   }),
 
@@ -358,8 +161,7 @@ Compare にかたくない, "not hard to (imagine)".
     id: "n1-ni-kataku-nai",
     title: "〜にかたくない",
     meaning: "it's not hard to (imagine, understand)",
-    structure:
-      "Noun / Verb dictionary form (想像, 察する, 予想) + にかたくない",
+    structure: "Noun / Verb dictionary form (想像, 察する, 予想) + にかたくない",
     related: ["n1-ni-wa-ataranai"],
     explanation: `
 **にかたくない** (に難くない) means "it's easy to imagine, understand or guess": 彼女の悲しみは想像にかたくない, "it's not hard to imagine her grief".
@@ -371,78 +173,26 @@ It combines with a small set of words for imagining and inferring: 想像, 察�
 Compare にたえない, "unbearable to", and には当たらない, "there's no reason to".
 `,
     sentences: [
-      s(
-        "彼女の悲しみは想像{にかたくない}。",
-        "かのじょのかなしみはそうぞう{にかたくない}。",
-        "It's not hard to imagine her grief.",
-        {
-          accept: ["に難くない"],
-          near: [
-            [
-              "にたえない",
-              'にたえない is "unbearable to". For "easy to imagine", use にかたくない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "子を失った親の気持ちは、察する{にかたくない}。",
-        "こをうしなったおやのきもちは、さっする{にかたくない}。",
-        "It's easy to sense how the parents who lost their child must feel.",
-        {
-          accept: ["に難くない"],
-          near: [
-            [
-              "にたえない",
-              'にたえない is "unbearable to". For "easy to sense", use にかたくない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼が反対することは、予想{にかたくない}。",
-        "かれがはんたいすることは、よそう{にかたくない}。",
-        "It's easy to predict that he'll object.",
-        {
-          accept: ["に難くない"],
-          near: [
-            [
-              "には当たらない",
-              'には当たらない is "there\'s no reason to". For "easy to predict", use にかたくない.',
-              "にはあたらない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "被害の大きさは想像する{にかたくない}。",
-        "ひがいのおおきさはそうぞうする{にかたくない}。",
-        "The scale of the damage is easy to imagine.",
-        {
-          accept: ["に難くない"],
-          near: [
-            [
-              "にたえない",
-              'にたえない is "unbearable to". For "easy to imagine", use にかたくない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼がどれほど苦労したかは、理解{にかたくない}。",
-        "かれがどれほどくろうしたかは、りかい{にかたくない}。",
-        "It's easy to understand how much he must have struggled.",
-        {
-          accept: ["に難くない"],
-          near: [
-            [
-              "には当たらない",
-              'には当たらない is "there\'s no reason to". For "easy to understand", use にかたくない.',
-              "にはあたらない",
-            ],
-          ],
-        },
-      ),
+      s("彼女の悲しみは想像{にかたくない}。", "かのじょのかなしみはそうぞう{にかたくない}。", "It's not hard to imagine her grief.", {
+        accept: ["に難くない"],
+        near: [["にたえない", "にたえない is \"unbearable to\". For \"easy to imagine\", use にかたくない."]],
+      }),
+      s("子を失った親の気持ちは、察する{にかたくない}。", "こをうしなったおやのきもちは、さっする{にかたくない}。", "It's easy to sense how the parents who lost their child must feel.", {
+        accept: ["に難くない"],
+        near: [["にたえない", "にたえない is \"unbearable to\". For \"easy to sense\", use にかたくない."]],
+      }),
+      s("彼が反対することは、予想{にかたくない}。", "かれがはんたいすることは、よそう{にかたくない}。", "It's easy to predict that he'll object.", {
+        accept: ["に難くない"],
+        near: [["には当たらない", "には当たらない is \"there's no reason to\". For \"easy to predict\", use にかたくない.", "にはあたらない"]],
+      }),
+      s("被害の大きさは想像する{にかたくない}。", "ひがいのおおきさはそうぞうする{にかたくない}。", "The scale of the damage is easy to imagine.", {
+        accept: ["に難くない"],
+        near: [["にたえない", "にたえない is \"unbearable to\". For \"easy to imagine\", use にかたくない."]],
+      }),
+      s("彼がどれほど苦労したかは、理解{にかたくない}。", "かれがどれほどくろうしたかは、りかい{にかたくない}。", "It's easy to understand how much he must have struggled.", {
+        accept: ["に難くない"],
+        near: [["には当たらない", "には当たらない is \"there's no reason to\". For \"easy to understand\", use にかたくない.", "にはあたらない"]],
+      }),
     ],
   }),
 
@@ -462,79 +212,26 @@ It's literally "can't forbid (the feeling)", and it's very formal, found in edit
 Don't confuse it with を余儀なくされる, "be forced to do", which is about actions, not feelings.
 `,
     sentences: [
-      s(
-        "彼の話を聞いて、涙{を禁じ得なかった}。",
-        "かれのはなしをきいて、なみだ{をきんじえなかった}。",
-        "Hearing his story, I couldn't hold back my tears.",
-        {
-          accept: ["を禁じえなかった"],
-          near: [
-            [
-              "を余儀なくされた",
-              'を余儀なくされる is "be forced to (do)". For a feeling you couldn\'t hold back, use を禁じ得ない.',
-              "をよぎなくされた",
-            ],
-          ],
-        },
-      ),
-      s(
-        "その判決には、怒り{を禁じ得ない}。",
-        "そのはんけつには、いかり{をきんじえない}。",
-        "I can't help feeling angry at that verdict.",
-        {
-          accept: ["を禁じえない"],
-          near: [
-            [
-              "を余儀なくされる",
-              'を余儀なくされる is "be forced to (do)". For a feeling you can\'t hold back, use を禁じ得ない.',
-              "をよぎなくされる",
-            ],
-          ],
-        },
-      ),
-      s(
-        "被害者の話には、同情{を禁じ得ない}。",
-        "ひがいしゃのはなしには、どうじょう{をきんじえない}。",
-        "I can't help feeling for the victims.",
-        {
-          accept: ["を禁じえない"],
-          near: [
-            [
-              "をえない",
-              'ざるをえない is "have no choice but to". For a feeling you can\'t hold back, use を禁じ得ない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の無責任な発言には、驚き{を禁じ得ない}。",
-        "かれのむせきにんなはつげんには、おどろき{をきんじえない}。",
-        "I can't help being astonished at his irresponsible remarks.",
-        {
-          accept: ["を禁じえない"],
-          near: [
-            [
-              "を余儀なくされる",
-              'を余儀なくされる is "be forced to (do)". For a feeling you can\'t hold back, use を禁じ得ない.',
-              "をよぎなくされる",
-            ],
-          ],
-        },
-      ),
-      s(
-        "事件の残酷さに、憤り{を禁じ得ない}。",
-        "じけんのざんこくさに、いきどおり{をきんじえない}。",
-        "The cruelty of the crime fills me with indignation.",
-        {
-          accept: ["を禁じえない"],
-          near: [
-            [
-              "をえない",
-              'ざるをえない is "have no choice but to". For a feeling you can\'t hold back, use を禁じ得ない.',
-            ],
-          ],
-        },
-      ),
+      s("彼の話を聞いて、涙{を禁じ得なかった}。", "かれのはなしをきいて、なみだ{をきんじえなかった}。", "Hearing his story, I couldn't hold back my tears.", {
+        accept: ["を禁じえなかった"],
+        near: [["を余儀なくされた", "を余儀なくされる is \"be forced to (do)\". For a feeling you couldn't hold back, use を禁じ得ない.", "をよぎなくされた"]],
+      }),
+      s("その判決には、怒り{を禁じ得ない}。", "そのはんけつには、いかり{をきんじえない}。", "I can't help feeling angry at that verdict.", {
+        accept: ["を禁じえない"],
+        near: [["を余儀なくされる", "を余儀なくされる is \"be forced to (do)\". For a feeling you can't hold back, use を禁じ得ない.", "をよぎなくされる"]],
+      }),
+      s("被害者の話には、同情{を禁じ得ない}。", "ひがいしゃのはなしには、どうじょう{をきんじえない}。", "I can't help feeling for the victims.", {
+        accept: ["を禁じえない"],
+        near: [["をえない", "ざるをえない is \"have no choice but to\". For a feeling you can't hold back, use を禁じ得ない."]],
+      }),
+      s("彼の無責任な発言には、驚き{を禁じ得ない}。", "かれのむせきにんなはつげんには、おどろき{をきんじえない}。", "I can't help being astonished at his irresponsible remarks.", {
+        accept: ["を禁じえない"],
+        near: [["を余儀なくされる", "を余儀なくされる is \"be forced to (do)\". For a feeling you can't hold back, use を禁じ得ない.", "をよぎなくされる"]],
+      }),
+      s("事件の残酷さに、憤り{を禁じ得ない}。", "じけんのざんこくさに、いきどおり{をきんじえない}。", "The cruelty of the crime fills me with indignation.", {
+        accept: ["を禁じえない"],
+        near: [["をえない", "ざるをえない is \"have no choice but to\". For a feeling you can't hold back, use を禁じ得ない."]],
+      }),
     ],
   }),
 
@@ -542,8 +239,7 @@ Don't confuse it with を余儀なくされる, "be forced to do", which is abou
     id: "n1-ni-taenai",
     title: "〜にたえない・〜にたえる",
     meaning: "unbearable to (see / hear); worthy of; deeply (grateful)",
-    structure:
-      "Verb dictionary form (見る, 聞く, 読む) + にたえない · Noun + にたえる · 感謝 / 遺憾 + にたえない",
+    structure: "Verb dictionary form (見る, 聞く, 読む) + にたえない · Noun + にたえる · 感謝 / 遺憾 + にたえない",
     related: ["n1-ni-taru", "n1-ni-kataku-nai"],
     explanation: `
 **にたえない** (に堪えない) has two uses:
@@ -557,77 +253,26 @@ The positive **にたえる** means "worth, able to stand up to": 大人の鑑�
 Compare にかたくない, "not hard to".
 `,
     sentences: [
-      s(
-        "彼の歌は聞く{にたえない}。",
-        "かれのうたはきく{にたえない}。",
-        "His singing is unbearable to listen to.",
-        {
-          accept: ["に堪えない"],
-          near: [
-            [
-              "にたえる",
-              'にたえる is "worth (it)". For "unbearable", use にたえない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "見る{にたえない}ひどい映像だった。",
-        "みる{にたえない}ひどいえいぞうだった。",
-        "The footage was too awful to watch.",
-        {
-          accept: ["に堪えない"],
-          near: [
-            [
-              "にかたくない",
-              'にかたくない is "not hard to". For "too awful to", use にたえない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "これは大人の鑑賞{にたえる}作品だ。",
-        "これはおとなのかんしょう{にたえる}さくひんだ。",
-        "This is a work that stands up to adult appreciation.",
-        {
-          accept: ["に堪える", "に足る"],
-          near: [
-            [
-              "にたえない",
-              'にたえない is "unbearable". For "worthy of", use にたえる.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "皆様のご支援には、感謝{にたえません}。",
-        "みなさまのごしえんには、かんしゃ{にたえません}。",
-        "I'm deeply grateful for all your support.",
-        {
-          accept: ["に堪えません", "にたえない", "に堪えない"],
-          near: [
-            [
-              "には及びません",
-              'には及びません is "there\'s no need". For "deeply grateful", use 感謝にたえません.',
-              "にはおよびません",
-            ],
-          ],
-        },
-      ),
-      s(
-        "誤字だらけで、読む{にたえない}文章だ。",
-        "ごじだらけで、よむ{にたえない}ぶんしょうだ。",
-        "It's so full of typos that it's unbearable to read.",
-        {
-          accept: ["に堪えない"],
-          near: [
-            [
-              "にたえる",
-              'にたえる is "worth (it)". For "unbearable", use にたえない.',
-            ],
-          ],
-        },
-      ),
+      s("彼の歌は聞く{にたえない}。", "かれのうたはきく{にたえない}。", "His singing is unbearable to listen to.", {
+        accept: ["に堪えない"],
+        near: [["にたえる", "にたえる is \"worth (it)\". For \"unbearable\", use にたえない."]],
+      }),
+      s("見る{にたえない}ひどい映像だった。", "みる{にたえない}ひどいえいぞうだった。", "The footage was too awful to watch.", {
+        accept: ["に堪えない"],
+        near: [["にかたくない", "にかたくない is \"not hard to\". For \"too awful to\", use にたえない."]],
+      }),
+      s("これは大人の鑑賞{にたえる}作品だ。", "これはおとなのかんしょう{にたえる}さくひんだ。", "This is a work that stands up to adult appreciation.", {
+        accept: ["に堪える", "に足る"],
+        near: [["にたえない", "にたえない is \"unbearable\". For \"worthy of\", use にたえる."]],
+      }),
+      s("皆様のご支援には、感謝{にたえません}。", "みなさまのごしえんには、かんしゃ{にたえません}。", "I'm deeply grateful for all your support.", {
+        accept: ["に堪えません", "にたえない", "に堪えない"],
+        near: [["には及びません", "には及びません is \"there's no need\". For \"deeply grateful\", use 感謝にたえません.", "にはおよびません"]],
+      }),
+      s("誤字だらけで、読む{にたえない}文章だ。", "ごじだらけで、よむ{にたえない}ぶんしょうだ。", "It's so full of typos that it's unbearable to read.", {
+        accept: ["に堪えない"],
+        near: [["にたえる", "にたえる is \"worth (it)\". For \"unbearable\", use にたえない."]],
+      }),
     ],
   }),
 
@@ -647,80 +292,25 @@ The negative **に足りない** (or に足らない) means "not worth": 取る�
 It's close to に値する, "worth, deserve", which is more common with nouns: 称賛に値する.
 `,
     sentences: [
-      s(
-        "彼は信頼する{に足る}人物だ。",
-        "かれはしんらいする{にたる}じんぶつだ。",
-        "He's a man worthy of trust.",
-        {
-          accept: ["に値する"],
-          near: [
-            [
-              "に足りない",
-              'に足りない is "not worth". This sentence is praise, so use に足る.',
-              "にたりない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "そんなのは取る{に足らない}問題だ。",
-        "そんなのはとる{にたらない}もんだいだ。",
-        "That's a trivial problem.",
-        {
-          accept: ["に足りない"],
-          near: [
-            [
-              "に足る",
-              'に足る is "worthy of". For "trivial, not worth", use に足らない.',
-              "にたる",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の話は信じる{に足る}ものだ。",
-        "かれのはなしはしんじる{にたる}ものだ。",
-        "His story is believable.",
-        {
-          accept: ["に値する"],
-          near: [
-            [
-              "に足りない",
-              'に足りない is "not worth". This sentence is positive, so use に足る.',
-              "にたりない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "残念ながら、満足する{に足る}結果は得られなかった。",
-        "ざんねんながら、まんぞくする{にたる}けっかはえられなかった。",
-        "Unfortunately, we didn't get a satisfactory result.",
-        {
-          near: [
-            [
-              "に足りない",
-              'に足りない is "not worth". For "sufficient for (satisfaction)", use に足る.',
-              "にたりない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "あんな相手は恐れる{に足りない}。",
-        "あんなあいてはおそれる{にたりない}。",
-        "An opponent like that is nothing to fear.",
-        {
-          accept: ["に足らない"],
-          near: [
-            [
-              "に足る",
-              'に足る is "worthy of". For "nothing to fear", use に足りない.',
-              "にたる",
-            ],
-          ],
-        },
-      ),
+      s("彼は信頼する{に足る}人物だ。", "かれはしんらいする{にたる}じんぶつだ。", "He's a man worthy of trust.", {
+        accept: ["に値する"],
+        near: [["に足りない", "に足りない is \"not worth\". This sentence is praise, so use に足る.", "にたりない"]],
+      }),
+      s("そんなのは取る{に足らない}問題だ。", "そんなのはとる{にたらない}もんだいだ。", "That's a trivial problem.", {
+        accept: ["に足りない"],
+        near: [["に足る", "に足る is \"worthy of\". For \"trivial, not worth\", use に足らない.", "にたる"]],
+      }),
+      s("彼の話は信じる{に足る}ものだ。", "かれのはなしはしんじる{にたる}ものだ。", "His story is believable.", {
+        accept: ["に値する"],
+        near: [["に足りない", "に足りない is \"not worth\". This sentence is positive, so use に足る.", "にたりない"]],
+      }),
+      s("残念ながら、満足する{に足る}結果は得られなかった。", "ざんねんながら、まんぞくする{にたる}けっかはえられなかった。", "Unfortunately, we didn't get a satisfactory result.", {
+        near: [["に足りない", "に足りない is \"not worth\". For \"sufficient for (satisfaction)\", use に足る.", "にたりない"]],
+      }),
+      s("あんな相手は恐れる{に足りない}。", "あんなあいてはおそれる{にたりない}。", "An opponent like that is nothing to fear.", {
+        accept: ["に足らない"],
+        near: [["に足る", "に足る is \"worthy of\". For \"nothing to fear\", use に足りない.", "にたる"]],
+      }),
     ],
   }),
 
@@ -740,78 +330,23 @@ It's formal and evaluative, common in reviews, reports and recommendations. 値 
 It's very close to に足る, which usually follows verbs (信頼するに足る). に値する is more common after nouns, and it's neutral about whether the verdict is good or bad: 非難に値する, "deserves criticism".
 `,
     sentences: [
-      s(
-        "この本は一読{に値する}。",
-        "このほんはいちどく{にあたいする}。",
-        "This book is worth reading.",
-        {
-          accept: ["に足る"],
-          near: [
-            [
-              "に値しない",
-              'に値しない is "not worth". This sentence is a recommendation, so use に値する.',
-              "にあたいしない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の努力は称賛{に値する}。",
-        "かれのどりょくはしょうさん{にあたいする}。",
-        "His efforts deserve praise.",
-        {
-          near: [
-            [
-              "に値しない",
-              'に値しない is "not worth". For "deserve", use に値する.',
-              "にあたいしない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "その提案は検討する{に値する}。",
-        "そのていあんはけんとうする{にあたいする}。",
-        "That proposal is worth considering.",
-        {
-          accept: ["に足る"],
-          near: [
-            [
-              "に値しない",
-              'に値しない is "not worth". For "worth considering", use に値する.',
-              "にあたいしない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼のしたことは非難{に値する}。",
-        "かれのしたことはひなん{にあたいする}。",
-        "What he did deserves criticism.",
-        {
-          near: [
-            [
-              "に当たらない",
-              'には当たらない is "not warranted". For "deserves", use に値する.',
-              "にあたらない",
-            ],
-          ],
-        },
-      ),
-      s(
-        "これは注目{に値する}研究だ。",
-        "これはちゅうもく{にあたいする}けんきゅうだ。",
-        "This is research worth paying attention to.",
-        {
-          near: [
-            [
-              "に値しない",
-              'に値しない is "not worth". For "worth paying attention to", use に値する.',
-              "にあたいしない",
-            ],
-          ],
-        },
-      ),
+      s("この本は一読{に値する}。", "このほんはいちどく{にあたいする}。", "This book is worth reading.", {
+        accept: ["に足る"],
+        near: [["に値しない", "に値しない is \"not worth\". This sentence is a recommendation, so use に値する.", "にあたいしない"]],
+      }),
+      s("彼の努力は称賛{に値する}。", "かれのどりょくはしょうさん{にあたいする}。", "His efforts deserve praise.", {
+        near: [["に値しない", "に値しない is \"not worth\". For \"deserve\", use に値する.", "にあたいしない"]],
+      }),
+      s("その提案は検討する{に値する}。", "そのていあんはけんとうする{にあたいする}。", "That proposal is worth considering.", {
+        accept: ["に足る"],
+        near: [["に値しない", "に値しない is \"not worth\". For \"worth considering\", use に値する.", "にあたいしない"]],
+      }),
+      s("彼のしたことは非難{に値する}。", "かれのしたことはひなん{にあたいする}。", "What he did deserves criticism.", {
+        near: [["に当たらない", "には当たらない is \"not warranted\". For \"deserves\", use に値する.", "にあたらない"]],
+      }),
+      s("これは注目{に値する}研究だ。", "これはちゅうもく{にあたいする}けんきゅうだ。", "This is research worth paying attention to.", {
+        near: [["に値しない", "に値しない is \"not worth\". For \"worth paying attention to\", use に値する.", "にあたいしない"]],
+      }),
     ],
   }),
 
@@ -831,71 +366,21 @@ It's formal and literary. It comes from べく (N1, "in order to"), the adverbia
 Don't confuse it with べきではない, "shouldn't". べくもない is about impossibility, not advice.
 `,
     sentences: [
-      s(
-        "プロの選手とは比べる{べくもない}。",
-        "プロのせんしゅとはくらべる{べくもない}。",
-        "There's no comparison with a professional player.",
-        {
-          near: [
-            [
-              "べきではない",
-              'べきではない is "shouldn\'t". For "there\'s no way to", use べくもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "素人の私には、その理由は知る{べくもない}。",
-        "しろうとのわたしには、そのりゆうはしる{べくもない}。",
-        "As an amateur, I couldn't possibly know the reason.",
-        {
-          near: [
-            [
-              "べきではない",
-              'べきではない is "shouldn\'t". For "couldn\'t possibly", use べくもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "今の収入では、家など望む{べくもない}。",
-        "いまのしゅうにゅうでは、いえなどのぞむ{べくもない}。",
-        "On my current income, a house is out of the question.",
-        {
-          near: [
-            [
-              "べきだ",
-              'べきだ is "should". For "out of the question", use べくもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の実力は疑う{べくもない}。",
-        "かれのじつりょくはうたがう{べくもない}。",
-        "His ability is beyond doubt.",
-        {
-          near: [
-            [
-              "べきではない",
-              'べきではない is "shouldn\'t". For "beyond doubt", use べくもない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "相手はプロだ。私たちが勝つ{べくもない}。",
-        "あいてはプロだ。わたしたちがかつ{べくもない}。",
-        "They're professionals. There's no way we can win.",
-        {
-          near: [
-            [
-              "べきだ",
-              'べきだ is "should". For "there\'s no way", use べくもない.',
-            ],
-          ],
-        },
-      ),
+      s("プロの選手とは比べる{べくもない}。", "プロのせんしゅとはくらべる{べくもない}。", "There's no comparison with a professional player.", {
+        near: [["べきではない", "べきではない is \"shouldn't\". For \"there's no way to\", use べくもない."]],
+      }),
+      s("素人の私には、その理由は知る{べくもない}。", "しろうとのわたしには、そのりゆうはしる{べくもない}。", "As an amateur, I couldn't possibly know the reason.", {
+        near: [["べきではない", "べきではない is \"shouldn't\". For \"couldn't possibly\", use べくもない."]],
+      }),
+      s("今の収入では、家など望む{べくもない}。", "いまのしゅうにゅうでは、いえなどのぞむ{べくもない}。", "On my current income, a house is out of the question.", {
+        near: [["べきだ", "べきだ is \"should\". For \"out of the question\", use べくもない."]],
+      }),
+      s("彼の実力は疑う{べくもない}。", "かれのじつりょくはうたがう{べくもない}。", "His ability is beyond doubt.", {
+        near: [["べきではない", "べきではない is \"shouldn't\". For \"beyond doubt\", use べくもない."]],
+      }),
+      s("相手はプロだ。私たちが勝つ{べくもない}。", "あいてはプロだ。わたしたちがかつ{べくもない}。", "They're professionals. There's no way we can win.", {
+        near: [["べきだ", "べきだ is \"should\". For \"there's no way\", use べくもない."]],
+      }),
     ],
   }),
 
@@ -903,8 +388,7 @@ Don't confuse it with べきではない, "shouldn't". べくもない is about 
     id: "n1-bekarazu",
     title: "〜べからず・〜べからざる",
     meaning: "must not (signs, maxims); unacceptable",
-    structure:
-      "Verb dictionary form + べからず (する → すべからず) · べからざる + Noun",
+    structure: "Verb dictionary form + べからず (する → すべからず) · べからざる + Noun",
     related: ["n3-beki", "n1-majiki"],
     explanation: `
 **べからず** is a classical prohibition, "must not", found on signs, notices and old sayings: 芝生に入るべからず, "keep off the grass".
@@ -916,69 +400,22 @@ Before a noun, it becomes **べからざる**, "unacceptable, not to be done": �
 It's the negative of べし, the classical source of べき (N3). In everyday Japanese, you'd say 〜てはいけない or 〜ないでください.
 `,
     sentences: [
-      s(
-        "芝生に入る{べからず}。",
-        "しばふにはいる{べからず}。",
-        "Keep off the grass.",
-        {
-          near: [
-            [
-              "べき",
-              'べき is "should". For a sign saying "do not", use べからず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "ここにごみを捨てる{べからず}。",
-        "ここにごみをすてる{べからず}。",
-        "No dumping rubbish here.",
-        {
-          near: [
-            [
-              "べき",
-              'べき is "should". For a sign saying "do not", use べからず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "働かざる者食う{べからず}。",
-        "はたらかざるものくう{べからず}。",
-        "He who does not work shall not eat.",
-        {
-          near: [
-            [
-              "べからざる",
-              "べからざる comes before a noun. To end a maxim, use べからず.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "初心忘る{べからず}。",
-        "しょしんわする{べからず}。",
-        "Never forget your beginner's spirit.",
-        {
-          near: [
-            ["べき", 'べき is "should". The maxim uses べからず, "must not".'],
-          ],
-        },
-      ),
-      s(
-        "それは許す{べからざる}行為だ。",
-        "それはゆるす{べからざる}こういだ。",
-        "That's an unforgivable act.",
-        {
-          accept: ["まじき"],
-          near: [
-            [
-              "べからず",
-              "べからず ends a sentence. Before a noun, use べからざる.",
-            ],
-          ],
-        },
-      ),
+      s("芝生に入る{べからず}。", "しばふにはいる{べからず}。", "Keep off the grass.", {
+        near: [["べき", "べき is \"should\". For a sign saying \"do not\", use べからず."]],
+      }),
+      s("ここにごみを捨てる{べからず}。", "ここにごみをすてる{べからず}。", "No dumping rubbish here.", {
+        near: [["べき", "べき is \"should\". For a sign saying \"do not\", use べからず."]],
+      }),
+      s("働かざる者食う{べからず}。", "はたらかざるものくう{べからず}。", "He who does not work shall not eat.", {
+        near: [["べからざる", "べからざる comes before a noun. To end a maxim, use べからず."]],
+      }),
+      s("初心忘る{べからず}。", "しょしんわする{べからず}。", "Never forget your beginner's spirit.", {
+        near: [["べき", "べき is \"should\". The maxim uses べからず, \"must not\"."]],
+      }),
+      s("それは許す{べからざる}行為だ。", "それはゆるす{べからざる}こういだ。", "That's an unforgivable act.", {
+        accept: ["まじき"],
+        near: [["べからず", "べからず ends a sentence. Before a noun, use べからざる."]],
+      }),
     ],
   }),
 
@@ -998,62 +435,26 @@ Occasionally, it follows other verbs: 許すまじき, "unforgivable".
 It's the adjectival form of まじ, the negative of べし, so it's a partner of べからざる. Compare ともあろう, which criticises someone for acting below their status: 教師ともあろう者が….
 `,
     sentences: [
-      s(
-        "それは教師にある{まじき}行為だ。",
-        "それはきょうしにある{まじき}こういだ。",
-        "That's behaviour unbecoming of a teacher.",
-        {
-          accept: ["べからざる"],
-          near: [
-            ["べき", 'べき is "should". For "unbecoming of", use あるまじき.'],
-          ],
-        },
-      ),
-      s(
-        "政治家としてある{まじき}発言だ。",
-        "せいじかとしてある{まじき}はつげんだ。",
-        "That's a remark no politician should ever make.",
-        {
-          accept: ["べからざる"],
-          near: [
-            ["べき", 'べき is "should". For "unbecoming of", use あるまじき.'],
-          ],
-        },
-      ),
-      s(
-        "医者にある{まじき}ミスだった。",
-        "いしゃにある{まじき}ミスだった。",
-        "It was a mistake a doctor should never make.",
-        {
-          accept: ["べからざる"],
-          near: [
-            [
-              "べき",
-              'べき is "should". For "a doctor should never", use あるまじき.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "それは人として許す{まじき}行為だ。",
-        "それはひととしてゆるす{まじき}こういだ。",
-        "As a human being, that's an unforgivable act.",
-        {
-          accept: ["べからざる"],
-          near: [["べき", 'べき is "should". For "unforgivable", use まじき.']],
-        },
-      ),
-      s(
-        "警察官にある{まじき}態度だ。",
-        "けいさつかんにある{まじき}たいどだ。",
-        "That attitude is unbecoming of a police officer.",
-        {
-          accept: ["べからざる"],
-          near: [
-            ["べき", 'べき is "should". For "unbecoming of", use あるまじき.'],
-          ],
-        },
-      ),
+      s("それは教師にある{まじき}行為だ。", "それはきょうしにある{まじき}こういだ。", "That's behaviour unbecoming of a teacher.", {
+        accept: ["べからざる"],
+        near: [["べき", "べき is \"should\". For \"unbecoming of\", use あるまじき."]],
+      }),
+      s("政治家としてある{まじき}発言だ。", "せいじかとしてある{まじき}はつげんだ。", "That's a remark no politician should ever make.", {
+        accept: ["べからざる"],
+        near: [["べき", "べき is \"should\". For \"unbecoming of\", use あるまじき."]],
+      }),
+      s("医者にある{まじき}ミスだった。", "いしゃにある{まじき}ミスだった。", "It was a mistake a doctor should never make.", {
+        accept: ["べからざる"],
+        near: [["べき", "べき is \"should\". For \"a doctor should never\", use あるまじき."]],
+      }),
+      s("それは人として許す{まじき}行為だ。", "それはひととしてゆるす{まじき}こういだ。", "As a human being, that's an unforgivable act.", {
+        accept: ["べからざる"],
+        near: [["べき", "べき is \"should\". For \"unforgivable\", use まじき."]],
+      }),
+      s("警察官にある{まじき}態度だ。", "けいさつかんにある{まじき}たいどだ。", "That attitude is unbecoming of a police officer.", {
+        accept: ["べからざる"],
+        near: [["べき", "べき is \"should\". For \"unbecoming of\", use あるまじき."]],
+      }),
     ],
   }),
 
@@ -1071,76 +472,26 @@ It's the adjectival form of まじ, the negative of べし, so it's a partner of
 It's a formal, persuasive way of saying べきだ, typical of editorials and arguments about fairness. On its own, しかるべき before a noun means "appropriate": しかるべき処置, "appropriate measures". The subject is often a third party, such as a company, a government or a person in authority.
 `,
     sentences: [
-      s(
-        "彼は当然謝っ{てしかるべきだ}。",
-        "かれはとうぜんあやまっ{てしかるべきだ}。",
-        "He really ought to apologise.",
-        {
-          accept: ["てしかるべき"],
-          near: [
-            [
-              "てもいい",
-              'てもいい is "may". For "ought to (as is proper)", use てしかるべきだ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女の研究は、もっと評価され{てしかるべきだ}。",
-        "かのじょのけんきゅうは、もっとひょうかされ{てしかるべきだ}。",
-        "Her research deserves more recognition.",
-        {
-          accept: ["てしかるべき"],
-          near: [
-            [
-              "てほしい",
-              'てほしい is "I want (someone) to". For "ought to (as is proper)", use てしかるべきだ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "会社は説明責任を果たし{てしかるべきだ}。",
-        "かいしゃはせつめいせきにんをはたし{てしかるべきだ}。",
-        "The company ought to account for itself.",
-        {
-          accept: ["てしかるべき"],
-          near: [
-            [
-              "てもいい",
-              'てもいい is "may". For "ought to", use てしかるべきだ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の努力は報われ{てしかるべきだ}。",
-        "かれのどりょくはむくわれ{てしかるべきだ}。",
-        "His efforts ought to be rewarded.",
-        {
-          accept: ["てしかるべき"],
-          near: [
-            [
-              "てほしい",
-              'てほしい is "I want (someone) to". For "ought to", use てしかるべきだ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "被害者には十分な補償があっ{てしかるべきだ}。",
-        "ひがいしゃにはじゅうぶんなほしょうがあっ{てしかるべきだ}。",
-        "The victims ought to receive proper compensation.",
-        {
-          accept: ["てしかるべき"],
-          near: [
-            [
-              "てもいい",
-              'てもいい is "may". For "ought to", use てしかるべきだ.',
-            ],
-          ],
-        },
-      ),
+      s("彼は当然謝っ{てしかるべきだ}。", "かれはとうぜんあやまっ{てしかるべきだ}。", "He really ought to apologise.", {
+        accept: ["てしかるべき"],
+        near: [["てもいい", "てもいい is \"may\". For \"ought to (as is proper)\", use てしかるべきだ."]],
+      }),
+      s("彼女の研究は、もっと評価され{てしかるべきだ}。", "かのじょのけんきゅうは、もっとひょうかされ{てしかるべきだ}。", "Her research deserves more recognition.", {
+        accept: ["てしかるべき"],
+        near: [["てほしい", "てほしい is \"I want (someone) to\". For \"ought to (as is proper)\", use てしかるべきだ."]],
+      }),
+      s("会社は説明責任を果たし{てしかるべきだ}。", "かいしゃはせつめいせきにんをはたし{てしかるべきだ}。", "The company ought to account for itself.", {
+        accept: ["てしかるべき"],
+        near: [["てもいい", "てもいい is \"may\". For \"ought to\", use てしかるべきだ."]],
+      }),
+      s("彼の努力は報われ{てしかるべきだ}。", "かれのどりょくはむくわれ{てしかるべきだ}。", "His efforts ought to be rewarded.", {
+        accept: ["てしかるべき"],
+        near: [["てほしい", "てほしい is \"I want (someone) to\". For \"ought to\", use てしかるべきだ."]],
+      }),
+      s("被害者には十分な補償があっ{てしかるべきだ}。", "ひがいしゃにはじゅうぶんなほしょうがあっ{てしかるべきだ}。", "The victims ought to receive proper compensation.", {
+        accept: ["てしかるべき"],
+        near: [["てもいい", "てもいい is \"may\". For \"ought to\", use てしかるべきだ."]],
+      }),
     ],
   }),
 
@@ -1159,76 +510,26 @@ It's literary and dramatic, found in essays, speeches, novels and song lyrics. �
 Don't confuse it with ではないだろう, "probably isn't", which is a genuine guess.
 `,
     sentences: [
-      s(
-        "これが愛{でなくてなんだろう}。",
-        "これがあい{でなくてなんだろう}。",
-        "If this isn't love, what is?",
-        {
-          accept: ["でなくて何だろう", "でなくてなんであろう"],
-          near: [
-            [
-              "ではないだろう",
-              'ではないだろう is "probably isn\'t". For "if this isn\'t X, what is?", use でなくてなんだろう.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "全員が助かったのは、奇跡{でなくてなんだろう}。",
-        "ぜんいんがたすかったのは、きせき{でなくてなんだろう}。",
-        "Everyone survived. If that isn't a miracle, what is?",
-        {
-          accept: ["でなくて何だろう", "でなくてなんであろう"],
-          near: [
-            [
-              "ではないだろう",
-              'ではないだろう is "probably isn\'t". For "if that isn\'t X, what is?", use でなくてなんだろう.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "二人の出会いは運命{でなくてなんだろう}。",
-        "ふたりのであいはうんめい{でなくてなんだろう}。",
-        "If their meeting wasn't fate, what was it?",
-        {
-          accept: ["でなくて何だろう", "でなくてなんであろう"],
-          near: [
-            [
-              "かもしれない",
-              'かもしれない is "might be". For "it can only be", use でなくてなんだろう.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "見た目だけで判断するのは、差別{でなくてなんだろう}。",
-        "みためだけではんだんするのは、さべつ{でなくてなんだろう}。",
-        "Judging people on looks alone. If that isn't discrimination, what is?",
-        {
-          accept: ["でなくて何だろう", "でなくてなんであろう"],
-          near: [
-            [
-              "ではないだろう",
-              'ではないだろう is "probably isn\'t". For "if that isn\'t X, what is?", use でなくてなんだろう.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "こんな偶然が重なるとは、神の導き{でなくてなんであろう}。",
-        "こんなぐうぜんがかさなるとは、かみのみちびき{でなくてなんであろう}。",
-        "So many coincidences at once. What could it be, if not the hand of God?",
-        {
-          accept: ["でなくてなんだろう", "でなくて何だろう"],
-          near: [
-            [
-              "かもしれない",
-              'かもしれない is "might be". For "what could it be, if not", use でなくてなんであろう.',
-            ],
-          ],
-        },
-      ),
+      s("これが愛{でなくてなんだろう}。", "これがあい{でなくてなんだろう}。", "If this isn't love, what is?", {
+        accept: ["でなくて何だろう", "でなくてなんであろう"],
+        near: [["ではないだろう", "ではないだろう is \"probably isn't\". For \"if this isn't X, what is?\", use でなくてなんだろう."]],
+      }),
+      s("全員が助かったのは、奇跡{でなくてなんだろう}。", "ぜんいんがたすかったのは、きせき{でなくてなんだろう}。", "Everyone survived. If that isn't a miracle, what is?", {
+        accept: ["でなくて何だろう", "でなくてなんであろう"],
+        near: [["ではないだろう", "ではないだろう is \"probably isn't\". For \"if that isn't X, what is?\", use でなくてなんだろう."]],
+      }),
+      s("二人の出会いは運命{でなくてなんだろう}。", "ふたりのであいはうんめい{でなくてなんだろう}。", "If their meeting wasn't fate, what was it?", {
+        accept: ["でなくて何だろう", "でなくてなんであろう"],
+        near: [["かもしれない", "かもしれない is \"might be\". For \"it can only be\", use でなくてなんだろう."]],
+      }),
+      s("見た目だけで判断するのは、差別{でなくてなんだろう}。", "みためだけではんだんするのは、さべつ{でなくてなんだろう}。", "Judging people on looks alone. If that isn't discrimination, what is?", {
+        accept: ["でなくて何だろう", "でなくてなんであろう"],
+        near: [["ではないだろう", "ではないだろう is \"probably isn't\". For \"if that isn't X, what is?\", use でなくてなんだろう."]],
+      }),
+      s("こんな偶然が重なるとは、神の導き{でなくてなんであろう}。", "こんなぐうぜんがかさなるとは、かみのみちびき{でなくてなんであろう}。", "So many coincidences at once. What could it be, if not the hand of God?", {
+        accept: ["でなくてなんだろう", "でなくて何だろう"],
+        near: [["かもしれない", "かもしれない is \"might be\". For \"what could it be, if not\", use でなくてなんであろう."]],
+      }),
     ],
   }),
 
@@ -1248,79 +549,26 @@ It appears in detective novels, formal reports and official documents. On forms,
 Don't confuse it with に相当する, "equivalent to", which uses a similar-looking word. In conversation, に違いない or きっと〜だ is far more natural, so save に相違ない for formal writing, where a firm, impersonal conclusion is wanted.
 `,
     sentences: [
-      s(
-        "犯人は彼{に相違ない}。",
-        "はんにんはかれ{にそういない}。",
-        "He must be the culprit.",
-        {
-          accept: ["に違いない"],
-          near: [
-            [
-              "に相当する",
-              'に相当する is "equivalent to". For "must be", use に相違ない.',
-              "にそうとうする",
-            ],
-          ],
-        },
-      ),
-      s(
-        "これは本物{に相違ない}。",
-        "これはほんもの{にそういない}。",
-        "This is surely the real thing.",
-        {
-          accept: ["に違いない"],
-          near: [
-            [
-              "に相当する",
-              'に相当する is "equivalent to". For "surely", use に相違ない.',
-              "にそうとうする",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の言っていることは事実{に相違ない}。",
-        "かれのいっていることはじじつ{にそういない}。",
-        "What he's saying is undoubtedly true.",
-        {
-          accept: ["に違いない"],
-          near: [
-            [
-              "かもしれない",
-              'かもしれない is "might". For "undoubtedly", use に相違ない.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "上記の内容は事実{に相違ありません}。",
-        "じょうきのないようはじじつ{にそういありません}。",
-        "I certify that the above is true.",
-        {
-          accept: ["に違いありません"],
-          near: [
-            [
-              "に相当します",
-              'に相当する is "equivalent to". For "is true, without doubt", use に相違ありません.',
-              "にそうとうします",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女は何か隠している{に相違ない}。",
-        "かのじょはなにかかくしている{にそういない}。",
-        "She must be hiding something.",
-        {
-          accept: ["に違いない"],
-          near: [
-            [
-              "かもしれない",
-              'かもしれない is "might". For "must be", use に相違ない.',
-            ],
-          ],
-        },
-      ),
+      s("犯人は彼{に相違ない}。", "はんにんはかれ{にそういない}。", "He must be the culprit.", {
+        accept: ["に違いない"],
+        near: [["に相当する", "に相当する is \"equivalent to\". For \"must be\", use に相違ない.", "にそうとうする"]],
+      }),
+      s("これは本物{に相違ない}。", "これはほんもの{にそういない}。", "This is surely the real thing.", {
+        accept: ["に違いない"],
+        near: [["に相当する", "に相当する is \"equivalent to\". For \"surely\", use に相違ない.", "にそうとうする"]],
+      }),
+      s("彼の言っていることは事実{に相違ない}。", "かれのいっていることはじじつ{にそういない}。", "What he's saying is undoubtedly true.", {
+        accept: ["に違いない"],
+        near: [["かもしれない", "かもしれない is \"might\". For \"undoubtedly\", use に相違ない."]],
+      }),
+      s("上記の内容は事実{に相違ありません}。", "じょうきのないようはじじつ{にそういありません}。", "I certify that the above is true.", {
+        accept: ["に違いありません"],
+        near: [["に相当します", "に相当する is \"equivalent to\". For \"is true, without doubt\", use に相違ありません.", "にそうとうします"]],
+      }),
+      s("彼女は何か隠している{に相違ない}。", "かのじょはなにかかくしている{にそういない}。", "She must be hiding something.", {
+        accept: ["に違いない"],
+        near: [["かもしれない", "かもしれない is \"might\". For \"must be\", use に相違ない."]],
+      }),
     ],
   }),
 ];

@@ -19,76 +19,26 @@ It's a formal, written relative of とはいえ (N2) and でも. It's common in 
 Don't confuse it with といえば (N3), "speaking of".
 `,
     sentences: [
-      s(
-        "子ども{といえども}、ルールは守らなければならない。",
-        "こども{といえども}、ルールはまもらなければならない。",
-        "Even children have to follow the rules.",
-        {
-          accept: ["とはいえ", "でも"],
-          near: [
-            [
-              "といえば",
-              'といえば is "speaking of". For "even though it\'s", use といえども.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "冗談{といえども}、言っていいことと悪いことがある。",
-        "じょうだん{といえども}、いっていいこととわるいことがある。",
-        "Even as a joke, there are things you shouldn't say.",
-        {
-          accept: ["とはいえ", "でも"],
-          near: [
-            [
-              "というと",
-              'というと is "speaking of". For "even as", use といえども.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "一円{といえども}、無駄にはできない。",
-        "いちえん{といえども}、むだにはできない。",
-        "We can't waste even a single yen.",
-        {
-          accept: ["たりとも", "でも"],
-          near: [
-            [
-              "といえば",
-              'といえば is "speaking of". For "not even", use といえども.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "専門家{といえども}、間違えることはある。",
-        "せんもんか{といえども}、まちがえることはある。",
-        "Even experts make mistakes.",
-        {
-          accept: ["とはいえ", "でも"],
-          near: [
-            [
-              "というと",
-              'というと is "speaking of". For "even", use といえども.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "休日{といえども}、彼は仕事のことばかり考えている。",
-        "きゅうじつ{といえども}、かれはしごとのことばかりかんがえている。",
-        "Even on his days off, he thinks about nothing but work.",
-        {
-          accept: ["とはいえ", "でも"],
-          near: [
-            [
-              "といえば",
-              'といえば is "speaking of". For "even on", use といえども.',
-            ],
-          ],
-        },
-      ),
+      s("子ども{といえども}、ルールは守らなければならない。", "こども{といえども}、ルールはまもらなければならない。", "Even children have to follow the rules.", {
+        accept: ["とはいえ", "でも"],
+        near: [["といえば", "といえば is \"speaking of\". For \"even though it's\", use といえども."]],
+      }),
+      s("冗談{といえども}、言っていいことと悪いことがある。", "じょうだん{といえども}、いっていいこととわるいことがある。", "Even as a joke, there are things you shouldn't say.", {
+        accept: ["とはいえ", "でも"],
+        near: [["というと", "というと is \"speaking of\". For \"even as\", use といえども."]],
+      }),
+      s("一円{といえども}、無駄にはできない。", "いちえん{といえども}、むだにはできない。", "We can't waste even a single yen.", {
+        accept: ["たりとも", "でも"],
+        near: [["といえば", "といえば is \"speaking of\". For \"not even\", use といえども."]],
+      }),
+      s("専門家{といえども}、間違えることはある。", "せんもんか{といえども}、まちがえることはある。", "Even experts make mistakes.", {
+        accept: ["とはいえ", "でも"],
+        near: [["というと", "というと is \"speaking of\". For \"even\", use といえども."]],
+      }),
+      s("休日{といえども}、彼は仕事のことばかり考えている。", "きゅうじつ{といえども}、かれはしごとのことばかりかんがえている。", "Even on his days off, he thinks about nothing but work.", {
+        accept: ["とはいえ", "でも"],
+        near: [["といえば", "といえば is \"speaking of\". For \"even on\", use といえども."]],
+      }),
     ],
   }),
 
@@ -108,81 +58,26 @@ It's close to と思ったら and かと思ったら (N2), but と思いきや a
 Don't use it for your present thoughts. It always looks back at an expectation that turned out wrong. Compare と思って, "thinking that (so I did)", which isn't contrastive.
 `,
     sentences: [
-      s(
-        "簡単に勝てる{と思いきや}、苦戦した。",
-        "かんたんにかてる{とおもいきや}、くせんした。",
-        "I thought we'd win easily, but it was a hard fight.",
-        {
-          accept: ["と思ったら", "と思ったが"],
-          near: [
-            [
-              "と思って",
-              'と思って is "thinking that (so I did)". For "I thought…, but no", use と思いきや.',
-              "とおもって",
-            ],
-          ],
-        },
-      ),
-      s(
-        "雨がやんだ{と思いきや}、また降り出した。",
-        "あめがやんだ{とおもいきや}、またふりだした。",
-        "Just when I thought the rain had stopped, it started again.",
-        {
-          accept: ["と思ったら", "かと思ったら", "と思ったが"],
-          near: [
-            [
-              "と思って",
-              'と思って is "thinking that (so I did)". For "I thought…, but no", use と思いきや.',
-              "とおもって",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は怒る{と思いきや}、笑って許してくれた。",
-        "かれはおこる{とおもいきや}、わらってゆるしてくれた。",
-        "I thought he'd be angry, but he laughed and forgave me.",
-        {
-          accept: ["と思ったら", "と思ったが"],
-          near: [
-            [
-              "と思って",
-              'と思って is "thinking that (so I did)". For "I thought…, but no", use と思いきや.',
-              "とおもって",
-            ],
-          ],
-        },
-      ),
-      s(
-        "高い{と思いきや}、意外に安かった。",
-        "たかい{とおもいきや}、いがいにやすかった。",
-        "I assumed it would be expensive, but it was surprisingly cheap.",
-        {
-          accept: ["と思ったら", "と思ったが"],
-          near: [
-            [
-              "と思えば",
-              'と思えば is "if you think of it as". For "I assumed…, but no", use と思いきや.',
-              "とおもえば",
-            ],
-          ],
-        },
-      ),
-      s(
-        "今日は休みか{と思いきや}、店は開いていた。",
-        "きょうはやすみか{とおもいきや}、みせはあいていた。",
-        "I thought it might be closed today, but the shop was open.",
-        {
-          accept: ["と思ったら", "と思ったが"],
-          near: [
-            [
-              "と思って",
-              'と思って is "thinking that (so I did)". For "I thought…, but no", use と思いきや.',
-              "とおもって",
-            ],
-          ],
-        },
-      ),
+      s("簡単に勝てる{と思いきや}、苦戦した。", "かんたんにかてる{とおもいきや}、くせんした。", "I thought we'd win easily, but it was a hard fight.", {
+        accept: ["と思ったら", "と思ったが"],
+        near: [["と思って", "と思って is \"thinking that (so I did)\". For \"I thought…, but no\", use と思いきや.", "とおもって"]],
+      }),
+      s("雨がやんだ{と思いきや}、また降り出した。", "あめがやんだ{とおもいきや}、またふりだした。", "Just when I thought the rain had stopped, it started again.", {
+        accept: ["と思ったら", "かと思ったら", "と思ったが"],
+        near: [["と思って", "と思って is \"thinking that (so I did)\". For \"I thought…, but no\", use と思いきや.", "とおもって"]],
+      }),
+      s("彼は怒る{と思いきや}、笑って許してくれた。", "かれはおこる{とおもいきや}、わらってゆるしてくれた。", "I thought he'd be angry, but he laughed and forgave me.", {
+        accept: ["と思ったら", "と思ったが"],
+        near: [["と思って", "と思って is \"thinking that (so I did)\". For \"I thought…, but no\", use と思いきや.", "とおもって"]],
+      }),
+      s("高い{と思いきや}、意外に安かった。", "たかい{とおもいきや}、いがいにやすかった。", "I assumed it would be expensive, but it was surprisingly cheap.", {
+        accept: ["と思ったら", "と思ったが"],
+        near: [["と思えば", "と思えば is \"if you think of it as\". For \"I assumed…, but no\", use と思いきや.", "とおもえば"]],
+      }),
+      s("今日は休みか{と思いきや}、店は開いていた。", "きょうはやすみか{とおもいきや}、みせはあいていた。", "I thought it might be closed today, but the shop was open.", {
+        accept: ["と思ったら", "と思ったが"],
+        near: [["と思って", "と思って is \"thinking that (so I did)\". For \"I thought…, but no\", use と思いきや.", "とおもって"]],
+      }),
     ],
   }),
 
@@ -202,68 +97,24 @@ The second half is a firm judgement or rule that applies to every case: 許さ�
 It's the formal version of でも and にしろ / にせよ (N2), and であろうと means the same. Don't confuse it with であり, "is, and", which just links sentences in writing.
 `,
     sentences: [
-      s(
-        "理由が何{であれ}、暴力は許されない。",
-        "りゆうがなん{であれ}、ぼうりょくはゆるされない。",
-        "Whatever the reason, violence is unacceptable.",
-        {
-          accept: ["であろうと", "にしろ", "にせよ"],
-          near: [
-            [
-              "であり",
-              'であり is "is, and". For "whatever it is", use であれ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "大人であれ子ども{であれ}、ルールは同じだ。",
-        "おとなであれこども{であれ}、ルールはおなじだ。",
-        "Adult or child, the rules are the same.",
-        {
-          near: [
-            [
-              "であり",
-              'であり is "is, and". For "whether … or", pair であれ with であれ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "晴れ{であれ}雨であれ、試合は行う。",
-        "はれ{であれ}あめであれ、しあいはおこなう。",
-        "Rain or shine, the match will go ahead.",
-        {
-          near: [
-            ["であり", 'であり is "is, and". For "whether … or", use であれ.'],
-          ],
-        },
-      ),
-      s(
-        "誰{であれ}、例外は認めない。",
-        "だれ{であれ}、れいがいはみとめない。",
-        "No exceptions, whoever it is.",
-        {
-          accept: ["であろうと", "でも", "にしろ", "にせよ"],
-          near: [
-            ["であり", 'であり is "is, and". For "whoever it is", use であれ.'],
-          ],
-        },
-      ),
-      s(
-        "どんな仕事{であれ}、責任を持ってやるべきだ。",
-        "どんなしごと{であれ}、せきにんをもってやるべきだ。",
-        "Whatever the job, you should do it responsibly.",
-        {
-          accept: ["であろうと", "でも", "にしろ", "にせよ"],
-          near: [
-            [
-              "であり",
-              'であり is "is, and". For "whatever the job", use であれ.',
-            ],
-          ],
-        },
-      ),
+      s("理由が何{であれ}、暴力は許されない。", "りゆうがなん{であれ}、ぼうりょくはゆるされない。", "Whatever the reason, violence is unacceptable.", {
+        accept: ["であろうと", "にしろ", "にせよ"],
+        near: [["であり", "であり is \"is, and\". For \"whatever it is\", use であれ."]],
+      }),
+      s("大人であれ子ども{であれ}、ルールは同じだ。", "おとなであれこども{であれ}、ルールはおなじだ。", "Adult or child, the rules are the same.", {
+        near: [["であり", "であり is \"is, and\". For \"whether … or\", pair であれ with であれ."]],
+      }),
+      s("晴れ{であれ}雨であれ、試合は行う。", "はれ{であれ}あめであれ、しあいはおこなう。", "Rain or shine, the match will go ahead.", {
+        near: [["であり", "であり is \"is, and\". For \"whether … or\", use であれ."]],
+      }),
+      s("誰{であれ}、例外は認めない。", "だれ{であれ}、れいがいはみとめない。", "No exceptions, whoever it is.", {
+        accept: ["であろうと", "でも", "にしろ", "にせよ"],
+        near: [["であり", "であり is \"is, and\". For \"whoever it is\", use であれ."]],
+      }),
+      s("どんな仕事{であれ}、責任を持ってやるべきだ。", "どんなしごと{であれ}、せきにんをもってやるべきだ。", "Whatever the job, you should do it responsibly.", {
+        accept: ["であろうと", "でも", "にしろ", "にせよ"],
+        near: [["であり", "であり is \"is, and\". For \"whatever the job\", use であれ."]],
+      }),
     ],
   }),
 
@@ -283,76 +134,26 @@ It's a stronger, more defiant version of ても. The shape is the volitional: �
 The two forms are interchangeable. Pair it with まい for "whether or not": 行こうが行くまいが (the next point).
 `,
     sentences: [
-      s(
-        "誰が何と言お{うと}、私の気持ちは変わらない。",
-        "だれがなんといお{うと}、わたしのきもちはかわらない。",
-        "Whatever anyone says, my feelings won't change.",
-        {
-          accept: ["うが"],
-          near: [
-            [
-              "ても",
-              "ても needs the て-form (言っても). After the volitional, use うと or うが.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "どんなに反対されよ{うが}、やめるつもりはない。",
-        "どんなにはんたいされよ{うが}、やめるつもりはない。",
-        "However much they oppose me, I've no intention of quitting.",
-        {
-          accept: ["うと"],
-          near: [
-            [
-              "ても",
-              "ても needs the て-form (されても). After the volitional, use うが or うと.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "雨が降ろ{うと}、試合は行われる。",
-        "あめがふろ{うと}、しあいはおこなわれる。",
-        "The match will go ahead even if it rains.",
-        {
-          accept: ["うが"],
-          near: [
-            [
-              "ても",
-              "ても needs the て-form (降っても). After the volitional, use うと or うが.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "何が起ころ{うと}、私は君の味方だ。",
-        "なにがおころ{うと}、わたしはきみのみかただ。",
-        "Whatever happens, I'm on your side.",
-        {
-          accept: ["うが"],
-          near: [
-            [
-              "うか",
-              'うか is "shall I?". For "whatever happens", use うと or うが.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "周りにどう思われよ{うが}、気にしない。",
-        "まわりにどうおもわれよ{うが}、きにしない。",
-        "I don't care what people think of me.",
-        {
-          accept: ["うと"],
-          near: [
-            [
-              "うか",
-              'うか is "shall I?". For "no matter how", use うが or うと.',
-            ],
-          ],
-        },
-      ),
+      s("誰が何と言お{うと}、私の気持ちは変わらない。", "だれがなんといお{うと}、わたしのきもちはかわらない。", "Whatever anyone says, my feelings won't change.", {
+        accept: ["うが"],
+        near: [["ても", "ても needs the て-form (言っても). After the volitional, use うと or うが."]],
+      }),
+      s("どんなに反対されよ{うが}、やめるつもりはない。", "どんなにはんたいされよ{うが}、やめるつもりはない。", "However much they oppose me, I've no intention of quitting.", {
+        accept: ["うと"],
+        near: [["ても", "ても needs the て-form (されても). After the volitional, use うが or うと."]],
+      }),
+      s("雨が降ろ{うと}、試合は行われる。", "あめがふろ{うと}、しあいはおこなわれる。", "The match will go ahead even if it rains.", {
+        accept: ["うが"],
+        near: [["ても", "ても needs the て-form (降っても). After the volitional, use うと or うが."]],
+      }),
+      s("何が起ころ{うと}、私は君の味方だ。", "なにがおころ{うと}、わたしはきみのみかただ。", "Whatever happens, I'm on your side.", {
+        accept: ["うが"],
+        near: [["うか", "うか is \"shall I?\". For \"whatever happens\", use うと or うが."]],
+      }),
+      s("周りにどう思われよ{うが}、気にしない。", "まわりにどうおもわれよ{うが}、きにしない。", "I don't care what people think of me.", {
+        accept: ["うと"],
+        near: [["うか", "うか is \"shall I?\". For \"no matter how\", use うが or うと."]],
+      }),
     ],
   }),
 
@@ -372,76 +173,26 @@ The まい form attaches to the dictionary form of godan verbs (降るまい, �
 Plain Japanese would say 降っても降らなくても. The うが〜まいが shape is more emphatic and a little defiant.
 `,
     sentences: [
-      s(
-        "雨が降ろうが降る{まいが}、出かける。",
-        "あめがふろうがふる{まいが}、でかける。",
-        "I'm going out whether it rains or not.",
-        {
-          accept: ["まいと"],
-          near: [
-            [
-              "ないが",
-              'ないが is "isn\'t, but". For "whether or not", pair うが with まいが.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "君が行こうと行く{まいと}、私は行く。",
-        "きみがいこうといく{まいと}、わたしはいく。",
-        "Whether you go or not, I'm going.",
-        {
-          accept: ["まいが"],
-          near: [
-            [
-              "ないと",
-              'ないと is "if not". For "whether or not", pair うと with まいと.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "信じようが信じ{まいが}、これは事実だ。",
-        "しんじようがしんじ{まいが}、これはじじつだ。",
-        "Believe it or not, this is a fact.",
-        {
-          accept: ["まいと"],
-          near: [
-            [
-              "ないが",
-              'ないが is "isn\'t, but". For "whether or not", pair うが with まいが.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼が来ようが来る{まいが}、会議は始める。",
-        "かれがこようがくる{まいが}、かいぎははじめる。",
-        "We'll start the meeting whether he comes or not.",
-        {
-          accept: ["まいと"],
-          near: [
-            [
-              "ないが",
-              'ないが is "isn\'t, but". For "whether or not", pair うが with まいが.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "賛成しようがする{まいが}、結果は変わらない。",
-        "さんせいしようがする{まいが}、けっかはかわらない。",
-        "Whether you agree or not, the result won't change.",
-        {
-          accept: ["まいと"],
-          near: [
-            [
-              "ないが",
-              'ないが is "isn\'t, but". For "whether or not", pair うが with まいが.',
-            ],
-          ],
-        },
-      ),
+      s("雨が降ろうが降る{まいが}、出かける。", "あめがふろうがふる{まいが}、でかける。", "I'm going out whether it rains or not.", {
+        accept: ["まいと"],
+        near: [["ないが", "ないが is \"isn't, but\". For \"whether or not\", pair うが with まいが."]],
+      }),
+      s("君が行こうと行く{まいと}、私は行く。", "きみがいこうといく{まいと}、わたしはいく。", "Whether you go or not, I'm going.", {
+        accept: ["まいが"],
+        near: [["ないと", "ないと is \"if not\". For \"whether or not\", pair うと with まいと."]],
+      }),
+      s("信じようが信じ{まいが}、これは事実だ。", "しんじようがしんじ{まいが}、これはじじつだ。", "Believe it or not, this is a fact.", {
+        accept: ["まいと"],
+        near: [["ないが", "ないが is \"isn't, but\". For \"whether or not\", pair うが with まいが."]],
+      }),
+      s("彼が来ようが来る{まいが}、会議は始める。", "かれがこようがくる{まいが}、かいぎははじめる。", "We'll start the meeting whether he comes or not.", {
+        accept: ["まいと"],
+        near: [["ないが", "ないが is \"isn't, but\". For \"whether or not\", pair うが with まいが."]],
+      }),
+      s("賛成しようがする{まいが}、結果は変わらない。", "さんせいしようがする{まいが}、けっかはかわらない。", "Whether you agree or not, the result won't change.", {
+        accept: ["まいと"],
+        near: [["ないが", "ないが is \"isn't, but\". For \"whether or not\", pair うが with まいが."]],
+      }),
     ],
   }),
 
@@ -461,66 +212,26 @@ It's emphatic and formal, and it appears in speeches, rules and dramatic dialogu
 It comes from the classical たり (= である) plus とも ("even if"), so it's literally "even if it is one yen".
 `,
     sentences: [
-      s(
-        "一円{たりとも}無駄にはできない。",
-        "いちえん{たりとも}むだにはできない。",
-        "We can't waste a single yen.",
-        {
-          accept: ["も"],
-          near: [
-            [
-              "でも",
-              'でも works casually. For the emphatic "not even one", this point practises たりとも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "一日{たりとも}練習を休んだことはない。",
-        "いちにち{たりとも}れんしゅうをやすんだことはない。",
-        "I've never missed a single day of practice.",
-        {
-          accept: ["も"],
-          near: [
-            [
-              "でも",
-              'でも works casually. For the emphatic "not a single", this point practises たりとも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "試合中は一瞬{たりとも}気を抜けない。",
-        "しあいちゅうはいっしゅん{たりとも}きをぬけない。",
-        "During a match, you can't relax for even a moment.",
-        {
-          accept: ["も"],
-          near: [["だけ", 'だけ is "only". For "not even", use たりとも.']],
-        },
-      ),
-      s(
-        "一秒{たりとも}遅れてはならない。",
-        "いちびょう{たりとも}おくれてはならない。",
-        "You must not be even one second late.",
-        {
-          accept: ["も", "でも"],
-          near: [["だけ", 'だけ is "only". For "not even", use たりとも.']],
-        },
-      ),
-      s(
-        "誰一人{たりとも}ここを通すな。",
-        "だれひとり{たりとも}ここをとおすな。",
-        "Don't let a single person through here.",
-        {
-          accept: ["として"],
-          near: [
-            [
-              "だけ",
-              'だけ is "only". For "not a single person", use たりとも.',
-            ],
-          ],
-        },
-      ),
+      s("一円{たりとも}無駄にはできない。", "いちえん{たりとも}むだにはできない。", "We can't waste a single yen.", {
+        accept: ["も"],
+        near: [["でも", "でも works casually. For the emphatic \"not even one\", this point practises たりとも."]],
+      }),
+      s("一日{たりとも}練習を休んだことはない。", "いちにち{たりとも}れんしゅうをやすんだことはない。", "I've never missed a single day of practice.", {
+        accept: ["も"],
+        near: [["でも", "でも works casually. For the emphatic \"not a single\", this point practises たりとも."]],
+      }),
+      s("試合中は一瞬{たりとも}気を抜けない。", "しあいちゅうはいっしゅん{たりとも}きをぬけない。", "During a match, you can't relax for even a moment.", {
+        accept: ["も"],
+        near: [["だけ", "だけ is \"only\". For \"not even\", use たりとも."]],
+      }),
+      s("一秒{たりとも}遅れてはならない。", "いちびょう{たりとも}おくれてはならない。", "You must not be even one second late.", {
+        accept: ["も", "でも"],
+        near: [["だけ", "だけ is \"only\". For \"not even\", use たりとも."]],
+      }),
+      s("誰一人{たりとも}ここを通すな。", "だれひとり{たりとも}ここをとおすな。", "Don't let a single person through here.", {
+        accept: ["として"],
+        near: [["だけ", "だけ is \"only\". For \"not a single person\", use たりとも."]],
+      }),
     ],
   }),
 
@@ -540,77 +251,26 @@ The first half is an easier case (a child, an amateur, the old days, a single ti
 いざ知らず is literally "I don't know (about that)". ならまだしも and ならともかく are close, more everyday relatives.
 `,
     sentences: [
-      s(
-        "子ども{ならいざ知らず}、大人がそんなことをするなんて。",
-        "こども{ならいざしらず}、おとながそんなことをするなんて。",
-        "From a child, maybe, but for an adult to do something like that!",
-        {
-          accept: ["ならまだしも", "ならともかく"],
-          near: [
-            [
-              "なら",
-              'Plain なら is "if". For "X would be one thing, but", use ならいざ知らず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "昔{ならいざ知らず}、今どきそんな考えは通用しない。",
-        "むかし{ならいざしらず}、いまどきそんなかんがえはつうようしない。",
-        "It might have worked in the old days, but that kind of thinking doesn't fly today.",
-        {
-          accept: ["ならまだしも", "ならともかく", "はいざ知らず"],
-          near: [
-            [
-              "なら",
-              'Plain なら is "if". For "X would be one thing, but", use ならいざ知らず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "素人{ならいざ知らず}、プロがこんなミスをするとは。",
-        "しろうと{ならいざしらず}、プロがこんなミスをするとは。",
-        "From an amateur, perhaps, but a professional making a mistake like this?",
-        {
-          accept: ["ならまだしも", "ならともかく"],
-          near: [
-            [
-              "ならでは",
-              'ならでは is "unique to". For "X would be one thing, but", use ならいざ知らず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "一度{ならいざ知らず}、何度も同じことを言わせるな。",
-        "いちど{ならいざしらず}、なんどもおなじことをいわせるな。",
-        "Once would be one thing, but don't make me say the same thing over and over.",
-        {
-          accept: ["ならまだしも", "ならともかく"],
-          near: [
-            [
-              "なら",
-              'Plain なら is "if". For "once would be one thing, but", use ならいざ知らず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "他の人{はいざ知らず}、私は反対だ。",
-        "ほかのひと{はいざしらず}、わたしははんたいだ。",
-        "I don't know about anyone else, but I'm against it.",
-        {
-          accept: ["ならいざ知らず", "はともかく"],
-          near: [
-            [
-              "は別として",
-              "は別として works in meaning. This point practises はいざ知らず.",
-              "はべつとして",
-            ],
-          ],
-        },
-      ),
+      s("子ども{ならいざ知らず}、大人がそんなことをするなんて。", "こども{ならいざしらず}、おとながそんなことをするなんて。", "From a child, maybe, but for an adult to do something like that!", {
+        accept: ["ならまだしも", "ならともかく"],
+        near: [["なら", "Plain なら is \"if\". For \"X would be one thing, but\", use ならいざ知らず."]],
+      }),
+      s("昔{ならいざ知らず}、今どきそんな考えは通用しない。", "むかし{ならいざしらず}、いまどきそんなかんがえはつうようしない。", "It might have worked in the old days, but that kind of thinking doesn't fly today.", {
+        accept: ["ならまだしも", "ならともかく", "はいざ知らず"],
+        near: [["なら", "Plain なら is \"if\". For \"X would be one thing, but\", use ならいざ知らず."]],
+      }),
+      s("素人{ならいざ知らず}、プロがこんなミスをするとは。", "しろうと{ならいざしらず}、プロがこんなミスをするとは。", "From an amateur, perhaps, but a professional making a mistake like this?", {
+        accept: ["ならまだしも", "ならともかく"],
+        near: [["ならでは", "ならでは is \"unique to\". For \"X would be one thing, but\", use ならいざ知らず."]],
+      }),
+      s("一度{ならいざ知らず}、何度も同じことを言わせるな。", "いちど{ならいざしらず}、なんどもおなじことをいわせるな。", "Once would be one thing, but don't make me say the same thing over and over.", {
+        accept: ["ならまだしも", "ならともかく"],
+        near: [["なら", "Plain なら is \"if\". For \"once would be one thing, but\", use ならいざ知らず."]],
+      }),
+      s("他の人{はいざ知らず}、私は反対だ。", "ほかのひと{はいざしらず}、わたしははんたいだ。", "I don't know about anyone else, but I'm against it.", {
+        accept: ["ならいざ知らず", "はともかく"],
+        near: [["は別として", "は別として works in meaning. This point practises はいざ知らず.", "はべつとして"]],
+      }),
     ],
   }),
 
@@ -628,76 +288,26 @@ The first half is an easier case (a child, an amateur, the old days, a single ti
 It's very close to ならいざ知らず, and the two are often interchangeable. ならまだしも is a little more conversational and focuses on "tolerable vs. intolerable", while ならいざ知らず suggests "I can't judge that case, but this one…". ならともかく is the most everyday of the three.
 `,
     sentences: [
-      s(
-        "一度{ならまだしも}、三度も遅刻するなんて。",
-        "いちど{ならまだしも}、さんどもちこくするなんて。",
-        "Once would be forgivable, but being late three times?",
-        {
-          accept: ["ならいざ知らず", "ならともかく"],
-          near: [
-            [
-              "なら",
-              'Plain なら is "if". For "X would be acceptable, but", use ならまだしも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "冗談{ならまだしも}、本気で言っているから困る。",
-        "じょうだん{ならまだしも}、ほんきでいっているからこまる。",
-        "If it were a joke, fine, but the trouble is he means it.",
-        {
-          accept: ["ならいざ知らず", "ならともかく"],
-          near: [
-            [
-              "なら",
-              'Plain なら is "if". For "X would be fine, but", use ならまだしも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "少し{ならまだしも}、こんなに高いとは思わなかった。",
-        "すこし{ならまだしも}、こんなにたかいとはおもわなかった。",
-        "A little expensive would be fine, but I never thought it would cost this much.",
-        {
-          accept: ["ならともかく"],
-          near: [
-            [
-              "ならでは",
-              'ならでは is "unique to". For "X would be fine, but", use ならまだしも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "自分が損をするの{ならまだしも}、人に迷惑をかけるのは許せない。",
-        "じぶんがそんをするの{ならまだしも}、ひとにめいわくをかけるのはゆるせない。",
-        "Losing out yourself is one thing, but causing trouble for others is unforgivable.",
-        {
-          accept: ["ならいざ知らず", "ならともかく"],
-          near: [
-            [
-              "なら",
-              'Plain なら is "if". For "X would be one thing, but", use ならまだしも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "雨{ならまだしも}、雪の中を歩いて帰るのは大変だ。",
-        "あめ{ならまだしも}、ゆきのなかをあるいてかえるのはたいへんだ。",
-        "Rain would be one thing, but walking home in the snow is hard.",
-        {
-          accept: ["ならともかく"],
-          near: [
-            [
-              "ならでは",
-              'ならでは is "unique to". For "X would be one thing, but", use ならまだしも.',
-            ],
-          ],
-        },
-      ),
+      s("一度{ならまだしも}、三度も遅刻するなんて。", "いちど{ならまだしも}、さんどもちこくするなんて。", "Once would be forgivable, but being late three times?", {
+        accept: ["ならいざ知らず", "ならともかく"],
+        near: [["なら", "Plain なら is \"if\". For \"X would be acceptable, but\", use ならまだしも."]],
+      }),
+      s("冗談{ならまだしも}、本気で言っているから困る。", "じょうだん{ならまだしも}、ほんきでいっているからこまる。", "If it were a joke, fine, but the trouble is he means it.", {
+        accept: ["ならいざ知らず", "ならともかく"],
+        near: [["なら", "Plain なら is \"if\". For \"X would be fine, but\", use ならまだしも."]],
+      }),
+      s("少し{ならまだしも}、こんなに高いとは思わなかった。", "すこし{ならまだしも}、こんなにたかいとはおもわなかった。", "A little expensive would be fine, but I never thought it would cost this much.", {
+        accept: ["ならともかく"],
+        near: [["ならでは", "ならでは is \"unique to\". For \"X would be fine, but\", use ならまだしも."]],
+      }),
+      s("自分が損をするの{ならまだしも}、人に迷惑をかけるのは許せない。", "じぶんがそんをするの{ならまだしも}、ひとにめいわくをかけるのはゆるせない。", "Losing out yourself is one thing, but causing trouble for others is unforgivable.", {
+        accept: ["ならいざ知らず", "ならともかく"],
+        near: [["なら", "Plain なら is \"if\". For \"X would be one thing, but\", use ならまだしも."]],
+      }),
+      s("雨{ならまだしも}、雪の中を歩いて帰るのは大変だ。", "あめ{ならまだしも}、ゆきのなかをあるいてかえるのはたいへんだ。", "Rain would be one thing, but walking home in the snow is hard.", {
+        accept: ["ならともかく"],
+        near: [["ならでは", "ならでは is \"unique to\". For \"X would be one thing, but\", use ならまだしも."]],
+      }),
     ],
   }),
 
@@ -717,77 +327,22 @@ That evaluative tone is the difference from に比べて (N3) and に対して (
 It's written and a little old-fashioned. The verb 引き換える means "to exchange".
 `,
     sentences: [
-      s(
-        "兄{にひきかえ}、弟は勉強が嫌いだ。",
-        "あに{にひきかえ}、おとうとはべんきょうがきらいだ。",
-        "Unlike his older brother, the younger one hates studying.",
-        {
-          near: [
-            [
-              "に比べて",
-              "に比べて is a neutral comparison. For a sharp, judgemental contrast, use にひきかえ.",
-              "にくらべて",
-            ],
-          ],
-        },
-      ),
-      s(
-        "去年の猛暑{にひきかえ}、今年は涼しい。",
-        "きょねんのもうしょ{にひきかえ}、ことしはすずしい。",
-        "In contrast to last year's heatwave, this year is cool.",
-        {
-          accept: ["に比べて"],
-          near: [
-            [
-              "に対して",
-              'に対して is a neutral "whereas". For a stark contrast, use にひきかえ.',
-              "にたいして",
-            ],
-          ],
-        },
-      ),
-      s(
-        "前の上司{にひきかえ}、今の上司はとても優しい。",
-        "まえのじょうし{にひきかえ}、いまのじょうしはとてもやさしい。",
-        "Unlike my old boss, my current one is very kind.",
-        {
-          near: [
-            [
-              "に比べて",
-              "に比べて is a neutral comparison. For a judgemental contrast, use にひきかえ.",
-              "にくらべて",
-            ],
-          ],
-        },
-      ),
-      s(
-        "姉が社交的なの{にひきかえ}、妹は人見知りだ。",
-        "あねがしゃこうてきなの{にひきかえ}、いもうとはひとみしりだ。",
-        "Whereas the older sister is outgoing, the younger one is shy.",
-        {
-          near: [
-            [
-              "に対して",
-              'に対して is a neutral "whereas". For a stark contrast, use にひきかえ.',
-              "にたいして",
-            ],
-          ],
-        },
-      ),
-      s(
-        "活気のあった昔{にひきかえ}、今の商店街は寂しい。",
-        "かっきのあったむかし{にひきかえ}、いまのしょうてんがいはさびしい。",
-        "Compared with how lively it used to be, the shopping street is desolate now.",
-        {
-          near: [
-            [
-              "に比べて",
-              "に比べて is a neutral comparison. For a judgemental contrast, use にひきかえ.",
-              "にくらべて",
-            ],
-          ],
-        },
-      ),
+      s("兄{にひきかえ}、弟は勉強が嫌いだ。", "あに{にひきかえ}、おとうとはべんきょうがきらいだ。", "Unlike his older brother, the younger one hates studying.", {
+        near: [["に比べて", "に比べて is a neutral comparison. For a sharp, judgemental contrast, use にひきかえ.", "にくらべて"]],
+      }),
+      s("去年の猛暑{にひきかえ}、今年は涼しい。", "きょねんのもうしょ{にひきかえ}、ことしはすずしい。", "In contrast to last year's heatwave, this year is cool.", {
+        accept: ["に比べて"],
+        near: [["に対して", "に対して is a neutral \"whereas\". For a stark contrast, use にひきかえ.", "にたいして"]],
+      }),
+      s("前の上司{にひきかえ}、今の上司はとても優しい。", "まえのじょうし{にひきかえ}、いまのじょうしはとてもやさしい。", "Unlike my old boss, my current one is very kind.", {
+        near: [["に比べて", "に比べて is a neutral comparison. For a judgemental contrast, use にひきかえ.", "にくらべて"]],
+      }),
+      s("姉が社交的なの{にひきかえ}、妹は人見知りだ。", "あねがしゃこうてきなの{にひきかえ}、いもうとはひとみしりだ。", "Whereas the older sister is outgoing, the younger one is shy.", {
+        near: [["に対して", "に対して is a neutral \"whereas\". For a stark contrast, use にひきかえ.", "にたいして"]],
+      }),
+      s("活気のあった昔{にひきかえ}、今の商店街は寂しい。", "かっきのあったむかし{にひきかえ}、いまのしょうてんがいはさびしい。", "Compared with how lively it used to be, the shopping street is desolate now.", {
+        near: [["に比べて", "に比べて is a neutral comparison. For a judgemental contrast, use にひきかえ.", "にくらべて"]],
+      }),
     ],
   }),
 
@@ -807,81 +362,26 @@ It's close to に反して (N2), "contrary to". 裏腹 literally means "back and
 Compare に沿って (N2), "in line with", which is the opposite relationship.
 `,
     sentences: [
-      s(
-        "期待{とは裏腹に}、結果は散々だった。",
-        "きたい{とはうらはらに}、けっかはさんざんだった。",
-        "Contrary to our hopes, the results were dismal.",
-        {
-          accept: ["に反して", "と裏腹に"],
-          near: [
-            [
-              "に沿って",
-              'に沿って is "in line with". For "contrary to", use とは裏腹に.',
-              "にそって",
-            ],
-          ],
-        },
-      ),
-      s(
-        "言葉{とは裏腹に}、彼女の顔は悲しそうだった。",
-        "ことば{とはうらはらに}、かのじょのかおはかなしそうだった。",
-        "Despite her words, her face looked sad.",
-        {
-          accept: ["と裏腹に"],
-          near: [
-            [
-              "に沿って",
-              'に沿って is "in line with". For "at odds with", use とは裏腹に.',
-              "にそって",
-            ],
-          ],
-        },
-      ),
-      s(
-        "予想{とは裏腹に}、試合は一方的な展開になった。",
-        "よそう{とはうらはらに}、しあいはいっぽうてきなてんかいになった。",
-        "Contrary to predictions, the match turned out one-sided.",
-        {
-          accept: ["に反して", "と裏腹に"],
-          near: [
-            [
-              "に基づいて",
-              'に基づいて is "based on". For "contrary to", use とは裏腹に.',
-              "にもとづいて",
-            ],
-          ],
-        },
-      ),
-      s(
-        "明るい性格{とは裏腹に}、彼は繊細な一面を持っている。",
-        "あかるいせいかく{とはうらはらに}、かれはせんさいないちめんをもっている。",
-        "Behind his cheerful personality, he has a sensitive side.",
-        {
-          accept: ["と裏腹に"],
-          near: [
-            [
-              "に沿って",
-              'に沿って is "in line with". For "at odds with", use とは裏腹に.',
-              "にそって",
-            ],
-          ],
-        },
-      ),
-      s(
-        "政府の発表{とは裏腹に}、生活は苦しくなる一方だ。",
-        "せいふのはっぴょう{とはうらはらに}、せいかつはくるしくなるいっぽうだ。",
-        "Contrary to what the government says, life just keeps getting harder.",
-        {
-          accept: ["に反して", "と裏腹に"],
-          near: [
-            [
-              "に基づいて",
-              'に基づいて is "based on". For "contrary to", use とは裏腹に.',
-              "にもとづいて",
-            ],
-          ],
-        },
-      ),
+      s("期待{とは裏腹に}、結果は散々だった。", "きたい{とはうらはらに}、けっかはさんざんだった。", "Contrary to our hopes, the results were dismal.", {
+        accept: ["に反して", "と裏腹に"],
+        near: [["に沿って", "に沿って is \"in line with\". For \"contrary to\", use とは裏腹に.", "にそって"]],
+      }),
+      s("言葉{とは裏腹に}、彼女の顔は悲しそうだった。", "ことば{とはうらはらに}、かのじょのかおはかなしそうだった。", "Despite her words, her face looked sad.", {
+        accept: ["と裏腹に"],
+        near: [["に沿って", "に沿って is \"in line with\". For \"at odds with\", use とは裏腹に.", "にそって"]],
+      }),
+      s("予想{とは裏腹に}、試合は一方的な展開になった。", "よそう{とはうらはらに}、しあいはいっぽうてきなてんかいになった。", "Contrary to predictions, the match turned out one-sided.", {
+        accept: ["に反して", "と裏腹に"],
+        near: [["に基づいて", "に基づいて is \"based on\". For \"contrary to\", use とは裏腹に.", "にもとづいて"]],
+      }),
+      s("明るい性格{とは裏腹に}、彼は繊細な一面を持っている。", "あかるいせいかく{とはうらはらに}、かれはせんさいないちめんをもっている。", "Behind his cheerful personality, he has a sensitive side.", {
+        accept: ["と裏腹に"],
+        near: [["に沿って", "に沿って is \"in line with\". For \"at odds with\", use とは裏腹に.", "にそって"]],
+      }),
+      s("政府の発表{とは裏腹に}、生活は苦しくなる一方だ。", "せいふのはっぴょう{とはうらはらに}、せいかつはくるしくなるいっぽうだ。", "Contrary to what the government says, life just keeps getting harder.", {
+        accept: ["に反して", "と裏腹に"],
+        near: [["に基づいて", "に基づいて is \"based on\". For \"contrary to\", use とは裏腹に.", "にもとづいて"]],
+      }),
     ],
   }),
 
@@ -899,72 +399,22 @@ The noun is usually other people's worry, opposition, criticism or excitement: �
 よそ means "somewhere else", so it's literally "treating it as someone else's business". Compare も構わず (N2), "without caring about", and をものともせず, which is about overcoming obstacles bravely.
 `,
     sentences: [
-      s(
-        "親の心配{をよそに}、息子は一人で旅に出た。",
-        "おやのしんぱい{をよそに}、むすこはひとりでたびにでた。",
-        "Ignoring his parents' worries, the son set off travelling alone.",
-        {
-          near: [
-            [
-              "をもとに",
-              'をもとに is "based on". For "ignoring", use をよそに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "周囲の反対{をよそに}、彼は会社を辞めた。",
-        "しゅういのはんたい{をよそに}、かれはかいしゃをやめた。",
-        "In spite of everyone's objections, he quit his job.",
-        {
-          accept: ["を押して", "をものともせず"],
-          near: [
-            [
-              "をめぐって",
-              'をめぐって is "over, concerning". For "ignoring", use をよそに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "住民の不安{をよそに}、工事は進められた。",
-        "じゅうみんのふあん{をよそに}、こうじはすすめられた。",
-        "The construction went ahead, regardless of residents' concerns.",
-        {
-          near: [
-            [
-              "をもとに",
-              'をもとに is "based on". For "regardless of", use をよそに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "周りの騒ぎ{をよそに}、赤ちゃんはぐっすり眠っていた。",
-        "まわりのさわぎ{をよそに}、あかちゃんはぐっすりねむっていた。",
-        "Oblivious to the commotion, the baby slept soundly.",
-        {
-          near: [
-            [
-              "をめぐって",
-              'をめぐって is "over, concerning". For "oblivious to", use をよそに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "世間の期待{をよそに}、彼は突然引退を発表した。",
-        "せけんのきたい{をよそに}、かれはとつぜんいんたいをはっぴょうした。",
-        "Ignoring the public's hopes, he suddenly announced his retirement.",
-        {
-          near: [
-            [
-              "をもとに",
-              'をもとに is "based on". For "ignoring", use をよそに.',
-            ],
-          ],
-        },
-      ),
+      s("親の心配{をよそに}、息子は一人で旅に出た。", "おやのしんぱい{をよそに}、むすこはひとりでたびにでた。", "Ignoring his parents' worries, the son set off travelling alone.", {
+        near: [["をもとに", "をもとに is \"based on\". For \"ignoring\", use をよそに."]],
+      }),
+      s("周囲の反対{をよそに}、彼は会社を辞めた。", "しゅういのはんたい{をよそに}、かれはかいしゃをやめた。", "In spite of everyone's objections, he quit his job.", {
+        accept: ["を押して", "をものともせず"],
+        near: [["をめぐって", "をめぐって is \"over, concerning\". For \"ignoring\", use をよそに."]],
+      }),
+      s("住民の不安{をよそに}、工事は進められた。", "じゅうみんのふあん{をよそに}、こうじはすすめられた。", "The construction went ahead, regardless of residents' concerns.", {
+        near: [["をもとに", "をもとに is \"based on\". For \"regardless of\", use をよそに."]],
+      }),
+      s("周りの騒ぎ{をよそに}、赤ちゃんはぐっすり眠っていた。", "まわりのさわぎ{をよそに}、あかちゃんはぐっすりねむっていた。", "Oblivious to the commotion, the baby slept soundly.", {
+        near: [["をめぐって", "をめぐって is \"over, concerning\". For \"oblivious to\", use をよそに."]],
+      }),
+      s("世間の期待{をよそに}、彼は突然引退を発表した。", "せけんのきたい{をよそに}、かれはとつぜんいんたいをはっぴょうした。", "Ignoring the public's hopes, he suddenly announced his retirement.", {
+        near: [["をもとに", "をもとに is \"based on\". For \"ignoring\", use をよそに."]],
+      }),
     ],
   }),
 
@@ -982,76 +432,26 @@ The noun is a hardship: injury, strong wind, cold, criticism, difficulty. The se
 It's literally "not treating it as anything". Compare をよそに, "ignoring (others' feelings)", which is often critical, and を押して, "pushing through (one's own illness or others' objections)".
 `,
     sentences: [
-      s(
-        "彼は大けが{をものともせず}、試合に出場した。",
-        "かれはおおけが{をものともせず}、しあいにしゅつじょうした。",
-        "Undeterred by a serious injury, he played in the match.",
-        {
-          accept: ["をものともせずに", "を押して"],
-          near: [
-            [
-              "をよそに",
-              "をよそに is ignoring other people's feelings. For bravely overcoming an obstacle, use をものともせず.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "強い風{をものともせず}、船は進んだ。",
-        "つよいかぜ{をものともせず}、ふねはすすんだ。",
-        "The boat pressed on, undaunted by the strong wind.",
-        {
-          accept: ["をものともせずに"],
-          near: [
-            [
-              "をよそに",
-              "をよそに is ignoring other people's feelings. For defying an obstacle, use をものともせず.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "周囲の批判{をものともせずに}、彼女は自分の道を貫いた。",
-        "しゅういのひはん{をものともせずに}、かのじょはじぶんのみちをつらぬいた。",
-        "Undeterred by criticism, she stayed true to her own path.",
-        {
-          accept: ["をものともせず", "をよそに"],
-          near: [
-            [
-              "をもとに",
-              'をもとに is "based on". For "undeterred by", use をものともせずに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "寒さ{をものともせず}、子どもたちは外で遊んでいる。",
-        "さむさ{をものともせず}、こどもたちはそとであそんでいる。",
-        "The children are playing outside, oblivious to the cold.",
-        {
-          accept: ["をものともせずに"],
-          near: [
-            [
-              "をもとに",
-              'をもとに is "based on". For "undeterred by", use をものともせず.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "数々の困難{をものともせず}、彼らは山頂を目指した。",
-        "かずかずのこんなん{をものともせず}、かれらはさんちょうをめざした。",
-        "Undaunted by countless difficulties, they pushed on for the summit.",
-        {
-          accept: ["をものともせずに"],
-          near: [
-            [
-              "をよそに",
-              "をよそに is ignoring other people's feelings. For defying difficulties, use をものともせず.",
-            ],
-          ],
-        },
-      ),
+      s("彼は大けが{をものともせず}、試合に出場した。", "かれはおおけが{をものともせず}、しあいにしゅつじょうした。", "Undeterred by a serious injury, he played in the match.", {
+        accept: ["をものともせずに", "を押して"],
+        near: [["をよそに", "をよそに is ignoring other people's feelings. For bravely overcoming an obstacle, use をものともせず."]],
+      }),
+      s("強い風{をものともせず}、船は進んだ。", "つよいかぜ{をものともせず}、ふねはすすんだ。", "The boat pressed on, undaunted by the strong wind.", {
+        accept: ["をものともせずに"],
+        near: [["をよそに", "をよそに is ignoring other people's feelings. For defying an obstacle, use をものともせず."]],
+      }),
+      s("周囲の批判{をものともせずに}、彼女は自分の道を貫いた。", "しゅういのひはん{をものともせずに}、かのじょはじぶんのみちをつらぬいた。", "Undeterred by criticism, she stayed true to her own path.", {
+        accept: ["をものともせず", "をよそに"],
+        near: [["をもとに", "をもとに is \"based on\". For \"undeterred by\", use をものともせずに."]],
+      }),
+      s("寒さ{をものともせず}、子どもたちは外で遊んでいる。", "さむさ{をものともせず}、こどもたちはそとであそんでいる。", "The children are playing outside, oblivious to the cold.", {
+        accept: ["をものともせずに"],
+        near: [["をもとに", "をもとに is \"based on\". For \"undeterred by\", use をものともせず."]],
+      }),
+      s("数々の困難{をものともせず}、彼らは山頂を目指した。", "かずかずのこんなん{をものともせず}、かれらはさんちょうをめざした。", "Undaunted by countless difficulties, they pushed on for the summit.", {
+        accept: ["をものともせずに"],
+        near: [["をよそに", "をよそに is ignoring other people's feelings. For defying difficulties, use をものともせず."]],
+      }),
     ],
   }),
 
@@ -1071,80 +471,25 @@ The noun is usually your own physical condition (病気, 熱, 痛み, けが) or
 Don't confuse it with を通して, "through (a channel)".
 `,
     sentences: [
-      s(
-        "彼は病気{を押して}、会議に出席した。",
-        "かれはびょうき{をおして}、かいぎにしゅっせきした。",
-        "Despite being ill, he forced himself to attend the meeting.",
-        {
-          accept: ["をものともせず"],
-          near: [
-            [
-              "を通して",
-              'を通して is "through (a channel)". For "despite (and pushing through)", use を押して.',
-              "をとおして",
-            ],
-          ],
-        },
-      ),
-      s(
-        "二人は周囲の反対{を押して}、結婚した。",
-        "ふたりはしゅういのはんたい{をおして}、けっこんした。",
-        "The two of them married in the face of everyone's objections.",
-        {
-          accept: ["をよそに", "をものともせず"],
-          near: [
-            [
-              "を通して",
-              'を通して is "through (a channel)". For "in the face of", use を押して.',
-              "をとおして",
-            ],
-          ],
-        },
-      ),
-      s(
-        "熱{を押して}、試験を受けた。",
-        "ねつ{をおして}、しけんをうけた。",
-        "I took the exam despite having a fever.",
-        {
-          near: [
-            [
-              "を通して",
-              'を通して is "through (a channel)". For "despite (a fever)", use を押して.',
-              "をとおして",
-            ],
-          ],
-        },
-      ),
-      s(
-        "足の痛み{を押して}、最後まで走り抜いた。",
-        "あしのいたみ{をおして}、さいごまではしりぬいた。",
-        "She pushed through the pain in her leg and ran to the end.",
-        {
-          accept: ["をものともせず"],
-          near: [
-            [
-              "を込めて",
-              'を込めて is "full of (feeling)". For "pushing through", use を押して.',
-              "をこめて",
-            ],
-          ],
-        },
-      ),
-      s(
-        "悪天候{を押して}、捜索が続けられた。",
-        "あくてんこう{をおして}、そうさくがつづけられた。",
-        "The search continued despite the bad weather.",
-        {
-          accept: ["をものともせず"],
-          near: [
-            [
-              "を通して",
-              'を通して is "through (a channel)". For "despite", use を押して.',
-              "をとおして",
-            ],
-          ],
-        },
-      ),
+      s("彼は病気{を押して}、会議に出席した。", "かれはびょうき{をおして}、かいぎにしゅっせきした。", "Despite being ill, he forced himself to attend the meeting.", {
+        accept: ["をものともせず"],
+        near: [["を通して", "を通して is \"through (a channel)\". For \"despite (and pushing through)\", use を押して.", "をとおして"]],
+      }),
+      s("二人は周囲の反対{を押して}、結婚した。", "ふたりはしゅういのはんたい{をおして}、けっこんした。", "The two of them married in the face of everyone's objections.", {
+        accept: ["をよそに", "をものともせず"],
+        near: [["を通して", "を通して is \"through (a channel)\". For \"in the face of\", use を押して.", "をとおして"]],
+      }),
+      s("熱{を押して}、試験を受けた。", "ねつ{をおして}、しけんをうけた。", "I took the exam despite having a fever.", {
+        near: [["を通して", "を通して is \"through (a channel)\". For \"despite (a fever)\", use を押して.", "をとおして"]],
+      }),
+      s("足の痛み{を押して}、最後まで走り抜いた。", "あしのいたみ{をおして}、さいごまではしりぬいた。", "She pushed through the pain in her leg and ran to the end.", {
+        accept: ["をものともせず"],
+        near: [["を込めて", "を込めて is \"full of (feeling)\". For \"pushing through\", use を押して.", "をこめて"]],
+      }),
+      s("悪天候{を押して}、捜索が続けられた。", "あくてんこう{をおして}、そうさくがつづけられた。", "The search continued despite the bad weather.", {
+        accept: ["をものともせず"],
+        near: [["を通して", "を通して is \"through (a channel)\". For \"despite\", use を押して.", "をとおして"]],
+      }),
     ],
   }),
 
@@ -1164,76 +509,26 @@ It's very close to とはいえ (N2) and とはいっても. とはいうもの�
 Compare というより (N3), "rather than", which corrects a description instead of conceding it.
 `,
     sentences: [
-      s(
-        "春{とはいうものの}、まだ寒い日が続く。",
-        "はる{とはいうものの}、まださむいひがつづく。",
-        "It may be spring, but the cold days go on.",
-        {
-          accept: ["とはいえ", "とはいっても", "と言うものの"],
-          near: [
-            [
-              "というより",
-              'というより is "rather than". For "it may be X, but", use とはいうものの.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "自分で決めた{とはいうものの}、不安もある。",
-        "じぶんできめた{とはいうものの}、ふあんもある。",
-        "Although it was my own decision, I do have worries.",
-        {
-          accept: ["とはいえ", "とはいっても", "と言うものの"],
-          near: [
-            [
-              "ということは",
-              'ということは is "which means". For "although", use とはいうものの.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "日本語を勉強している{とはいうものの}、まだ簡単な会話しかできない。",
-        "にほんごをべんきょうしている{とはいうものの}、まだかんたんなかいわしかできない。",
-        "I say I'm studying Japanese, but I can still only manage simple conversations.",
-        {
-          accept: ["とはいえ", "とはいっても", "と言うものの"],
-          near: [
-            [
-              "というより",
-              'というより is "rather than". For "I say…, but", use とはいうものの.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "夏休み{とはいうものの}、毎日部活がある。",
-        "なつやすみ{とはいうものの}、まいにちぶかつがある。",
-        "It's the summer holidays, supposedly, but I have club activities every day.",
-        {
-          accept: ["とはいえ", "とはいっても", "と言うものの"],
-          near: [
-            [
-              "ということは",
-              'ということは is "which means". For "supposedly, but", use とはいうものの.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "安い{とはいうものの}、やはり買うのは迷う。",
-        "やすい{とはいうものの}、やはりかうのはまよう。",
-        "Cheap as it is, I'm still in two minds about buying it.",
-        {
-          accept: ["とはいえ", "とはいっても", "と言うものの"],
-          near: [
-            [
-              "というより",
-              'というより is "rather than". For "cheap as it is", use とはいうものの.',
-            ],
-          ],
-        },
-      ),
+      s("春{とはいうものの}、まだ寒い日が続く。", "はる{とはいうものの}、まださむいひがつづく。", "It may be spring, but the cold days go on.", {
+        accept: ["とはいえ", "とはいっても", "と言うものの"],
+        near: [["というより", "というより is \"rather than\". For \"it may be X, but\", use とはいうものの."]],
+      }),
+      s("自分で決めた{とはいうものの}、不安もある。", "じぶんできめた{とはいうものの}、ふあんもある。", "Although it was my own decision, I do have worries.", {
+        accept: ["とはいえ", "とはいっても", "と言うものの"],
+        near: [["ということは", "ということは is \"which means\". For \"although\", use とはいうものの."]],
+      }),
+      s("日本語を勉強している{とはいうものの}、まだ簡単な会話しかできない。", "にほんごをべんきょうしている{とはいうものの}、まだかんたんなかいわしかできない。", "I say I'm studying Japanese, but I can still only manage simple conversations.", {
+        accept: ["とはいえ", "とはいっても", "と言うものの"],
+        near: [["というより", "というより is \"rather than\". For \"I say…, but\", use とはいうものの."]],
+      }),
+      s("夏休み{とはいうものの}、毎日部活がある。", "なつやすみ{とはいうものの}、まいにちぶかつがある。", "It's the summer holidays, supposedly, but I have club activities every day.", {
+        accept: ["とはいえ", "とはいっても", "と言うものの"],
+        near: [["ということは", "ということは is \"which means\". For \"supposedly, but\", use とはいうものの."]],
+      }),
+      s("安い{とはいうものの}、やはり買うのは迷う。", "やすい{とはいうものの}、やはりかうのはまよう。", "Cheap as it is, I'm still in two minds about buying it.", {
+        accept: ["とはいえ", "とはいっても", "と言うものの"],
+        near: [["というより", "というより is \"rather than\". For \"cheap as it is\", use とはいうものの."]],
+      }),
     ],
   }),
 
@@ -1253,75 +548,25 @@ The second half usually says the result is fine anyway: 分かる, 間に合う,
 Don't confuse it with ずに, "without doing (and doing something else instead)": 朝ご飯を食べずに出かけた.
 `,
     sentences: [
-      s(
-        "わざわざ言わ{ずとも}、分かっている。",
-        "わざわざいわ{ずとも}、わかっている。",
-        "You don't need to tell me. I know.",
-        {
-          accept: ["なくても"],
-          near: [
-            [
-              "ずに",
-              'ずに is "without doing (and doing something else)". For "even without", use ずとも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "急が{ずとも}、間に合うだろう。",
-        "いそが{ずとも}、まにあうだろう。",
-        "We'll make it even if we don't hurry.",
-        {
-          accept: ["なくても"],
-          near: [
-            [
-              "ずに",
-              'ずに is "without doing (and doing something else)". For "even if we don\'t", use ずとも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "高い薬を使わ{ずとも}、治る病気だ。",
-        "たかいくすりをつかわ{ずとも}、なおるびょうきだ。",
-        "It's an illness that gets better even without expensive medicine.",
-        {
-          accept: ["なくても"],
-          near: [
-            [
-              "ずに",
-              'ずに is "without doing (and doing something else)". For "even without", use ずとも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "説明され{ずとも}、見れば分かる。",
-        "せつめいされ{ずとも}、みればわかる。",
-        "You can tell just by looking, without it being explained.",
-        {
-          accept: ["なくても"],
-          near: [
-            [
-              "ずに",
-              'ずに is "without doing (and doing something else)". For "even without", use ずとも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "そんなに心配せ{ずとも}、大丈夫だ。",
-        "そんなにしんぱいせ{ずとも}、だいじょうぶだ。",
-        "It'll be fine, even if you don't worry so much.",
-        {
-          near: [
-            [
-              "ずに",
-              'ずに is "without doing (and doing something else)". For "even if you don\'t", use ずとも.',
-            ],
-          ],
-        },
-      ),
+      s("わざわざ言わ{ずとも}、分かっている。", "わざわざいわ{ずとも}、わかっている。", "You don't need to tell me. I know.", {
+        accept: ["なくても"],
+        near: [["ずに", "ずに is \"without doing (and doing something else)\". For \"even without\", use ずとも."]],
+      }),
+      s("急が{ずとも}、間に合うだろう。", "いそが{ずとも}、まにあうだろう。", "We'll make it even if we don't hurry.", {
+        accept: ["なくても"],
+        near: [["ずに", "ずに is \"without doing (and doing something else)\". For \"even if we don't\", use ずとも."]],
+      }),
+      s("高い薬を使わ{ずとも}、治る病気だ。", "たかいくすりをつかわ{ずとも}、なおるびょうきだ。", "It's an illness that gets better even without expensive medicine.", {
+        accept: ["なくても"],
+        near: [["ずに", "ずに is \"without doing (and doing something else)\". For \"even without\", use ずとも."]],
+      }),
+      s("説明され{ずとも}、見れば分かる。", "せつめいされ{ずとも}、みればわかる。", "You can tell just by looking, without it being explained.", {
+        accept: ["なくても"],
+        near: [["ずに", "ずに is \"without doing (and doing something else)\". For \"even without\", use ずとも."]],
+      }),
+      s("そんなに心配せ{ずとも}、大丈夫だ。", "そんなにしんぱいせ{ずとも}、だいじょうぶだ。", "It'll be fine, even if you don't worry so much.", {
+        near: [["ずに", "ずに is \"without doing (and doing something else)\". For \"even if you don't\", use ずとも."]],
+      }),
     ],
   }),
 
@@ -1341,71 +586,21 @@ Common shapes are 〜とは言わないまでも ("I won't go as far as saying")
 Compare なくても, "even without", which doesn't set up a lower target. ないまでも is always "not X, but at least Y".
 `,
     sentences: [
-      s(
-        "毎日とは言わ{ないまでも}、週に一度は運動したい。",
-        "まいにちとはいわ{ないまでも}、しゅうにいちどはうんどうしたい。",
-        "Not every day, perhaps, but I'd like to exercise at least once a week.",
-        {
-          near: [
-            [
-              "なくても",
-              'なくても is "even without". For "not X, but at least Y", use ないまでも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "優勝はでき{ないまでも}、三位には入りたい。",
-        "ゆうしょうはでき{ないまでも}、さんいにははいりたい。",
-        "Even if we can't win, I'd like us to make the top three.",
-        {
-          near: [
-            [
-              "なくても",
-              'なくても is "even without". For "not X, but at least Y", use ないまでも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "完璧では{ないまでも}、合格点は取れるはずだ。",
-        "かんぺきでは{ないまでも}、ごうかくてんはとれるはずだ。",
-        "It may not be perfect, but it should get a pass mark.",
-        {
-          near: [
-            [
-              "なくても",
-              'なくても is "even without". For "not X, but at least Y", use ないまでも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "謝ら{ないまでも}、説明ぐらいはすべきだ。",
-        "あやまら{ないまでも}、せつめいぐらいはすべきだ。",
-        "He doesn't have to apologise, but he should at least explain.",
-        {
-          near: [
-            [
-              "ないで",
-              'ないで is "without". For "not X, but at least Y", use ないまでも.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "手伝わ{ないまでも}、邪魔はしないでほしい。",
-        "てつだわ{ないまでも}、じゃまはしないでほしい。",
-        "If you won't help, at least don't get in the way.",
-        {
-          near: [
-            [
-              "ないで",
-              'ないで is "without". For "not X, but at least Y", use ないまでも.',
-            ],
-          ],
-        },
-      ),
+      s("毎日とは言わ{ないまでも}、週に一度は運動したい。", "まいにちとはいわ{ないまでも}、しゅうにいちどはうんどうしたい。", "Not every day, perhaps, but I'd like to exercise at least once a week.", {
+        near: [["なくても", "なくても is \"even without\". For \"not X, but at least Y\", use ないまでも."]],
+      }),
+      s("優勝はでき{ないまでも}、三位には入りたい。", "ゆうしょうはでき{ないまでも}、さんいにははいりたい。", "Even if we can't win, I'd like us to make the top three.", {
+        near: [["なくても", "なくても is \"even without\". For \"not X, but at least Y\", use ないまでも."]],
+      }),
+      s("完璧では{ないまでも}、合格点は取れるはずだ。", "かんぺきでは{ないまでも}、ごうかくてんはとれるはずだ。", "It may not be perfect, but it should get a pass mark.", {
+        near: [["なくても", "なくても is \"even without\". For \"not X, but at least Y\", use ないまでも."]],
+      }),
+      s("謝ら{ないまでも}、説明ぐらいはすべきだ。", "あやまら{ないまでも}、せつめいぐらいはすべきだ。", "He doesn't have to apologise, but he should at least explain.", {
+        near: [["ないで", "ないで is \"without\". For \"not X, but at least Y\", use ないまでも."]],
+      }),
+      s("手伝わ{ないまでも}、邪魔はしないでほしい。", "てつだわ{ないまでも}、じゃまはしないでほしい。", "If you won't help, at least don't get in the way.", {
+        near: [["ないで", "ないで is \"without\". For \"not X, but at least Y\", use ないまでも."]],
+      }),
     ],
   }),
 
@@ -1423,76 +618,26 @@ Compare なくても, "even without", which doesn't set up a lower target. な�
 Both are emphatic versions of としても and にしても (N3), and they're related to たところで (N2), "even if (it's pointless)". The tone is resigned or a little argumentative.
 `,
     sentences: [
-      s(
-        "今から急いだ{としたところで}、間に合わないだろう。",
-        "いまからいそいだ{としたところで}、まにあわないだろう。",
-        "Even if we hurried now, we probably wouldn't make it.",
-        {
-          accept: ["としても", "ところで"],
-          near: [
-            [
-              "としたら",
-              'としたら is "if (supposing)". For "even if (it wouldn\'t help)", use としたところで.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "私{にしたところで}、いい案があるわけではない。",
-        "わたし{にしたところで}、いいあんがあるわけではない。",
-        "It's not as if I have a good idea either.",
-        {
-          accept: ["にしても", "としても"],
-          near: [
-            [
-              "にしては",
-              'にしては is "for (surprisingly)". For "even for me", use にしたところで.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼{にしたところで}、全部分かっているわけではない。",
-        "かれ{にしたところで}、ぜんぶわかっているわけではない。",
-        "Even he doesn't understand all of it.",
-        {
-          accept: ["にしても", "としても"],
-          near: [
-            [
-              "にしては",
-              'にしては is "for (surprisingly)". For "even he", use にしたところで.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "今さら謝った{としたところで}、許してもらえないだろう。",
-        "いまさらあやまった{としたところで}、ゆるしてもらえないだろう。",
-        "Even if I apologised now, they probably wouldn't forgive me.",
-        {
-          accept: ["としても", "ところで"],
-          near: [
-            [
-              "としたら",
-              'としたら is "if (supposing)". For "even if (it wouldn\'t help)", use としたところで.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "私一人が反対した{としたところで}、結果は変わらない。",
-        "わたしひとりがはんたいした{としたところで}、けっかはかわらない。",
-        "Even if I alone objected, it wouldn't change the result.",
-        {
-          accept: ["としても", "ところで"],
-          near: [
-            [
-              "としたら",
-              'としたら is "if (supposing)". For "even if (it wouldn\'t matter)", use としたところで.',
-            ],
-          ],
-        },
-      ),
+      s("今から急いだ{としたところで}、間に合わないだろう。", "いまからいそいだ{としたところで}、まにあわないだろう。", "Even if we hurried now, we probably wouldn't make it.", {
+        accept: ["としても", "ところで"],
+        near: [["としたら", "としたら is \"if (supposing)\". For \"even if (it wouldn't help)\", use としたところで."]],
+      }),
+      s("私{にしたところで}、いい案があるわけではない。", "わたし{にしたところで}、いいあんがあるわけではない。", "It's not as if I have a good idea either.", {
+        accept: ["にしても", "としても"],
+        near: [["にしては", "にしては is \"for (surprisingly)\". For \"even for me\", use にしたところで."]],
+      }),
+      s("彼{にしたところで}、全部分かっているわけではない。", "かれ{にしたところで}、ぜんぶわかっているわけではない。", "Even he doesn't understand all of it.", {
+        accept: ["にしても", "としても"],
+        near: [["にしては", "にしては is \"for (surprisingly)\". For \"even he\", use にしたところで."]],
+      }),
+      s("今さら謝った{としたところで}、許してもらえないだろう。", "いまさらあやまった{としたところで}、ゆるしてもらえないだろう。", "Even if I apologised now, they probably wouldn't forgive me.", {
+        accept: ["としても", "ところで"],
+        near: [["としたら", "としたら is \"if (supposing)\". For \"even if (it wouldn't help)\", use としたところで."]],
+      }),
+      s("私一人が反対した{としたところで}、結果は変わらない。", "わたしひとりがはんたいした{としたところで}、けっかはかわらない。", "Even if I alone objected, it wouldn't change the result.", {
+        accept: ["としても", "ところで"],
+        near: [["としたら", "としたら is \"if (supposing)\". For \"even if (it wouldn't matter)\", use としたところで."]],
+      }),
     ],
   }),
 
@@ -1512,65 +657,26 @@ The everyday equivalent is だって or でも. It's close to といえども, w
 With a negative, 誰とて〜ない means "no one at all". Don't confuse it with として, "as (a role)".
 `,
     sentences: [
-      s(
-        "私{とて}、この結果には納得していない。",
-        "わたし{とて}、このけっかにはなっとくしていない。",
-        "Even I'm not satisfied with this result.",
-        {
-          accept: ["だって", "も", "でも"],
-          near: [
-            ["として", 'として is "as (a role)". For "even I", use とて.'],
-          ],
-        },
-      ),
-      s(
-        "誰{とて}、死ぬのは怖い。",
-        "だれ{とて}、しぬのはこわい。",
-        "Everyone is afraid of dying.",
-        {
-          accept: ["だって", "でも"],
-          near: [
-            [
-              "として",
-              'として is "as (a role)". For "anyone at all", use とて.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "先生{とて}人間だ。間違えることもある。",
-        "せんせい{とて}にんげんだ。まちがえることもある。",
-        "Teachers are human too. They make mistakes.",
-        {
-          accept: ["だって", "も", "でも"],
-          near: [["として", 'として is "as (a role)". For "X too", use とて.']],
-        },
-      ),
-      s(
-        "今{とて}、その気持ちは変わらない。",
-        "いま{とて}、そのきもちはかわらない。",
-        "Even now, that feeling hasn't changed.",
-        {
-          accept: ["でも", "も"],
-          near: [
-            ["として", 'として is "as (a role)". For "even now", use とて.'],
-          ],
-        },
-      ),
-      s(
-        "親{とて}、子どもの気持ちがすべて分かるわけではない。",
-        "おや{とて}、こどものきもちがすべてわかるわけではない。",
-        "Even parents don't understand everything their children feel.",
-        {
-          accept: ["だって", "でも"],
-          near: [
-            [
-              "として",
-              'として is "as (a role)". For "even parents", use とて.',
-            ],
-          ],
-        },
-      ),
+      s("私{とて}、この結果には納得していない。", "わたし{とて}、このけっかにはなっとくしていない。", "Even I'm not satisfied with this result.", {
+        accept: ["だって", "も", "でも"],
+        near: [["として", "として is \"as (a role)\". For \"even I\", use とて."]],
+      }),
+      s("誰{とて}、死ぬのは怖い。", "だれ{とて}、しぬのはこわい。", "Everyone is afraid of dying.", {
+        accept: ["だって", "でも"],
+        near: [["として", "として is \"as (a role)\". For \"anyone at all\", use とて."]],
+      }),
+      s("先生{とて}人間だ。間違えることもある。", "せんせい{とて}にんげんだ。まちがえることもある。", "Teachers are human too. They make mistakes.", {
+        accept: ["だって", "も", "でも"],
+        near: [["として", "として is \"as (a role)\". For \"X too\", use とて."]],
+      }),
+      s("今{とて}、その気持ちは変わらない。", "いま{とて}、そのきもちはかわらない。", "Even now, that feeling hasn't changed.", {
+        accept: ["でも", "も"],
+        near: [["として", "として is \"as (a role)\". For \"even now\", use とて."]],
+      }),
+      s("親{とて}、子どもの気持ちがすべて分かるわけではない。", "おや{とて}、こどものきもちがすべてわかるわけではない。", "Even parents don't understand everything their children feel.", {
+        accept: ["だって", "でも"],
+        near: [["として", "として is \"as (a role)\". For \"even parents\", use とて."]],
+      }),
     ],
   }),
 
@@ -1590,76 +696,26 @@ It's a sad, sympathetic expression, often used in reports of illness and defeat:
 Compare おかげで, "thanks to", which is the grateful opposite.
 `,
     sentences: [
-      s(
-        "努力の{かいもなく}、試験に落ちた。",
-        "どりょくの{かいもなく}、しけんにおちた。",
-        "Despite all my efforts, I failed the exam.",
-        {
-          accept: ["甲斐もなく"],
-          near: [
-            [
-              "かいがあって",
-              'かいがあって is "it paid off". For "in vain", use かいもなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "懸命な治療の{かいもなく}、彼は亡くなった。",
-        "けんめいなちりょうの{かいもなく}、かれはなくなった。",
-        "Despite every effort to treat him, he passed away.",
-        {
-          accept: ["甲斐もなく"],
-          near: [
-            [
-              "おかげで",
-              'おかげで is "thanks to". For "despite (in vain)", use かいもなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "必死に応援した{かいもなく}、チームは負けた。",
-        "ひっしにおうえんした{かいもなく}、チームはまけた。",
-        "Despite our desperate cheering, the team lost.",
-        {
-          accept: ["甲斐もなく"],
-          near: [
-            [
-              "かいがあって",
-              'かいがあって is "it paid off". For "in vain", use かいもなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "毎日練習した{かいもなく}、一回戦で敗退した。",
-        "まいにちれんしゅうした{かいもなく}、いっかいせんではいたいした。",
-        "All that daily practice was for nothing. We went out in the first round.",
-        {
-          accept: ["甲斐もなく"],
-          near: [
-            [
-              "おかげで",
-              'おかげで is "thanks to". For "for nothing", use かいもなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "何度も説得した{かいもなく}、彼は会社を辞めた。",
-        "なんどもせっとくした{かいもなく}、かれはかいしゃをやめた。",
-        "Despite all my attempts to persuade him, he quit the company.",
-        {
-          accept: ["甲斐もなく"],
-          near: [
-            [
-              "かいがあって",
-              'かいがあって is "it paid off". For "in vain", use かいもなく.',
-            ],
-          ],
-        },
-      ),
+      s("努力の{かいもなく}、試験に落ちた。", "どりょくの{かいもなく}、しけんにおちた。", "Despite all my efforts, I failed the exam.", {
+        accept: ["甲斐もなく"],
+        near: [["かいがあって", "かいがあって is \"it paid off\". For \"in vain\", use かいもなく."]],
+      }),
+      s("懸命な治療の{かいもなく}、彼は亡くなった。", "けんめいなちりょうの{かいもなく}、かれはなくなった。", "Despite every effort to treat him, he passed away.", {
+        accept: ["甲斐もなく"],
+        near: [["おかげで", "おかげで is \"thanks to\". For \"despite (in vain)\", use かいもなく."]],
+      }),
+      s("必死に応援した{かいもなく}、チームは負けた。", "ひっしにおうえんした{かいもなく}、チームはまけた。", "Despite our desperate cheering, the team lost.", {
+        accept: ["甲斐もなく"],
+        near: [["かいがあって", "かいがあって is \"it paid off\". For \"in vain\", use かいもなく."]],
+      }),
+      s("毎日練習した{かいもなく}、一回戦で敗退した。", "まいにちれんしゅうした{かいもなく}、いっかいせんではいたいした。", "All that daily practice was for nothing. We went out in the first round.", {
+        accept: ["甲斐もなく"],
+        near: [["おかげで", "おかげで is \"thanks to\". For \"for nothing\", use かいもなく."]],
+      }),
+      s("何度も説得した{かいもなく}、彼は会社を辞めた。", "なんどもせっとくした{かいもなく}、かれはかいしゃをやめた。", "Despite all my attempts to persuade him, he quit the company.", {
+        accept: ["甲斐もなく"],
+        near: [["かいがあって", "かいがあって is \"it paid off\". For \"in vain\", use かいもなく."]],
+      }),
     ],
   }),
 
@@ -1679,76 +735,26 @@ It's a stronger, more literary version of のに (N4): 素直に謝ればいい�
 Don't confuse it with ものの (N2), "although", which is a neutral concession.
 `,
     sentences: [
-      s(
-        "早く言ってくれれば手伝った{ものを}。",
-        "はやくいってくれればてつだった{ものを}。",
-        "If only you'd told me sooner, I'd have helped.",
-        {
-          accept: ["のに"],
-          near: [
-            [
-              "ものの",
-              'ものの is "although". For regret ("if only"), use ものを.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "知っていれば教えてあげた{ものを}、なぜ黙っていたのか。",
-        "しっていればおしえてあげた{ものを}、なぜだまっていたのか。",
-        "I'd have told you if I'd known. Why did you keep quiet?",
-        {
-          accept: ["のに"],
-          near: [
-            [
-              "ものの",
-              'ものの is "although". For regret ("I\'d have"), use ものを.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "素直に謝ればいい{ものを}、彼は言い訳ばかりする。",
-        "すなおにあやまればいい{ものを}、かれはいいわけばかりする。",
-        "He could just apologise, but all he does is make excuses.",
-        {
-          accept: ["のに"],
-          near: [
-            [
-              "ものの",
-              'ものの is "although". For reproach ("he could just"), use ものを.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "もう少し待てば会えた{ものを}、先に帰ってしまった。",
-        "もうすこしまてばあえた{ものを}、さきにかえってしまった。",
-        "If I'd waited a little longer I'd have seen them, but I went home first.",
-        {
-          accept: ["のに"],
-          near: [
-            [
-              "ものだ",
-              'ものだ is "that\'s how it is". For regret, use ものを.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "黙っていればいい{ものを}、余計なことを言ってしまった。",
-        "だまっていればいい{ものを}、よけいなことをいってしまった。",
-        "I should have kept quiet, but I went and said too much.",
-        {
-          accept: ["のに"],
-          near: [
-            [
-              "ものの",
-              'ものの is "although". For regret ("I should have"), use ものを.',
-            ],
-          ],
-        },
-      ),
+      s("早く言ってくれれば手伝った{ものを}。", "はやくいってくれればてつだった{ものを}。", "If only you'd told me sooner, I'd have helped.", {
+        accept: ["のに"],
+        near: [["ものの", "ものの is \"although\". For regret (\"if only\"), use ものを."]],
+      }),
+      s("知っていれば教えてあげた{ものを}、なぜ黙っていたのか。", "しっていればおしえてあげた{ものを}、なぜだまっていたのか。", "I'd have told you if I'd known. Why did you keep quiet?", {
+        accept: ["のに"],
+        near: [["ものの", "ものの is \"although\". For regret (\"I'd have\"), use ものを."]],
+      }),
+      s("素直に謝ればいい{ものを}、彼は言い訳ばかりする。", "すなおにあやまればいい{ものを}、かれはいいわけばかりする。", "He could just apologise, but all he does is make excuses.", {
+        accept: ["のに"],
+        near: [["ものの", "ものの is \"although\". For reproach (\"he could just\"), use ものを."]],
+      }),
+      s("もう少し待てば会えた{ものを}、先に帰ってしまった。", "もうすこしまてばあえた{ものを}、さきにかえってしまった。", "If I'd waited a little longer I'd have seen them, but I went home first.", {
+        accept: ["のに"],
+        near: [["ものだ", "ものだ is \"that's how it is\". For regret, use ものを."]],
+      }),
+      s("黙っていればいい{ものを}、余計なことを言ってしまった。", "だまっていればいい{ものを}、よけいなことをいってしまった。", "I should have kept quiet, but I went and said too much.", {
+        accept: ["のに"],
+        near: [["ものの", "ものの is \"although\". For regret (\"I should have\"), use ものを."]],
+      }),
     ],
   }),
 
@@ -1768,78 +774,26 @@ With a question word, it means "above all": 何にもまして健康が大切だ
 It's formal and written. The ました here isn't polite ます. It comes from 増す, "to increase". Don't confuse it with にしても, "even if".
 `,
     sentences: [
-      s(
-        "今年は去年{にもまして}暑い。",
-        "ことしはきょねん{にもまして}あつい。",
-        "This year is even hotter than last year.",
-        {
-          accept: ["よりも", "より"],
-          near: [
-            [
-              "にしても",
-              'にしても is "even if". For "even more than", use にもまして.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "何{にもまして}、健康が大切だ。",
-        "なに{にもまして}、けんこうがたいせつだ。",
-        "Above all, health is what matters.",
-        {
-          accept: ["よりも", "より"],
-          near: [
-            [
-              "にしても",
-              'にしても is "even if". For "above all", use 何にもまして.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "以前{にもまして}、仕事が忙しくなった。",
-        "いぜん{にもまして}、しごとがいそがしくなった。",
-        "Work has got even busier than before.",
-        {
-          accept: ["よりも", "より"],
-          near: [
-            [
-              "に比べて",
-              'に比べて is a neutral comparison. For "even more than", use にもまして.',
-              "にくらべて",
-            ],
-          ],
-        },
-      ),
-      s(
-        "優勝も嬉しかったが、それ{にもまして}仲間の言葉が嬉しかった。",
-        "ゆうしょうもうれしかったが、それ{にもまして}なかまのことばがうれしかった。",
-        "Winning was great, but my teammates' words made me even happier.",
-        {
-          accept: ["よりも", "より"],
-          near: [
-            [
-              "にしても",
-              'にしても is "even if". For "even more than", use にもまして.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は前{にもまして}熱心に練習するようになった。",
-        "かれはまえ{にもまして}ねっしんにれんしゅうするようになった。",
-        "He's started practising even harder than before.",
-        {
-          accept: ["よりも", "より"],
-          near: [
-            [
-              "に比べて",
-              'に比べて is a neutral comparison. For "even more than", use にもまして.',
-              "にくらべて",
-            ],
-          ],
-        },
-      ),
+      s("今年は去年{にもまして}暑い。", "ことしはきょねん{にもまして}あつい。", "This year is even hotter than last year.", {
+        accept: ["よりも", "より"],
+        near: [["にしても", "にしても is \"even if\". For \"even more than\", use にもまして."]],
+      }),
+      s("何{にもまして}、健康が大切だ。", "なに{にもまして}、けんこうがたいせつだ。", "Above all, health is what matters.", {
+        accept: ["よりも", "より"],
+        near: [["にしても", "にしても is \"even if\". For \"above all\", use 何にもまして."]],
+      }),
+      s("以前{にもまして}、仕事が忙しくなった。", "いぜん{にもまして}、しごとがいそがしくなった。", "Work has got even busier than before.", {
+        accept: ["よりも", "より"],
+        near: [["に比べて", "に比べて is a neutral comparison. For \"even more than\", use にもまして.", "にくらべて"]],
+      }),
+      s("優勝も嬉しかったが、それ{にもまして}仲間の言葉が嬉しかった。", "ゆうしょうもうれしかったが、それ{にもまして}なかまのことばがうれしかった。", "Winning was great, but my teammates' words made me even happier.", {
+        accept: ["よりも", "より"],
+        near: [["にしても", "にしても is \"even if\". For \"even more than\", use にもまして."]],
+      }),
+      s("彼は前{にもまして}熱心に練習するようになった。", "かれはまえ{にもまして}ねっしんにれんしゅうするようになった。", "He's started practising even harder than before.", {
+        accept: ["よりも", "より"],
+        near: [["に比べて", "に比べて is a neutral comparison. For \"even more than\", use にもまして.", "にくらべて"]],
+      }),
     ],
   }),
 ];

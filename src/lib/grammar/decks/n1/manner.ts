@@ -21,74 +21,24 @@ It's different from ながら (N5), "while doing two actions". ながらに desc
 It's literary and set-phrase based, so learn the combinations as a group. In a puzzle, the noun in front (涙, 生まれ, 昔, いる) usually tells you this is the pattern.
 `,
     sentences: [
-      s(
-        "彼女は涙{ながらに}、事故の様子を語った。",
-        "かのじょはなみだ{ながらに}、じこのようすをかたった。",
-        "In tears, she described what happened in the accident.",
-        {
-          near: [
-            [
-              "ながら",
-              'Plain ながら is "while doing". The fixed phrase is 涙ながらに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は生まれ{ながらに}、音楽の才能を持っていた。",
-        "かれはうまれ{ながらに}、おんがくのさいのうをもっていた。",
-        "He was born with a gift for music.",
-        {
-          accept: ["ながらにして"],
-          near: [
-            [
-              "ながら",
-              'Plain ながら is "while doing". The fixed phrase is 生まれながらに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "ネットがあれば、家にい{ながらにして}世界中の人と話せる。",
-        "ネットがあれば、いえにい{ながらにして}せかいじゅうのひととはなせる。",
-        "With the internet, you can talk to people all over the world without leaving home.",
-        {
-          accept: ["ながらに"],
-          near: [
-            [
-              "ながら",
-              'Plain ながら is "while doing". For "without leaving home", use いながらにして.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "この辺りには昔{ながらの}町並みが残っている。",
-        "このあたりにはむかし{ながらの}まちなみがのこっている。",
-        "The traditional streetscape survives around here.",
-        {
-          near: [
-            [
-              "ながら",
-              'Plain ながら is "while doing". Before a noun, 昔ながらの means "traditional".',
-            ],
-          ],
-        },
-      ),
-      s(
-        "人は生まれ{ながらにして}平等である。",
-        "ひとはうまれ{ながらにして}びょうどうである。",
-        "All people are born equal.",
-        {
-          accept: ["ながらに"],
-          near: [
-            [
-              "ながら",
-              'Plain ながら is "while doing". The fixed phrase is 生まれながらにして.',
-            ],
-          ],
-        },
-      ),
+      s("彼女は涙{ながらに}、事故の様子を語った。", "かのじょはなみだ{ながらに}、じこのようすをかたった。", "In tears, she described what happened in the accident.", {
+        near: [["ながら", "Plain ながら is \"while doing\". The fixed phrase is 涙ながらに."]],
+      }),
+      s("彼は生まれ{ながらに}、音楽の才能を持っていた。", "かれはうまれ{ながらに}、おんがくのさいのうをもっていた。", "He was born with a gift for music.", {
+        accept: ["ながらにして"],
+        near: [["ながら", "Plain ながら is \"while doing\". The fixed phrase is 生まれながらに."]],
+      }),
+      s("ネットがあれば、家にい{ながらにして}世界中の人と話せる。", "ネットがあれば、いえにい{ながらにして}せかいじゅうのひととはなせる。", "With the internet, you can talk to people all over the world without leaving home.", {
+        accept: ["ながらに"],
+        near: [["ながら", "Plain ながら is \"while doing\". For \"without leaving home\", use いながらにして."]],
+      }),
+      s("この辺りには昔{ながらの}町並みが残っている。", "このあたりにはむかし{ながらの}まちなみがのこっている。", "The traditional streetscape survives around here.", {
+        near: [["ながら", "Plain ながら is \"while doing\". Before a noun, 昔ながらの means \"traditional\"."]],
+      }),
+      s("人は生まれ{ながらにして}平等である。", "ひとはうまれ{ながらにして}びょうどうである。", "All people are born equal.", {
+        accept: ["ながらに"],
+        near: [["ながら", "Plain ながら is \"while doing\". The fixed phrase is 生まれながらにして."]],
+      }),
     ],
   }),
 
@@ -96,8 +46,7 @@ It's literary and set-phrase based, so learn the combinations as a group. In a p
     id: "n1-tomo-naku",
     title: "〜ともなく・〜ともなしに",
     meaning: "without meaning to, idly; (from) somewhere or other",
-    structure:
-      "Verb dictionary form + ともなく · Question word (+ particle) + ともなく",
+    structure: "Verb dictionary form + ともなく · Question word (+ particle) + ともなく",
     related: ["n2-koto-naku"],
     explanation: `
 **ともなく** describes an action done idly, without a clear intention: 見るともなくテレビを見ていた, "I was idly watching TV". The verb is usually repeated: 見るともなく見る, 聞くともなく聞く, 考えるともなく考える.
@@ -109,75 +58,25 @@ With a question word, it means "some … or other": どこからともなく, "f
 Compare ことなく (N2), "without doing", which states that something didn't happen at all. With ともなく, the action does happen, just without intent. It paints a relaxed, absent-minded scene, which is why novelists like it.
 `,
     sentences: [
-      s(
-        "見る{ともなく}テレビを見ていた。",
-        "みる{ともなく}テレビをみていた。",
-        "I was idly watching TV.",
-        {
-          accept: ["ともなしに"],
-          near: [
-            [
-              "ことなく",
-              'ことなく is "without doing (at all)". For "idly, without meaning to", use ともなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "聞く{ともなく}、隣の人の話が耳に入った。",
-        "きく{ともなく}、となりのひとのはなしがみみにはいった。",
-        "Without really meaning to listen, I overheard the people next to me.",
-        {
-          accept: ["ともなしに"],
-          near: [
-            [
-              "ことなく",
-              'ことなく is "without doing (at all)". For "without really meaning to", use ともなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "どこから{ともなく}、いい匂いがしてきた。",
-        "どこから{ともなく}、いいにおいがしてきた。",
-        "A nice smell came wafting from somewhere or other.",
-        {
-          near: [
-            [
-              "でも",
-              'どこからでも is "from anywhere". For "from somewhere or other", use ともなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "考える{ともなく}、昔のことを考えていた。",
-        "かんがえる{ともなく}、むかしのことをかんがえていた。",
-        "I found myself idly thinking about the past.",
-        {
-          accept: ["ともなしに"],
-          near: [
-            [
-              "ことなく",
-              'ことなく is "without doing (at all)". For "idly", use ともなく.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は誰に言う{ともなく}、「疲れた」とつぶやいた。",
-        "かれはだれにいう{ともなく}、「つかれた」とつぶやいた。",
-        'He muttered "I\'m tired" to no one in particular.',
-        {
-          accept: ["ともなしに"],
-          near: [
-            [
-              "ことなく",
-              'ことなく is "without doing (at all)". For "to no one in particular", use ともなく.',
-            ],
-          ],
-        },
-      ),
+      s("見る{ともなく}テレビを見ていた。", "みる{ともなく}テレビをみていた。", "I was idly watching TV.", {
+        accept: ["ともなしに"],
+        near: [["ことなく", "ことなく is \"without doing (at all)\". For \"idly, without meaning to\", use ともなく."]],
+      }),
+      s("聞く{ともなく}、隣の人の話が耳に入った。", "きく{ともなく}、となりのひとのはなしがみみにはいった。", "Without really meaning to listen, I overheard the people next to me.", {
+        accept: ["ともなしに"],
+        near: [["ことなく", "ことなく is \"without doing (at all)\". For \"without really meaning to\", use ともなく."]],
+      }),
+      s("どこから{ともなく}、いい匂いがしてきた。", "どこから{ともなく}、いいにおいがしてきた。", "A nice smell came wafting from somewhere or other.", {
+        near: [["でも", "どこからでも is \"from anywhere\". For \"from somewhere or other\", use ともなく."]],
+      }),
+      s("考える{ともなく}、昔のことを考えていた。", "かんがえる{ともなく}、むかしのことをかんがえていた。", "I found myself idly thinking about the past.", {
+        accept: ["ともなしに"],
+        near: [["ことなく", "ことなく is \"without doing (at all)\". For \"idly\", use ともなく."]],
+      }),
+      s("彼は誰に言う{ともなく}、「疲れた」とつぶやいた。", "かれはだれにいう{ともなく}、「つかれた」とつぶやいた。", "He muttered \"I'm tired\" to no one in particular.", {
+        accept: ["ともなしに"],
+        near: [["ことなく", "ことなく is \"without doing (at all)\". For \"to no one in particular\", use ともなく."]],
+      }),
     ],
   }),
 
@@ -197,71 +96,21 @@ Set phrases include 割れんばかりの拍手 ("thunderous applause"), あふ�
 言わんばかりに means "as if to say", and とばかりに (N1) is the other way to say it. Plain ばかり means "only".
 `,
     sentences: [
-      s(
-        "彼女は泣き出さ{んばかり}の顔をしていた。",
-        "かのじょはなきださ{んばかり}のかおをしていた。",
-        "She looked as if she was about to burst into tears.",
-        {
-          near: [
-            [
-              "ばかり",
-              'Plain ばかり is "only". After the ない-stem, "as if about to" is んばかり.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "会場は割れ{んばかり}の拍手に包まれた。",
-        "かいじょうはわれ{んばかり}のはくしゅにつつまれた。",
-        "The hall was filled with thunderous applause.",
-        {
-          near: [
-            [
-              "ばかり",
-              'Plain ばかり is "only". The set phrase is 割れんばかりの拍手.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は「お前が悪い」と言わ{んばかりに}、私をにらんだ。",
-        "かれは「おまえがわるい」といわ{んばかりに}、わたしをにらんだ。",
-        "He glared at me as if to say it was my fault.",
-        {
-          near: [
-            [
-              "ばかりに",
-              'ばかりに is "just because". After 言わ, "as if to say" is んばかりに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女はあふれ{んばかり}の笑顔で迎えてくれた。",
-        "かのじょはあふれ{んばかり}のえがおでむかえてくれた。",
-        "She greeted us with a beaming smile.",
-        {
-          near: [
-            [
-              "ばかり",
-              'Plain ばかり is "only". The set phrase is あふれんばかりの笑顔.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "合格の知らせに、彼は飛び上がら{んばかりに}喜んだ。",
-        "ごうかくのしらせに、かれはとびあがら{んばかりに}よろこんだ。",
-        "He practically jumped for joy at the news that he'd passed.",
-        {
-          near: [
-            [
-              "ばかりに",
-              'ばかりに is "just because". For "almost (jumping)", use んばかりに.',
-            ],
-          ],
-        },
-      ),
+      s("彼女は泣き出さ{んばかり}の顔をしていた。", "かのじょはなきださ{んばかり}のかおをしていた。", "She looked as if she was about to burst into tears.", {
+        near: [["ばかり", "Plain ばかり is \"only\". After the ない-stem, \"as if about to\" is んばかり."]],
+      }),
+      s("会場は割れ{んばかり}の拍手に包まれた。", "かいじょうはわれ{んばかり}のはくしゅにつつまれた。", "The hall was filled with thunderous applause.", {
+        near: [["ばかり", "Plain ばかり is \"only\". The set phrase is 割れんばかりの拍手."]],
+      }),
+      s("彼は「お前が悪い」と言わ{んばかりに}、私をにらんだ。", "かれは「おまえがわるい」といわ{んばかりに}、わたしをにらんだ。", "He glared at me as if to say it was my fault.", {
+        near: [["ばかりに", "ばかりに is \"just because\". After 言わ, \"as if to say\" is んばかりに."]],
+      }),
+      s("彼女はあふれ{んばかり}の笑顔で迎えてくれた。", "かのじょはあふれ{んばかり}のえがおでむかえてくれた。", "She greeted us with a beaming smile.", {
+        near: [["ばかり", "Plain ばかり is \"only\". The set phrase is あふれんばかりの笑顔."]],
+      }),
+      s("合格の知らせに、彼は飛び上がら{んばかりに}喜んだ。", "ごうかくのしらせに、かれはとびあがら{んばかりに}よろこんだ。", "He practically jumped for joy at the news that he'd passed.", {
+        near: [["ばかりに", "ばかりに is \"just because\". For \"almost (jumping)\", use んばかりに."]],
+      }),
     ],
   }),
 
@@ -281,75 +130,25 @@ It's close to と言わんばかりに, which means the same. ここぞとばか
 Don't confuse it with ばかりに (N2), "just because", which gives a cause of something bad.
 `,
     sentences: [
-      s(
-        "彼は「待ってました」{とばかりに}、立ち上がった。",
-        "かれは「まってました」{とばかりに}、たちあがった。",
-        'He stood up as if to say "finally!".',
-        {
-          accept: ["と言わんばかりに"],
-          near: [
-            [
-              "ばかりに",
-              'ばかりに is "just because". After a quote, "as if to say" is とばかりに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "今がチャンス{とばかりに}、一気に攻め込んだ。",
-        "いまがチャンス{とばかりに}、いっきにせめこんだ。",
-        "Seeing their chance, they launched an all-out attack.",
-        {
-          accept: ["と言わんばかりに"],
-          near: [
-            [
-              "ばかりに",
-              'ばかりに is "just because". For "as if to say", use とばかりに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "犬は「散歩に行こう」{とばかりに}、しっぽを振った。",
-        "いぬは「さんぽにいこう」{とばかりに}、しっぽをふった。",
-        'The dog wagged its tail as if to say "let\'s go for a walk".',
-        {
-          accept: ["と言わんばかりに"],
-          near: [
-            [
-              "ばかりか",
-              'ばかりか is "not only". For "as if to say", use とばかりに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女は「もう知らない」{とばかりに}、部屋を出て行った。",
-        "かのじょは「もうしらない」{とばかりに}、へやをでていった。",
-        'She walked out of the room as if to say "I\'ve had enough".',
-        {
-          accept: ["と言わんばかりに"],
-          near: [
-            [
-              "ばかりに",
-              'ばかりに is "just because". After a quote, "as if to say" is とばかりに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "ファンはここぞ{とばかりに}、大声で応援した。",
-        "ファンはここぞ{とばかりに}、おおごえでおうえんした。",
-        "Seizing the moment, the fans cheered at the top of their voices.",
-        {
-          near: [
-            [
-              "ばかりか",
-              'ばかりか is "not only". The set phrase is ここぞとばかりに.',
-            ],
-          ],
-        },
-      ),
+      s("彼は「待ってました」{とばかりに}、立ち上がった。", "かれは「まってました」{とばかりに}、たちあがった。", "He stood up as if to say \"finally!\".", {
+        accept: ["と言わんばかりに"],
+        near: [["ばかりに", "ばかりに is \"just because\". After a quote, \"as if to say\" is とばかりに."]],
+      }),
+      s("今がチャンス{とばかりに}、一気に攻め込んだ。", "いまがチャンス{とばかりに}、いっきにせめこんだ。", "Seeing their chance, they launched an all-out attack.", {
+        accept: ["と言わんばかりに"],
+        near: [["ばかりに", "ばかりに is \"just because\". For \"as if to say\", use とばかりに."]],
+      }),
+      s("犬は「散歩に行こう」{とばかりに}、しっぽを振った。", "いぬは「さんぽにいこう」{とばかりに}、しっぽをふった。", "The dog wagged its tail as if to say \"let's go for a walk\".", {
+        accept: ["と言わんばかりに"],
+        near: [["ばかりか", "ばかりか is \"not only\". For \"as if to say\", use とばかりに."]],
+      }),
+      s("彼女は「もう知らない」{とばかりに}、部屋を出て行った。", "かのじょは「もうしらない」{とばかりに}、へやをでていった。", "She walked out of the room as if to say \"I've had enough\".", {
+        accept: ["と言わんばかりに"],
+        near: [["ばかりに", "ばかりに is \"just because\". After a quote, \"as if to say\" is とばかりに."]],
+      }),
+      s("ファンはここぞ{とばかりに}、大声で応援した。", "ファンはここぞ{とばかりに}、おおごえでおうえんした。", "Seizing the moment, the fans cheered at the top of their voices.", {
+        near: [["ばかりか", "ばかりか is \"not only\". The set phrase is ここぞとばかりに."]],
+      }),
     ],
   }),
 
@@ -357,8 +156,7 @@ Don't confuse it with ばかりに (N2), "just because", which gives a cause of 
     id: "n1-gotoku",
     title: "〜ごとく・〜ごとき・〜ごとし",
     meaning: "like, as (literary)",
-    structure:
-      "Noun の / Verb + (かの)ごとく (+ verb) · ごとき (+ noun) · ごとし (end)",
+    structure: "Noun の / Verb + (かの)ごとく (+ verb) · ごとき (+ noun) · ごとし (end)",
     related: ["n2-ka-no-you-ni", "n3-marude"],
     explanation: `
 **ごとく** is the classical version of ように, "like, as", and it changes shape depending on what follows:
@@ -373,72 +171,25 @@ Person + ごとき is a special use for contempt or humility: 私ごときが意
 So the puzzle is what follows: a verb, a noun, or the end of the sentence.
 `,
     sentences: [
-      s(
-        "光陰矢の{ごとし}。",
-        "こういんやの{ごとし}。",
-        "Time flies like an arrow.",
-        {
-          near: [
-            [
-              "ごとく",
-              "ごとく comes before a verb. To end a sentence, use ごとし.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は風の{ごとく}走り去った。",
-        "かれはかぜの{ごとく}はしりさった。",
-        "He ran off like the wind.",
-        {
-          accept: ["ように"],
-          near: [
-            [
-              "ごとき",
-              "ごとき comes before a noun. Before a verb, use ごとく.",
-            ],
-          ],
-        },
-      ),
-      s(
-        "前述の{ごとく}、計画は変更された。",
-        "ぜんじゅつの{ごとく}、けいかくはへんこうされた。",
-        "As mentioned above, the plan has been changed.",
-        {
-          accept: ["ように", "とおり", "通り"],
-          near: [
-            ["ごとし", "ごとし ends a sentence. Before a clause, use ごとく."],
-          ],
-        },
-      ),
-      s(
-        "私{ごとき}が意見を言うのは失礼だ。",
-        "わたし{ごとき}がいけんをいうのはしつれいだ。",
-        "It would be rude for someone like me to give an opinion.",
-        {
-          accept: ["なんか", "など"],
-          near: [
-            [
-              "ごとく",
-              'ごとく comes before a verb. For "someone like me", use ごとき.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は何事もなかったかの{ごとく}振る舞った。",
-        "かれはなにごともなかったかの{ごとく}ふるまった。",
-        "He behaved as if nothing had happened.",
-        {
-          accept: ["ように"],
-          near: [
-            [
-              "ごとき",
-              "ごとき comes before a noun. Before a verb, use ごとく.",
-            ],
-          ],
-        },
-      ),
+      s("光陰矢の{ごとし}。", "こういんやの{ごとし}。", "Time flies like an arrow.", {
+        near: [["ごとく", "ごとく comes before a verb. To end a sentence, use ごとし."]],
+      }),
+      s("彼は風の{ごとく}走り去った。", "かれはかぜの{ごとく}はしりさった。", "He ran off like the wind.", {
+        accept: ["ように"],
+        near: [["ごとき", "ごとき comes before a noun. Before a verb, use ごとく."]],
+      }),
+      s("前述の{ごとく}、計画は変更された。", "ぜんじゅつの{ごとく}、けいかくはへんこうされた。", "As mentioned above, the plan has been changed.", {
+        accept: ["ように", "とおり", "通り"],
+        near: [["ごとし", "ごとし ends a sentence. Before a clause, use ごとく."]],
+      }),
+      s("私{ごとき}が意見を言うのは失礼だ。", "わたし{ごとき}がいけんをいうのはしつれいだ。", "It would be rude for someone like me to give an opinion.", {
+        accept: ["なんか", "など"],
+        near: [["ごとく", "ごとく comes before a verb. For \"someone like me\", use ごとき."]],
+      }),
+      s("彼は何事もなかったかの{ごとく}振る舞った。", "かれはなにごともなかったかの{ごとく}ふるまった。", "He behaved as if nothing had happened.", {
+        accept: ["ように"],
+        near: [["ごとき", "ごとき comes before a noun. Before a verb, use ごとく."]],
+      }),
     ],
   }),
 
@@ -461,74 +212,24 @@ Before a noun, it's めいた: 謎めいた女性, "a mysterious woman". It conj
 Compare っぽい (N3), a casual "-ish", and じみる, which is negative ("smacks of"). めく is mostly neutral and a bit literary, and it's especially loved for seasonal descriptions.
 `,
     sentences: [
-      s(
-        "日差しが春{めいて}きた。",
-        "ひざしがはる{めいて}きた。",
-        "The sunshine is starting to feel like spring.",
-        {
-          accept: ["らしくなって"],
-          near: [
-            [
-              "っぽく",
-              'っぽく is a casual "-ish". For "showing signs of (spring)", use めいて.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の言い方は皮肉{めいて}いた。",
-        "かれのいいかたはひにく{めいて}いた。",
-        "The way he said it had an ironic edge.",
-        {
-          accept: ["っぽかった"],
-          near: [
-            [
-              "らしく",
-              'らしく is "typical of". For "having an air of", use めいて.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "謎{めいた}女性が現れた。",
-        "なぞ{めいた}じょせいがあらわれた。",
-        "A mysterious woman appeared.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of". For "mysterious", use 謎めいた.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は冗談{めいた}口調で言った。",
-        "かれはじょうだん{めいた}くちょうでいった。",
-        "He said it in a half-joking tone.",
-        {
-          near: [
-            [
-              "じみた",
-              'じみた is "smacking of" (negative). For "half-joking", use めいた.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "秋{めいた}風が吹いている。",
-        "あき{めいた}かぜがふいている。",
-        "There's an autumnal breeze blowing.",
-        {
-          accept: ["らしい"],
-          near: [
-            [
-              "じみた",
-              'じみた is "smacking of" (negative). For "autumnal", use めいた.',
-            ],
-          ],
-        },
-      ),
+      s("日差しが春{めいて}きた。", "ひざしがはる{めいて}きた。", "The sunshine is starting to feel like spring.", {
+        accept: ["らしくなって"],
+        near: [["っぽく", "っぽく is a casual \"-ish\". For \"showing signs of (spring)\", use めいて."]],
+      }),
+      s("彼の言い方は皮肉{めいて}いた。", "かれのいいかたはひにく{めいて}いた。", "The way he said it had an ironic edge.", {
+        accept: ["っぽかった"],
+        near: [["らしく", "らしく is \"typical of\". For \"having an air of\", use めいて."]],
+      }),
+      s("謎{めいた}女性が現れた。", "なぞ{めいた}じょせいがあらわれた。", "A mysterious woman appeared.", {
+        near: [["らしい", "らしい is \"typical of\". For \"mysterious\", use 謎めいた."]],
+      }),
+      s("彼は冗談{めいた}口調で言った。", "かれはじょうだん{めいた}くちょうでいった。", "He said it in a half-joking tone.", {
+        near: [["じみた", "じみた is \"smacking of\" (negative). For \"half-joking\", use めいた."]],
+      }),
+      s("秋{めいた}風が吹いている。", "あき{めいた}かぜがふいている。", "There's an autumnal breeze blowing.", {
+        accept: ["らしい"],
+        near: [["じみた", "じみた is \"smacking of\" (negative). For \"autumnal\", use めいた."]],
+      }),
     ],
   }),
 
@@ -548,72 +249,22 @@ It's always critical. Compare めく, which is mostly neutral ("showing signs of
 It conjugates like an ichidan verb: じみる, じみて, じみた.
 `,
     sentences: [
-      s(
-        "子ども{じみた}ことを言うな。",
-        "こども{じみた}ことをいうな。",
-        "Stop saying such childish things.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of" in a good way. For "childish" (critical), use じみた.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女は年寄り{じみた}服を着ている。",
-        "かのじょはとしより{じみた}ふくをきている。",
-        "She wears clothes that make her look old.",
-        {
-          near: [
-            [
-              "めいた",
-              'めいた is "showing signs of", mostly neutral. For a critical "smacking of", use じみた.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼の話は説教{じみて}いて、聞き飽きた。",
-        "かれのはなしはせっきょう{じみて}いて、ききあきた。",
-        "His talk was preachy, and I got tired of it.",
-        {
-          accept: ["くさくて"],
-          near: [
-            [
-              "らしく",
-              'らしく is "typical of". For "preachy" (critical), use じみて.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "最近、彼女は所帯{じみた}格好をしている。",
-        "さいきん、かのじょはしょたい{じみた}かっこうをしている。",
-        "Lately, she's been dressing in a frumpy, domestic way.",
-        {
-          near: [
-            [
-              "めいた",
-              'めいた is "showing signs of", mostly neutral. For a critical "smacking of", use じみた.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "芝居{じみた}謝り方だった。",
-        "しばい{じみた}あやまりかただった。",
-        "It was a theatrical, insincere apology.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of". For "theatrical" (critical), use じみた.',
-            ],
-          ],
-        },
-      ),
+      s("子ども{じみた}ことを言うな。", "こども{じみた}ことをいうな。", "Stop saying such childish things.", {
+        near: [["らしい", "らしい is \"typical of\" in a good way. For \"childish\" (critical), use じみた."]],
+      }),
+      s("彼女は年寄り{じみた}服を着ている。", "かのじょはとしより{じみた}ふくをきている。", "She wears clothes that make her look old.", {
+        near: [["めいた", "めいた is \"showing signs of\", mostly neutral. For a critical \"smacking of\", use じみた."]],
+      }),
+      s("彼の話は説教{じみて}いて、聞き飽きた。", "かれのはなしはせっきょう{じみて}いて、ききあきた。", "His talk was preachy, and I got tired of it.", {
+        accept: ["くさくて"],
+        near: [["らしく", "らしく is \"typical of\". For \"preachy\" (critical), use じみて."]],
+      }),
+      s("最近、彼女は所帯{じみた}格好をしている。", "さいきん、かのじょはしょたい{じみた}かっこうをしている。", "Lately, she's been dressing in a frumpy, domestic way.", {
+        near: [["めいた", "めいた is \"showing signs of\", mostly neutral. For a critical \"smacking of\", use じみた."]],
+      }),
+      s("芝居{じみた}謝り方だった。", "しばい{じみた}あやまりかただった。", "It was a theatrical, insincere apology.", {
+        near: [["らしい", "らしい is \"typical of\". For \"theatrical\" (critical), use じみた."]],
+      }),
     ],
   }),
 
@@ -633,71 +284,21 @@ It's always a criticism or a gentle tease. Compare ふりをする (N3), "preten
 Don't confuse it with がる (N4), which is about visibly showing a feeling: 痛がる, 欲しがる.
 `,
     sentences: [
-      s(
-        "彼はいつも偉{ぶって}いる。",
-        "かれはいつもえら{ぶって}いる。",
-        "He's always acting all important.",
-        {
-          near: [
-            [
-              "がって",
-              'がって shows someone\'s feelings (痛がる). For "acting important", use ぶって.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は学者{ぶった}話し方をする。",
-        "かれはがくしゃ{ぶった}はなしかたをする。",
-        "He talks as if he's some kind of scholar.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of". For "acting like", use ぶった.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女は上品{ぶって}いるが、本当は下品だ。",
-        "かのじょはじょうひん{ぶって}いるが、ほんとうはげひんだ。",
-        "She puts on refined airs, but she's actually rather vulgar.",
-        {
-          near: [
-            [
-              "がって",
-              'がって shows someone\'s feelings. For "putting on airs", use ぶって.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "先生の前でいい子{ぶる}のはやめなさい。",
-        "せんせいのまえでいいこ{ぶる}のはやめなさい。",
-        "Stop playing the good kid in front of the teacher.",
-        {
-          near: [
-            [
-              "がる",
-              'がる shows someone\'s feelings. For "playing the good kid", use ぶる.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女は大人{ぶって}、コーヒーをブラックで飲んだ。",
-        "かのじょはおとな{ぶって}、コーヒーをブラックでのんだ。",
-        "Trying to act grown-up, she drank her coffee black.",
-        {
-          near: [
-            [
-              "らしく",
-              'らしく is "like a proper". For "trying to act", use ぶって.',
-            ],
-          ],
-        },
-      ),
+      s("彼はいつも偉{ぶって}いる。", "かれはいつもえら{ぶって}いる。", "He's always acting all important.", {
+        near: [["がって", "がって shows someone's feelings (痛がる). For \"acting important\", use ぶって."]],
+      }),
+      s("彼は学者{ぶった}話し方をする。", "かれはがくしゃ{ぶった}はなしかたをする。", "He talks as if he's some kind of scholar.", {
+        near: [["らしい", "らしい is \"typical of\". For \"acting like\", use ぶった."]],
+      }),
+      s("彼女は上品{ぶって}いるが、本当は下品だ。", "かのじょはじょうひん{ぶって}いるが、ほんとうはげひんだ。", "She puts on refined airs, but she's actually rather vulgar.", {
+        near: [["がって", "がって shows someone's feelings. For \"putting on airs\", use ぶって."]],
+      }),
+      s("先生の前でいい子{ぶる}のはやめなさい。", "せんせいのまえでいいこ{ぶる}のはやめなさい。", "Stop playing the good kid in front of the teacher.", {
+        near: [["がる", "がる shows someone's feelings. For \"playing the good kid\", use ぶる."]],
+      }),
+      s("彼女は大人{ぶって}、コーヒーをブラックで飲んだ。", "かのじょはおとな{ぶって}、コーヒーをブラックでのんだ。", "Trying to act grown-up, she drank her coffee black.", {
+        near: [["らしく", "らしく is \"like a proper\". For \"trying to act\", use ぶって."]],
+      }),
     ],
   }),
 
@@ -720,71 +321,21 @@ It combines with only a handful of words, so learn them as vocabulary:
 It's always critical, or humble when used about yourself.
 `,
     sentences: [
-      s(
-        "恩着せ{がましい}言い方をするな。",
-        "おんきせ{がましい}いいかたをするな。",
-        "Don't talk as if you're doing me a favour.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of". For "smacking of (unpleasantly)", use がましい.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "言い訳{がましい}ことは言いたくない。",
-        "いいわけ{がましい}ことはいいたくない。",
-        "I don't want to say anything that sounds like an excuse.",
-        {
-          near: [
-            [
-              "っぽい",
-              'っぽい is a casual "-ish". The set phrase is 言い訳がましい.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "押し付け{がましい}アドバイスはやめてほしい。",
-        "おしつけ{がましい}アドバイスはやめてほしい。",
-        "I wish you'd stop giving pushy advice.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of". The set phrase is 押し付けがましい.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "差し出{がましい}ようですが、一言よろしいでしょうか。",
-        "さしで{がましい}ようですが、ひとことよろしいでしょうか。",
-        "I hope I'm not being presumptuous, but may I say something?",
-        {
-          near: [
-            [
-              "っぽい",
-              'っぽい is a casual "-ish". The set phrase is 差し出がましい.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "未練{がましい}ことを言うようだけど、もう一度会いたい。",
-        "みれん{がましい}ことをいうようだけど、もういちどあいたい。",
-        "I know it sounds like I can't let go, but I want to see you again.",
-        {
-          near: [
-            [
-              "らしい",
-              'らしい is "typical of". The set phrase is 未練がましい.',
-            ],
-          ],
-        },
-      ),
+      s("恩着せ{がましい}言い方をするな。", "おんきせ{がましい}いいかたをするな。", "Don't talk as if you're doing me a favour.", {
+        near: [["らしい", "らしい is \"typical of\". For \"smacking of (unpleasantly)\", use がましい."]],
+      }),
+      s("言い訳{がましい}ことは言いたくない。", "いいわけ{がましい}ことはいいたくない。", "I don't want to say anything that sounds like an excuse.", {
+        near: [["っぽい", "っぽい is a casual \"-ish\". The set phrase is 言い訳がましい."]],
+      }),
+      s("押し付け{がましい}アドバイスはやめてほしい。", "おしつけ{がましい}アドバイスはやめてほしい。", "I wish you'd stop giving pushy advice.", {
+        near: [["らしい", "らしい is \"typical of\". The set phrase is 押し付けがましい."]],
+      }),
+      s("差し出{がましい}ようですが、一言よろしいでしょうか。", "さしで{がましい}ようですが、ひとことよろしいでしょうか。", "I hope I'm not being presumptuous, but may I say something?", {
+        near: [["っぽい", "っぽい is a casual \"-ish\". The set phrase is 差し出がましい."]],
+      }),
+      s("未練{がましい}ことを言うようだけど、もう一度会いたい。", "みれん{がましい}ことをいうようだけど、もういちどあいたい。", "I know it sounds like I can't let go, but I want to see you again.", {
+        near: [["らしい", "らしい is \"typical of\". The set phrase is 未練がましい."]],
+      }),
     ],
   }),
 
@@ -802,72 +353,22 @@ It's often positive: いいこと, めでたいこと ("happy events"), ごち�
 Compare だらけ (N3), "full of", which is almost always negative and suggests mess (間違いだらけ, 傷だらけ), and まみれ (N2), "covered in (something messy)". ずくめ is about the overall character of a whole period or outfit. A quick test: if the thing is good, or it's a colour, ずくめ is almost always the answer.
 `,
     sentences: [
-      s(
-        "今年はいいこと{ずくめ}だった。",
-        "ことしはいいこと{ずくめ}だった。",
-        "This year was nothing but good things.",
-        {
-          near: [
-            [
-              "だらけ",
-              'だらけ is "full of (bad things)". For "nothing but good things", use ずくめ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼女はいつも黒{ずくめ}の服を着ている。",
-        "かのじょはいつもくろ{ずくめ}のふくをきている。",
-        "She always dresses all in black.",
-        {
-          near: [
-            [
-              "まみれ",
-              'まみれ is "covered in (something messy)". For "all in black", use ずくめ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "結婚に昇進と、めでたいこと{ずくめ}の一年だった。",
-        "けっこんにしょうしんと、めでたいこと{ずくめ}のいちねんだった。",
-        "With a wedding and a promotion, it was a year full of happy events.",
-        {
-          near: [
-            [
-              "だらけ",
-              'だらけ is "full of (bad things)". For "full of happy events", use ずくめ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "規則{ずくめ}の生活にうんざりしている。",
-        "きそく{ずくめ}のせいかつにうんざりしている。",
-        "I'm fed up with a life that's all rules.",
-        {
-          accept: ["だらけ"],
-          near: [
-            [
-              "まみれ",
-              'まみれ is "covered in (something messy)". For "all rules", use ずくめ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "旅行中はごちそう{ずくめ}の毎日だった。",
-        "りょこうちゅうはごちそう{ずくめ}のまいにちだった。",
-        "Every day of the trip was one feast after another.",
-        {
-          near: [
-            [
-              "だらけ",
-              'だらけ is "full of (bad things)". For "one feast after another", use ずくめ.',
-            ],
-          ],
-        },
-      ),
+      s("今年はいいこと{ずくめ}だった。", "ことしはいいこと{ずくめ}だった。", "This year was nothing but good things.", {
+        near: [["だらけ", "だらけ is \"full of (bad things)\". For \"nothing but good things\", use ずくめ."]],
+      }),
+      s("彼女はいつも黒{ずくめ}の服を着ている。", "かのじょはいつもくろ{ずくめ}のふくをきている。", "She always dresses all in black.", {
+        near: [["まみれ", "まみれ is \"covered in (something messy)\". For \"all in black\", use ずくめ."]],
+      }),
+      s("結婚に昇進と、めでたいこと{ずくめ}の一年だった。", "けっこんにしょうしんと、めでたいこと{ずくめ}のいちねんだった。", "With a wedding and a promotion, it was a year full of happy events.", {
+        near: [["だらけ", "だらけ is \"full of (bad things)\". For \"full of happy events\", use ずくめ."]],
+      }),
+      s("規則{ずくめ}の生活にうんざりしている。", "きそく{ずくめ}のせいかつにうんざりしている。", "I'm fed up with a life that's all rules.", {
+        accept: ["だらけ"],
+        near: [["まみれ", "まみれ is \"covered in (something messy)\". For \"all rules\", use ずくめ."]],
+      }),
+      s("旅行中はごちそう{ずくめ}の毎日だった。", "りょこうちゅうはごちそう{ずくめ}のまいにちだった。", "Every day of the trip was one feast after another.", {
+        near: [["だらけ", "だらけ is \"full of (bad things)\". For \"one feast after another\", use ずくめ."]],
+      }),
     ],
   }),
 
@@ -887,71 +388,21 @@ The fixed phrase **身ぐるみはがされる** means "be stripped of everythin
 It comes from くるむ, "to wrap up". Compare ごと, "including, (swallowing) whole": 皮ごと食べる, "eat it skin and all". ぐるみ is about groups of people. It often comes before で or の: 家族ぐるみで, 会社ぐるみの.
 `,
     sentences: [
-      s(
-        "うちとあの家は、家族{ぐるみ}で付き合っている。",
-        "うちとあのいえは、かぞく{ぐるみ}でつきあっている。",
-        "Our two families are close friends.",
-        {
-          near: [
-            [
-              "ごと",
-              'ごと is "including (swallowed whole)". For "the whole family together", use ぐるみ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "町{ぐるみ}で祭りの準備をした。",
-        "まち{ぐるみ}でまつりのじゅんびをした。",
-        "The whole town got the festival ready together.",
-        {
-          near: [
-            [
-              "ごと",
-              'ごと is "including (swallowed whole)". For "the whole town together", use ぐるみ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "会社{ぐるみ}の不正が発覚した。",
-        "かいしゃ{ぐるみ}のふせいがはっかくした。",
-        "Company-wide fraud has come to light.",
-        {
-          near: [
-            [
-              "ずくめ",
-              'ずくめ is "nothing but". For "company-wide", use ぐるみ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "地域{ぐるみ}で子どもたちを見守る。",
-        "ちいき{ぐるみ}でこどもたちをみまもる。",
-        "The whole community looks out for the children.",
-        {
-          near: [
-            [
-              "ごと",
-              'ごと is "including (swallowed whole)". For "the whole community", use ぐるみ.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "旅行中に強盗にあい、身{ぐるみ}はがされた。",
-        "りょこうちゅうにごうとうにあい、み{ぐるみ}はがされた。",
-        "I was robbed on holiday and stripped of everything I had.",
-        {
-          near: [
-            [
-              "ずくめ",
-              'ずくめ is "nothing but". The set phrase is 身ぐるみはがされる.',
-            ],
-          ],
-        },
-      ),
+      s("うちとあの家は、家族{ぐるみ}で付き合っている。", "うちとあのいえは、かぞく{ぐるみ}でつきあっている。", "Our two families are close friends.", {
+        near: [["ごと", "ごと is \"including (swallowed whole)\". For \"the whole family together\", use ぐるみ."]],
+      }),
+      s("町{ぐるみ}で祭りの準備をした。", "まち{ぐるみ}でまつりのじゅんびをした。", "The whole town got the festival ready together.", {
+        near: [["ごと", "ごと is \"including (swallowed whole)\". For \"the whole town together\", use ぐるみ."]],
+      }),
+      s("会社{ぐるみ}の不正が発覚した。", "かいしゃ{ぐるみ}のふせいがはっかくした。", "Company-wide fraud has come to light.", {
+        near: [["ずくめ", "ずくめ is \"nothing but\". For \"company-wide\", use ぐるみ."]],
+      }),
+      s("地域{ぐるみ}で子どもたちを見守る。", "ちいき{ぐるみ}でこどもたちをみまもる。", "The whole community looks out for the children.", {
+        near: [["ごと", "ごと is \"including (swallowed whole)\". For \"the whole community\", use ぐるみ."]],
+      }),
+      s("旅行中に強盗にあい、身{ぐるみ}はがされた。", "りょこうちゅうにごうとうにあい、み{ぐるみ}はがされた。", "I was robbed on holiday and stripped of everything I had.", {
+        near: [["ずくめ", "ずくめ is \"nothing but\". The set phrase is 身ぐるみはがされる."]],
+      }),
     ],
   }),
 
@@ -971,70 +422,21 @@ It's used for comparisons of level or degree: プロ並み, 真夏並みの暑�
 Compare 向き (N3), "suited to", and ぐらい (N3), "about". 並み is a compact way to say "as … as". It's especially common in weather reports and reviews, where a vivid comparison is wanted.
 `,
     sentences: [
-      s(
-        "彼の料理の腕はプロ{並み}だ。",
-        "かれのりょうりのうではプロ{なみ}だ。",
-        "His cooking is up there with a professional's.",
-        {
-          near: [
-            [
-              "向き",
-              '向き is "suited to". For "on a par with", use 並み.',
-              "むき",
-            ],
-          ],
-        },
-      ),
-      s(
-        "今日は真夏{並み}の暑さだ。",
-        "きょうはまなつ{なみ}のあつさだ。",
-        "It's as hot as midsummer today.",
-        {
-          near: [
-            ["向き", '向き is "suited to". For "as hot as", use 並み.', "むき"],
-          ],
-        },
-      ),
-      s(
-        "私は人{並み}の生活がしたいだけだ。",
-        "わたしはひと{なみ}のせいかつがしたいだけだ。",
-        "I just want a normal life, like everyone else.",
-        {
-          near: [
-            [
-              "らしい",
-              '人らしい is "humane". For "like everyone else", use 人並み.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "昨夜は台風{並み}の強い風が吹いた。",
-        "さくやはたいふう{なみ}のつよいかぜがふいた。",
-        "Last night, there were typhoon-strength winds.",
-        {
-          near: [
-            [
-              "向き",
-              '向き is "suited to". For "as strong as", use 並み.',
-              "むき",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼も世間{並み}に、結婚して家を買った。",
-        "かれもせけん{なみ}に、けっこんしていえをかった。",
-        "Like most people, he got married and bought a house.",
-        {
-          near: [
-            [
-              "らしく",
-              'らしく is "typical of". For "like most people", use 世間並みに.',
-            ],
-          ],
-        },
-      ),
+      s("彼の料理の腕はプロ{並み}だ。", "かれのりょうりのうではプロ{なみ}だ。", "His cooking is up there with a professional's.", {
+        near: [["向き", "向き is \"suited to\". For \"on a par with\", use 並み.", "むき"]],
+      }),
+      s("今日は真夏{並み}の暑さだ。", "きょうはまなつ{なみ}のあつさだ。", "It's as hot as midsummer today.", {
+        near: [["向き", "向き is \"suited to\". For \"as hot as\", use 並み.", "むき"]],
+      }),
+      s("私は人{並み}の生活がしたいだけだ。", "わたしはひと{なみ}のせいかつがしたいだけだ。", "I just want a normal life, like everyone else.", {
+        near: [["らしい", "人らしい is \"humane\". For \"like everyone else\", use 人並み."]],
+      }),
+      s("昨夜は台風{並み}の強い風が吹いた。", "さくやはたいふう{なみ}のつよいかぜがふいた。", "Last night, there were typhoon-strength winds.", {
+        near: [["向き", "向き is \"suited to\". For \"as strong as\", use 並み.", "むき"]],
+      }),
+      s("彼も世間{並み}に、結婚して家を買った。", "かれもせけん{なみ}に、けっこんしていえをかった。", "Like most people, he got married and bought a house.", {
+        near: [["らしく", "らしく is \"typical of\". For \"like most people\", use 世間並みに."]],
+      }),
     ],
   }),
 
@@ -1054,68 +456,21 @@ It conjugates like a godan verb. There's often a note of excess or excitement, s
 Compare 切る (N3), "do completely", and 抜く (N2), "do all the way to the end". まくる is about quantity and intensity, not completion.
 `,
     sentences: [
-      s(
-        "休みの日は、ゲームをし{まくった}。",
-        "やすみのひは、ゲームをし{まくった}。",
-        "On my day off, I played games non-stop.",
-        {
-          near: [
-            [
-              "きった",
-              'きった is "did completely". For "did like crazy", use まくった.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "旅行先で写真を撮り{まくった}。",
-        "りょこうさきでしゃしんをとり{まくった}。",
-        "I took photos like crazy on the trip.",
-        {
-          near: [
-            [
-              "ぬいた",
-              'ぬいた is "saw it through". For "like crazy", use まくった.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "カラオケで歌い{まくって}、声が出なくなった。",
-        "カラオケでうたい{まくって}、こえがでなくなった。",
-        "I sang so much at karaoke that I lost my voice.",
-        {
-          near: [
-            ["きって", 'きって is "completely". For "so much", use まくって.'],
-          ],
-        },
-      ),
-      s(
-        "その試合で、彼は点を取り{まくった}。",
-        "そのしあいで、かれはてんをとり{まくった}。",
-        "He scored goal after goal in that match.",
-        {
-          near: [
-            [
-              "ぬいた",
-              'ぬいた is "saw it through". For "goal after goal", use まくった.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "セールで服を買い{まくった}。",
-        "セールでふくをかい{まくった}。",
-        "I went on a clothes-buying spree in the sale.",
-        {
-          near: [
-            [
-              "きった",
-              'きった is "did completely". For "on a spree", use まくった.',
-            ],
-          ],
-        },
-      ),
+      s("休みの日は、ゲームをし{まくった}。", "やすみのひは、ゲームをし{まくった}。", "On my day off, I played games non-stop.", {
+        near: [["きった", "きった is \"did completely\". For \"did like crazy\", use まくった."]],
+      }),
+      s("旅行先で写真を撮り{まくった}。", "りょこうさきでしゃしんをとり{まくった}。", "I took photos like crazy on the trip.", {
+        near: [["ぬいた", "ぬいた is \"saw it through\". For \"like crazy\", use まくった."]],
+      }),
+      s("カラオケで歌い{まくって}、声が出なくなった。", "カラオケでうたい{まくって}、こえがでなくなった。", "I sang so much at karaoke that I lost my voice.", {
+        near: [["きって", "きって is \"completely\". For \"so much\", use まくって."]],
+      }),
+      s("その試合で、彼は点を取り{まくった}。", "そのしあいで、かれはてんをとり{まくった}。", "He scored goal after goal in that match.", {
+        near: [["ぬいた", "ぬいた is \"saw it through\". For \"goal after goal\", use まくった."]],
+      }),
+      s("セールで服を買い{まくった}。", "セールでふくをかい{まくった}。", "I went on a clothes-buying spree in the sale.", {
+        near: [["きった", "きった is \"did completely\". For \"on a spree\", use まくった."]],
+      }),
     ],
   }),
 
@@ -1135,74 +490,21 @@ The noun is something you'd normally do properly: 挨拶, 食事, 朝ご飯, 仕
 Compare も構わず (N2), "without caring about", which ignores something completely.
 `,
     sentences: [
-      s(
-        "挨拶{もそこそこに}、彼は本題に入った。",
-        "あいさつ{もそこそこに}、かれはほんだいにはいった。",
-        "With barely a greeting, he got straight down to business.",
-        {
-          near: [
-            [
-              "も構わず",
-              'も構わず is "without caring about". For "barely bothering with (in a hurry)", use もそこそこに.',
-              "もかまわず",
-            ],
-          ],
-        },
-      ),
-      s(
-        "朝ご飯{もそこそこに}、家を飛び出した。",
-        "あさごはん{もそこそこに}、いえをとびだした。",
-        "I rushed out of the house, barely touching my breakfast.",
-        {
-          near: [
-            [
-              "も構わず",
-              'も構わず is "without caring about". For "barely touching", use もそこそこに.',
-              "もかまわず",
-            ],
-          ],
-        },
-      ),
-      s(
-        "彼は仕事{もそこそこに}、飲みに出かけた。",
-        "かれはしごと{もそこそこに}、のみにでかけた。",
-        "He knocked off work early and went out drinking.",
-        {
-          near: [
-            [
-              "もかまわず",
-              'もかまわず is "without caring about". For "cutting work short", use もそこそこに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "息子は宿題{もそこそこに}、遊びに行ってしまった。",
-        "むすこはしゅくだい{もそこそこに}、あそびにいってしまった。",
-        "My son rushed through his homework and went off to play.",
-        {
-          near: [
-            [
-              "もかまわず",
-              'もかまわず is "without caring about". For "rushing through", use もそこそこに.',
-            ],
-          ],
-        },
-      ),
-      s(
-        "準備{もそこそこに}、会議が始まった。",
-        "じゅんび{もそこそこに}、かいぎがはじまった。",
-        "The meeting started before we'd barely prepared.",
-        {
-          near: [
-            [
-              "も構わず",
-              'も構わず is "without caring about". For "barely prepared", use もそこそこに.',
-              "もかまわず",
-            ],
-          ],
-        },
-      ),
+      s("挨拶{もそこそこに}、彼は本題に入った。", "あいさつ{もそこそこに}、かれはほんだいにはいった。", "With barely a greeting, he got straight down to business.", {
+        near: [["も構わず", "も構わず is \"without caring about\". For \"barely bothering with (in a hurry)\", use もそこそこに.", "もかまわず"]],
+      }),
+      s("朝ご飯{もそこそこに}、家を飛び出した。", "あさごはん{もそこそこに}、いえをとびだした。", "I rushed out of the house, barely touching my breakfast.", {
+        near: [["も構わず", "も構わず is \"without caring about\". For \"barely touching\", use もそこそこに.", "もかまわず"]],
+      }),
+      s("彼は仕事{もそこそこに}、飲みに出かけた。", "かれはしごと{もそこそこに}、のみにでかけた。", "He knocked off work early and went out drinking.", {
+        near: [["もかまわず", "もかまわず is \"without caring about\". For \"cutting work short\", use もそこそこに."]],
+      }),
+      s("息子は宿題{もそこそこに}、遊びに行ってしまった。", "むすこはしゅくだい{もそこそこに}、あそびにいってしまった。", "My son rushed through his homework and went off to play.", {
+        near: [["もかまわず", "もかまわず is \"without caring about\". For \"rushing through\", use もそこそこに."]],
+      }),
+      s("準備{もそこそこに}、会議が始まった。", "じゅんび{もそこそこに}、かいぎがはじまった。", "The meeting started before we'd barely prepared.", {
+        near: [["も構わず", "も構わず is \"without caring about\". For \"barely prepared\", use もそこそこに.", "もかまわず"]],
+      }),
     ],
   }),
 ];

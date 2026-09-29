@@ -51,8 +51,8 @@ export default function GrammarChapter() {
         <p>
           If you want your first pass laid out for you, the <In href="/grammar/n5">N5 grammar list</In> goes through the
           beginner points in the order you&apos;ll meet them, a short explanation and a handful of sentences each, and the{" "}
-          <In href="/grammar/n4">N4</In>,{" "}
-          <In href="/grammar/n3">N3</In> and <In href="/grammar/n2">N2</In> lists pick up from there. Signed in,
+          <In href="/grammar/n4">N4</In>, <In href="/grammar/n3">N3</In>, <In href="/grammar/n2">N2</In> and{" "}
+          <In href="/grammar/n1">N1</In> lists pick up from there. Signed in,
           you can learn a few a day and have them come back for review just before you&apos;d forget them. Keep it to a few
           minutes a day: it&apos;s there so the patterns look familiar when you meet them in your reading, not to replace the
           reading.

@@ -26,9 +26,9 @@ export const TOOLS: Tool[] = [
   },
   {
     href: "/grammar/n5",
-    title: "N5 to N2 grammar, point by point",
+    title: "N5 to N1 grammar, point by point",
     short: "Grammar decks",
-    description: "Every grammar point from N5 to N2 in learning order, with short explanations and example sentences. Sign in to review them on a spaced schedule.",
+    description: "Every grammar point from N5 to N1 in learning order, with short explanations and example sentences. Sign in to review them on a spaced schedule.",
     sample: "〜たい",
   },
   {
