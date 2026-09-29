@@ -141,7 +141,7 @@ export function checkAnswer(sentence: GrammarSentence, input: string): CheckResu
   if (accepted.has(n) || blankPattern(sentence)?.test(n)) return { result: "correct" };
 
   for (const miss of sentence.nearMisses) {
-    if (normalizeInput(miss.answer) === n) return { result: "nearMiss", nudge: miss.nudge };
+    if (normalizeInput(miss.answer) === n || miss.spellings?.includes(n)) return { result: "nearMiss", nudge: miss.nudge };
   }
 
   if ([...accepted].some((a) => spokenVariants(a).includes(n))) return { result: "nearMiss", nudge: PARTICLE_SPELLING };

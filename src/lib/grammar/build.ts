@@ -31,8 +31,12 @@ export interface SentenceOptions {
   hint?: string;
   /** Extra accepted spellings beyond the marked text, its reading and any conjugated forms. */
   accept?: string[];
-  /** [answer, nudge] pairs. */
-  near?: [string, string][];
+  /**
+   * [answer, nudge] pairs. The kana spelling learners type is worked out from the decks'
+   * furigana (spellings.ts); give it as a third item when it can't be, as with counters
+   * whose sound changes (六個, ろっこ).
+   */
+  near?: ([answer: string, nudge: string] | [answer: string, nudge: string, kana: string])[];
   conj?: ConjugationSpec;
 }
 
@@ -59,7 +63,11 @@ function buildSentence(pointId: string, index: number, [japanese, reading, engli
   const acceptedAnswers = [
     ...new Set([blankOf(japanese), blankOf(reading), ...(o.conj ? conjugatedAnswers(o.conj) : []), ...(o.accept ?? [])].filter(Boolean)),
   ];
-  const nearMisses: NearMiss[] = (o.near ?? []).map(([answer, nudge]) => ({ answer, nudge }));
+  const nearMisses: NearMiss[] = (o.near ?? []).map(([answer, nudge, kana]) => ({
+    answer,
+    nudge,
+    ...(kana ? { spellings: [kana] } : {}),
+  }));
   return {
     id: `${pointId}-${index + 1}`,
     japanese,

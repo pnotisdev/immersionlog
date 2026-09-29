@@ -12,6 +12,8 @@ export interface NearMiss {
   answer: string;
   /** Shown instead of marking the answer wrong: the learner gets another go. */
   nudge: string;
+  /** The answer in kana, for learners who type romaji; filled in from the decks' furigana (spellings.ts). */
+  spellings?: string[];
 }
 
 /**

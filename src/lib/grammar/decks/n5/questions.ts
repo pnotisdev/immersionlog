@@ -294,7 +294,7 @@ Mixing up いくら and いくつ is one of the most common first-trip-to-Japan 
         near: [["いくら", "いくら asks a price. For how many, use いくつ."]],
       }),
       s("妹さんは{いくつ}ですか。", "いもうとさんは{いくつ}ですか。", "How old is your little sister?", {
-        near: [["何歳", "何歳 works too, and is a bit more direct. This point practises いくつ."]],
+        near: [["何歳", "何歳 works too, and is a bit more direct. This point practises いくつ.", "なんさい"]],
       }),
       s("全部で{いくら}ですか。", "ぜんぶで{いくら}ですか。", "How much is it altogether?", {
         near: [["いくつ", "いくつ counts things. For the total price, use いくら."]],
@@ -403,14 +403,14 @@ The counter usually goes after the thing and its particle, right before the verb
         hint: "3",
         accept: ["3つ"],
         near: [
-          ["三個", "三個 works too. This point practises the native つ counter."],
+          ["三個", "三個 works too. This point practises the native つ counter.", "さんこ"],
           ["三", "A bare number can't count things. Add a counter: 三つ."],
         ],
       }),
       s("部屋に椅子が{四つ}あります。", "へやにいすが{よっつ}あります。", "There are four chairs in the room.", {
         hint: "4",
         accept: ["4つ"],
-        near: [["四個", "四個 works too. This point practises the native つ counter."]],
+        near: [["四個", "四個 works too. This point practises the native つ counter.", "よんこ"]],
       }),
       s("質問が{一つ}あります。", "しつもんが{ひとつ}あります。", "I have one question.", {
         hint: "1",
@@ -420,12 +420,12 @@ The counter usually goes after the thing and its particle, right before the verb
       s("コーヒーを{二つ}お願いします。", "コーヒーを{ふたつ}おねがいします。", "Two coffees, please.", {
         hint: "2",
         accept: ["2つ"],
-        near: [["二杯", "二杯 (cups) works too. This point practises つ."]],
+        near: [["二杯", "二杯 (cups) works too. This point practises つ.", "にはい"]],
       }),
       s("箱の中に卵が{六つ}あります。", "はこのなかにたまごが{むっつ}あります。", "There are six eggs in the box.", {
         hint: "6",
         accept: ["6つ"],
-        near: [["六個", "六個 works too. This point practises the native つ counter."]],
+        near: [["六個", "六個 works too. This point practises the native つ counter.", "ろっこ"]],
       }),
     ],
   }),
@@ -465,7 +465,7 @@ In restaurants you'll be asked 何名様ですか; 名 is the polite counter for
       s("教室に学生が{五人}います。", "きょうしつにがくせいが{ごにん}います。", "There are five students in the classroom.", {
         hint: "5",
         accept: ["5人"],
-        near: [["五つ", "つ counts things. People are counted with 人: 五人."]],
+        near: [["五つ", "つ counts things. People are counted with 人: 五人.", "いつつ"]],
       }),
       s("クラスに学生は{何人}いますか。", "クラスにがくせいは{なんにん}いますか。", "How many students are in the class?", {
         hint: "how many",
@@ -580,7 +580,7 @@ The choice of counter comes from the shape, not the category, so a shirt is 一�
       s("写真を{五枚}撮りました。", "しゃしんを{ごまい}とりました。", "I took five photos.", {
         hint: "5",
         accept: ["5枚"],
-        near: [["五本", "本 is for long, thin things. Photos are flat: 枚."]],
+        near: [["五本", "本 is for long, thin things. Photos are flat: 枚.", "ごほん"]],
       }),
       s("シャツを{三枚}買いました。", "シャツを{さんまい}かいました。", "I bought three shirts.", {
         hint: "3",

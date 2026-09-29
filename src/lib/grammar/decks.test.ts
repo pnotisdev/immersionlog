@@ -89,6 +89,14 @@ describe.each(points.map((p) => [p.id, p] as const))("%s", (_id, point) => {
     for (const miss of s.nearMisses) {
       expect(normalizeInput(miss.nudge)).not.toBe("");
       expect(checkAnswer(s, miss.answer), `near miss ${miss.answer} is accepted`).toEqual({ result: "nearMiss", nudge: miss.nudge });
+      // Typed as romaji it arrives as kana, and should still get the nudge.
+      if (/[^ぁ-ゖー]/u.test(normalizeInput(miss.answer))) {
+        const nudged = (miss.spellings ?? []).filter((k) => {
+          const r = checkAnswer(s, k);
+          return r.result === "nearMiss" && r.nudge === miss.nudge;
+        });
+        expect(nudged, `near miss ${miss.answer} in kana`).not.toEqual([]);
+      }
     }
 
     if (s.conjugation) {
