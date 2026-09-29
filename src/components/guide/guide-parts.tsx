@@ -44,6 +44,7 @@ export function Ext({ href, children }: { href: string; children: ReactNode }) {
     >
       {children}
       <ArrowUpRight className="size-3.5 shrink-0 self-center opacity-70" aria-hidden />
+      <span className="sr-only"> (opens in a new tab)</span>
     </a>
   );
 }
@@ -71,12 +72,17 @@ export function Callout({ title, children, tone = "note" }: { title: string; chi
   );
 }
 
-/** A small key/value table: settings, timelines. */
+/**
+ * A small key/value table: settings, timelines. With three or more columns it turns into
+ * one card per row on a phone, each cell labelled with its column, so nothing scrolls
+ * sideways.
+ */
 export function Table({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
+  const stack = head.length >= 3;
   return (
-    <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-      <table className="w-full border-collapse text-[0.9375rem]">
-        <thead>
+    <div className={stack ? "sm:overflow-x-auto" : "-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0"}>
+      <table className={cn("w-full border-collapse text-[0.9375rem]", stack && "max-sm:block")}>
+        <thead className={cn(stack && "max-sm:sr-only")}>
           <tr>
             {head.map((h) => (
               <th key={h} className="border-b border-line-strong py-2 pr-4 text-left font-semibold whitespace-nowrap">
@@ -85,11 +91,23 @@ export function Table({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className={cn(stack && "max-sm:grid max-sm:gap-3")}>
           {rows.map((r, i) => (
-            <tr key={i}>
+            <tr
+              key={i}
+              className={cn(stack && "max-sm:grid max-sm:gap-1.5 max-sm:rounded-lg max-sm:border max-sm:border-border max-sm:bg-surface max-sm:px-4 max-sm:py-3")}
+            >
               {r.map((c, j) => (
-                <td key={j} className={cn("border-b border-border py-2.5 pr-4 align-top", j === 0 && "font-medium whitespace-nowrap")}>
+                <td
+                  key={j}
+                  data-label={head[j]}
+                  className={cn(
+                    "border-b border-border py-2.5 pr-4 align-top",
+                    j === 0 && "font-medium sm:whitespace-nowrap",
+                    stack && "max-sm:border-0 max-sm:p-0",
+                    stack && j > 0 && head[j] && "max-sm:before:block max-sm:before:text-meta max-sm:before:text-dim max-sm:before:content-[attr(data-label)]",
+                  )}
+                >
                   {c}
                 </td>
               ))}

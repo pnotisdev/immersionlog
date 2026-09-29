@@ -1,15 +1,22 @@
-import { GUIDE_ANIME, GUIDE_BOOKS, GUIDE_FILMS, GUIDE_GAMES, GUIDE_MANGA, GUIDE_VISUAL_NOVELS } from "@/lib/guide-media";
-import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
+import { GUIDE_ANIME, GUIDE_BOOKS, GUIDE_FILMS, GUIDE_GAMES, GUIDE_MANGA, GUIDE_VISUAL_NOVELS, guideFinderItems } from "@/lib/guide-media";
+import { A_YEAR_TO_LEARN_JAPANESE, MORG } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, Photo } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
+import { MediaFinder } from "@/components/guide/media-finder";
 import { MediaTable, VnFacts } from "@/components/guide/media-table";
 
 export const metadata = chapterMetadata("what-to-watch-and-read");
 
 export default function MediaChapter() {
   return (
-    <ChapterShell slug="what-to-watch-and-read">
+    <ChapterShell
+      slug="what-to-watch-and-read"
+      art={{
+        name: "yotsuba",
+        caption: "Yotsuba in a room full of instruments, wondering which one to try first. That's this chapter.",
+      }}
+    >
       <GuideSection id="choosing" title="How to choose">
         <Photo
           src="/guide/manga-bookshop.webp"
@@ -20,8 +27,8 @@ export default function MediaChapter() {
         />
         <p>
           The single most important rule: <strong>pick things you actually want to finish.</strong> Something you care about
-          carries you through confusion that a perfectly levelled textbook story never will. Past that, a few things make a first
-          title easier:
+          carries you through confusion that a perfectly levelled textbook story never will. A show you love at 60%
+          comprehension beats a show you&apos;re bored by at 90%. Past that, a few things make a first title easier:
         </p>
         <List>
           <li>
@@ -36,7 +43,7 @@ export default function MediaChapter() {
           </li>
           <li>
             <strong>Something you&apos;ve already seen in English.</strong> Knowing the plot frees your attention for the
-            language.
+            language. Rewatching a childhood favourite in Japanese is a great first project, and very nostalgic.
           </li>
           <li>
             <strong>Made for Japanese people.</strong> Beyond the first weeks, native content teaches you real Japanese, including
@@ -55,7 +62,21 @@ export default function MediaChapter() {
           This chapter covers the beginner end, roughly 0 to 3. Harder titles are in the{" "}
           <In href="/guide/intermediate#recommendations">intermediate</In>,{" "}
           <In href="/guide/upper-intermediate#recommendations">upper-intermediate</In> and{" "}
-          <In href="/guide/advanced#recommendations">advanced</In> chapters, including live-action dramas.
+          <In href="/guide/advanced#recommendations">advanced</In> chapters, including live-action dramas. The finder below
+          searches all of them at once.
+        </p>
+      </GuideSection>
+
+      <GuideSection id="find" title="Find something">
+        <p>
+          Every title the guide ranks, from this chapter and the level chapters, in one list. Filter by medium, difficulty, length
+          or whether there&apos;s audio to listen along with; each title links to the chapter that recommends it.
+        </p>
+        <MediaFinder items={guideFinderItems()} />
+        <p className="text-meta text-dim">
+          Length is Jiten&apos;s count of Japanese characters in the whole work, so a long-running anime counts every episode.
+          Furigana isn&apos;t tracked; manga for younger readers and children&apos;s imprints usually have it, most adult novels
+          don&apos;t.
         </p>
       </GuideSection>
 
@@ -71,7 +92,11 @@ export default function MediaChapter() {
             ],
             ["NHK News Web Easy", "Current news rewritten in simple Japanese for children and learners, with furigana and audio.", "Free"],
             [<Ext key="w" href="https://watanoc.com/">Watanoc</Ext>, "Online magazine with articles graded by JLPT level.", "Free"],
-            [<Ext key="h" href="https://www.hukumusume.com/">Hukumusume</Ext>, "Folk tales and children's stories written for Japanese primary-school children.", "Free"],
+            [
+              <Ext key="h" href="https://www.hukumusume.com/">Hukumusume</Ext>,
+              "Folk tales and children's stories for Japanese primary-school children, with audio. Short, but fairy-tale Japanese is full of old-fashioned set phrases, so don't worry if it feels odd.",
+              "Free",
+            ],
             [
               <Ext key="i" href="https://www.irodori.jpf.go.jp/en/">IRODORI</Ext>,
               "The Japan Foundation's textbook for daily life in Japan, with audio; doubles as reading and listening practice.",
@@ -89,47 +114,166 @@ export default function MediaChapter() {
           <strong>角川つばさ文庫</strong> and <strong>講談社青い鳥文庫</strong> publish children&apos;s editions, including novels of
           popular films and anime, in large type with furigana throughout.
         </p>
+        <p>
+          One warning about picture books for toddlers, which seem like the obvious place to start. As{" "}
+          <Ext href={`${MORG}/Reading-children-books-or-fairytales`}>morg</Ext> points out, they&apos;re often packed with
+          onomatopoeia, baby talk and wordplay aimed at three-year-olds, and they&apos;re boring for adults. Manga and graded
+          readers are usually a better use of the same time.
+        </p>
       </GuideSection>
 
       <GuideSection id="podcasts" title="Podcasts and YouTube">
+        <p>
+          Video and audio you can fit around a day: on the commute, over lunch, while cooking. The best advice for all of it comes
+          from <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext>: <strong>follow one person a lot</strong>{" "}
+          rather than sampling many. Each speaker has their own pace, accent and favourite words, and once you&apos;re used to
+          them you can listen for meaning instead of fighting to parse. Going from a forty-year-old office worker to a
+          twenty-year-old student is a real adjustment.
+        </p>
         <H3>For learners, in Japanese</H3>
+        <p>Made for learners but spoken in Japanese: the bridge between textbooks and native content.</p>
         <Table
-          head={["Show", "Level", "What it is"]}
+          head={["Channel", "Level", "Why this one"]}
           rows={[
+            [
+              <Ext key="c" href="https://www.youtube.com/@nijapanese">Natural Japanese</Ext>,
+              "Complete beginner and up",
+              "Formerly Comprehensible Japanese. Drawings, gestures and props carry the meaning, so it works from week one. Over 1,500 videos, searchable by level on its site.",
+            ],
             [
               <Ext key="t" href="https://nihongoconteppei.com/">Nihongo con Teppei</Ext>,
               "Beginner, then intermediate",
-              "Teppei talks about everyday topics in simple, natural Japanese; the beginner series repeats a lot on purpose. Free.",
-            ],
-            [
-              <Ext key="n" href="https://www.japanesewithnoriko.com/">Learn Japanese with Noriko</Ext>,
-              "Upper beginner and up",
-              "Short episodes on daily-life topics, with free transcripts to read along.",
+              "Short podcast episodes on everyday topics. The beginner series repeats a lot on purpose; Teppei is a language learner himself and knows which words will trip you up. Free.",
             ],
             [
               <Ext key="s" href="https://www.youtube.com/@JapanesewithShun">Japanese with Shun</Ext>,
               "N5–N3",
-              "Vlogs, interviews and travel in clear Japanese, mostly using the grammar from Genki I and II.",
+              "Vlogs, interviews and travel in clear Japanese, mostly with the grammar from Genki I and II. Real places, not a studio.",
             ],
             [
-              <Ext key="c" href="https://nijapanese.com/">Natural Japanese</Ext>,
-              "Complete beginner and up",
-              "Formerly Comprehensible Japanese: videos in simple Japanese, with drawings and gestures carrying the meaning.",
+              <Ext key="n" href="https://www.japanesewithnoriko.com/">Learn Japanese with Noriko</Ext>,
+              "Upper beginner and up",
+              "Short episodes on daily-life topics, with free transcripts. Good for reading along while you listen.",
+            ],
+            [
+              <Ext key="y" href="https://www.youtube.com/@yuyunihongopodcast">YUYUの日本語Podcast</Ext>,
+              "Intermediate",
+              "Longer talks for learners about culture, daily life and language, at a pace closer to natural speech. A step towards native podcasts.",
+            ],
+            [
+              <Ext key="m" href="https://www.youtube.com/@MikuRealJapanese">Miku Real Japanese</Ext>,
+              "Intermediate",
+              "A Japanese teacher's podcast in natural Japanese about life and culture. Real conversational speed, but clear.",
             ],
           ]}
         />
-        <H3>Native shows that are easy to follow</H3>
+        <H3>Japanese explained in English</H3>
+        <p>
+          Not immersion, but useful when something won&apos;t click. Treat these like a grammar guide: look things up, then go
+          back to Japanese.
+        </p>
+        <Table
+          head={["Channel", "Good for", "Why this one"]}
+          rows={[
+            [
+              <Ext key="a" href="https://www.youtube.com/@TokiniAndy">ToKini Andy</Ext>,
+              "Grammar, textbook learners",
+              "Lessons that follow the Genki and Quartet textbooks chapter by chapter. The one to have open alongside a textbook.",
+            ],
+            [
+              <Ext key="g" href="https://www.youtube.com/@GameGengo">Game Gengo</Ext>,
+              "Grammar in context",
+              "Breaks down real lines from Japanese games and explains the grammar in them. Great if games are why you're learning.",
+            ],
+            [
+              <Ext key="k" href="https://www.youtube.com/@kanamenaito">Kaname Naito</Ext>,
+              "Nuance, natural phrasing",
+              "Explains the difference between near-synonyms and what natives actually say. Best from the intermediate stage.",
+            ],
+            [
+              <Ext key="d" href="https://www.youtube.com/@Dogen">Dogen</Ext>,
+              "Pronunciation, pitch accent",
+              "The best-known pitch accent teacher; free videos on YouTube, the full phonetics course on Patreon (paid). See pitch accent.",
+            ],
+            [
+              <Ext key="u" href="https://www.youtube.com/@ThatJapaneseManYuta">That Japanese Man Yuta</Ext>,
+              "How people really talk",
+              "Street interviews with ordinary people and explanations of casual speech, with Japanese and English subtitles.",
+            ],
+          ]}
+        />
+        <H3>Native YouTube, roughly easiest first</H3>
+        <p>
+          Made for Japanese viewers. These aren&apos;t measured the way the lists below are; the order is a judgement. Most
+          Japanese YouTubers put big captions (テロップ) on screen for their key lines, which makes them far easier to follow than
+          TV drama.
+        </p>
+        <Table
+          head={["Channel", "What it is", "Why this one"]}
+          rows={[
+            [
+              <Ext key="r" href="https://www.youtube.com/@ryuji825">料理研究家リュウジのバズレシピ</Ext>,
+              "Cooking",
+              "You watch what he's doing while he says it, so every verb and ingredient comes with a picture. Casual, friendly speech.",
+            ],
+            [
+              <Ext key="h" href="https://www.youtube.com/@HikakinTV">HikakinTV</Ext>,
+              "Reviews, challenges",
+              "One of Japan's biggest YouTubers. Clear, energetic and family-friendly, with captions for almost everything.",
+            ],
+            [
+              <Ext key="f" href="https://www.youtube.com/@Fischers">Fischer&apos;s</Ext>,
+              "Group challenges",
+              "Six friends doing challenges and outdoor games, made with a young audience in mind. Simple language, lots of action.",
+            ],
+            [
+              <Ext key="j" href="https://www.youtube.com/@hajimesyacho">はじめしゃちょー</Ext>,
+              "Experiments, pranks",
+              "Big, visual experiments with heavy captions. Easy to follow even when you miss words.",
+            ],
+            [
+              <Ext key="ko" href="https://www.youtube.com/@InugamiKorone">戌神ころね</Ext>,
+              "VTuber, game streams",
+              "Hours of casual talk over games; one voice to get used to. Fan clip channels (切り抜き) cut streams into short, captioned highlights, which are much easier to start with.",
+            ],
+            [
+              <Ext key="p" href="https://www.youtube.com/@UsadaPekora">兎田ぺこら</Ext>,
+              "VTuber, game streams",
+              "Same idea. She ends sentences with ぺこ as a character quirk: fun to hear, not something to copy (see role language).",
+            ],
+            [
+              <Ext key="q" href="https://www.youtube.com/@QuizKnock">QuizKnock</Ext>,
+              "Quizzes, puzzles",
+              "A group of quiz players making knowledge entertainment. Lots of on-screen text and a wide vocabulary; intermediate and up.",
+            ],
+            [
+              <Ext key="l" href="https://www.youtube.com/@yurugengo">ゆる言語学ラジオ</Ext>,
+              "Linguistics talk",
+              "Two friends talking about language, light-hearted and very popular. No visuals to lean on, so it's a listening test.",
+            ],
+            [
+              <Ext key="to" href="https://www.youtube.com/@tokaionair">東海オンエア</Ext>,
+              "Group variety",
+              "Six friends and fast, overlapping banter. A real upper-intermediate listening challenge.",
+            ],
+            [
+              <Ext key="an" href="https://www.youtube.com/@annnewsCH">ANNnewsCH</Ext>,
+              "TV news",
+              "TV Asahi's news channel: standard, carefully pronounced Japanese and news vocabulary. Short clips; advanced.",
+            ],
+          ]}
+        />
         <List>
           <li>
-            <strong>Let&apos;s plays.</strong> Gamers narrate what they&apos;re doing, so the screen tells you what the words mean.
-            Pick one person and stay with them.
+            <strong>Let&apos;s plays</strong> are worth seeking out in whatever game you like: gamers narrate what they&apos;re
+            doing, so the screen tells you what the words mean.
           </li>
           <li>
-            <strong>Vlogs and daily-life channels.</strong> Same advice: one speaker, lots of episodes.
+            <strong>COTEN RADIO</strong> (history) is another well-loved native podcast for intermediate listeners.
           </li>
           <li>
-            <strong>ゆる言語学ラジオ</strong> (a light-hearted linguistics podcast) and <strong>COTEN RADIO</strong> (history) are
-            well-loved native podcasts for intermediate listeners.
+            Turn on Japanese captions where they exist, and use <In href="/guide/immersion#tools">the tools chapter</In>&apos;s
+            setup to look words up in YouTube subtitles.
           </li>
         </List>
       </GuideSection>
@@ -137,7 +281,8 @@ export default function MediaChapter() {
       <GuideSection id="anime" title="Anime and films">
         <p>
           Watch with Japanese subtitles (see <In href="/guide/immersion#subtitles">subtitles</In>). Slice of life is the easiest
-          genre by far, which is why it dominates the top of this list.
+          genre by far, which is why it dominates the top of this list: people drinking tea and talking about their day is,
+          it turns out, exactly the Japanese you need.
         </p>
         <MediaTable items={GUIDE_ANIME} />
         <H3>Films</H3>
@@ -147,15 +292,17 @@ export default function MediaChapter() {
         </p>
         <MediaTable items={GUIDE_FILMS} />
         <p>
-          Popular doesn&apos;t mean easy: Kaguya-sama and Steins;Gate are community favourites but score among the hardest here,
-          while quiet shows like Polar Bear Café and Non Non Biyori score among the easiest.
+          Popular doesn&apos;t mean easy: Kaguya-sama and Steins;Gate are community favourites but score among the hardest here
+          (Kaguya&apos;s narrator talks like a sports commentator on espresso), while quiet shows like Polar Bear Café and Non Non
+          Biyori score among the easiest.
         </p>
       </GuideSection>
 
       <GuideSection id="manga" title="Manga">
         <p>
           Pictures carry the story, so manga needs far less vocabulary than a novel. Most of it is dialogue, which means lots of
-          casual speech and slang, and furigana is common in manga for younger readers. Read it with{" "}
+          casual speech and slang, and furigana is common in manga for younger readers. morg&apos;s top pick for a
+          beginner&apos;s first real reading, and ours too. Read it with{" "}
           <In href="/guide/immersion#tools">mokuro</In> for lookups, or on paper with a dictionary app.
         </p>
         <MediaTable items={GUIDE_MANGA} />
@@ -168,7 +315,8 @@ export default function MediaChapter() {
       <GuideSection id="visual-novels" title="Visual novels">
         <p>
           Visual novels are novels with pictures, music and usually full voice acting: you read every line while hearing it. VN
-          Club and many immersion learners swear by them because you can read for hours without the fatigue of a plain novel. Set
+          Club and many immersion learners swear by them because you can read for hours without the fatigue of a plain novel,
+          and the voice actors do half the work of explaining what a line means. Set
           one up with a texthooker (see <In href="/guide/immersion#tools">tools</In>).
         </p>
         <Callout title="About age ratings" tone="warn">
@@ -186,8 +334,9 @@ export default function MediaChapter() {
 
       <GuideSection id="games" title="Games">
         <p>
-          Games are reading with a reason to understand. RPGs and adventure games are text-heavy; Animal Crossing is endless
-          low-stakes conversation. One surprise in the data: older games written only in kana score as harder than they look.
+          Games are reading with a reason to understand: if you don&apos;t get what the old man said, you don&apos;t get the
+          sword. RPGs and adventure games are text-heavy; Animal Crossing is endless low-stakes conversation with a raccoon who
+          wants your money. One surprise in the data: older games written only in kana score as harder than they look.
           Without kanji there are no visual cues for where words begin and end, so Pokémon Red, with one kanji in the whole game,
           scores harder than Pokémon Sword.
         </p>
@@ -197,7 +346,8 @@ export default function MediaChapter() {
 
       <GuideSection id="books" title="Books">
         <p>
-          Novels are the hardest medium to start with and the most rewarding once you can: nothing builds vocabulary faster.
+          Novels are the hardest medium to start with and the most rewarding once you can: nothing builds vocabulary faster, and
+          the first time you finish one is a genuinely great day.
           Start with short books, and consider reading something after watching its adaptation. The list climbs from a
           children&apos;s novel to a popular intermediate target:
         </p>

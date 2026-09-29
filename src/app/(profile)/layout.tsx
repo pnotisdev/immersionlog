@@ -28,6 +28,14 @@ export default async function ProfileLayout({ children }: LayoutProps<"/">) {
             <Link href="/">
               <Wordmark markSize={18} textClassName="text-lg font-semibold" />
             </Link>
+            <nav className="ml-6 hidden items-center gap-5 text-sm text-muted-foreground md:flex">
+              <Link href="/guide" className="transition-colors hover:text-foreground">
+                Guide
+              </Link>
+              <Link href="/tools" className="transition-colors hover:text-foreground">
+                Tools
+              </Link>
+            </nav>
             <div className="ml-auto flex items-center gap-1 sm:gap-2">
               <Link
                 href="/login"

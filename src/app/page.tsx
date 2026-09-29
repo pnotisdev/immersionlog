@@ -72,6 +72,12 @@ function SiteHeader() {
               {label}
             </a>
           ))}
+          <Link href="/guide" className="transition-colors hover:text-foreground">
+            Guide
+          </Link>
+          <Link href="/tools" className="transition-colors hover:text-foreground">
+            Tools
+          </Link>
         </nav>
         <div className="ml-auto flex items-center gap-1">
           {/* Hidden at 375px, where the wordmark and two controls do not fit together.
@@ -203,8 +209,9 @@ async function Pillars({ top }: { top: Awaited<ReturnType<typeof getLeaderboard>
   const shelf = buildLibraryEntries(pool, 6);
   const days = buildHeatmapDays();
 
+  // No rule on top: the hero's light and cover wall already end the section above.
   return (
-    <Band id="track">
+    <Band id="track" rule={false}>
       <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
         <div data-reveal>
           <PillarHeading>Hours, characters, streaks.</PillarHeading>
@@ -221,11 +228,11 @@ async function Pillars({ top }: { top: Awaited<ReturnType<typeof getLeaderboard>
         {/* minCell: a full year shrinks to fit this column, as a picture of the product,
             instead of scrolling the way the in-app heatmap does on a phone. */}
         <div data-reveal className="rounded-lg border border-border bg-surface p-5 sm:p-7">
-          <Heatmap days={days} minCell={3} gap={2} />
+          <Heatmap days={days} minCell={3} gap={2} tour />
         </div>
       </div>
 
-      <div className="mt-16 grid gap-12 border-t border-border pt-16 lg:mt-20 lg:grid-cols-2 lg:gap-16 lg:pt-20">
+      <div className="mt-16 grid gap-12 lg:mt-20 lg:grid-cols-2 lg:gap-16 lg:border-t lg:border-border lg:pt-20">
         <div id="community" data-reveal className="scroll-mt-20">
           <PillarHeading>The other people doing this.</PillarHeading>
           <p className="mt-5 text-base leading-[1.65] text-muted-foreground">
@@ -341,8 +348,10 @@ function SiteFooter() {
     <footer className="relative overflow-hidden">
       <Rule />
       <Frame className="pt-14 pb-10">
-        <div className="flex flex-wrap items-start gap-x-12 gap-y-8 text-sm">
-          <p className="max-w-xs leading-[1.7] text-muted-foreground">
+        {/* A plain grid below lg: a wrapping flex row left the link columns wherever
+            they happened to break, one of them stranded beside the blurb. */}
+        <div className="grid grid-cols-2 items-start gap-x-8 gap-y-8 text-sm sm:grid-cols-3 lg:flex lg:flex-wrap lg:gap-x-12">
+          <p className="col-span-full max-w-xs leading-[1.7] text-muted-foreground">
             A tracker for everything you consume in Japanese, and the people doing it with you.
           </p>
 
@@ -358,8 +367,20 @@ function SiteFooter() {
             <Link href="/titles" className="transition-colors hover:text-foreground">
               Japanese titles
             </Link>
+            <Link href="/guide" className="transition-colors hover:text-foreground">
+              Learning guide
+            </Link>
+            <Link href="/tools" className="transition-colors hover:text-foreground">
+              Practice tools
+            </Link>
             <Link href="/tools/reading-speed" className="transition-colors hover:text-foreground">
               Reading speed test
+            </Link>
+            <Link href="/tools/kana" className="transition-colors hover:text-foreground">
+              Kana quiz
+            </Link>
+            <Link href="/tools/conjugation" className="transition-colors hover:text-foreground">
+              Conjugation practice
             </Link>
           </nav>
 
@@ -378,7 +399,7 @@ function SiteFooter() {
             </Link>
           </nav>
 
-          <p className="max-w-xs leading-[1.7] text-dim sm:ml-auto">
+          <p className="col-span-full max-w-xs leading-[1.7] text-dim lg:ml-auto">
             Cover art and metadata from AniList, VNDB, TMDB, Google Books, Jiten.moe and the stores you import from.
           </p>
         </div>

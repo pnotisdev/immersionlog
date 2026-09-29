@@ -34,6 +34,15 @@ export function Footer({
         <Link href="/titles" className="hover:text-foreground">
           Titles
         </Link>
+        <Link href="/tools" className="hover:text-foreground">
+          Practice tools
+        </Link>
+        <Link href="/tools/kana" className="hover:text-foreground">
+          Kana quiz
+        </Link>
+        <Link href="/tools/conjugation" className="hover:text-foreground">
+          Conjugation practice
+        </Link>
         <Link href="/tools/reading-speed" className="hover:text-foreground">
           Reading speed test
         </Link>

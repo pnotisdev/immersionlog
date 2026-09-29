@@ -3,6 +3,7 @@ import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
 import { LevelRecommendations } from "@/components/guide/media-table";
+import { Scene } from "@/components/guide/anime-art";
 
 export const metadata = chapterMetadata("advanced");
 
@@ -16,13 +17,19 @@ function J({ children }: { children: string }) {
 
 export default function AdvancedChapter() {
   return (
-    <ChapterShell slug="advanced">
+    <ChapterShell
+      slug="advanced"
+      art={{
+        name: "bungo",
+        caption: "In Bungo Stray Dogs, Dazai, Akutagawa and Mori Ōgai fight with superpowers named after their own books. In this chapter they just have the books, and you can read them.",
+      }}
+    >
       <GuideSection id="where-you-are" title="What advanced means">
         <p>
           Advanced isn&apos;t a finish line. An advanced learner can do almost anything with some preparation, and many things
           on the spot: read a novel for pleasure, follow a heated group discussion, handle a work meeting. What&apos;s left is the
           long tail that native speakers also spend their lives on: literary style, formal writing, specialist fields, the
-          history buried in the language.
+          history buried in the language. The final boss has no health bar; it&apos;s just more interesting bosses.
         </p>
         <p>
           It&apos;s also worth asking whether you need it.{" "}
@@ -189,6 +196,14 @@ export default function AdvancedChapter() {
           (negatives), 〜なり (is). You don&apos;t need to read the Tale of Genji, but recognising these makes a lot of
           &ldquo;weird grammar&rdquo; suddenly obvious.
         </p>
+        <Scene name="chihayafuru" title="Classical poetry as a contact sport">
+          <p>
+            <em>Chihayafuru</em> is about competitive karuta, a card game built on the <em>Hyakunin Isshu</em>, a hundred
+            classical poems, some of them over 1,300 years old, collected in the 13th century. Top players know all hundred by heart and slap the right card
+            before the reader finishes the first syllables. You don&apos;t need to go that far, but it&apos;s the most exciting way
+            there is to hear what classical Japanese sounds like.
+          </p>
+        </Scene>
         <List>
           <li>
             <Ext href="https://imabi.org/">IMABI</Ext> has a full Classical Japanese course alongside its modern lessons.
@@ -198,6 +213,84 @@ export default function AdvancedChapter() {
             playlist.
           </li>
         </List>
+      </GuideSection>
+
+      <GuideSection id="linguistics" title="Going deeper: linguistics and language history">
+        <p>
+          At some point &ldquo;how do I say this?&rdquo; turns into &ldquo;why is it like this?&rdquo; Why does 日曜日 read 日 two
+          ways, why does は sound like <em>wa</em>, why do 人々 (ひとびと) and 時々 (ときどき) change their second sound? That&apos;s linguistics, and
+          Japanese is a famously fun language to ask it about. None of this is needed to get good at Japanese; all of it makes
+          Japanese more interesting.
+        </p>
+        <H3>Linguistics in general</H3>
+        <List>
+          <li>
+            <Ext href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtP5mp25nStsuDzk2blncJDW">Crash Course Linguistics</Ext>:
+            sixteen short episodes on sounds, grammar, meaning and how languages change. The quickest overview there is.
+          </li>
+          <li>
+            <Ext href="https://lingthusiasm.com/">Lingthusiasm</Ext>: a podcast of two linguists being extremely enthusiastic
+            about language. Accurate, friendly and fun.
+          </li>
+          <li>
+            <Ext href="https://ecampusontario.pressbooks.pub/essentialsoflinguistics2/">Essentials of Linguistics</Ext>: a free
+            open textbook, if you want the structured university-intro version.
+          </li>
+          <li>
+            <Ext href="https://www.youtube.com/@NativLang">NativLang</Ext> and{" "}
+            <Ext href="https://www.youtube.com/@Langfocus">Langfocus</Ext>: animated language history and &ldquo;how this
+            language works&rdquo; videos, including Japanese and the Japonic family.
+          </li>
+          <li>
+            <Ext href="https://wals.info/">WALS</Ext> and <Ext href="https://glottolog.org/">Glottolog</Ext>: databases of how
+            the world&apos;s languages differ and how they&apos;re related. Dangerous to open late at night.
+          </li>
+        </List>
+        <H3>Japanese linguistics and history</H3>
+        <List>
+          <li>
+            <Ext href="https://yurugengo.com/">ゆる言語学ラジオ</Ext>: two friends chatting about linguistics in Japanese. Linguistics
+            and listening practice at the same time.
+          </li>
+          <li>
+            <Ext href="https://www.ninjal.ac.jp/english/">NINJAL</Ext>, Japan&apos;s national language research institute, makes
+            its research tools free: OJAD for pitch accent, the{" "}
+            <Ext href="https://ccd.ninjal.ac.jp/chj/">Corpus of Historical Japanese</Ext> (real texts from Old Japanese to the
+            Meiji era, searchable) and the <Ext href="https://oncoj.ninjal.ac.jp/">Oxford-NINJAL Corpus of Old Japanese</Ext>,
+            with the 8th-century poems and texts glossed word by word.
+          </li>
+          <li>
+            <Ext href="https://imabi.org/">IMABI</Ext> explains the history behind many modern forms alongside its Classical
+            Japanese lessons.
+          </li>
+          <li>
+            <Ext href="https://japanese.stackexchange.com/">Japanese Stack Exchange</Ext> is the best free place for &ldquo;why is
+            it like this?&rdquo; questions: rendaku, sound changes, where a word came from. Good answers cite their sources.
+          </li>
+          <li>
+            Wikipedia is unusually strong here: the articles on Japanese phonology, Old Japanese, Early Middle Japanese, the
+            Japonic languages and rendaku are well referenced and a good way in.
+          </li>
+        </List>
+        <H3>Books worth buying</H3>
+        <Table
+          head={["Book", "What it's for"]}
+          rows={[
+            ["Natsuko Tsujimura, An Introduction to Japanese Linguistics", "The standard textbook: sounds, words, grammar, meaning and variation."],
+            ["Masayoshi Shibatani, The Languages of Japan", "Japanese and Ainu, with a lot of history. Older, still a classic."],
+            ["Bjarke Frellesvig, A History of the Japanese Language", "The modern standard on how Old Japanese became today's Japanese."],
+            ["Haruhiko Kindaichi, The Japanese Language", "A readable classic for a general audience, by one of Japan's best-known linguists."],
+            [<span key="y" lang="ja">山口仲美『日本語の歴史』（岩波新書）</span>, "A short, lively history of Japanese, written for Japanese readers. Doubles as advanced reading practice."],
+            [<span key="k" lang="ja">金水敏『ヴァーチャル日本語 役割語の謎』</span>, "The book that named role language (役割語): why anime professors say じゃ and ojōsama say ですわ."],
+          ]}
+        />
+        <Callout title="Careful with etymology sites" tone="warn">
+          <p>
+            Popular etymology sites such as 語源由来辞典 mix real history with folk etymology, and a good story spreads faster than
+            a true one. For anything that matters, check it against Japanese Stack Exchange or a proper dictionary; 日本国語大辞典
+            is the authority.
+          </p>
+        </Callout>
       </GuideSection>
 
       <GuideSection id="tests" title="Tests and credentials">

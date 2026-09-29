@@ -9,6 +9,11 @@ export const GUIDE_UPDATED = "2026-09-27";
 /** u/SuikaCider's "A Year to Learn Japanese", cited throughout the guide. */
 export const A_YEAR_TO_LEARN_JAPANESE = "https://docs.google.com/document/d/10bRzVblKVOsQJjTc2PIi1Gbj_LrsJCkMkh0SutXCZdI/edit";
 
+/** morg.systems, whose notes the guide draws on for the learning loop, output, reading and traps. */
+export const MORG = "https://morg.systems";
+
+export const REFOLD_ROADMAP = "https://refold.la/roadmap";
+
 export interface GuideChapter {
   /** "" for the overview at /guide. */
   slug: string;
@@ -30,6 +35,7 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
     minutes: 12,
     sections: [
       { id: "short-version", label: "The short version" },
+      { id: "loop", label: "The loop" },
       { id: "chapters", label: "The chapters" },
       { id: "expectations", label: "What to expect" },
       { id: "how-japanese-works", label: "How Japanese works" },
@@ -122,6 +128,7 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
       { id: "role-language", label: "Anime speech and role language" },
       { id: "kansai", label: "Kansai dialect" },
       { id: "keigo", label: "When politeness goes up" },
+      { id: "textbook-skips", label: "What textbooks skip" },
       { id: "practice", label: "How to learn it" },
     ],
   },
@@ -135,8 +142,10 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
     sections: [
       { id: "input", label: "Comprehensible input" },
       { id: "when", label: "When to start" },
+      { id: "ambiguity", label: "Letting things go" },
       { id: "listening", label: "Listening" },
       { id: "reading", label: "Reading" },
+      { id: "narrow", label: "Read narrow" },
       { id: "subtitles", label: "Subtitles" },
       { id: "tools", label: "Tools" },
       { id: "mining", label: "Mining" },
@@ -147,10 +156,11 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
     nav: "What to watch and read",
     title: "What to watch and read: Japanese for beginners",
     description:
-      "Beginner-friendly podcasts, YouTube, graded readers, anime, films, manga, visual novels, games and books, ranked by measured difficulty from Jiten.moe, with the all-ages status of every visual novel checked.",
-    minutes: 16,
+      "Beginner-friendly podcasts, YouTube channels, graded readers, anime, films, manga, visual novels, games and books, ranked by measured difficulty from Jiten.moe, with the all-ages status of every visual novel checked, and a finder that filters every title in the guide.",
+    minutes: 20,
     sections: [
       { id: "choosing", label: "How to choose" },
+      { id: "find", label: "Find something" },
       { id: "learner", label: "Made for learners" },
       { id: "podcasts", label: "Podcasts and YouTube" },
       { id: "anime", label: "Anime and films" },
@@ -171,6 +181,7 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
       { id: "when", label: "When to start" },
       { id: "before", label: "Before your first conversation" },
       { id: "conversations", label: "Conversations" },
+      { id: "practice", label: "Practising output" },
       { id: "pitch-accent", label: "Pitch accent" },
       { id: "writing", label: "Writing" },
     ],
@@ -180,14 +191,33 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
     nav: "Routine and milestones",
     title: "A daily Japanese study routine, and what to expect",
     description:
-      "Sample routines for your first week, first month and first year, milestones to aim for, how to stay consistent, and the most common mistakes.",
-    minutes: 10,
+      "Sample routines for your first week and first months, a plan for 30–45 minutes a day, what to emphasise if your goal is anime, novels, travel or work, milestones, what to do when progress feels invisible, and how to stay consistent through bad weeks.",
+    minutes: 18,
     sections: [
       { id: "first-week", label: "Your first week" },
       { id: "first-months", label: "The first months" },
+      { id: "short-on-time", label: "Only 30–45 minutes a day" },
+      { id: "goals", label: "If you have one main goal" },
       { id: "milestones", label: "Milestones" },
+      { id: "plateaus", label: "When progress feels invisible" },
       { id: "consistency", label: "Staying consistent" },
       { id: "mistakes", label: "Common mistakes" },
+    ],
+  },
+  {
+    slug: "traps",
+    nav: "Traps to skip",
+    title: "Bad ideas for learning Japanese (and what to do instead)",
+    description:
+      "The popular shortcuts that cost you months: romaji, Duolingo, machine translation, fill-in-the-blank exercises, English-first flashcards, studying song lyrics, children's books, waiting until you're ready, and the fixed study partner. Plus the things people worry about that are actually fine.",
+    minutes: 11,
+    sections: [
+      { id: "why", label: "Why a list of bad ideas" },
+      { id: "shortcuts", label: "Shortcuts that aren't" },
+      { id: "exercises", label: "Exercises that waste your time" },
+      { id: "material", label: "Material traps" },
+      { id: "people", label: "The study-buddy trap" },
+      { id: "fine", label: "Things that are actually fine" },
     ],
   },
   {
@@ -227,8 +257,8 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
     nav: "Advanced",
     title: "Advanced Japanese: literature, keigo, news and beyond",
     description:
-      "The long road past N1: modern and Meiji-era literature, news and editorials, keigo you can actually use, formal writing, idioms and four-character compounds, dialects, classical Japanese and kanji proficiency, and the hardest popular media.",
-    minutes: 15,
+      "The long road past N1: modern and Meiji-era literature, news and editorials, keigo you can actually use, formal writing, idioms and four-character compounds, dialects, classical Japanese, linguistics and the history of the language, kanji proficiency, and the hardest popular media.",
+    minutes: 18,
     sections: [
       { id: "where-you-are", label: "What advanced means" },
       { id: "literature", label: "Literature" },
@@ -238,6 +268,7 @@ export const GUIDE_CHAPTERS: GuideChapter[] = [
       { id: "idioms", label: "Idioms and set expressions" },
       { id: "dialects", label: "Dialects" },
       { id: "classical", label: "Classical Japanese" },
+      { id: "linguistics", label: "Linguistics and language history" },
       { id: "tests", label: "Tests and credentials" },
       { id: "recommendations", label: "The hardest popular media" },
     ],

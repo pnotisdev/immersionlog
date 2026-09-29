@@ -375,6 +375,180 @@ export function MoraDiagram() {
   );
 }
 
+/**
+ * Word pairs that differ only in length: each mora is one fixed-width slot, so the
+ * extra beat shows as extra width.
+ */
+export function LengthPairsDiagram() {
+  // `hl`: the beats of the longer word that the shorter one doesn't have.
+  const pairs = [
+    { short: { morae: ["き", "て"], en: "come" }, long: { morae: ["き", "っ", "て"], en: "stamp" }, hl: [1] },
+    { short: { morae: ["お", "ば", "さ", "ん"], en: "aunt" }, long: { morae: ["お", "ば", "あ", "さ", "ん"], en: "grandmother" }, hl: [2] },
+    { short: { morae: ["びょ", "う", "い", "ん"], en: "hospital" }, long: { morae: ["び", "よ", "う", "い", "ん"], en: "beauty salon" }, hl: [0, 1] },
+  ];
+  const Row = ({ morae, en, hl = [] }: { morae: string[]; en: string; hl?: number[] }) => (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <div className="flex gap-1">
+        {morae.map((m, i) => (
+          <span
+            key={i}
+            className={cn(
+              "grid h-9 w-10 place-items-center rounded-sm border text-base",
+              hl.includes(i) ? "border-primary bg-accent-tint" : "border-border bg-background",
+            )}
+          >
+            {m}
+          </span>
+        ))}
+      </div>
+      <span className="text-meta text-dim" lang="en">
+        {en} · {morae.length}
+      </span>
+    </div>
+  );
+  return (
+    <Diagram
+      label="Word pairs that differ by one beat: kite and kitte, obasan and obaasan, byouin and biyouin"
+      caption="Each box is one beat of the same length. Add a beat and you have a different word: a small っ is a held silence, a long vowel is a second beat, and びょ (one beat) is not び・よ (two). Say them while tapping once per box."
+    >
+      <div className="grid gap-5" lang="ja">
+        {pairs.map((p) => (
+          <div key={p.long.en} className="grid justify-center gap-2 sm:justify-start sm:pl-4">
+            <Row {...p.short} />
+            <Row {...p.long} hl={p.hl} />
+          </div>
+        ))}
+      </div>
+    </Diagram>
+  );
+}
+
+/**
+ * One sentence broken into chunks, each particle's job named, all pointing at the verb;
+ * then the same chunks shuffled, meaning unchanged.
+ */
+export function ParticleRolesDiagram() {
+  const chunks = [
+    { word: "田中さん", p: "が", role: "who" },
+    { word: "友達", p: "と", role: "with whom" },
+    { word: "駅", p: "で", role: "where it happens" },
+    { word: "本", p: "を", role: "what" },
+  ];
+  return (
+    <Diagram
+      label="Tanaka-san ga, tomodachi to, eki de, hon o, katta: each particle marks a role for the verb at the end. Shuffled, the sentence means the same."
+      caption="Every chunk tells the verb what part it plays, so the chunks can move around; only the verb stays at the end. Both lines mean “Tanaka bought a book with a friend at the station.”"
+    >
+      <div className="grid gap-5" lang="ja">
+        <div className="flex flex-wrap items-stretch justify-center gap-2">
+          {chunks.map((c) => (
+            <div key={c.p} className="flex flex-col items-center rounded-md border border-border bg-background px-3 py-2">
+              <span className="text-xl">
+                {c.word}
+                <span className="font-semibold text-primary">{c.p}</span>
+              </span>
+              <span className="mt-1 text-meta text-dim" lang="en">
+                {c.role}
+              </span>
+            </div>
+          ))}
+          <div className="flex items-center text-dim max-sm:hidden" aria-hidden>
+            →
+          </div>
+          <div className="flex flex-col items-center rounded-md border border-primary bg-accent-tint px-3 py-2">
+            <span className="text-xl font-semibold">買った</span>
+            <span className="mt-1 text-meta text-muted-foreground" lang="en">
+              bought (verb, last)
+            </span>
+          </div>
+        </div>
+        <p className="text-center text-lg text-muted-foreground">
+          本<span className="text-primary">を</span>田中さん<span className="text-primary">が</span>駅<span className="text-primary">で</span>
+          友達<span className="text-primary">と</span>買った。
+        </p>
+      </div>
+    </Diagram>
+  );
+}
+
+/** Input builds what you understand; output draws on it and shows you what's missing. */
+export function InputOutputDiagram() {
+  const box = "rounded-md border border-border bg-background px-3 py-3 text-center";
+  return (
+    <Diagram
+      label="Input (listening and reading) grows what you understand; output (speaking and writing) draws on it; output exposes gaps, which you then notice in input"
+      caption="Input is where the language comes from: you can only say what you've taken in. Output turns it into something you can use at speed, and every time you get stuck, it shows you what to look out for in your next hour of input."
+    >
+      <div className="grid gap-2 text-sm">
+        <div className="grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
+          <div className={box}>
+            <div className="font-semibold">Input</div>
+            <div className="mt-0.5 text-meta text-dim">listening, reading</div>
+          </div>
+          <div className="text-center text-dim" aria-hidden>
+            <span className="sm:hidden">↓</span>
+            <span className="max-sm:hidden">→</span>
+          </div>
+          <div className={cn(box, "border-primary bg-accent-tint")}>
+            <div className="font-semibold">What you understand</div>
+            <div className="mt-0.5 text-meta text-muted-foreground">words, grammar, sounds</div>
+          </div>
+          <div className="text-center text-dim" aria-hidden>
+            <span className="sm:hidden">↓</span>
+            <span className="max-sm:hidden">→</span>
+          </div>
+          <div className={box}>
+            <div className="font-semibold">Output</div>
+            <div className="mt-0.5 text-meta text-dim">speaking, writing</div>
+          </div>
+        </div>
+        <div className="rounded-md border border-dashed border-line-strong px-3 py-2 text-center text-muted-foreground">
+          <span aria-hidden>↩ </span>Output shows you the gaps; you start noticing them in input
+        </div>
+      </div>
+    </Diagram>
+  );
+}
+
+/**
+ * The stages and turning points from "A Year to Learn Japanese", as a vertical
+ * timeline with the nope threshold highlighted.
+ */
+export function StagesDiagram() {
+  const steps: { kind: "stage" | "point"; title: string; text: string; key?: boolean }[] = [
+    { kind: "stage", title: "Stage one: building a foundation", text: "Kana, first words, basic grammar. Real Japanese is a brick wall; study is what tips the scales." },
+    { kind: "point", title: "The nope threshold", text: "Native content becomes tolerable. Not easy, not efficient: you just stop “noping” out of it.", key: true },
+    { kind: "stage", title: "Stage two: engaging with content", text: "You pick things you care about and solve the problems they throw at you. Progress is real but hard to see." },
+    { kind: "point", title: "The epiphany moment", text: "Something makes you look back, and Japanese isn't so hard any more." },
+    { kind: "stage", title: "Stage three: enjoying it", text: "Learning is a by-product of doing things you enjoy. The backlog grows faster than you can clear it." },
+    { kind: "point", title: "The hurt-ego moment", text: "A wall: a book you can't get through, a conversation that goes badly. It spurs you to change something." },
+    { kind: "stage", title: "Stage two, again", text: "A new skill or a harder kind of Japanese, starting from stage two. This loop repeats for years." },
+  ];
+  return (
+    <Diagram
+      label="Stages of learning: foundation, then the nope threshold, engaging with content, the epiphany moment, enjoying it, the hurt-ego moment, and stage two again"
+      caption="Adapted from the stages in A Year to Learn Japanese. Months 3–6 usually sit on either side of the nope threshold, which is exactly where progress is hardest to feel."
+    >
+      <ol className="relative grid gap-3 pl-6 text-sm before:absolute before:top-2 before:bottom-2 before:left-[0.4375rem] before:w-px before:bg-line-strong">
+        {steps.map((s) => (
+          <li key={s.title} className="relative">
+            <span
+              className={cn(
+                "absolute top-1.5 -left-6 size-3.5 rounded-full border-2",
+                s.kind === "point" ? "rotate-45 rounded-none" : "",
+                s.key ? "border-primary bg-primary" : s.kind === "point" ? "border-primary bg-surface" : "border-line-strong bg-background",
+              )}
+              aria-hidden
+            />
+            <p className={cn("font-semibold", s.kind === "point" && "text-primary")}>{s.title}</p>
+            <p className="text-muted-foreground">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </Diagram>
+  );
+}
+
 /** Credits for the photos used on one chapter, at its foot (CC BY needs them on the page). */
 export function ImageCredits({ srcs }: { srcs: string[] }) {
   const credits = GUIDE_IMAGE_CREDITS.filter((c) => srcs.includes(c.src));

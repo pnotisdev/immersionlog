@@ -368,6 +368,30 @@
   }
 }
 
+/*
+ * One pass of light across a heatmap, left to right: each cell brightens in turn, its
+ * delay set per week column inline (see Heatmap's `tour`). Runs once, so a visitor sees
+ * the grid is live without it ever becoming a loop to ignore.
+ */
+@utility animate-heat-sweep {
+  animation-name: heat-sweep;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes heat-sweep {
+  0%,
+  100% {
+    filter: none;
+    transform: none;
+  }
+  35% {
+    filter: brightness(1.7);
+    transform: scale(1.18);
+  }
+}
+
 /* --- Data-viz tokens. Both themes ramp the site's own accent (redesign.md §1.6: the
    heatmap and the activity chart are part of the identity system), so they follow
    --primary rather than a colour of their own. Light used to keep a blue ramp from

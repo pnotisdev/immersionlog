@@ -8,10 +8,17 @@ export const metadata = chapterMetadata("upper-intermediate");
 
 export default function UpperIntermediateChapter() {
   return (
-    <ChapterShell slug="upper-intermediate">
+    <ChapterShell
+      slug="upper-intermediate"
+      art={{
+        name: "hyouka",
+        caption: "「私、気になります！」 Chitanda's catchphrase in Hyouka, \"I'm curious!\", is the whole mood of this stage: you pick things because you want to know, not because they're on a list.",
+      }}
+    >
       <GuideSection id="where-you-are" title="Where you are">
         <p>
-          At this stage Japanese has become something you do rather than something you study. You probably recognise yourself
+          At this stage Japanese has become something you do rather than something you study. You probably have opinions about
+          light novel translations now. That&apos;s a symptom. You probably recognise yourself
           here if:
         </p>
         <List>
@@ -38,7 +45,7 @@ export default function UpperIntermediateChapter() {
       <GuideSection id="widen" title="Widen your range">
         <p>
           The biggest risk now is comfort. If you only consume the genres you already know, your Japanese gets very good at
-          those genres and stays where it is everywhere else. Each new domain brings its own vocabulary and style:
+          those genres and stays where it is everywhere else. Isekai fluency is real, and it doesn&apos;t help at the doctor&apos;s. Each new domain brings its own vocabulary and style:
         </p>
         <Table
           head={["Try", "What it adds"]}

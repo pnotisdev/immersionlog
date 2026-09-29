@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Page structure for the landing page: one 1200px column with a hairline rule between
- * bands. Nothing more than that — no crosshairs, no plotted grid, no monospace index
+ * some bands. Nothing more than that — no crosshairs, no plotted grid, no monospace index
  * labels. Those read as a costume rather than as structure, and they were carrying
  * weight the content should be carrying.
  *
@@ -11,9 +11,17 @@ import { cn } from "@/lib/utils";
  * scaled: they get drawn left to right as you reach them (landing-motion.tsx).
  */
 
-/** The full-bleed hairline that separates two bands. */
+/**
+ * The hairline that separates two bands. It spans the column, not the viewport, and
+ * only from lg up: once the layout stacks into one column the spacing already separates
+ * the bands, and a rule between every one of them read as clutter on a phone.
+ */
 export function Rule() {
-  return <div data-rule aria-hidden className="h-px w-full origin-left bg-border" />;
+  return (
+    <Frame className="hidden lg:block">
+      <div data-rule aria-hidden className="h-px w-full origin-left bg-border" />
+    </Frame>
+  );
 }
 
 /** The page column. */
@@ -34,7 +42,7 @@ export function Frame({
   );
 }
 
-/** One horizontal band of the page: full-bleed top rule, framed content. */
+/** One horizontal band of the page: optional top rule, framed content. */
 export function Band({
   id,
   className,

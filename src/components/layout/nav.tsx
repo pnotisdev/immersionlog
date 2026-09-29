@@ -7,6 +7,7 @@ import {
   BookOpen,
   ChartNoAxesColumn,
   Compass,
+  Dumbbell,
   House,
   Library,
   LogOut,
@@ -71,6 +72,7 @@ const MENU_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/write", label: "Write a post", icon: PenLine },
   { href: "/texthooker", label: "Texthooker", icon: Terminal },
   { href: "/guide", label: "Learning guide", icon: BookOpen },
+  { href: "/tools", label: "Practice tools", icon: Dumbbell },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 

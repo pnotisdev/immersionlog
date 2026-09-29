@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { formatDuration, pluralize } from "@/lib/format";
 import { quantileStep } from "@/lib/heatmap-scale";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,11 @@ const LABEL_W = 28;
  * it stops shrinking and scrolls sideways instead — and because the scroller is a
  * `row-reverse` flex box, it opens at its *right* edge (the most recent weeks) with no
  * script and no jump after hydration, which is what a phone visitor needs to see.
+ *
+ * `tour` is for a heatmap shown as a picture of the product (the landing page), where
+ * nothing says the cells answer to a pointer: once it scrolls into view a light sweeps
+ * across the weeks, then the tooltip steps through a few of the busiest recent days on
+ * its own until the visitor points at a cell themselves.
  */
 export function Heatmap({
   days,
@@ -34,6 +39,7 @@ export function Heatmap({
   minCell = 10,
   gap = 3,
   highlightKey,
+  tour = false,
   className,
 }: {
   days: HeatmapDay[];
@@ -45,10 +51,67 @@ export function Heatmap({
   gap?: number;
   /** A day to outline, usually today. */
   highlightKey?: string;
+  /** Show off the tooltip on its own once in view (see above). */
+  tour?: boolean;
   className?: string;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [tip, setTip] = useState<{ i: number; x: number; y: number; w: number } | null>(null);
+  const [sweep, setSweep] = useState(false);
+  /** Set by the first real pointer on the grid; the tour never takes over from it. */
+  const touched = useRef(false);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!tour || !wrap) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // The busiest day in each of the last several weeks, oldest first, so the tooltip
+    // walks towards today.
+    const stops: number[] = [];
+    for (let end = days.length; end > 0 && stops.length < 6; end -= 7 * 3) {
+      let best = -1;
+      for (let i = Math.max(0, end - 7); i < end; i++) if (days[i].seconds > (days[best]?.seconds ?? 0)) best = i;
+      if (best >= 0) stops.unshift(best);
+    }
+    if (stops.length === 0) return;
+
+    const timers: number[] = [];
+    const point = (i: number) => {
+      const cell = wrap.querySelector<HTMLElement>(`[data-i="${i}"]`);
+      if (!cell || touched.current) return;
+      const r = cell.getBoundingClientRect();
+      const w = wrap.getBoundingClientRect();
+      setTip({ i, x: r.left - w.left + r.width / 2, y: r.top - w.top, w: w.width });
+    };
+    const start = () => {
+      if (reduced) return point(stops[stops.length - 1]);
+      setSweep(true);
+      let n = 0;
+      const next = () => {
+        if (touched.current) return;
+        point(stops[n % stops.length]);
+        n++;
+        timers.push(window.setTimeout(next, 1800));
+      };
+      // After the sweep has crossed the grid.
+      timers.push(window.setTimeout(next, 1100));
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        start();
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(wrap);
+    return () => {
+      io.disconnect();
+      timers.forEach(clearTimeout);
+    };
+  }, [tour, days]);
+
   if (days.length === 0) return null;
 
   const step = quantileStep(days.map((d) => d.seconds));
@@ -73,6 +136,7 @@ export function Heatmap({
   };
 
   function show(e: React.PointerEvent) {
+    touched.current = true;
     const target = (e.target as HTMLElement).closest<HTMLElement>("[data-i]");
     const wrap = wrapRef.current;
     if (!target || !wrap) return;
@@ -117,11 +181,14 @@ export function Heatmap({
                 className={cn(
                   "aspect-square w-full rounded-[18%] hover:brightness-125",
                   day.key === highlightKey && "outline-1 outline-offset-1 outline-foreground/50",
+                  tip?.i === i && "brightness-125 outline-1 outline-offset-1 outline-foreground/70",
+                  sweep && "animate-heat-sweep",
                 )}
                 style={{
                   gridRow: (pos % 7) + 2,
                   gridColumn: Math.floor(pos / 7) + 2,
                   background: `var(--viz-seq-${step(day.seconds)})`,
+                  animationDelay: sweep ? `${Math.floor(pos / 7) * 14}ms` : undefined,
                 }}
               />
             );

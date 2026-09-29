@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { GUIDE_CHAPTERS, guidePath } from "@/lib/guide";
+import { TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
 
 /**
@@ -52,6 +53,22 @@ export function GuideNav({ variant }: { variant: "sidebar" | "mobile" }) {
     </ol>
   );
 
+  const practice = (
+    <ul className="grid gap-0.5 text-sm">
+      {TOOLS.map((t) => (
+        <li key={t.href}>
+          <Link
+            href={t.href}
+            className="flex gap-2.5 rounded-sm px-2 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <span className="w-4 shrink-0" />
+            <span>{t.short}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+
   if (variant === "mobile") {
     return (
       <details className="group rounded-lg border border-border bg-surface lg:hidden">
@@ -62,7 +79,11 @@ export function GuideNav({ variant }: { variant: "sidebar" | "mobile" }) {
           </span>
           <ChevronDown className="size-4 text-dim transition-transform group-open:rotate-180" />
         </summary>
-        <div className="border-t border-border px-2 py-2">{list}</div>
+        <div className="border-t border-border px-2 py-2">
+          {list}
+          <p className="section-label mt-3 mb-1 px-2">Practice</p>
+          {practice}
+        </div>
       </details>
     );
   }
@@ -71,6 +92,8 @@ export function GuideNav({ variant }: { variant: "sidebar" | "mobile" }) {
     <nav aria-label="Learning guide" className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pb-6">
       <p className="section-label mb-3 px-2">Learning guide</p>
       {list}
+      <p className="section-label mt-6 mb-2 px-2">Practice</p>
+      {practice}
     </nav>
   );
 }

@@ -3,12 +3,19 @@ import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
 import { LevelRecommendations } from "@/components/guide/media-table";
+import { Scene } from "@/components/guide/anime-art";
 
 export const metadata = chapterMetadata("intermediate");
 
 export default function IntermediateChapter() {
   return (
-    <ChapterShell slug="intermediate">
+    <ChapterShell
+      slug="intermediate"
+      art={{
+        name: "spy-family",
+        caption: "Operation Strix: get a mind-reading six-year-old into an elite school without anyone noticing. Operation Intermediate: get from learner material to native content. Similar difficulty, fewer guns.",
+      }}
+    >
       <GuideSection id="where-you-are" title="Where you are">
         <p>
           &ldquo;Intermediate&rdquo; is a wide band, but you&apos;re in it when most of these are true:
@@ -27,14 +34,14 @@ export default function IntermediateChapter() {
             <em>A Year to Learn Japanese</em>
           </Ext>{" "}
           calls the entrance to this stage the &ldquo;nope threshold&rdquo;: the point where native content stops being
-          unbearable and becomes merely hard. You&apos;ve crossed it. The rest of the road is mostly doing more of what you love,
-          in Japanese.
+          unbearable and becomes merely hard. You&apos;ve crossed it. Congratulations, genuinely. The rest of the road is mostly
+          doing more of what you love, in Japanese.
         </p>
       </GuideSection>
 
       <GuideSection id="plateau" title="The intermediate plateau">
         <p>
-          Almost everyone hits it. Tofugu&apos;s{" "}
+          Almost everyone hits it, and it&apos;s the most boring monster in the game. Tofugu&apos;s{" "}
           <Ext href="https://www.tofugu.com/japanese/intermediate-japanese-plateau/">article on the intermediate plateau</Ext>{" "}
           explains why: you&apos;ve learned the basic grammar and conjugation, so the easy, visible wins are gone. You&apos;re still
           improving, but each gain is smaller and harder to notice, and the remaining work is mostly vocabulary: thousands of
@@ -81,6 +88,13 @@ export default function IntermediateChapter() {
           medium-length visual novel, you&apos;re not a beginner any more; after ten, you&apos;re solidly intermediate. Pick
           books you&apos;d want to read in English, and don&apos;t be afraid to drop them.
         </p>
+        <Scene name="dungeon-meshi" title="Explanatory Japanese is great input">
+          <p>
+            <em>Delicious in Dungeon</em> stops the adventure to explain, in careful detail, how to cook a walking mushroom.
+            Characters who explain things are a gift at this stage: the vocabulary comes with its own definition, and the
+            pictures check your understanding.
+          </p>
+        </Scene>
         <H3>Listen without the safety net</H3>
         <p>
           Once Japanese subtitles feel comfortable for a show, try an episode without them. You&apos;ll miss things; rewatch with

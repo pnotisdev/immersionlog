@@ -3,6 +3,7 @@ import { countChars } from "@/lib/characters";
 import { formatNumber } from "@/lib/format";
 import { getSession } from "@/lib/session";
 import { absoluteUrl, breadcrumbs, JsonLd } from "@/lib/seo";
+import { MoreTools } from "@/components/tools/more-tools";
 import { jitenOf, listPublicTitles, titlePath } from "@/lib/titles";
 import { ReadingSpeedTest } from "@/components/tools/reading-speed-test";
 import { PASSAGES } from "@/components/tools/reading-passages";
@@ -69,6 +70,7 @@ export default async function ReadingSpeedPage() {
           },
           breadcrumbs([
             { name: "immersionlog", path: "/" },
+            { name: "Tools", path: "/tools" },
             { name: title, path: PATH },
           ]),
         ]}
@@ -92,6 +94,8 @@ export default async function ReadingSpeedPage() {
           </div>
         ))}
       </section>
+
+      <MoreTools current={PATH} />
     </div>
   );
 }

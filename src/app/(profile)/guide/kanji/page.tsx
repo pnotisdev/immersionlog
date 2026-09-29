@@ -1,4 +1,4 @@
-import { A_YEAR_TO_LEARN_JAPANESE } from "@/lib/guide";
+import { A_YEAR_TO_LEARN_JAPANESE, MORG } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ImageCredits, KanjiAnatomyDiagram, Photo } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, In, List, Table } from "@/components/guide/guide-parts";
@@ -7,23 +7,39 @@ export const metadata = chapterMetadata("kanji");
 
 export default function KanjiChapter() {
   return (
-    <ChapterShell slug="kanji">
+    <ChapterShell
+      slug="kanji"
+      art={{
+        name: "barakamon",
+        caption: "In Barakamon, a calligrapher moves to a tiny island to fix his brushwork, and the local kids fix him instead. You only need to read kanji, not paint them.",
+      }}
+    >
       <GuideSection id="how-kanji-work" title="How kanji work">
         <p>
           There are <strong>2,136 jōyō kanji</strong>, the official list for general use last revised in 2010, and Japanese
-          children learn 1,026 of them in primary school. That number scares many learners into months of kanji study before
-          reading anything. It helps to know how kanji are put together, because they&apos;re far less arbitrary than they look.
+          children learn 1,026 of them in primary school. That number scares a lot of learners into months of kanji study before
+          reading anything. Take a breath. Kanji are far less random than they look, and you don&apos;t have to learn them the
+          way Japanese kids do.
+        </p>
+        <p>
+          The most useful mindset shift, from{" "}
+          <Ext href={`${MORG}/Kanji`}>morg&apos;s kanji notes</Ext>: <strong>kanji aren&apos;t words, they&apos;re a way of
+          spelling words</strong> that already exist in spoken Japanese. People said <em>niku</em> (meat) long before anyone wrote
+          肉, and <em>kumo</em> (spider) before anyone wrote 蜘蛛. Think of kanji as very specialised emoji: a picture that stands
+          in for a word you could also write in kana (にく, くも). Which means that what you&apos;re really learning is words, and
+          kanji are how those words dress up in public.
         </p>
         <KanjiAnatomyDiagram />
         <List>
           <li>
             <strong>Most kanji are built from parts.</strong> A few hundred components (often called radicals) recur across
-            thousands of characters. Once 亻 means &ldquo;person&rdquo; to you, 休, 体, 住 and 使 stop being random squiggles.
+            thousands of characters. Once 亻 means &ldquo;person&rdquo; to you, 休, 体, 住 and 使 stop being random squiggles
+            and start being &ldquo;person + something&rdquo;.
           </li>
           <li>
             <strong>Most kanji hint at their sound.</strong> The largest group are phono-semantic compounds: one part suggests the
             meaning, another the on&apos;yomi. 青 (sei) appears in 清, 晴, 精 and 請, all read <em>sei</em>. The hint isn&apos;t
-            reliable, but it&apos;s right often enough to help.
+            reliable, but it&apos;s right often enough to feel like a cheat code.
           </li>
           <li>
             <strong>Words, not characters, carry meaning.</strong> 大家 is &ldquo;big&rdquo; plus &ldquo;house&rdquo; but means
@@ -42,7 +58,7 @@ export default function KanjiChapter() {
       <GuideSection id="readings" title="Readings">
         <p>
           Most kanji have two kinds of reading, because Japanese borrowed characters from Chinese and kept both the borrowed
-          pronunciation and its own native word:
+          pronunciation and its own native word. This is where people&apos;s eyes glaze over, so here&apos;s the short version:
         </p>
         <List>
           <li>
@@ -56,13 +72,13 @@ export default function KanjiChapter() {
           <li>
             <strong>Rule of thumb:</strong> kanji followed by hiragana usually takes the kun&apos;yomi; kanji stuck together
             usually take on&apos;yomi. There are plenty of exceptions: 日曜日 is <em>nichi-yō-bi</em>, with 日 read two ways in one
-            word, and 今日 (<em>kyō</em>, today) ignores its characters&apos; usual readings altogether.
+            word, and 今日 (<em>kyō</em>, today) ignores its characters&apos; usual readings altogether, out of spite.
           </li>
         </List>
         <p>
           That&apos;s why memorising a kanji&apos;s list of readings on its own is close to useless: 生 has a dozen, and knowing
           them doesn&apos;t tell you which one a word uses. <strong>Learn readings through words.</strong> Kaishi teaches 先生 and
-          生きる as words, and the readings come with them.
+          生きる as words, and the readings come along for free.
         </p>
         <Photo
           src="/guide/furigana.webp"
@@ -76,7 +92,11 @@ export default function KanjiChapter() {
 
       <GuideSection id="routes" title="Three routes through the kanji">
         <p>
-          Learners argue endlessly about this, and people have succeeded with every approach. <Ext href={A_YEAR_TO_LEARN_JAPANESE}><em>A Year to Learn Japanese</em></Ext>{" "}
+          Learners argue about this endlessly, the way people argue about pineapple on pizza, and people have succeeded with
+          every approach.{" "}
+          <Ext href={A_YEAR_TO_LEARN_JAPANESE}>
+            <em>A Year to Learn Japanese</em>
+          </Ext>{" "}
           sorts them into three routes, which is a useful way to choose:
         </p>
         <Table
@@ -123,16 +143,16 @@ export default function KanjiChapter() {
         </p>
         <p>
           Kanji also get easier the more you know. After the first few hundred, new ones are mostly familiar parts in new
-          arrangements, and you start guessing readings from their phonetic parts. Japanese front-loads the effort: it&apos;s hard
-          at the start and steadily easier after.
+          arrangements, and you start guessing readings from their phonetic parts. Japanese front-loads the pain: it&apos;s hard
+          at the start and steadily easier after. Hang in there.
         </p>
       </GuideSection>
 
       <GuideSection id="writing" title="Writing by hand">
         <p>
           Reading needs recognition; writing needs recall, which is much harder. Most Japanese adults type far more than they
-          write, and even native speakers forget how to write characters they read every day. So for most learners, handwriting
-          can wait.
+          write, and even native speakers forget how to write characters they read every day. There&apos;s even a name for it:
+          ワープロ健忘症, &ldquo;word-processor amnesia&rdquo;. So for most learners, handwriting can wait.
         </p>
         <List>
           <li>
@@ -146,6 +166,10 @@ export default function KanjiChapter() {
           <li>
             For practice and feedback, the weekly <em>Tegaki Tuesday</em> handwriting challenge is a friendly community habit.
           </li>
+          <li>
+            This is also the one place where English-on-the-front cards make sense: if you learned kanji by keyword (RTK,
+            WaniKani), a keyword → write-the-kanji card is a fine way to practise writing.
+          </li>
         </List>
         <p>
           The <In href="/guide/speaking#writing">speaking and writing chapter</In> covers writing sentences, which is a different
@@ -156,8 +180,8 @@ export default function KanjiChapter() {
       <p className="text-meta text-dim">
         Sources for this chapter include{" "}
         <Ext href="https://en.wikipedia.org/wiki/J%C5%8Dy%C5%8D_kanji">Wikipedia on the jōyō kanji</Ext>,{" "}
-        <Ext href="https://en.wikipedia.org/wiki/Kanji">Wikipedia on kanji</Ext>, TheMoeWay&apos;s resource list, Tofugu&apos;s
-        guide and <em>A Year to Learn Japanese</em>.
+        <Ext href="https://en.wikipedia.org/wiki/Kanji">Wikipedia on kanji</Ext>, <Ext href={`${MORG}/Kanji`}>morg.systems</Ext>,
+        TheMoeWay&apos;s resource list, Tofugu&apos;s guide and <em>A Year to Learn Japanese</em>.
       </p>
 
       <ImageCredits srcs={["/guide/kanji-drill.webp", "/guide/furigana.webp"]} />

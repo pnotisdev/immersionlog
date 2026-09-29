@@ -3,9 +3,11 @@ import { ArrowUpRight } from "lucide-react";
 import { formatNumber } from "@/lib/format";
 import { jitenUrl, type GuideMedia, type GuideVisualNovel, type LevelMedia } from "@/lib/guide-media";
 import { cn } from "@/lib/utils";
+import { artForJiten } from "@/lib/guide-art";
+import { RowCover } from "./anime-art";
 
 /** Jiten's 0–5 score as a short bar, so a column of them reads as a ranking at a glance. */
-function Difficulty({ value, deck }: { value: number; deck: number }) {
+export function Difficulty({ value, deck }: { value: number; deck: number }) {
   return (
     <a
       href={jitenUrl(deck)}
@@ -30,24 +32,31 @@ export function MediaTable({ items, extra }: { items: (GuideMedia | GuideVisualN
   const sorted = [...items].sort((a, b) => a.difficulty - b.difficulty);
   return (
     <ol className="divide-y divide-border rounded-lg border border-border bg-surface">
-      {sorted.map((m) => (
-        <li key={m.jiten} className="grid gap-x-4 gap-y-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto]">
-          <div className="min-w-0">
-            <p className="font-medium" lang="ja">
-              {m.ja}
-            </p>
-            <p className="text-meta text-dim">
-              {m.en !== m.ja && `${m.en} · `}
-              {formatNumber(m.chars)} characters
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">{m.note}</p>
-            {extra && "vndb" in m && <div className="mt-1.5">{extra(m)}</div>}
-          </div>
-          <div className={cn("text-sm sm:pt-0.5")}>
-            <Difficulty value={m.difficulty} deck={m.jiten} />
-          </div>
-        </li>
-      ))}
+      {sorted.map((m) => {
+        const cover = artForJiten(m.jiten) !== null;
+        return (
+          <li key={m.jiten} className="grid gap-x-4 gap-y-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+            <div className="flex min-w-0 gap-3.5">
+              <RowCover jiten={m.jiten} />
+              <div className="min-w-0">
+                <p className="font-medium" lang="ja">
+                  {m.ja}
+                </p>
+                <p className="text-meta text-dim">
+                  {m.en !== m.ja && `${m.en} · `}
+                  {formatNumber(m.chars)} characters
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">{m.note}</p>
+                {extra && "vndb" in m && <div className="mt-1.5">{extra(m)}</div>}
+              </div>
+            </div>
+            {/* On a phone the score drops under the text; line it up with the text, not the cover. */}
+            <div className={cn("text-sm sm:pt-0.5", cover && "max-sm:pl-[3.625rem]")}>
+              <Difficulty value={m.difficulty} deck={m.jiten} />
+            </div>
+          </li>
+        );
+      })}
     </ol>
   );
 }

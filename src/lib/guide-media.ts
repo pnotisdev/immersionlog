@@ -63,7 +63,9 @@ export const GUIDE_FILMS: GuideMedia[] = [
 
 export const GUIDE_MANGA: GuideMedia[] = [
   { ja: "からかい上手の高木さん", en: "Teasing Master Takagi-san", difficulty: 0.65, chars: 213_436, jiten: 96748, note: "Short chapters, the same two characters, simple dialogue." },
+  { ja: "ルックバック", en: "Look Back", difficulty: 1.4, chars: 6_214, jiten: 119722, note: "Tatsuki Fujimoto's one-shot about two girls who draw manga. One volume, finishable in an evening." },
   { ja: "よつばと！", en: "Yotsuba&!", difficulty: 0.8, chars: 167_600, jiten: 96859, note: "The classic first manga. A five-year-old's everyday adventures." },
+  { ja: "少女終末旅行", en: "Girls' Last Tour", difficulty: 1.87, chars: 48_039, jiten: 102169, note: "Two girls wandering a ruined city. Very little dialogue, six volumes, quietly beautiful." },
   { ja: "チーズスイートホーム", en: "Chi's Sweet Home", difficulty: 1.65, chars: 107_346, jiten: 105023, note: "A kitten's life. Chi talks in baby speech, which throws some readers." },
   { ja: "聲の形", en: "A Silent Voice", difficulty: 2.08, chars: 84_709, jiten: 98132, note: "Seven volumes of school drama; a complete story." },
   { ja: "SPY×FAMILY", en: "Spy × Family", difficulty: 2.46, chars: 358_447, jiten: 123744, note: "Popular, funny, some jargon." },
@@ -217,6 +219,7 @@ export const GUIDE_GAMES: GuideMedia[] = [
 export const GUIDE_BOOKS: GuideMedia[] = [
   { ja: "魔女の宅急便（1〜6）", en: "Kiki's Delivery Service (novels)", difficulty: 1.14, chars: 595_960, jiten: 129969, note: "Eiko Kadono's children's novels behind the film. Warm and simple." },
   { ja: "世界から猫が消えたなら", en: "If Cats Disappeared from the World", difficulty: 1.68, chars: 72_403, jiten: 105479, note: "Short, plain language, popular first novel." },
+  { ja: "５分後に意外な結末", en: "A Surprising Ending in Five Minutes", difficulty: 2.74, chars: 198_683, jiten: 105902, note: "Anthologies of very short stories with twist endings. One story per sitting; the easiest way into prose." },
   { ja: "コンビニ人間", en: "Convenience Store Woman", difficulty: 2.19, chars: 63_545, jiten: 105475, note: "Short literary novel in very clear prose." },
   { ja: "君の膵臓をたべたい", en: "I Want to Eat Your Pancreas", difficulty: 2.6, chars: 126_015, jiten: 113176, note: "Mostly dialogue between two students." },
   { ja: "星の王子さま", en: "The Little Prince (Japanese)", difficulty: 2.75, chars: 40_594, jiten: 136539, note: "A story you may know already, which helps." },
@@ -274,6 +277,7 @@ export const INTERMEDIATE_MEDIA: LevelMedia = {
     { ja: "チェンソーマン", en: "Chainsaw Man", difficulty: 2.64, chars: 200_005, jiten: 97316, note: "Rough, casual speech; action carries a lot." },
     { ja: "寄生獣", en: "Parasyte", difficulty: 2.65, chars: 141_290, jiten: 100122, note: "A classic; some science talk." },
     { ja: "3月のライオン", en: "March Comes in Like a Lion", difficulty: 2.69, chars: 505_286, jiten: 102793, note: "Shogi and family life; long." },
+    { ja: "とんがり帽子のアトリエ", en: "Witch Hat Atelier", difficulty: 2.91, chars: 182_848, jiten: 98765, note: "Magic drawn with ink and rules; the art explains a lot, the magic vocabulary grows as you go." },
     { ja: "銀の匙", en: "Silver Spoon", difficulty: 2.81, chars: 406_713, jiten: 105142, note: "Farming school; lots of agricultural vocabulary, explained in the story." },
   ],
   books: [
@@ -285,6 +289,7 @@ export const INTERMEDIATE_MEDIA: LevelMedia = {
     { ja: "正欲", en: "Seiyoku", difficulty: 2.94, chars: 205_738, jiten: 130033, note: "Asai Ryō's novel about hidden desires; modern and direct." },
     { ja: "海辺のカフカ", en: "Kafka on the Shore", difficulty: 2.97, chars: 441_368, jiten: 107619, note: "Scores easier than Norwegian Wood on Jiten, despite its length." },
     { ja: "ようこそ実力至上主義の教室へ", en: "Classroom of the Elite (light novel)", difficulty: 2.63, chars: 1_797_953, jiten: 54767, note: "Light novel series; school scheming, lots of dialogue." },
+    { ja: "本好きの下剋上", en: "Ascendance of a Bookworm (light novel)", difficulty: 2.74, chars: 6_606_891, jiten: 54858, note: "A book lover reborn in a world without books. 33 volumes of the same world and cast: the ultimate narrow read." },
     { ja: "狼と香辛料", en: "Spice and Wolf (light novel)", difficulty: 2.85, chars: 2_618_286, jiten: 55005, note: "Medieval trade and economics, at a gentle pace." },
   ],
   visualNovels: [
@@ -452,3 +457,53 @@ export const ADVANCED_MEDIA: Pick<LevelMedia, "anime" | "books"> = {
     { ja: "人間失格", en: "No Longer Human (Dazai)", difficulty: 4.37, chars: 70_987, jiten: 54631, note: "Short but hard: 1940s prose and introspection. Free on Aozora Bunko." },
   ],
 };
+
+export type FinderMedium = "Anime" | "Film" | "Drama" | "Manga" | "Book" | "Visual novel" | "Game";
+
+/** One title in the "What to watch and read" finder, with the chapter that recommends it. */
+export interface FinderItem extends GuideMedia {
+  medium: FinderMedium;
+  /** Heard as well as read: anime, films, dramas and voiced visual novels. */
+  audio: boolean;
+  level: "Beginner" | "Intermediate" | "Upper intermediate" | "Advanced";
+  href: string;
+}
+
+/**
+ * Every recommended title across the guide, easiest first, for the filterable finder.
+ * Keyed by Jiten deck, so an anime and its manga are separate entries; a deck listed at
+ * two levels keeps the lower one.
+ */
+export function guideFinderItems(): FinderItem[] {
+  const out: FinderItem[] = [];
+  const seen = new Set<number>();
+  const add = (list: (GuideMedia | GuideVisualNovel)[], medium: FinderMedium, level: FinderItem["level"], href: string) => {
+    for (const m of list) {
+      if (seen.has(m.jiten)) continue;
+      seen.add(m.jiten);
+      const audio = medium === "Anime" || medium === "Film" || medium === "Drama" || ("voiced" in m && m.voiced !== "None");
+      out.push({ ja: m.ja, en: m.en, difficulty: m.difficulty, chars: m.chars, jiten: m.jiten, note: m.note, medium, audio, level, href });
+    }
+  };
+  const beginner = "/guide/what-to-watch-and-read";
+  add(GUIDE_ANIME, "Anime", "Beginner", `${beginner}#anime`);
+  add(GUIDE_FILMS, "Film", "Beginner", `${beginner}#anime`);
+  add(GUIDE_MANGA, "Manga", "Beginner", `${beginner}#manga`);
+  add(GUIDE_VISUAL_NOVELS, "Visual novel", "Beginner", `${beginner}#visual-novels`);
+  add(GUIDE_GAMES, "Game", "Beginner", `${beginner}#games`);
+  add(GUIDE_BOOKS, "Book", "Beginner", `${beginner}#books`);
+  const levels: [Partial<LevelMedia>, FinderItem["level"], string][] = [
+    [INTERMEDIATE_MEDIA, "Intermediate", "/guide/intermediate#recommendations"],
+    [UPPER_INTERMEDIATE_MEDIA, "Upper intermediate", "/guide/upper-intermediate#recommendations"],
+    [ADVANCED_MEDIA, "Advanced", "/guide/advanced#recommendations"],
+  ];
+  for (const [media, level, href] of levels) {
+    add(media.anime ?? [], "Anime", level, href);
+    add(media.dramas ?? [], "Drama", level, href);
+    add(media.manga ?? [], "Manga", level, href);
+    add(media.books ?? [], "Book", level, href);
+    add(media.visualNovels ?? [], "Visual novel", level, href);
+    add(media.games ?? [], "Game", level, href);
+  }
+  return out.sort((a, b) => a.difficulty - b.difficulty);
+}

@@ -1,4 +1,6 @@
+import { MORG } from "@/lib/guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
+import { Scene } from "@/components/guide/anime-art";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
 
 export const metadata = chapterMetadata("natural-japanese");
@@ -14,13 +16,19 @@ function J({ children }: { children: string }) {
 
 export default function NaturalJapaneseChapter() {
   return (
-    <ChapterShell slug="natural-japanese">
+    <ChapterShell
+      slug="natural-japanese"
+      art={{
+        name: "takagi",
+        caption: "Takagi-san spends three seasons teasing Nishikata in the most relaxed Japanese there is. This chapter is about how people like her actually talk.",
+      }}
+    >
       <GuideSection id="why" title="Why textbook Japanese sounds stiff">
         <p>
           Textbooks teach one kind of Japanese: polite, complete, carefully pronounced sentences, the kind you&apos;d use with a
           stranger. That&apos;s the right place to start, because it&apos;s the safest. But it&apos;s not how friends, families,
-          anime characters or most of the internet talk, and learners who only know it tend to sound like a customer-service
-          announcement.
+          anime characters or most of the internet talk, and learners who only know it tend to sound like a train station
+          announcement that has learned to feel.
         </p>
         <p>Compare the same exchange, textbook style and the way two friends would actually say it:</p>
         <Table
@@ -42,7 +50,7 @@ export default function NaturalJapaneseChapter() {
       <GuideSection id="plain-polite" title="Plain and polite">
         <p>
           Every Japanese verb and adjective has a plain form (食べる, 高い, 学生だ) and a polite form (食べます, 高いです,
-          学生です). Which one you use says something about your relationship with the listener.
+          学生です). Which one you use says something about your relationship with the listener, whether you mean it to or not.
         </p>
         <Table
           head={["Use", "With"]}
@@ -75,7 +83,8 @@ export default function NaturalJapaneseChapter() {
       <GuideSection id="contractions" title="Contractions">
         <p>
           Casual speech smooths out anything that takes effort to say. These contractions are everywhere in anime, manga, dramas
-          and conversation, and recognising them is the single biggest step from textbook to real Japanese.
+          and conversation, and recognising them is the single biggest step from textbook to real Japanese. If a line in an
+          anime sounds like a word you know that got put through a blender, it&apos;s probably one of these.
         </p>
         <Table
           head={["Full form", "Spoken", "Example"]}
@@ -96,8 +105,8 @@ export default function NaturalJapaneseChapter() {
         />
         <p>
           Rougher speech goes further: vowel pairs merge (ない → ねえ, すごい → すげえ, うるさい → うるせえ). You&apos;ll hear this
-          constantly from tough male characters; it&apos;s real, but it&apos;s a strong register. Recognise it before you use
-          it.
+          constantly from delinquents and shōnen heroes; it&apos;s real, but it&apos;s a strong register. Recognise it before
+          you use it.
         </p>
         <p>
           <strong>って</strong> deserves a note of its own, because it does so much: it quotes (明日来るって, &ldquo;(they) said
@@ -114,7 +123,7 @@ export default function NaturalJapaneseChapter() {
           </li>
           <li>
             <strong>Subjects and objects disappear.</strong> If it&apos;s obvious who or what you mean, you don&apos;t say it.
-            Learners who say 私は in every sentence sound like they&apos;re giving a presentation.
+            Learners who say 私は in every sentence sound like they&apos;re giving a presentation about themselves.
           </li>
           <li>
             <strong>Word order loosens.</strong> The verb-last rule bends in speech: 行こうよ、一緒に, 何それ？ Afterthoughts get
@@ -134,7 +143,8 @@ export default function NaturalJapaneseChapter() {
       <GuideSection id="particles" title="Sentence-ending particles">
         <p>
           Small particles at the end of a sentence carry attitude: certainty, softness, a request for agreement. They&apos;re
-          most of the difference between a sentence that sounds human and one that sounds like a translation.
+          most of the difference between a sentence that sounds human and one that sounds like a translation. They&apos;re the
+          emoji of spoken Japanese.
         </p>
         <Table
           head={["Particle", "Feel", "Example"]}
@@ -164,13 +174,15 @@ export default function NaturalJapaneseChapter() {
         <List>
           <li>
             <strong>Avoid あなた for &ldquo;you&rdquo;.</strong> Textbooks teach it early, but in conversation it can sound
-            distant or even pointed. Use the person&apos;s name with さん, or leave &ldquo;you&rdquo; out entirely, which is what
-            Japanese speakers do most of the time.
+            distant or even pointed (it&apos;s also what a wife might call her husband in a drama, which is a different vibe
+            again). Use the person&apos;s name with さん, or leave &ldquo;you&rdquo; out entirely, which is what Japanese speakers
+            do most of the time.
           </li>
           <li>
             <strong>&ldquo;I&rdquo; has options.</strong> 私 (<em>watashi</em>) is neutral and always safe. 僕 is a softer male
             &ldquo;I&rdquo;, 俺 a rougher, casual male one; あたし and うち are casual and mostly used by women (うち also in
-            western Japan). Very formal speech uses わたくし.
+            western Japan). Very formal speech uses わたくし. Anime adds a few more (拙者, 我, 俺様) that you should enjoy and
+            never use.
           </li>
           <li>
             <strong>Most of the time, say nothing.</strong> Once the conversation is about you, you don&apos;t need to keep saying
@@ -187,7 +199,7 @@ export default function NaturalJapaneseChapter() {
         <H3>Fillers</H3>
         <p>
           Everyone hesitates. Japanese hesitation sounds different from English &ldquo;um&rdquo; and &ldquo;like&rdquo;, and
-          using the Japanese ones makes you sound far more natural while you think.
+          using the Japanese ones makes you sound far more natural while you frantically search for a word.
         </p>
         <Table
           head={["Filler", "Use"]}
@@ -204,7 +216,7 @@ export default function NaturalJapaneseChapter() {
         <p>
           Japanese listeners make frequent small sounds while the other person talks, called <em>aizuchi</em>: うん, はい, ええ,
           そうなんだ / そうなんですね, へえ, なるほど, 本当？, マジで？ Silence while someone talks can feel like you&apos;re not
-          listening. Nods count too.
+          listening, or that the call dropped. Nods count too.
         </p>
         <Callout title="はい doesn't mean yes" tone="warn">
           <p>
@@ -223,7 +235,7 @@ export default function NaturalJapaneseChapter() {
         <List>
           <li>
             <strong>ちょっと</strong> (&ldquo;a little&rdquo;): ちょっと難しいです usually means &ldquo;no&rdquo;. ちょっと… on its own,
-            trailing off, is a complete refusal.
+            trailing off, is a complete refusal. It&apos;s the most powerful word in the language.
           </li>
           <li>
             <strong>〜んですけど</strong>: sets up a request or a problem and leaves room for the other person. 道に迷ったんですけど…
@@ -266,8 +278,8 @@ export default function NaturalJapaneseChapter() {
       <GuideSection id="onomatopoeia" title="Onomatopoeia">
         <p>
           Japanese has a huge stock of sound-symbolic words, and not just for sounds. Linguists sort them into words for animal
-          and human sounds (擬声語), other sounds (擬音語), states and movements (擬態語) and feelings (擬情語). They&apos;re
-          everywhere in manga and casual speech, and many have no neat English translation.
+          and human sounds (擬声語), other sounds (擬音語), states and movements (擬態語) and feelings (擬情語). There&apos;s even
+          one for silence. They&apos;re everywhere in manga and casual speech, and many have no neat English translation.
         </p>
         <Table
           head={["Word", "Meaning", "Example"]}
@@ -280,7 +292,7 @@ export default function NaturalJapaneseChapter() {
             [<J key="11">キラキラ</J>, "Sparkling, glittering.", <J key="12">キラキラ光る</J>],
             [<J key="13">ニコニコ</J>, "Smiling happily.", <J key="14">ニコニコしてる</J>],
             [<J key="15">ゴロゴロ</J>, "Lazing about; also rumbling thunder.", <J key="16">家でゴロゴロ</J>],
-            [<J key="17">ペラペラ</J>, "Fluent (and chattering).", <J key="18">日本語ペラペラ</J>],
+            [<J key="17">ペラペラ</J>, "Fluent (and chattering). The goal.", <J key="18">日本語ペラペラ</J>],
             [<J key="19">ギリギリ</J>, "Only just, at the last moment.", <J key="20">ギリギリ間に合った</J>],
             [<J key="21">しーん</J>, "Dead silence: a sound word for no sound.", <J key="22">しーんとした</J>],
           ]}
@@ -298,16 +310,16 @@ export default function NaturalJapaneseChapter() {
           head={["Word", "Meaning"]}
           rows={[
             [<J key="1">マジ / マジで</J>, "Seriously, really. マジで？ = \"For real?\""],
-            [<J key="2">ヤバい</J>, "Originally \"dangerous\", now also \"amazing\"; which one depends on tone."],
+            [<J key="2">ヤバい</J>, "Originally \"dangerous\", now also \"amazing\"; which one depends on tone. Context is everything."],
             [<J key="3">めっちゃ</J>, "Very. From Kansai dialect, now used everywhere."],
             [<J key="4">ガチ</J>, "Serious, hardcore, genuinely."],
             [<J key="5">エモい</J>, "Emotional, nostalgic, moving."],
-            [<J key="6">草 / ｗ</J>, "Online laughter. ｗ looks like grass (草) when repeated: ｗｗｗ."],
+            [<J key="6">草 / ｗ</J>, "Online laughter. ｗ looks like grass (草) when repeated: ｗｗｗ. 大草原 (a great prairie) means you're dying laughing."],
           ]}
         />
         <p>
           Slang ages fast and depends on who you are. It&apos;s good to understand; use it the way the people you actually talk
-          with use it.
+          with use it. Nothing is less cool than last year&apos;s slang from a textbook.
         </p>
       </GuideSection>
 
@@ -331,12 +343,26 @@ export default function NaturalJapaneseChapter() {
           character: an adult learner who talks like a shōnen hero or ends sentences with ござる sounds, at best, like they&apos;re
           doing a bit. For natural speech, copy real people: vloggers, podcasters, dramas set in the present day, reality TV.
         </p>
+        <Scene name="shin-chan" title="Don't learn manners from Shin-chan">
+          <p>
+            Crayon Shin-chan is one of the easiest anime by vocabulary, and Shin-chan himself is a five-year-old who is rude to
+            everyone on purpose: he calls his mum by her first name and hits on grown women. Watch it, laugh, and let the adults
+            around him be your model instead.
+          </p>
+        </Scene>
+        <Scene name="non-non" title="にゃんぱすー is not a greeting">
+          <p>
+            Renge in <em>Non Non Biyori</em> greets everyone with にゃんぱすー, a word she made up. It&apos;s adorable. It&apos;s
+            also a good reminder that characters invent verbal tics (VTubers do too: ぺこら ends everything with ぺこ). When a word
+            isn&apos;t in any dictionary, it might just be that character&apos;s thing.
+          </p>
+        </Scene>
       </GuideSection>
 
       <GuideSection id="kansai" title="Kansai dialect">
         <p>
           The dialect of Osaka, Kyoto and Kobe is the one you&apos;re most likely to meet in media, thanks to comedians and the
-          manzai tradition; many anime characters speak it too. The basics:
+          manzai tradition; many anime characters speak it too, usually the funny one. The basics:
         </p>
         <Table
           head={["Standard", "Kansai", "Example"]}
@@ -354,6 +380,13 @@ export default function NaturalJapaneseChapter() {
           (&ldquo;why on earth…?!&rdquo;) is the classic comedy retort. The <In href="/guide/advanced#dialects">advanced chapter</In>{" "}
           has more on dialects.
         </p>
+        <Scene name="azumanga" title="Osaka, the anti-stereotype">
+          <p>
+            In <em>Azumanga Daioh</em>, the transfer student from Osaka gets nicknamed &ldquo;Osaka&rdquo; on day one, and her
+            classmates expect a fast-talking comedian. She turns out to be the slowest, dreamiest person in the school. A good
+            gag, and a good lesson: dialect in anime is often a shorthand for personality, and real people don&apos;t fit it.
+          </p>
+        </Scene>
       </GuideSection>
 
       <GuideSection id="keigo" title="When politeness goes up">
@@ -373,9 +406,46 @@ export default function NaturalJapaneseChapter() {
           ]}
         />
         <p>
-          You need to <em>understand</em> keigo early, because every shop and station announcement uses it. You need to{" "}
-          <em>produce</em> it only if you work in Japanese; the <In href="/guide/advanced#keigo">advanced chapter</In> covers that.
-          Good dramas to hear it in context are workplace ones, like 半沢直樹.
+          You need to <em>understand</em> keigo early, because every shop and station announcement uses it (the convenience
+          store clerk is speaking keigo at you at full speed). You need to <em>produce</em> it only if you work in Japanese; the{" "}
+          <In href="/guide/advanced#keigo">advanced chapter</In> covers that. Good dramas to hear it in context are workplace
+          ones, like 半沢直樹.
+        </p>
+      </GuideSection>
+
+      <GuideSection id="textbook-skips" title="What textbooks skip">
+        <p>
+          morg keeps a collection of what they jokingly call{" "}
+          <Ext href={`${MORG}/Collection-of-Japanese-phrases-your-textbook-won't-teach-you`}>N0 grammar</Ext>: things that turn up
+          all the time in real Japanese and appear in no textbook or JLPT list. A few favourites, so that when you meet them you
+          know you haven&apos;t misread anything:
+        </p>
+        <Table
+          head={["You'll see", "What's going on"]}
+          rows={[
+            [
+              <J key="1">俺のスマホ知らない？</J>,
+              "知る (know) is used to ask where something is: \"Have you seen my phone?\" English does the same thing with \"seen\", if you think about it.",
+            ],
+            [
+              <J key="2">すごい美味しい</J>,
+              "By the rules it should be すごく美味しい. Almost everyone says すごい anyway, even on TV, and some natives feel すごく sounds a bit calculated.",
+            ],
+            [<J key="3">ちょっと聞いてくれよ</J>, "\"Listen to this…\": a rant is coming. Like \"you won't believe what happened\"."],
+            [<J key="4">まあいっか、これでいいってことにしよ</J>, "\"Eh, let's call that good enough.\" For when the result is so-so and you can't be bothered any more."],
+            [<J key="5">答えをプリーズ</J>, "A jokey English \"please\" instead of ください. Just slang, and a fun one."],
+            [<J key="6">二人とも</J>, "二人 is a counter for people, but it's used for two pets, two robots, even a person and a talking ship, whenever they're treated like people."],
+            [<J key="7">ここが終点だったのだと</J>, "A sentence ending in と with the verb left off. The missing 思った (\"…or so we thought\") is implied, often ominously."],
+            [<J key="8">かっこE</J>, "Online, E stands in for いい because it sounds the same: かっこE is かっこいい. Some people even write (E, because brackets are 括弧, かっこ."],
+            [<J key="9">すっごく²</J>, "A late-90s style: ² doubles the word, so this is すっごくすっごく."],
+            [<J key="10">ソーセージよろしく</J>, "An old meaning of よろしく: \"just like\". \"Like a sausage.\" It's as funny in Japanese as it is here."],
+            [<J key="11">わかれよ！</J>, "The command form of 分かる, which you'd think can't exist (you can't order someone to understand). A frustrated character shouting \"Understand me!\" uses it anyway."],
+          ]}
+        />
+        <p>
+          The general lesson: when a sentence breaks a rule you learned, it&apos;s usually not a typo. Real language bends. Note
+          it, look it up if you&apos;re curious, and enjoy the fact that you&apos;re now reading Japanese that textbooks
+          don&apos;t.
         </p>
       </GuideSection>
 

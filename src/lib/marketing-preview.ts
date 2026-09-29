@@ -7,6 +7,9 @@ import { getShelves, type ShelfKey } from "@/lib/sources/browse";
 import type { SearchResult } from "@/lib/sources/types";
 import type { ActiveTimerView } from "@/components/timer/timer-card";
 import type { HeatmapDay } from "@/components/stats/heatmap";
+import type { HeatmapActivity } from "@/lib/queries";
+import type { QuickLogItem } from "@/components/sessions/quick-log-grid";
+import type { TypeRow } from "@/components/stats/type-bars";
 import type { MediaCardData } from "@/components/library/media-card";
 import type { SessionView } from "@/components/sessions/types";
 
@@ -131,6 +134,40 @@ export function buildSessions(pool: SearchResult[], count: number): SessionView[
       coverUrl: item.coverUrl,
     };
   });
+}
+
+/** The "Continue" rail: the most recent titles, as the real dashboard lists them. */
+export function buildContinueItems(pool: SearchResult[], count: number): QuickLogItem[] {
+  const labels = ["2h ago", "6h ago", "yesterday", "yesterday", "2 days ago", "3 days ago", "4 days ago", "5 days ago", "6 days ago", "1 week ago"];
+  return pool.slice(0, count).map((item, i) => ({
+    mediaItemId: `preview-${item.source}-${item.sourceId}`,
+    title: item.title,
+    titleNative: item.titleNative,
+    coverUrl: item.coverUrl,
+    type: item.mediaType,
+    lastLabel: labels[i % labels.length],
+    seconds: Math.round(3600 * (3 + noise(i + 11) * 40)),
+  }));
+}
+
+/** The dashboard heatmap's input: the same fabricated year as the landing page's own heatmap. */
+export function buildHeatmapActivity(): HeatmapActivity {
+  const days = buildHeatmapDays();
+  return {
+    today: days[days.length - 1].key,
+    days: days.filter((d) => d.seconds > 0).map((d) => [d.key, d.seconds, d.sessions ?? 1]),
+  };
+}
+
+export function buildTypeBreakdown(): TypeRow[] {
+  return [
+    { mediaType: "anime", seconds: 231 * 3600 },
+    { mediaType: "visual_novel", seconds: 164 * 3600 },
+    { mediaType: "manga", seconds: 118 * 3600 },
+    { mediaType: "light_novel", seconds: 57 * 3600 },
+    { mediaType: "youtube", seconds: 29 * 3600 },
+    { mediaType: "podcast", seconds: 13 * 3600 },
+  ];
 }
 
 // --- Library ---

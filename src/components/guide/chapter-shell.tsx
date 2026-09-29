@@ -6,6 +6,8 @@ import { adjacentChapters, GUIDE_CHAPTERS, GUIDE_UPDATED, guideChapter, guidePat
 import { getSession } from "@/lib/session";
 import { absoluteUrl, breadcrumbs, JsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
+import type { ArtKey } from "@/lib/guide-art";
+import { ChapterArt } from "./anime-art";
 
 export function chapterMetadata(slug: string): Metadata {
   const c = guideChapter(slug);
@@ -26,10 +28,13 @@ export async function ChapterShell({
   slug,
   children,
   faq,
+  art,
 }: {
   slug: string;
   children: ReactNode;
   faq?: { q: string; a: string }[];
+  /** The picture above the title, with its caption. */
+  art?: { name: ArtKey; caption: ReactNode };
 }) {
   const c = guideChapter(slug);
   const path = guidePath(slug);
@@ -69,6 +74,8 @@ export async function ChapterShell({
           ]),
         ]}
       />
+
+      {art && <ChapterArt name={art.name} caption={art.caption} />}
 
       <header className="max-w-[44rem]">
         <p className="section-label mb-3">{index === 0 ? "Learning guide" : `Learning guide · Chapter ${index}`}</p>

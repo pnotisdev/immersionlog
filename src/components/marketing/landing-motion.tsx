@@ -45,8 +45,13 @@ function belowTheFold(selector: string): HTMLElement[] {
 
 export function LandingMotion() {
   useEffect(() => {
-    /** Elements that have been hidden, and how to put each group back. */
-    const pending: { els: Element[]; show: (els: Element[]) => void }[] = [];
+    /**
+     * Elements that have been hidden, and how to put each group back. A `together` group
+     * is revealed as a unit: the footer mark's cells sit at the very bottom of the page,
+     * so on a phone its lower rows can never scroll past the trigger line, and revealing
+     * them one by one left the logo stuck with a single row showing.
+     */
+    const pending: { els: Element[]; show: (els: Element[]) => void; together?: boolean }[] = [];
     /** Anything already revealed, so the safety net never re-animates it. */
     const shown = new WeakSet<Element>();
     const reveal = (els: Element[], show: (els: Element[]) => void) => {
@@ -87,7 +92,7 @@ export function LandingMotion() {
         const showCells = (els: Element[]) =>
           gsap.to(els, { opacity: 1, duration: 0.4, stagger: { each: 0.03, from: "start" } });
         gsap.set(cells, { opacity: 0 });
-        pending.push({ els: cells, show: showCells });
+        pending.push({ els: cells, show: showCells, together: true });
         if (cells.length > 0) {
           ScrollTrigger.create({
             trigger: "footer",
@@ -107,21 +112,34 @@ export function LandingMotion() {
     const settle = () => {
       const line = triggerLine();
       for (const group of pending) {
-        reveal(
-          group.els.filter((el) => !shown.has(el) && el.getBoundingClientRect().top < line),
-          group.show,
-        );
+        const due = group.els.filter((el) => !shown.has(el) && el.getBoundingClientRect().top < line);
+        reveal(group.together && due.length > 0 ? group.els : due, group.show);
       }
     };
 
-    // The cover-art wall streams in after hydration and changes the page height, which
-    // moves every trigger below it. Re-measure, then settle, once everything is in.
+    // The page changes height after this runs: the cover-art wall streams in, and the
+    // hero screenshot only shrinks to its scaled height once ScaleToFit has measured it,
+    // which on a phone takes well over a screen off the page. Triggers measured before
+    // that sat below the bottom of the page and never fired (the footer logo stayed
+    // blank). So re-measure whenever the page's height changes, not just once on load.
+    let frame = 0;
     const refresh = () => {
-      ScrollTrigger.refresh();
-      settle();
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+        settle();
+      });
     };
     if (document.readyState === "complete") refresh();
     else window.addEventListener("load", refresh);
+    let lastHeight = document.body.scrollHeight;
+    const ro = new ResizeObserver(() => {
+      const height = document.body.scrollHeight;
+      if (height === lastHeight) return;
+      lastHeight = height;
+      refresh();
+    });
+    ro.observe(document.body);
     ScrollTrigger.addEventListener("refresh", settle);
     // Also on plain scroll: a programmatic jump moves the page without ScrollTrigger
     // ever seeing an element cross its start, and `reveal` makes this idempotent, so the
@@ -129,6 +147,8 @@ export function LandingMotion() {
     window.addEventListener("scroll", settle, { passive: true });
 
     return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
       window.removeEventListener("load", refresh);
       window.removeEventListener("scroll", settle);
       ScrollTrigger.removeEventListener("refresh", settle);
