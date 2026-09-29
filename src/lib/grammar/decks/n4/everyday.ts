@@ -1,6 +1,6 @@
 import { point, s, word } from "../../build";
 
-/** The rest of everyday N4: instructions, "without", sudden starts, advice, regret and casual speech. */
+/** The rest of everyday N4: instructions, "without", sudden starts, advice, regret and casual quoting. */
 
 export const everyday = [
   point({
@@ -282,6 +282,43 @@ With nouns, 必要 works as a な-adjective with が in front: パスポート�
       }),
       s("もう一度確認する{必要がある}。", "もういちどかくにんする{ひつようがある}。", "We need to check it once more.", {
         near: [["必要だ", "Close. After a verb, it's 必要がある."]],
+      }),
+    ],
+  }),
+
+  point({
+    id: "n4-tte",
+    title: "〜って",
+    meaning: "(casual) they said; (casual topic) what's …",
+    structure: "Plain form + って · Noun + って",
+    register: "Casual: everyday speech with friends and family.",
+    related: ["n4-to-iu", "n4-sou-hearsay"],
+    explanation: `
+**って** is the casual stand-in for the quoting と and for という, and you'll hear it constantly in conversation.
+
+Quoting: 田中さん、明日は来ないって, "Tanaka says they're not coming tomorrow". The verb 言う is often dropped, so って alone means "they said" or "apparently".
+
+Asking about a word or thing: 「積ん読」って何?, "what's tsundoku?" Here it stands in for というのは, marking what you're asking about.
+
+It also passes on hearsay, like そうだ: 明日は雨だって, "apparently it'll rain tomorrow".
+
+Keep it for speech and casual messages. In writing, use と, という and そうです.
+`,
+    sentences: [
+      s("田中さん、明日は来ない{って}。", "たなかさん、あしたはこない{って}。", "Tanaka says they're not coming tomorrow.", {
+        near: [["と", "と needs a verb after it (と言っていた). On its own at the end, casual speech uses って."]],
+      }),
+      s("「積ん読」{って}何?", "「つんどく」{って}なに?", "What's \"tsundoku\"?", {
+        near: [["は", "That works, but for \"what's this word?\", casual speech uses って."]],
+      }),
+      s("明日は雨だ{って}。", "あしたはあめだ{って}。", "Apparently it's going to rain tomorrow.", {
+        near: [["そう", "雨だそう works too. This point practises the casual って."]],
+      }),
+      s("先生が明日テストがある{って}言ってたよ。", "せんせいがあしたテストがある{って}いってたよ。", "The teacher said there's a test tomorrow.", {
+        near: [["と", "と is right in careful speech. Casually, it's って."]],
+      }),
+      s("駅前のパン屋、すごくおいしい{って}。", "えきまえのパンや、すごくおいしい{って}。", "People say the bakery by the station is really good.", {
+        near: [["そうです", "おいしいそうです is the polite version. Casually, just って."]],
       }),
     ],
   }),
