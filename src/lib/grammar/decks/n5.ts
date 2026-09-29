@@ -1,6 +1,7 @@
 import { deck } from "../build";
 import { adjectives } from "./n5/adjectives";
 import { basics } from "./n5/basics";
+import { questions } from "./n5/questions";
 import { verbs } from "./n5/verbs";
 
 /**
@@ -19,5 +20,6 @@ export const N5 = deck(
     { title: "First sentences", points: basics },
     { title: "Verbs and the particles around them", points: verbs },
     { title: "Adjectives, likes and wants", points: adjectives },
+    { title: "Questions and counting", points: questions },
   ],
 );
