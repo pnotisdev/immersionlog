@@ -5,6 +5,7 @@ import { extent } from "./n2/extent";
 import { likelihood } from "./n2/likelihood";
 import { scope } from "./n2/scope";
 import { time } from "./n2/time";
+import { viewpoint } from "./n2/viewpoint";
 
 /**
  * JLPT N2 grammar: the patterns of newspapers, essays, business and fiction.
@@ -25,5 +26,6 @@ export const N2 = deck(
     { title: "Degree, addition and emphasis", points: extent },
     { title: "Could, couldn't and must", points: likelihood },
     { title: "Concession and conditions", points: concession },
+    { title: "Viewpoints and verdicts", points: viewpoint },
   ],
 );
