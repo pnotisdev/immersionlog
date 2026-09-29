@@ -1478,4 +1478,93 @@ It builds on くらい (N3) in its "minimal extent" sense, and のものだ adds
       ),
     ],
   }),
+
+  point({
+    id: "n1-no-nan-no-tte",
+    title: "〜のなんのって",
+    meaning: "so incredibly …, you wouldn't believe how",
+    structure: "い-adj / Verb plain form + のなんのって",
+    related: ["n1-to-ittara-nai"],
+    explanation: `
+**のなんのって** is a spoken way of saying something was indescribably intense: 痛いのなんのって、声も出なかった, "it hurt so much I couldn't even make a sound".
+
+It follows an adjective or verb of feeling: 痛い, 寒い, おいしい, 驚いた, 喜んだ. It often trails off, leaving the listener to imagine, or it's followed by an extreme result: 声も出なかった, 腰を抜かしそうだった, 泣き出した.
+
+It's lively and conversational, a colloquial cousin of といったらない (N1). のなんの is sometimes used on its own, too.
+
+Don't confuse it with のに, "even though". Because it's so colloquial, you'll hear it in stories told among friends rather than read it in formal writing.
+`,
+    sentences: [
+      s(
+        "痛い{のなんのって}、声も出なかった。",
+        "いたい{のなんのって}、こえもでなかった。",
+        "It hurt so much I couldn't even make a sound.",
+        {
+          accept: ["のなんの"],
+          near: [
+            [
+              "のに",
+              'のに is "even though". For "so incredibly", use のなんのって.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "驚いた{のなんのって}、腰を抜かしそうだった。",
+        "おどろいた{のなんのって}、こしをぬかしそうだった。",
+        "I was so shocked I nearly fell over.",
+        {
+          accept: ["のなんの"],
+          near: [
+            [
+              "のに",
+              'のに is "even though". For "so incredibly", use のなんのって.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "あの店のラーメン、おいしい{のなんのって}。",
+        "あのみせのラーメン、おいしい{のなんのって}。",
+        "The ramen at that place is unbelievably good.",
+        {
+          accept: ["のなんの", "といったらない"],
+          near: [
+            [
+              "のだから",
+              'のだから is "since". For "unbelievably", use のなんのって.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "寒い{のなんのって}、手がかじかんで動かなかった。",
+        "さむい{のなんのって}、てがかじかんでうごかなかった。",
+        "It was so cold my hands went numb.",
+        {
+          accept: ["のなんの"],
+          near: [
+            [
+              "のに",
+              'のに is "even though". For "so incredibly", use のなんのって.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "彼女が喜んだ{のなんのって}、泣き出してしまった。",
+        "かのじょがよろこんだ{のなんのって}、なきだしてしまった。",
+        "She was so happy she burst into tears.",
+        {
+          accept: ["のなんの"],
+          near: [
+            [
+              "のだから",
+              'のだから is "since". For "so incredibly", use のなんのって.',
+            ],
+          ],
+        },
+      ),
+    ],
+  }),
 ];

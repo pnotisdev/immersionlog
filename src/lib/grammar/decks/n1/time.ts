@@ -1845,4 +1845,93 @@ Don't confuse it with というものだ (N2), "that's what … is", or とい�
       ),
     ],
   }),
+
+  point({
+    id: "n1-hyoushi-ni",
+    title: "〜拍子に・〜はずみで",
+    meaning: "the moment (and by accident), as a result of (a sudden movement)",
+    structure: "Verb た-form + 拍子に / はずみで · 何かの拍子に",
+    related: ["n3-ta-totan", "n1-ya-ina-ya"],
+    explanation: `
+**拍子に** says that at the moment of one sudden action, something else happened by accident: 転んだ拍子に、眼鏡が落ちた, "when I fell over, my glasses came off".
+
+The first half is usually an abrupt physical movement (falling, standing up, sneezing, bumping into something), and the second half is an unintended result. **はずみで** (弾みで) means the same, and はずみに is also used.
+
+**何かの拍子に** means "for some reason or other, by chance": 何かの拍子に、昔のことを思い出す, "every now and then, something makes me remember the past".
+
+It's close to たとたん (N3), but 拍子に stresses the accidental knock-on effect. 拍子 means "rhythm, beat", as in the beat that triggers the next thing.
+`,
+    sentences: [
+      s(
+        "転んだ{拍子に}、眼鏡が落ちた。",
+        "ころんだ{ひょうしに}、めがねがおちた。",
+        "When I fell over, my glasses came off.",
+        {
+          accept: ["はずみに", "はずみで", "とたんに", "とたん"],
+          near: [
+            [
+              "ついでに",
+              'ついでに is "while you\'re at it". For an accidental "the moment", use 拍子に.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "立ち上がった{拍子に}、頭をぶつけた。",
+        "たちあがった{ひょうしに}、あたまをぶつけた。",
+        "I banged my head as I stood up.",
+        {
+          accept: ["はずみに", "はずみで", "とたんに", "とたん"],
+          near: [
+            [
+              "ついでに",
+              'ついでに is "while you\'re at it". For an accidental "as I", use 拍子に.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "くしゃみをした{拍子に}、腰を痛めた。",
+        "くしゃみをした{ひょうしに}、こしをいためた。",
+        "I hurt my back when I sneezed.",
+        {
+          accept: ["はずみに", "はずみで", "とたんに", "とたん"],
+          near: [
+            [
+              "ついでに",
+              'ついでに is "while you\'re at it". For an accidental "when", use 拍子に.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "何かの{拍子に}、昔のことを思い出す。",
+        "なにかの{ひょうしに}、むかしのことをおもいだす。",
+        "Every now and then, something makes me remember the past.",
+        {
+          accept: ["はずみに", "はずみで"],
+          near: [
+            [
+              "ついでに",
+              'ついでに is "while you\'re at it". The phrase is 何かの拍子に.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "人とぶつかった{はずみで}、コップが割れた。",
+        "ひととぶつかった{はずみで}、コップがわれた。",
+        "I bumped into someone and the glass broke.",
+        {
+          accept: ["拍子に", "はずみに", "とたんに"],
+          near: [
+            [
+              "ついでに",
+              'ついでに is "while you\'re at it". For an accidental knock-on effect, use はずみで.',
+            ],
+          ],
+        },
+      ),
+    ],
+  }),
 ];

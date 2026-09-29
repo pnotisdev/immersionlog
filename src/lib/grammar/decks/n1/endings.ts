@@ -1333,4 +1333,93 @@ It follows an い-adjective in its く form plus も (怖くも, 痛くも, 羨�
       ),
     ],
   }),
+
+  point({
+    id: "n1-tokoro-wo-miru-to",
+    title: "〜ところを見ると",
+    meaning: "judging from (the fact that)",
+    structure: "Plain form + ところを見ると / ところからすると",
+    related: ["n1-to-mieru", "n2-kara-suru-to"],
+    explanation: `
+**ところを見ると** draws a conclusion from what you can observe: 笑っているところを見ると、試験はうまくいったようだ, "judging from the fact that he's smiling, the exam must have gone well".
+
+The first half is a visible fact, and the second half is a guess, so it almost always ends with ようだ, らしい, のだろう or に違いない.
+
+It's close to から判断すると and からすると (N2), but ところを見ると focuses on a specific, observed situation right in front of you. It pairs naturally with とみえる (N1).
+
+Don't confuse it with ところに (N2), "just then", which is about timing.
+`,
+    sentences: [
+      s(
+        "笑っている{ところを見ると}、試験はうまくいったようだ。",
+        "わらっている{ところをみると}、しけんはうまくいったようだ。",
+        "Judging from the fact that he's smiling, the exam must have gone well.",
+        {
+          accept: ["ところからすると", "ことから"],
+          near: [
+            [
+              "ところに",
+              'ところに is "just then". For "judging from", use ところを見ると.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "返事がない{ところを見ると}、留守らしい。",
+        "へんじがない{ところをみると}、るすらしい。",
+        "There's no answer, so they must be out.",
+        {
+          accept: ["ところからすると", "ことから"],
+          near: [
+            [
+              "ところに",
+              'ところに is "just then". For "judging from", use ところを見ると.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "何も言わない{ところを見ると}、彼は反対ではないのだろう。",
+        "なにもいわない{ところをみると}、かれははんたいではないのだろう。",
+        "Since he isn't saying anything, he probably isn't against it.",
+        {
+          accept: ["ところからすると", "ことから"],
+          near: [
+            [
+              "ところで",
+              'ところで is "by the way" or "even if". For "judging from", use ところを見ると.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "あわてている{ところを見ると}、何かあったに違いない。",
+        "あわてている{ところをみると}、なにかあったにちがいない。",
+        "Judging by how flustered she is, something must have happened.",
+        {
+          accept: ["ところからすると", "ことから"],
+          near: [
+            [
+              "ところに",
+              'ところに is "just then". For "judging by", use ところを見ると.',
+            ],
+          ],
+        },
+      ),
+      s(
+        "行列ができている{ところを見ると}、人気の店なのだろう。",
+        "ぎょうれつができている{ところをみると}、にんきのみせなのだろう。",
+        "Seeing the queue, it must be a popular place.",
+        {
+          accept: ["ところからすると", "ことから"],
+          near: [
+            [
+              "ところで",
+              'ところで is "by the way" or "even if". For "seeing (that)", use ところを見ると.',
+            ],
+          ],
+        },
+      ),
+    ],
+  }),
 ];
