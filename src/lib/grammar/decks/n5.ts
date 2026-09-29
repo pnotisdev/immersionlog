@@ -2,6 +2,7 @@ import { deck } from "../build";
 import { adjectives } from "./n5/adjectives";
 import { basics } from "./n5/basics";
 import { questions } from "./n5/questions";
+import { teForm } from "./n5/te-form";
 import { verbs } from "./n5/verbs";
 
 /**
@@ -21,5 +22,6 @@ export const N5 = deck(
     { title: "Verbs and the particles around them", points: verbs },
     { title: "Adjectives, likes and wants", points: adjectives },
     { title: "Questions and counting", points: questions },
+    { title: "Plain forms and the て-form", points: teForm },
   ],
 );
