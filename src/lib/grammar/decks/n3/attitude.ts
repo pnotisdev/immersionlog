@@ -8,7 +8,7 @@ export const attitude = [
     title: "せっかく",
     meaning: "specially, (it's a shame to waste) the effort or chance",
     structure: "せっかく + Verb … のに / から · せっかくの + Noun",
-    related: ["n4-noni", "n3-douse"],
+    related: ["n4-noni", "n3-douse", "n2-wazawaza"],
     explanation: `
 **せっかく** marks something as valuable because of the effort, trouble or rarity behind it, and says it would be a shame to waste it.
 
@@ -80,7 +80,7 @@ Compare きっと ("surely, certainly"), which is confident the thing is true. �
     title: "さすが",
     meaning: "just as you'd expect (admiring); even (X)",
     structure: "さすが + Noun · さすが(は)〜だ · さすがに",
-    related: ["n3-rashii-typical", "n3-masaka"],
+    related: ["n3-rashii-typical", "n3-masaka", "n2-dake-atte"],
     explanation: `
 **さすが** praises someone or something for living up to their reputation: さすがプロだね, "just what you'd expect from a pro". It's admiration, and it's very common as a compliment: さすがですね!
 
@@ -185,7 +185,7 @@ Compare 全然 (not at all), which is absolute, and あまり (not very). なか
     title: "むしろ",
     meaning: "rather, if anything",
     structure: "(A より) むしろ B",
-    related: ["n3-to-iu-yori", "n5-yori-no-hou-ga"],
+    related: ["n3-to-iu-yori", "n5-yori-no-hou-ga", "n2-kaette"],
     explanation: `
 **むしろ** corrects an expectation by saying the opposite, or something else, is more accurate: 今日は寒くない。むしろ暑いくらいだ, "it's not cold today. If anything, it's hot".
 

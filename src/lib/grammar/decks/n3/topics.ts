@@ -43,7 +43,7 @@ It's neutral and works in speech and writing. The formal equivalent, common in b
     title: "〜に関して・〜に関する",
     meaning: "regarding, concerning (formal)",
     structure: "Noun + に関して · Noun + に関する + Noun",
-    related: ["n3-ni-tsuite"],
+    related: ["n3-ni-tsuite", "n2-wo-megutte"],
     explanation: `
 **に関して** is the formal twin of について: この件に関して、ご意見をお聞かせください, "please let us know your views on this matter". You'll meet it in business emails, announcements, reports and the news.
 
@@ -409,7 +409,7 @@ It can be literal, too: 地球は太陽を中心に回っている, "the Earth r
     title: "〜向け・〜向き",
     meaning: "made for; suited to",
     structure: "Noun + 向け / 向き (+ の Noun · + だ)",
-    related: ["n3-ni-totte"],
+    related: ["n3-ni-totte", "n2-ni-mukete"],
     explanation: `
 **向け** means "aimed at, made for" a particular group: 子ども向けの本, "a book for children"; 外国人向けのガイド, "a guide for foreigners". Someone designed it with that audience in mind.
 

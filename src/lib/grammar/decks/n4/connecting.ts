@@ -45,7 +45,7 @@ In polite speech you'll also hear ですので and ますので. Among friends, 
     title: "〜のに",
     meaning: "even though, and yet (frustration)",
     structure: "Plain form + のに · Noun / な-adj + なのに",
-    related: ["n4-node", "n4-temo", "n5-kedo"],
+    related: ["n4-node", "n4-temo", "n5-kedo", "n2-mono-no", "n2-ni-mo-kakawarazu"],
     explanation: `
 **のに** means "even though" or "and yet", with feeling: 薬を飲んだのに、熱が下がらない, "I took the medicine, and my fever still won't go down".
 

@@ -119,7 +119,7 @@ The meaning is close to the past と or たら of discovery (電話したら、�
     title: "〜際(に)",
     meaning: "when, at the time of (formal)",
     structure: "Verb plain form / Noun + の + 際(に) · 際は",
-    related: ["n5-toki", "n3-saichuu", "n3-baai"],
+    related: ["n5-toki", "n3-saichuu", "n3-baai", "n2-ni-saishite"],
     explanation: `
 **際** is a formal word for "occasion", and it works like とき: お帰りの際は、忘れ物にご注意ください, "when leaving, please take care not to forget your belongings".
 
@@ -227,7 +227,7 @@ Compare ごとに, "every" for regular units (every station, every hour, every s
     title: "〜て以来",
     meaning: "ever since",
     structure: "Verb て-form + 以来 · Noun + 以来",
-    related: ["n5-te-kara", "n3-te-hajimete"],
+    related: ["n5-te-kara", "n3-te-hajimete", "n2-te-kara-to-iu-mono"],
     explanation: `
 **以来** means "since then, ever since": 日本に来て以来、ずっと東京に住んでいる, "I've lived in Tokyo ever since I came to Japan".
 
@@ -412,7 +412,7 @@ Compare 一方だ, which also describes a trend, but with the sense of "only eve
     title: "〜につれて",
     meaning: "as (one thing changes, so does another)",
     structure: "Verb dictionary form / Noun + につれて",
-    related: ["n3-ni-shitagatte", "n3-to-tomo-ni"],
+    related: ["n3-ni-shitagatte", "n3-to-tomo-ni", "n2-ni-tomonatte"],
     explanation: `
 **につれて** links two changes: as the first progresses, the second follows. 年をとるにつれて、体が弱くなる, "as you get older, your body gets weaker".
 

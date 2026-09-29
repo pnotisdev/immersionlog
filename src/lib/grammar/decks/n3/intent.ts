@@ -310,7 +310,7 @@ Compare てはじめて, which looks back ("I only realised after"). てから�
     title: "〜てたまらない・〜てしょうがない",
     meaning: "unbearably, terribly, dying to",
     structure: "い-adj くて · な-adj で · Verb て-form + たまらない / しょうがない / しかたがない",
-    related: ["n4-sugiru", "n5-tai"],
+    related: ["n4-sugiru", "n5-tai", "n2-te-naranai"],
     explanation: `
 **てたまらない** says a feeling or sensation is so strong you can't stand it: 暑くてたまらない, "it's unbearably hot". たまる means "to bear", so it's literally "can't bear it".
 

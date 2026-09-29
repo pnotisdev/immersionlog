@@ -1,4 +1,5 @@
 import { deck } from "../build";
+import { adverbs } from "./n2/adverbs";
 import { cause } from "./n2/cause";
 import { concession } from "./n2/concession";
 import { extent } from "./n2/extent";
@@ -29,5 +30,6 @@ export const N2 = deck(
     { title: "Concession and conditions", points: concession },
     { title: "Viewpoints and verdicts", points: viewpoint },
     { title: "Manner, appearance and verb compounds", points: manner },
+    { title: "Adverbs with a point of view", points: adverbs },
   ],
 );

@@ -197,7 +197,7 @@ Depending on context, it's either reassurance ("all you need is…") or a wistfu
     title: "〜こそ",
     meaning: "precisely, this one (for sure)",
     structure: "Noun + こそ · 〜からこそ · こちらこそ",
-    related: ["n3-sae", "n5-wa"],
+    related: ["n3-sae", "n5-wa", "n2-te-koso"],
     explanation: `
 **こそ** puts strong emphasis on one thing: "this, and no other". 今年こそ、試験に合格したい, "this year, for sure, I want to pass the exam". It suggests previous years didn't work out.
 
@@ -271,7 +271,7 @@ Surprise or disbelief, after a whole clause: 彼がそんなことを言うな�
     title: "〜だけでなく",
     meaning: "not only … but also",
     structure: "Noun / Plain form + だけでなく … も (な-adj + な)",
-    related: ["n5-dake", "n4-shi"],
+    related: ["n5-dake", "n4-shi", "n2-bakari-ka", "n2-nomi-narazu"],
     explanation: `
 **だけでなく** means "not only": 彼は英語だけでなく、中国語も話せる, "he speaks not only English but Chinese too".
 
@@ -312,7 +312,7 @@ It's a useful way to pile up good points when recommending something, and it's c
     title: "〜以外",
     meaning: "except, other than",
     structure: "Noun + 以外 (は · に · の + Noun)",
-    related: ["n5-shika-nai", "n5-dake"],
+    related: ["n5-shika-nai", "n5-dake", "n2-wo-nozoite"],
     explanation: `
 **以外** means "except" or "other than": 日曜日以外は毎日働いている, "I work every day except Sunday".
 
@@ -348,7 +348,7 @@ Don't confuse it with 意外, pronounced the same way, which means "unexpected":
     title: "〜しかない",
     meaning: "have no choice but to, all you can do is",
     structure: "Verb dictionary form + しかない",
-    related: ["n5-shika-nai", "n5-nakereba-naranai"],
+    related: ["n5-shika-nai", "n5-nakereba-naranai", "n2-zaru-wo-enai"],
     explanation: `
 At N5, しか〜ない was "only" with nouns. After a verb's dictionary form, **しかない** means "there's nothing to do but this": 電車が止まっているから、歩いて帰るしかない, "the trains aren't running, so I have no choice but to walk home".
 
@@ -387,7 +387,7 @@ Compare なければならない, which is obligation. しかない says the oth
     title: "〜だらけ",
     meaning: "covered in, full of (something unwanted)",
     structure: "Noun + だらけ (+ の Noun · + だ · + になる)",
-    related: ["n4-bakari"],
+    related: ["n4-bakari", "n2-mamire"],
     explanation: `
 **だらけ** says something is covered in or full of something, usually something unwelcome: 泥だらけ, "covered in mud"; 間違いだらけ, "full of mistakes"; 傷だらけ, "covered in cuts".
 
@@ -458,7 +458,7 @@ The second half is usually negative. The feeling is that a situation got stuck, 
     title: "〜切る・〜切れない",
     meaning: "do completely; can't (possibly) finish",
     structure: "Verb ます-stem + 切る / 切れる / 切れない",
-    related: ["n4-hajimeru-owaru", "n4-te-shimau"],
+    related: ["n4-hajimeru-owaru", "n4-te-shimau", "n2-nuku"],
     explanation: `
 **切る** after a ます-stem means doing something completely, to the very end: 一晩で本を読み切った, "I read the whole book in one night". 切る means "cut", so the image is of cutting it off at the end.
 

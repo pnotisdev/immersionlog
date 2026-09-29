@@ -341,7 +341,7 @@ Compare について and に関して, which are neutral "about". をめぐっ�
     title: "〜に限って・〜に限り",
     meaning: "of all times/people; only (limited to)",
     structure: "Noun + に限って · Noun + に限り",
-    related: ["n2-ni-kagirazu"],
+    related: ["n2-ni-kagirazu", "n2-ni-kagiru"],
     explanation: `
 **に限って** has two uses.
 
@@ -379,7 +379,7 @@ Its opposite is に限らず, "not only".
     title: "〜に限らず",
     meaning: "not only, not limited to",
     structure: "Noun + に限らず … も",
-    related: ["n2-ni-kagitte", "n3-dake-de-naku"],
+    related: ["n2-ni-kagitte", "n3-dake-de-naku", "n2-nomi-narazu"],
     explanation: `
 **に限らず** means "not limited to", widening the scope: この店は若者に限らず、お年寄りにも人気がある, "this shop is popular not only with young people but with older people too".
 
@@ -456,7 +456,7 @@ Compare によって, "depending on", which is the opposite: the factor does mak
     title: "〜にかかわらず",
     meaning: "regardless of, whether or not",
     structure: "Noun · Verb dictionary form + ないか · A か B か + にかかわらず",
-    related: ["n2-wo-towazu"],
+    related: ["n2-wo-towazu", "n2-ni-mo-kakawarazu"],
     explanation: `
 **にかかわらず** says something is unaffected by a factor: 天候にかかわらず、試合は行われます, "the match will go ahead regardless of the weather".
 

@@ -298,7 +298,7 @@ With ね, it checks your understanding of what someone said: つまり、明日�
     title: "〜わけがない",
     meaning: "there's no way, it can't be",
     structure: "Plain form + わけがない (な-adj + な · Noun + の / である)",
-    related: ["n4-hazu-ga-nai", "n3-wake-de-wa-nai"],
+    related: ["n4-hazu-ga-nai", "n3-wake-de-wa-nai", "n2-kkonai"],
     explanation: `
 **わけがない** flatly rules something out: 彼がうそをつくわけがない, "there's no way he'd lie". There's no reason or logic that could make it true.
 

@@ -6,7 +6,7 @@ import { TOOLS } from "@/lib/tools";
 const PATH = "/tools";
 const title = "Free Japanese practice tools";
 const description =
-  "Free tools for learning Japanese: a hiragana and katakana quiz, a verb and adjective conjugation drill, N5, N4 and N3 grammar lists with spaced reviews, and a reading speed test.";
+  "Free tools for learning Japanese: a hiragana and katakana quiz, a verb and adjective conjugation drill, grammar lists from N5 to N2 with spaced reviews, and a reading speed test.";
 
 export const metadata: Metadata = {
   title,

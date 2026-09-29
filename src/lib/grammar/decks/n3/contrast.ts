@@ -337,7 +337,7 @@ It's common in news and essays. Don't confuse it with 一方だ at the end of a 
     title: "〜ながら(も) (although)",
     meaning: "although, even though",
     structure: "Verb ます-stem / い-adj / Noun + ながら(も)",
-    related: ["n5-nagara", "n4-noni"],
+    related: ["n5-nagara", "n4-noni", "n2-tsutsu"],
     explanation: `
 At N5, ながら meant doing two things at once. With states, it means **"although"**: 狭いながらも、快適な部屋だ, "it's small, but it's a comfortable room". The も is optional and adds emphasis.
 

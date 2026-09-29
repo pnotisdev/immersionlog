@@ -42,7 +42,7 @@ Used for a bad result, おかげで turns sarcastic: 君のおかげで遅刻し
     title: "〜せいで・〜せいか",
     meaning: "because of (blame); maybe because",
     structure: "Noun + のせいで · Plain form + せいで (な-adj + な)",
-    related: ["n3-okage-de", "n3-tame-reason"],
+    related: ["n3-okage-de", "n3-tame-reason", "n2-bakari-ni"],
     explanation: `
 **せいで** gives the cause of something bad and puts the blame on it: 雨のせいで試合が中止になった, "the match was called off because of the rain". It attaches like おかげで: の after a noun, the plain form after a verb or adjective.
 
@@ -154,7 +154,7 @@ It's not for giving orders or requests: ものだから can't be followed by "so
     title: "〜結果",
     meaning: "as a result of, after (doing)",
     structure: "Verb た-form + 結果 · Noun + の + 結果",
-    related: ["n3-tame-reason", "n4-koto-ni-suru"],
+    related: ["n3-tame-reason", "n4-koto-ni-suru", "n2-ageku", "n2-sue-ni"],
     explanation: `
 **結果** means "result". After a た-form or a noun with の, it introduces the outcome of an effort, a process or a decision: よく考えた結果、留学することにしました, "after thinking it over, I decided to study abroad".
 
@@ -188,7 +188,7 @@ As an ordinary noun it's "results": 検査の結果, "test results"; 試合の�
     title: "〜からには",
     meaning: "now that, since (so I must)",
     structure: "Plain form + からには",
-    related: ["n5-kara-because", "n5-nakereba-naranai"],
+    related: ["n5-kara-because", "n5-nakereba-naranai", "n2-ue-wa", "n2-ijou-wa"],
     explanation: `
 **からには** gives a reason that commits you to something: やると決めたからには、最後まで頑張ります, "now that I've decided to do it, I'll see it through".
 
