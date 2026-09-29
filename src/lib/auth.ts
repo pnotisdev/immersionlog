@@ -37,7 +37,7 @@ async function generateUniqueUsername(name: string, email: string): Promise<stri
 /**
  * Better Auth's built-in account deletion (`user.deleteUser`) relies on Postgres
  * `ON DELETE CASCADE` FKs to wipe the user's own rows (sessions, library entries,
- * goals, kudos, club memberships, etc. — see src/db/schema/*.ts). One FK is
+ * goals, kudos, club memberships, grammar progress and reviews, etc. — see src/db/schema/*.ts). One FK is
  * asymmetric though: `clubs.ownerId` cascades too, which would delete the whole
  * club — including *other members'* memberships/picks/votes — just because the
  * owner deleted their account. Reassign ownership to the longest-standing other

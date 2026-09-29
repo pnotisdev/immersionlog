@@ -6,7 +6,7 @@ import { TOOLS } from "@/lib/tools";
 const PATH = "/tools";
 const title = "Free Japanese practice tools";
 const description =
-  "Free tools for learning Japanese: a hiragana and katakana quiz, a verb and adjective conjugation drill, and a reading speed test. No account needed.";
+  "Free tools for learning Japanese: a hiragana and katakana quiz, a verb and adjective conjugation drill, an N5 grammar list with spaced reviews, and a reading speed test.";
 
 export const metadata: Metadata = {
   title,
@@ -35,7 +35,8 @@ export default function ToolsPage() {
       <header>
         <h1 className="text-2xl font-semibold sm:text-4xl">{title}</h1>
         <p className="mt-3 max-w-prose text-sm leading-relaxed text-muted-foreground">
-          Short drills for the parts of Japanese that reward repetition. They work without an account. For what to do around
+          Short drills for the parts of Japanese that reward repetition. They work without an account (grammar reviews need one
+          to remember your schedule). For what to do around
           them, the{" "}
           <Link href="/guide" className="text-primary hover:underline">
             learning guide

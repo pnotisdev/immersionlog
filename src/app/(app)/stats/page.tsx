@@ -4,6 +4,7 @@ import { eachDayKey, presetRange } from "@/lib/dates";
 import { formatCompact, formatDuration, formatMonthYear, formatNumber, pluralize } from "@/lib/format";
 import { UNIT_LABELS } from "@/lib/media";
 import { xpFromSeconds } from "@/lib/progression";
+import { getGrammarHeatmap, getGrammarProgress } from "@/lib/grammar-queries";
 import { getGroupTotals, getProgression, getReadingMetrics } from "@/lib/progression-queries";
 import { getDailyTotals, getHeatmapActivity, getLifetimeStats, getSessionsInRange, getTopItems, getTypeBreakdown } from "@/lib/queries";
 import { resolveRange } from "@/lib/range-params";
@@ -13,6 +14,7 @@ import { Panel } from "@/components/layout/panel";
 import { MonthCompare } from "@/components/progression/month-compare";
 import { ColumnChart } from "@/components/stats/column-chart";
 import { ActivityHeatmap } from "@/components/stats/activity-heatmap";
+import { GrammarActivity } from "@/components/grammar/grammar-activity";
 import { RangePicker } from "@/components/stats/range-picker";
 import { SplitBar, StatStrip } from "@/components/stats/stat-strip";
 import { TopTitles } from "@/components/stats/top-titles";
@@ -32,7 +34,7 @@ export default async function StatsPage(props: PageProps<"/stats">) {
   const lastMonthFrom = subMonths(monthRange.from, 1);
   const lastMonthTo = subMonths(now, 1);
 
-  const [daily, breakdown, top, lifetime, sessions, groups, reading, progression, heat, monthTotals, lastMonthTotals] =
+  const [daily, breakdown, top, lifetime, sessions, groups, reading, progression, heat, monthTotals, lastMonthTotals, grammarHeat, grammar] =
     await Promise.all([
       getDailyTotals(user.id, range.from, range.to, tz),
       getTypeBreakdown(user.id, range.from, range.to),
@@ -45,6 +47,8 @@ export default async function StatsPage(props: PageProps<"/stats">) {
       getHeatmapActivity(user.id, tz, now),
       getGroupTotals(user.id, monthRange.from, monthRange.to),
       getGroupTotals(user.id, lastMonthFrom, lastMonthTo),
+      getGrammarHeatmap(user.id, tz, now),
+      getGrammarProgress(user.id),
     ]);
 
   const totalSeconds = [...daily.values()].reduce((a, d) => a + d.seconds, 0);
@@ -182,6 +186,14 @@ export default async function StatsPage(props: PageProps<"/stats">) {
         {progression.activeDays} active days all time
         {lifetime.firstSession && <> · tracking since {formatMonthYear(String(lifetime.firstSession))}</>}
       </p>
+
+      {/* Grammar reviews get their own section: study, not immersion, so none of the time or XP above includes them. */}
+      {(grammar.length > 0 || grammarHeat.days.length > 0) && (
+        <section className="mt-10">
+          <SectionHeader title="Grammar" />
+          <GrammarActivity activity={grammarHeat} learned={grammar.length} burned={grammar.filter((g) => g.burned).length} />
+        </section>
+      )}
     </div>
   );
 }

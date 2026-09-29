@@ -9,6 +9,7 @@ import {
   Compass,
   Dumbbell,
   House,
+  Languages,
   Library,
   LogOut,
   Moon,
@@ -56,7 +57,7 @@ interface NavLink {
 
 /**
  * Five destinations, nothing more. Everything else (log history, goals, texthooker,
- * settings) lives in the account menu, and logging has its own button.
+ * grammar, settings) lives in the account menu, and logging has its own button.
  */
 const LINKS: NavLink[] = [
   { href: "/dashboard", label: "Home", icon: House },
@@ -72,6 +73,7 @@ const MENU_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/write", label: "Write a post", icon: PenLine },
   { href: "/texthooker", label: "Texthooker", icon: Terminal },
   { href: "/guide", label: "Learning guide", icon: BookOpen },
+  { href: "/grammar", label: "Grammar", icon: Languages },
   { href: "/tools", label: "Practice tools", icon: Dumbbell },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
