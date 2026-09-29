@@ -62,7 +62,7 @@ Verbs without a special respectful replacement use a pattern: **お + ます-ste
 
 The request version is **お + stem + ください**: お待ちください, "please wait"; お座りください, "please have a seat". You'll hear these constantly in shops, stations and on the phone.
 
-It doesn't work for verbs that already have their own respectful word: for 行く, it's いらっしゃる, not お行きになる. And for one-kanji-stem verbs like 見る and 寝る, the special words (ご覧になる, お休みになる) are used instead.
+It doesn't work for verbs that already have their own respectful word: for 行く, it's いらっしゃる, not お行きになる. And verbs with a one-syllable stem, like 見る (み) and 寝る (ね), use their special words instead: ご覧になる, お休みになる.
 `,
     sentences: [
       s("先生はもう{お帰りになりました}。", "せんせいはもう{おかえりになりました}。", "The teacher has already gone home.", {

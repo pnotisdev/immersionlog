@@ -65,7 +65,7 @@ export default async function DeckPage(props: PageProps<"/grammar/[deck]">) {
         <p className="section-label">Grammar</p>
         <h1 className="mt-1 text-2xl font-semibold sm:text-4xl">{title}</h1>
         <p className="mt-3 max-w-prose text-sm leading-relaxed text-muted-foreground">
-          {deck.points.length} points in the order a beginner meets them. {deck.description} Every explanation and example
+          {deck.points.length} points in learning order. {deck.description} Every explanation and example
           is written for immersionlog.
         </p>
         <p className="mt-3 text-sm">
