@@ -3,6 +3,7 @@ import { adverbs } from "./n1/adverbs";
 import { cause } from "./n1/cause";
 import { concession } from "./n1/concession";
 import { condition } from "./n1/condition";
+import { extent } from "./n1/extent";
 import { time } from "./n1/time";
 
 /**
@@ -18,7 +19,7 @@ export const N1 = deck(
     description:
       "The grammar of editorials, speeches, literature and formal writing: attitude adverbs, timing, reasons and purpose, concession, conditions, degree and emphasis, verdicts, standpoints and manner.",
   },
-  [adverbs, time, cause, concession, condition],
+  [adverbs, time, cause, concession, condition, extent],
   [
     { title: "1 · Adverbs with an attitude", ids: adverbs.map((p) => p.id) },
     { title: "2 · Timing and sequence", ids: time.map((p) => p.id) },
@@ -28,5 +29,6 @@ export const N1 = deck(
       title: "5 · Conditions and exclusivity",
       ids: condition.map((p) => p.id),
     },
+    { title: "6 · Degree and emphasis", ids: extent.map((p) => p.id) },
   ],
 );
