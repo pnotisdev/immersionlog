@@ -120,6 +120,13 @@
       "when": 1790710236860,
       "tag": "0016_kanji_srs",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1790796636860,
+      "tag": "0017_other_group",
+      "breakpoints": true
     }
   ]
 }

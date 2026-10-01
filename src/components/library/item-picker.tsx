@@ -4,8 +4,8 @@ import { useState, useTransition } from "react";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
 import { addFromSearch } from "@/actions/library";
-import { MEDIA_TYPES, type MediaType } from "@/db/schema";
-import { effectiveSearchSource, MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
+import { type MediaType } from "@/db/schema";
+import { effectiveSearchSource, MEDIA_TYPE_META, PICKABLE_MEDIA_TYPES, resolveOtherType, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
 import type { SearchResult } from "@/lib/sources";
 import { useMediaSearch } from "@/lib/use-media-search";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,7 @@ import type { LibraryPick } from "./types";
 export const NO_ITEM = "__none__";
 
 const STATUS_ORDER = ["active", "paused", "planning", "finished", "dropped"] as const;
-const TYPE_LABELS: Record<string, string> = Object.fromEntries(MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label]));
+const TYPE_LABELS: Record<string, string> = Object.fromEntries(PICKABLE_MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label]));
 
 export interface PickerValue {
   mediaItemId: string | null;
@@ -60,6 +60,7 @@ export function ItemPicker({
   const itemLabels: Record<string, string> = { [NO_ITEM]: "Something not in my library…", ...addedLabels };
   for (const e of entries) itemLabels[e.mediaItemId] = e.title;
 
+  const isOther = value.mediaType === "other" || value.mediaType === "other_reading" || value.mediaType === "other_listening";
   const searchSource = effectiveSearchSource(value.mediaType);
   const searchable = searchSource !== null;
   const linkable = MEDIA_TYPE_META[value.mediaType].importSources.length > 0;
@@ -126,14 +127,14 @@ export function ItemPicker({
               <Label htmlFor={`${idPrefix}-type`}>Type</Label>
               <Select
                 items={TYPE_LABELS}
-                value={value.mediaType}
-                onValueChange={(v) => onChange({ ...value, mediaType: v as MediaType })}
+                value={isOther ? "other" : value.mediaType}
+                onValueChange={(v) => onChange({ ...value, mediaType: v === "other" ? "other_reading" : (v as MediaType) })}
               >
                 <SelectTrigger id={`${idPrefix}-type`} className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {MEDIA_TYPES.map((t) => (
+                  {PICKABLE_MEDIA_TYPES.map((t) => (
                     <SelectItem key={t} value={t}>
                       {MEDIA_TYPE_META[t].label}
                     </SelectItem>
@@ -164,6 +165,29 @@ export function ItemPicker({
               </div>
             </div>
           </div>
+
+          {isOther && (
+            <div className="grid gap-1.5">
+              <Label id={`${idPrefix}-group-label`}>Counts as</Label>
+              <div role="radiogroup" aria-labelledby={`${idPrefix}-group-label`} className="grid grid-cols-2 gap-1 rounded-md border p-1">
+                {(["reading", "listening"] as const).map((g) => {
+                  const active = MEDIA_TYPE_META[value.mediaType].group === g;
+                  return (
+                    <button
+                      key={g}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() => onChange({ ...value, mediaType: resolveOtherType("other", g) })}
+                      className={`rounded-sm px-3 py-1.5 text-sm transition-colors ${active ? "bg-primary text-primary-foreground" : "hover:bg-muted/50"}`}
+                    >
+                      {g === "reading" ? "Reading" : "Listening"}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {isLink && (
             <div className="grid gap-2">

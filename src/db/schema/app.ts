@@ -45,6 +45,9 @@ export const MEDIA_TYPES = [
   "game",
   "news",
   "other",
+  // "Other" split by what it counts as; picked via the Reading/Listening toggle, never directly.
+  "other_reading",
+  "other_listening",
 ] as const;
 export type MediaType = (typeof MEDIA_TYPES)[number];
 export const mediaTypeEnum = pgEnum("media_type", MEDIA_TYPES);

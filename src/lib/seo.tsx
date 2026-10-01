@@ -29,6 +29,8 @@ export const SCHEMA_TYPE: Record<MediaType, string> = {
   drama_cd: "CreativeWork",
   news: "CreativeWork",
   other: "CreativeWork",
+  other_reading: "CreativeWork",
+  other_listening: "CreativeWork",
 };
 
 export function breadcrumbs(items: { name: string; path: string }[]) {

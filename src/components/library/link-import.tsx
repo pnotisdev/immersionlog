@@ -4,8 +4,8 @@ import { useState, useTransition } from "react";
 import { Link2 } from "lucide-react";
 import { toast } from "sonner";
 import { addFromUrl, previewImport, type PreviewResult } from "@/actions/import";
-import { ENTRY_STATUSES, MEDIA_TYPES, type MediaType } from "@/db/schema";
-import { MEDIA_TYPE_META, SOURCE_LABELS, UNIT_LABELS } from "@/lib/media";
+import { ENTRY_STATUSES, type MediaType } from "@/db/schema";
+import { MEDIA_TYPE_META, PICKABLE_MEDIA_TYPES, SOURCE_LABELS, UNIT_LABELS } from "@/lib/media";
 import { matchImporterHost } from "@/lib/sources/hosts";
 import type { SearchResult } from "@/lib/sources/types";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DetailsList } from "@/components/media/details-list";
 
-const TYPE_ITEMS: Record<string, string> = Object.fromEntries(MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label]));
+const TYPE_ITEMS: Record<string, string> = Object.fromEntries(PICKABLE_MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label]));
 
 /** Looks like a pasted link rather than a search query. */
 export function looksLikeUrl(s: string): boolean {
@@ -200,7 +200,7 @@ function ImportPreview({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {MEDIA_TYPES.map((t) => (
+              {PICKABLE_MEDIA_TYPES.map((t) => (
                 <SelectItem key={t} value={t}>
                   {MEDIA_TYPE_META[t].label}
                 </SelectItem>

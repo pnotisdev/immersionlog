@@ -5,8 +5,8 @@ import { useState, useTransition, type FormEvent } from "react";
 import { Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { addFromSearch, addManual } from "@/actions/library";
-import { ENTRY_STATUSES, MEDIA_TYPES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
-import { effectiveSearchSource, MEDIA_TYPE_META, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
+import { ENTRY_STATUSES, UNITS, type EntryStatus, type MediaType, type Unit } from "@/db/schema";
+import { effectiveSearchSource, MEDIA_TYPE_META, PICKABLE_MEDIA_TYPES, SOURCE_LABELS, STATUS_LABELS, UNIT_LABELS } from "@/lib/media";
 import type { SearchResult } from "@/lib/sources";
 import { LinkHint, LinkImport, supportedSourcesLine } from "@/components/library/link-import";
 import { useMediaSearch } from "@/lib/use-media-search";
@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const TYPE_ITEMS: Record<string, string> = Object.fromEntries(MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label]));
+const TYPE_ITEMS: Record<string, string> = Object.fromEntries(PICKABLE_MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label]));
 const STATUS_ITEMS: Record<string, string> = { ...STATUS_LABELS };
 const NONE = "__none__";
 const UNIT_ITEMS: Record<string, string> = { [NONE]: "no unit", ...UNIT_LABELS };
@@ -75,7 +75,7 @@ function AddMediaBody({ defaultType, onDone }: { defaultType: MediaType; onDone:
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {MEDIA_TYPES.map((t) => (
+              {PICKABLE_MEDIA_TYPES.map((t) => (
                 <SelectItem key={t} value={t}>
                   {MEDIA_TYPE_META[t].label}
                 </SelectItem>

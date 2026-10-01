@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
 import { toast } from "sonner";
 import { createGoal, updateGoal, type GoalInput } from "@/actions/goals";
-import { GOAL_METRICS, MEDIA_TYPES, type GoalMetric, type MediaType } from "@/db/schema";
-import { GOAL_METRIC_LABELS, MEDIA_TYPE_META } from "@/lib/media";
+import { GOAL_METRICS, type GoalMetric, type MediaType } from "@/db/schema";
+import { GOAL_METRIC_LABELS, MEDIA_TYPE_META, PICKABLE_MEDIA_TYPES } from "@/lib/media";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const ALL = "__all__";
 const METRIC_ITEMS: Record<string, string> = { ...GOAL_METRIC_LABELS };
-const TYPE_ITEMS: Record<string, string> = { [ALL]: "All media", ...Object.fromEntries(MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label])) };
+const TYPE_ITEMS: Record<string, string> = { [ALL]: "All media", ...Object.fromEntries(PICKABLE_MEDIA_TYPES.map((t) => [t, MEDIA_TYPE_META[t].label])) };
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
@@ -118,7 +118,7 @@ export function GoalForm({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value={ALL}>All media</SelectItem>
-              {MEDIA_TYPES.map((t) => (
+              {PICKABLE_MEDIA_TYPES.map((t) => (
                 <SelectItem key={t} value={t}>
                   {MEDIA_TYPE_META[t].label}
                 </SelectItem>

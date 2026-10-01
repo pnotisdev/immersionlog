@@ -1,3 +1,4 @@
+import { MEDIA_TYPES } from "@/db/schema";
 import type { EntryStatus, GoalMetric, MediaSource, MediaType, Unit } from "@/db/schema";
 
 /** Reading vs listening: anything with audio counts as listening (anime, video, podcasts); text media as reading. */
@@ -30,7 +31,18 @@ export const MEDIA_TYPE_META: Record<MediaType, MediaTypeMeta> = {
   game: { label: "Game", group: "other", defaultUnit: null, searchSource: null, importSources: ["backloggd", "dmm", "jiten"] },
   news: { label: "News", group: "reading", defaultUnit: "items", searchSource: null, importSources: [] },
   other: { label: "Other", group: "other", defaultUnit: null, searchSource: null, importSources: [] },
+  other_reading: { label: "Other (reading)", group: "reading", defaultUnit: null, searchSource: null, importSources: [] },
+  other_listening: { label: "Other (listening)", group: "listening", defaultUnit: null, searchSource: null, importSources: [] },
 };
+
+/** Types worth offering in a type dropdown: "Other" stands in for its reading/listening variants. */
+export const PICKABLE_MEDIA_TYPES = MEDIA_TYPES.filter((t) => t !== "other_reading" && t !== "other_listening");
+
+/** "Other" with the reading/listening toggle applied; any other type passes through. */
+export function resolveOtherType(type: MediaType, group: "reading" | "listening" | "other"): MediaType {
+  if (type !== "other" && type !== "other_reading" && type !== "other_listening") return type;
+  return group === "reading" ? "other_reading" : group === "listening" ? "other_listening" : "other";
+}
 
 export const UNIT_LABELS: Record<Unit, string> = {
   episodes: "episodes",
@@ -106,6 +118,7 @@ export function activityVerb(type: MediaType): string {
       return "watched";
     case "podcast":
     case "drama_cd":
+    case "other_listening":
       return "listened to";
     case "game":
       return "played";

@@ -1,5 +1,4 @@
-import { MEDIA_TYPES } from "@/db/schema";
-import { MEDIA_TYPE_META } from "@/lib/media";
+import { MEDIA_TYPE_META, PICKABLE_MEDIA_TYPES } from "@/lib/media";
 import { PERIOD_LABELS, RANKING_PERIODS, type RankingPeriod, type RankingScope } from "@/lib/ranking-params";
 import { TabLinks } from "@/components/layout/tab-links";
 
@@ -7,7 +6,7 @@ const SCOPES: { key: RankingScope; label: string }[] = [
   { key: "all", label: "All media" },
   { key: "reading", label: "Reading" },
   { key: "listening", label: "Listening" },
-  ...MEDIA_TYPES.map((t) => ({ key: t as RankingScope, label: MEDIA_TYPE_META[t].label })),
+  ...PICKABLE_MEDIA_TYPES.map((t) => ({ key: t as RankingScope, label: MEDIA_TYPE_META[t].label })),
 ];
 
 export type RankingAudience = "everyone" | "following";
