@@ -163,3 +163,9 @@ export function checkAnswer(sentence: GrammarSentence, input: string): CheckResu
 export function displayAnswer(sentence: GrammarSentence): string {
   return blankOf(sentence.japanese);
 }
+
+/** Check a built sentence (the tiles joined in the learner's order) against the sentence. */
+export function checkBuild(sentence: GrammarSentence, built: string): CheckResult {
+  const n = normalizeInput(built);
+  return n && n === normalizeInput(unmark(sentence.japanese)) ? { result: "correct" } : { result: "wrong" };
+}

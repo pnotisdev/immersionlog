@@ -78,6 +78,19 @@ export function stageLabel(stage: number): string {
   return g.from === g.to ? g.label : `${g.label} ${stage}`;
 }
 
+/** A point missed this many times, and wrong in over 40% of its reviews, is a leech: it needs relearning, not more reviews. */
+export const LEECH_MISSES = 8;
+const LEECH_RATE = 0.4;
+
+export function isLeech(timesWrong: number, timesCorrect: number): boolean {
+  return timesWrong >= LEECH_MISSES && timesWrong / (timesWrong + timesCorrect) > LEECH_RATE;
+}
+
+/** Sentence building joins the mix from this stage on, once the pattern is familiar. */
+export const BUILD_MIN_STAGE = 5;
+/** Share of eligible reviews asked as a build. */
+export const BUILD_SHARE = 0.4;
+
 // ---------------------------------------------------------------------------
 // Sentences
 

@@ -55,6 +55,11 @@ export function DeckCard({
                 Learn
               </Button>
             )}
+            {learned > 0 && (
+              <Button size="sm" variant="outline" nativeButton={false} render={<Link href={`/grammar/practice?deck=${deck.id}`} prefetch={false} />}>
+                Practise
+              </Button>
+            )}
             <Button size="sm" variant="outline" nativeButton={false} render={<Link href={deckPath(deck)} />}>
               Browse
             </Button>

@@ -18,7 +18,7 @@ describe("decks", () => {
     expect(new Set(ids).size).toBe(ids.length);
     for (const id of ids) {
       expect(id).toMatch(/^[a-z0-9]+$/);
-      expect(["learn", "review"]).not.toContain(id);
+      expect(["learn", "review", "practice", "contrast"]).not.toContain(id);
     }
   });
 

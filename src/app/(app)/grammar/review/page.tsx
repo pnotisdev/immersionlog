@@ -3,6 +3,7 @@ import { formatDueIn } from "@/lib/format";
 import { getGrammarOverview, getReviewQueue } from "@/lib/grammar-queries";
 import { requireUser } from "@/lib/session";
 import { EmptyState } from "@/components/layout/empty-state";
+import { GrammarExplanation } from "@/components/grammar/explanation";
 import { ReviewSession } from "@/components/grammar/review-session";
 
 export const metadata = { title: "Grammar reviews" };
@@ -36,6 +37,7 @@ export default async function ReviewPage() {
       upcoming={overview.nextDueAt?.toISOString() ?? null}
       settings={overview.settings}
       tz={tz}
+      explanations={Object.fromEntries(cards.map((c) => [c.pointId, <GrammarExplanation key={c.pointId} markdown={c.explanation} />]))}
     />
   );
 }

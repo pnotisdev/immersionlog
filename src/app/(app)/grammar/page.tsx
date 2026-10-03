@@ -73,6 +73,27 @@ export default async function GrammarPage() {
         })}
       </div>
 
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-surface px-4 py-3">
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">Contrasts.</span> あげる or くれる? は or が? Drill the pairs that get mixed up.
+        </p>
+        <Button size="sm" variant="outline" nativeButton={false} render={<Link href="/grammar/contrast" />}>
+          Practise contrasts
+        </Button>
+      </div>
+
+      {o.weakCount > 0 && (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-surface px-4 py-3">
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{pluralize(o.weakCount, "trouble spot")}.</span> Points you keep missing. Practise them
+            now without touching your schedule.
+          </p>
+          <Button size="sm" variant="outline" nativeButton={false} render={<Link href="/grammar/practice" prefetch={false} />}>
+            Practise trouble spots
+          </Button>
+        </div>
+      )}
+
       <Panel
         title="Next 24 hours"
         description={

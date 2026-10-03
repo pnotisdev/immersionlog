@@ -5,6 +5,7 @@ import {
   dueTodayCount,
   forecast,
   forecastHours,
+  isLeech,
   lessonSentences,
   nextDue,
   nextReviewAt,
@@ -176,5 +177,14 @@ describe("due counts and forecast", () => {
       "2026-09-29T18:00:00.000Z",
     );
     expect(nextDue([at(null)], now)).toBeNull();
+  });
+});
+
+describe("isLeech", () => {
+  it("needs many misses and a poor record", () => {
+    expect(isLeech(7, 0)).toBe(false);
+    expect(isLeech(8, 2)).toBe(true);
+    expect(isLeech(8, 20)).toBe(false);
+    expect(isLeech(0, 0)).toBe(false);
   });
 });

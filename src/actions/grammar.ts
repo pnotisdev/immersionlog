@@ -4,7 +4,7 @@ import { and, desc, eq, gt, lte } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
 import { grammarProgress, grammarReviews, grammarSettings, type GrammarProgressSnapshot } from "@/db/schema";
-import { checkAnswer } from "@/lib/grammar/check";
+import { checkAnswer, checkBuild } from "@/lib/grammar/check";
 import { getPoint } from "@/lib/grammar/decks";
 import { GRAMMAR_LIMITS, UNDO_WINDOW_MS } from "@/lib/grammar/settings";
 import { BURNED_STAGE, FIRST_STAGE, lessonSentences, nextReviewAt, nextStage } from "@/lib/grammar/srs";
@@ -87,6 +87,8 @@ const reviewSchema = z.object({
   pointId,
   sentenceId: z.string().max(120),
   answer: z.string().max(200),
+  // A build is graded on the sentence put together from tiles; anything else is a typed blank.
+  mode: z.enum(["blank", "build"]).optional(),
 });
 
 export type ReviewInput = z.infer<typeof reviewSchema>;
@@ -125,7 +127,7 @@ export async function submitReview(input: ReviewInput): Promise<ActionResult<Rev
     return { ok: false, error: "This point isn't due for review yet" };
   }
 
-  const check = checkAnswer(sentence, answer);
+  const check = parsed.data.mode === "build" ? checkBuild(sentence, answer) : checkAnswer(sentence, answer);
   if (check.result === "nearMiss") return { ok: true, data: check };
 
   const correct = check.result === "correct";
@@ -243,6 +245,25 @@ export async function resetPoint(id: string): Promise<ActionResult> {
   const parsed = pointId.safeParse(id);
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   await db.delete(grammarProgress).where(and(eq(grammarProgress.userId, user.id), eq(grammarProgress.pointId, parsed.data)));
+  return { ok: true, data: undefined };
+}
+
+/**
+ * Start a point over: back to stage 1, due in four hours, with its miss count cleared so
+ * it stops being flagged as a leech. For a point that keeps slipping; the review log keeps
+ * the history.
+ */
+export async function relearnPoint(id: string): Promise<ActionResult> {
+  const user = await requireUser();
+  const parsed = pointId.safeParse(id);
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  const now = new Date();
+  const updated = await db
+    .update(grammarProgress)
+    .set({ stage: FIRST_STAGE, nextReviewAt: nextReviewAt(FIRST_STAGE, now), burned: false, streak: 0, timesWrong: 0, timesCorrect: 0 })
+    .where(and(eq(grammarProgress.userId, user.id), eq(grammarProgress.pointId, parsed.data)))
+    .returning({ id: grammarProgress.id });
+  if (updated.length === 0) return { ok: false, error: "You haven't learned this point yet" };
   return { ok: true, data: undefined };
 }
 
