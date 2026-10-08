@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { LAST_UPDATED as PRIVACY_UPDATED } from "@/app/(legal)/privacy/page";
 import { LAST_UPDATED as TERMS_UPDATED } from "@/app/(legal)/terms/page";
 import { DECKS, deckPath, pointPath } from "@/lib/grammar/decks";
+import { GUIDE_UPDATED as COURSE_UPDATED, LESSONS, lessonPath } from "@/lib/grammar-guide";
 import { GUIDE_CHAPTERS, GUIDE_UPDATED, guidePath } from "@/lib/guide";
 import { getSiteUrl } from "@/lib/site";
 import { listPublicTitles, titlePath } from "@/lib/titles";
@@ -25,6 +26,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(GUIDE_UPDATED),
       changeFrequency: "monthly" as const,
       priority: c.slug ? 0.8 : 0.9,
+    })),
+    { url: `${base}/grammar-guide`, lastModified: new Date(COURSE_UPDATED), changeFrequency: "monthly" as const, priority: 0.9 },
+    ...LESSONS.map((l) => ({
+      url: `${base}${lessonPath(l)}`,
+      lastModified: new Date(COURSE_UPDATED),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
     })),
     ...["/tools", "/tools/kana", "/tools/conjugation", "/tools/reading-speed"].map((path) => ({
       url: `${base}${path}`,

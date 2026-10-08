@@ -1,4 +1,5 @@
 import { A_YEAR_TO_LEARN_JAPANESE, MORG } from "@/lib/guide";
+import { LESSONS } from "@/lib/grammar-guide";
 import { ChapterShell, chapterMetadata } from "@/components/guide/chapter-shell";
 import { ParticleRolesDiagram, SentenceDiagram } from "@/components/guide/figures";
 import { Callout, Ext, GuideSection, H3, In, List, Table } from "@/components/guide/guide-parts";
@@ -57,6 +58,13 @@ export default function GrammarChapter() {
           minutes a day: it&apos;s there so the patterns look familiar when you meet them in your reading, not to replace the
           reading.
         </p>
+        <Callout title="Want a course that teaches it?">
+          <p>
+            The <In href="/grammar-guide">grammar course</In> is our own step-by-step guide: {LESSONS.length} lessons from how a sentence works to
+            reading novels, with glossed examples and a method for taking apart long sentences. Read it alongside the beginner guide
+            you pick, or instead of it.
+          </p>
+        </Callout>
         <Callout title="Explain Japanese as Japanese">
           <p>
             Tae Kim&apos;s guide is built on one idea worth borrowing whatever resource you use: explain Japanese from a Japanese

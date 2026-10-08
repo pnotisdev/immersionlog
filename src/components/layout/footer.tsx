@@ -31,6 +31,9 @@ export function Footer({
         <Link href="/guide" className="hover:text-foreground">
           Learning guide
         </Link>
+        <Link href="/grammar-guide" className="hover:text-foreground">
+          Grammar course
+        </Link>
         <Link href="/titles" className="hover:text-foreground">
           Titles
         </Link>
