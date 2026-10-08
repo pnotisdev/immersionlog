@@ -36,7 +36,7 @@ export type Node =
   | { t: "h2"; id: string; text: string }
   | { t: "h3"; text: string }
   | { t: "md"; text: string }
-  | { t: "ex"; chunks: Chunk[]; en?: string; note?: string }
+  | { t: "ex"; chunks: Chunk[]; /** Further lines of a passage, shown under the first. */ more?: Chunk[][]; en?: string; note?: string }
   | { t: "box"; kind: BoxKind; title: string; children: Node[] };
 
-export type BoxKind = "note" | "key" | "warn" | "try";
+export type BoxKind = "note" | "key" | "warn" | "try" | "read";

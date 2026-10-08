@@ -11,6 +11,7 @@ import { questionEndings, sentenceEndings } from "./lessons/more5";
 import { archaic, copulaLadder, grammarTerms, noDa, sounds, whyYesNo } from "./lessons/more6";
 import { desu, sentenceShape, topic } from "./lessons/part1";
 import { ga, no, pointing, roles } from "./lessons/part1b";
+import { PRACTICE } from "./practice";
 import { lessonMinutes, lessonSections, parseBody } from "./parse";
 import type { Lesson, Node, Part } from "./types";
 
@@ -55,6 +56,20 @@ export const PARTS: Part[] = [
     lessons: [casual, sentenceEndings, questionEndings, whyYesNo, noDa, copulaLadder, narration, formalNouns, grammarTerms, parsing],
   },
 ];
+
+/**
+ * Longer reading passages for a lesson live in ./practice, keyed by slug, and are spliced
+ * in before the lesson's "Key points" so each lesson ends with the short list, as before.
+ */
+function withPractice(lesson: Lesson): Lesson {
+  const extra = PRACTICE[lesson.slug];
+  if (!extra) return lesson;
+  const at = lesson.body.lastIndexOf("\n## Key points");
+  const body = at === -1 ? `${lesson.body}\n${extra}` : `${lesson.body.slice(0, at)}\n${extra}\n${lesson.body.slice(at)}`;
+  return { ...lesson, body };
+}
+
+for (const part of PARTS) part.lessons = part.lessons.map(withPractice);
 
 export const LESSONS: Lesson[] = PARTS.flatMap((p) => p.lessons);
 

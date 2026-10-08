@@ -36,7 +36,7 @@ describe.each(LESSONS.map((l) => [l.slug, l] as const))("lesson %s", (_slug, les
   it("gives every example's kanji a reading that lines up", () => {
     const problems: string[] = [];
     for (const ex of examples(parsed.nodes)) {
-      for (const c of ex.chunks) {
+      for (const c of [ex.chunks, ...(ex.more ?? [])].flat()) {
         const hasKanji = /[一-鿿々]/.test(c.jp);
         if (hasKanji && !c.kana) problems.push(`${c.jp} needs a reading`);
         if (c.kana && !alignReading(c.jp, c.kana)) problems.push(`${c.jp} / ${c.kana} don't line up`);

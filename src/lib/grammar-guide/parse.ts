@@ -4,9 +4,10 @@ import type { BoxKind, Chunk, Node } from "./types";
  * Lesson markup. Blocks are separated by blank lines:
  *
  *   ## Heading / ### Smaller heading
- *   :::key Title ... :::         a box (note, key, warn, try); its content is lesson markup
+ *   :::key Title ... :::         a box (note, key, warn, try, read); its content is lesson markup
  *   > chunk ; chunk ; chunk      an example sentence, split into word-sized pieces
- *   = English                    the natural translation, under the example
+ *                                (several > lines in a row make one passage)
+ *   = English                    the natural translation, under the example (one = per sentence)
  *   + note                       a short remark under it
  *   anything else                Markdown (with tables)
  *
@@ -15,7 +16,7 @@ import type { BoxKind, Chunk, Node } from "./types";
  * about. A line with no `|` at all is shown as plain text, for a sentence not worth gluing.
  */
 
-const BOXES = new Set<string>(["note", "key", "warn", "try"]);
+const BOXES = new Set<string>(["note", "key", "warn", "try", "read"]);
 
 export function slugify(text: string): string {
   return text
@@ -79,20 +80,25 @@ function parseLines(lines: string[], start: number, inBox: boolean): [Node[], nu
     }
     if (line.startsWith("> ")) {
       flush();
-      const chunks = line
-        .slice(2)
-        .split(" ; ")
-        .map(parseChunk)
-        .filter((c) => c.jp);
-      let en: string | undefined;
-      let note: string | undefined;
+      const row = (l: string) =>
+        l
+          .slice(2)
+          .split(" ; ")
+          .map(parseChunk)
+          .filter((c) => c.jp);
+      const chunks = row(line);
+      // Lines of > in a row are one passage; each is a row under the first.
+      const more: Chunk[][] = [];
       i++;
+      while (i < lines.length && lines[i].startsWith("> ")) more.push(row(lines[i++]));
+      const ens: string[] = [];
+      let note: string | undefined;
       while (i < lines.length && (lines[i].startsWith("= ") || lines[i].startsWith("+ "))) {
-        if (lines[i].startsWith("= ")) en = lines[i].slice(2).trim();
+        if (lines[i].startsWith("= ")) ens.push(lines[i].slice(2).trim());
         else note = lines[i].slice(2).trim();
         i++;
       }
-      nodes.push({ t: "ex", chunks, en, note });
+      nodes.push({ t: "ex", chunks, ...(more.length ? { more } : {}), en: ens.length ? ens.join("\n") : undefined, note });
       continue;
     }
     if (line.trim() === "") flush();
@@ -116,7 +122,7 @@ export function lessonMinutes(nodes: Node[]): number {
       case "md":
         return n.text.split(/\s+/).length;
       case "ex":
-        return 12 + (n.en?.split(/\s+/).length ?? 0) + (n.note?.split(/\s+/).length ?? 0);
+        return 12 + (n.more?.length ?? 0) * 8 + (n.en?.split(/\s+/).length ?? 0) + (n.note?.split(/\s+/).length ?? 0);
       case "box":
         return n.children.reduce((s, c) => s + words(c), 0);
       default:

@@ -70,17 +70,24 @@ function ChunkCell({ c, glossed }: { c: Chunk; glossed: boolean }) {
 }
 
 function Example({ node }: { node: Extract<Node, { t: "ex" }> }) {
-  const glossed = node.chunks.some((c) => c.gloss);
+  const rows = [node.chunks, ...(node.more ?? [])];
   return (
     <figure className="rounded-lg border border-border bg-surface px-4 py-3 sm:px-5">
-      <div className={cn("flex flex-wrap items-start", glossed ? "gap-x-3 gap-y-1" : "gap-x-0")}>
-        {node.chunks.map((c, i) => (
-          <ChunkCell key={i} c={c} glossed={glossed} />
-        ))}
+      <div className={cn("grid", rows.length > 1 && "gap-y-3")}>
+        {rows.map((chunks, r) => {
+          const glossed = chunks.some((c) => c.gloss);
+          return (
+            <div key={r} className={cn("flex flex-wrap items-start", glossed ? "gap-x-3 gap-y-1" : "gap-x-0")}>
+              {chunks.map((c, i) => (
+                <ChunkCell key={i} c={c} glossed={glossed} />
+              ))}
+            </div>
+          );
+        })}
       </div>
       {(node.en || node.note) && (
         <figcaption className="mt-2 grid gap-1 text-[0.9375rem] leading-relaxed">
-          {node.en && <span className="text-foreground">{node.en}</span>}
+          {node.en && <span className="whitespace-pre-line text-foreground">{node.en}</span>}
           {node.note && <span className="text-meta text-dim">{node.note}</span>}
         </figcaption>
       )}
@@ -93,6 +100,7 @@ const BOX: Record<BoxKind, { label: string; className: string }> = {
   key: { label: "Remember", className: "border-primary/40 bg-accent-tint" },
   warn: { label: "Careful", className: "border-primary/40 bg-accent-tint" },
   try: { label: "Look for it", className: "border-border bg-surface-2" },
+  read: { label: "Step by step", className: "border-border bg-surface-2" },
 };
 
 function Nodes({ nodes }: { nodes: Node[] }) {

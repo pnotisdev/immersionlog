@@ -61,6 +61,11 @@ export default function GrammarGuideIndex() {
             read the next.
           </li>
           <li>
+            <strong>Longer sentences in every lesson.</strong> Each lesson ends with multi-sentence passages (news reports,
+            dialogues, stories, formal emails), parsed step by step, so the grammar is practised on text as long as the text you
+            will actually read.
+          </li>
+          <li>
             <strong>Built for reading.</strong> The last parts are about the grammar of novels, manga, and subtitles: long sentences,
             dropped subjects, quoted speech and the narrator&apos;s voice.
           </li>
