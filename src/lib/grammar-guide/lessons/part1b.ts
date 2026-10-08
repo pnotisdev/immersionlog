@@ -390,9 +390,9 @@ In casual speech の at the end of a sentence has two jobs.
 > 今日|きょう|today ; は ; 行かない|いかない|won't go ; *の
 = I'm not going today (you see).
 
-It makes the sentence sound like you are explaining, softening, or asking for an explanation. In writing it often shows up in dialogue. In speech it often shortens to **ん** (行かないん？). We will cover it more in the lessons on explaining and casual speech.
+It makes the sentence sound like you are explaining, softening, or asking for an explanation. In writing it often shows up in dialogue. In speech it often shortens to **ん** (行かないんだ). We will cover it more in the lessons on explaining and casual speech.
 
-## Chains inside chains 
+## Several の in a row
 
 Because の does so much, it can appear several times in a row without trouble. Parse patiently from the left:
 
@@ -501,8 +501,8 @@ When you find **それ**, **その**, **そこ**, **そう** or **そんな** in
 
 These four describe a way or manner.
 
-> *どうして|why ; 泣いている|ないている|are crying ; の ; ？
-= Why are you crying?
+> *どう|how ; した|did ; の ; ？
+= What's wrong? / What happened?
 
 > *そう|that way ; 思う|おもう|think
 = I think so.

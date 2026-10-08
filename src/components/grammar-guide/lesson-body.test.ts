@@ -8,7 +8,8 @@ describe("LessonBody", () => {
   it.each(LESSONS.map((l) => [l.slug, l] as const))("renders %s", (_slug, lesson) => {
     const html = renderToStaticMarkup(createElement(LessonBody, { nodes: parseLesson(lesson).nodes }));
     expect(html).toContain("<h2");
-    expect(html).toContain("<ruby");
+    // Lessons with glossed examples show furigana; a lesson of tables and prose may have none.
+    if (parseLesson(lesson).nodes.some((n) => n.t === "ex")) expect(html).toContain("<ruby");
     expect(html).not.toContain(":::");
     expect(html).not.toContain("<table><thead></thead>");
   });

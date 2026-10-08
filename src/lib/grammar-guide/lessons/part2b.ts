@@ -356,7 +356,7 @@ The thing carried over is the favour. English "my friend took me to the station"
 
 > 助けて|たすけて|helping ; *くれて|gave ; ありがとう
 = Thank you for helping me.
-+ 〜てくれて ありがとう: "thank you for doing ~ for me". The most natural way to thank someone.
++ 〜てくれて ありがとう: "thank you for doing 〜 for me". The most natural way to thank someone.
 
 :::warn あげる can sound patronising
 〜てあげる can sound like you're doing someone a favour, which is rude to a superior. With people above you in status, use another form (〜てさしあげる is formal; often one simply says what you did without 〜てあげる). With friends and family it's perfectly normal.

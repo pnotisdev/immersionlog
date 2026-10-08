@@ -201,7 +201,7 @@ They overlap, but not entirely. Roughly:
 > 彼|かれ|he ; が ; 歌う|うたう|sings ; *の|(nounifier) ; を ; 聞いた|きいた|heard
 = I heard him sing.
 
-> 彼|かれ|he ; が ; 歌手|かしゅ|singer ; だ|is ; *こと|(nounifier) ; を ; 知っている|しっている|know
+> 彼|かれ|he ; が ; 歌手|かしゅ|singer ; だ ; という|that ; *こと|(nounifier) ; を ; 知っている|しっている|know
 = I know that he is a singer.
 
 Several fixed expressions require one or the other. In these, you can't swap:
@@ -365,7 +365,7 @@ Notice how the connecting word is at the start of the second sentence, so you kn
 > すみません|excuse me ; *けど|(softener) ; 駅|えき|station ; は ; どこ ; ですか
 = Excuse me, where is the station?
 
-That softening け ど is everywhere in conversation, and it just shows politeness, not contrast.
+That softening けど is everywhere in conversation, and it just shows politeness, not contrast.
 
 ## のに: even though (with feeling)
 
@@ -599,7 +599,7 @@ The same person does both. If different people do things at once, use **間に /
 
 **あいだ** ("interval") is "while / during", and **うちに** means "while it's still the case, before it changes".
 
-> 私|わたし|I ; が ; 寝ている|ねている|am sleeping ; *間|あいだ|while ; 母|はは|mother ; は ; 買い物|かいもの|shopping ; に ; 行った|いった|went
+> 私|わたし|I ; が ; 寝ている|ねている|am sleeping ; *間に|あいだに|during ; 母|はは|mother ; は ; 買い物|かいもの|shopping ; に ; 行った|いった|went
 = While I was sleeping, my mother went shopping.
 
 > 若い|わかい|young ; *うちに|while ; 旅行|りょこう|travel ; して|do ; おく

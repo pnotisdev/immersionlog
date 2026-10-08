@@ -8,6 +8,7 @@ import { conjunctions, listing, purposeCause, thinkingFeeling, timing } from "./
 import { becomingMaking, intention, negativeForms, selfEachOther, suggesting, transitivePairs, wishes } from "./lessons/more3";
 import { approximately, cannotHelp, compoundParticles, extraParticles, likeness, stemEndings } from "./lessons/more4";
 import { questionEndings, sentenceEndings } from "./lessons/more5";
+import { archaic, copulaLadder, grammarTerms, noDa, sounds, whyYesNo } from "./lessons/more6";
 import { desu, sentenceShape, topic } from "./lessons/part1";
 import { ga, no, pointing, roles } from "./lessons/part1b";
 import { lessonMinutes, lessonSections, parseBody } from "./parse";
@@ -21,7 +22,7 @@ export const PARTS: Part[] = [
     id: "foundations",
     title: "Part 1 · How a sentence works",
     blurb: "The shape of a Japanese sentence, the particles that hold it together, names, politeness and pointing words.",
-    lessons: [sentenceShape, desu, nouns, topic, ga, roles, particlesCompared, no, pointing, politeCasual],
+    lessons: [sentenceShape, desu, nouns, topic, ga, roles, particlesCompared, no, pointing, sounds, politeCasual],
   },
   {
     id: "verbs-adjectives",
@@ -45,13 +46,13 @@ export const PARTS: Part[] = [
     id: "nuance",
     title: "Part 5 · Judgement and nuance",
     blurb: "Guessing and likeness, comparing and approximating, the smaller particles, verb endings, written-style particles, and keigo.",
-    lessons: [guessing, likeness, comparing, approximately, extraParticles, stemEndings, compoundParticles, cannotHelp, politeSpeech],
+    lessons: [guessing, likeness, comparing, approximately, extraParticles, stemEndings, compoundParticles, cannotHelp, politeSpeech, archaic],
   },
   {
     id: "real-japanese",
     title: "Part 6 · Reading real Japanese",
     blurb: "Casual speech, sentence endings, questions, the voice of narration, the small nouns that make patterns, and a method for any sentence.",
-    lessons: [casual, sentenceEndings, questionEndings, narration, formalNouns, parsing],
+    lessons: [casual, sentenceEndings, questionEndings, whyYesNo, noDa, copulaLadder, narration, formalNouns, grammarTerms, parsing],
   },
 ];
 

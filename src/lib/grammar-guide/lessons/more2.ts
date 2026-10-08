@@ -18,7 +18,7 @@ Japanese has several words for "and", and they are not interchangeable. The main
 > 犬|いぬ|dog ; *と|and ; 猫|ねこ|cat ; を ; 飼っている|かっている|keep
 = I keep a dog and a cat. (just those two)
 
-と joins **nouns only**, never verbs or sentences. For those you use other tools (て-form, ~し, ~たり).
+と joins **nouns only**, never verbs or sentences. For those you use other tools (て-form, 〜し, 〜たり).
 
 ## Example lists: や, とか, など
 

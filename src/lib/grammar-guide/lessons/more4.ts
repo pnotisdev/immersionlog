@@ -180,7 +180,7 @@ And "only that much / trivial":
 > 昨日|きのう|yesterday ; ほど|as ; 寒く|さむく|cold ; ない
 = It's not as cold as yesterday.
 
-Differences: ぐらい is neutral; ほど suggests limit or extreme. In "not as ~ as" sentences, only ほど works.
+Differences: ぐらい is neutral; ほど suggests limit or extreme. In "not as 〜 as" sentences, only ほど works.
 
 ## 約, およそ, だいたい
 
@@ -236,7 +236,7 @@ These are written or formal "approximately":
 ## Key points
 
 - **ぐらい / くらい**: amounts and durations. **ごろ**: points in time.
-- **ほど**: extent, degree; the only one in "not as ~ as".
+- **ほど**: extent, degree; the only one in "not as 〜 as".
 - **約, およそ, だいたい**: formal and casual "roughly".
 - **ほとんど**: almost all/none. **もう少しで**: nearly.
 - **に** after a period = "per".

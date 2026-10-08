@@ -126,7 +126,7 @@ export const desu: Lesson = {
   slug: "desu",
   title: "Saying what something is: だ, です and negatives",
   description:
-    "The two words for \"is\": plain だ and polite です, how to make them negative and past, why you often can't tell from the sentence which is more correct, and how politeness changes everything on a page.",
+    "The two words for \"is\": plain だ and polite です, how to make them negative and past, and how the choice between them changes the feel of everything on the page.",
   points: ["n5-desu", "n5-ja-nai", "n5-deshita", "n5-ja-nakatta"],
   body: `
 The first predicate to learn is the one that means "is": it ties a noun to a description or another noun. Japanese has two forms of it, and the difference is **politeness**, not meaning.

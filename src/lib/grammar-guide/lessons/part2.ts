@@ -103,7 +103,7 @@ Three things to read off this table:
 > 手紙|てがみ|letter ; を ; *書かなかった|かかなかった|didn't write
 = I didn't write a letter.
 
-The past forms look like a lot to memorise, but they follow the sound pattern you can feel: だ goes with the nasal sounds (ん), た with the others. You will say them aloud and they'll become automatic.
+The past forms look like a lot to memorise, but they follow the sound pattern you can feel: だ goes with the voiced endings (ぬ, ぶ, む, ぐ), た with the others. You will say them aloud and they'll become automatic.
 
 :::warn One exception: 行く
 **行く** is a regular く-verb in every way except the past: its past is **行った** (not 行いた). Its て-form is 行って. This is the only common exception.

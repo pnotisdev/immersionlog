@@ -667,7 +667,7 @@ export const comparing: Lesson = {
   body: `
 ## Comparing two things: より and のほうが
 
-**A より B のほうが ~** says B is more ~ than A. **より** marks the thing compared against.
+**A より B のほうが 〜** says B is more 〜 than A. **より** marks the thing compared against.
 
 > 犬|いぬ|dog ; *より|than ; 猫|ねこ|cat ; *のほうが|is more ; 好き|すき|liked
 = I like cats more than dogs.
@@ -680,7 +680,7 @@ You can drop either half when it's clear:
 > こちら|this one ; *のほうが|is more ; 安い|やすい|cheap|やすい|cheap
 = This one is cheaper.
 
-To ask which of two: どちらのほうが ~ ですか。
+To ask which of two: どちらのほうが 〜 ですか。
 
 ## The most: 一番
 
@@ -694,7 +694,7 @@ To ask which of two: どちらのほうが ~ ですか。
 
 ## As much as: ほど
 
-**ほど** is "to the extent of", and in a negative sentence it says "not as ~ as".
+**ほど** is "to the extent of", and in a negative sentence it says "not as 〜 as".
 
 > 今日|きょう|today ; は ; 昨日|きのう|yesterday ; *ほど|as ; 寒く|さむく|cold ; ない
 = Today isn't as cold as yesterday.
@@ -746,7 +746,7 @@ The English sentences are nearly identical, but しか adds a feeling of "so lit
 ## Key points
 
 - **A より B のほうが** = B more than A. **一番** = the most.
-- **ほど + negative** = not as ~ as.
+- **ほど + negative** = not as 〜 as.
 - **だけ** = only. **しか + negative** = nothing but.
 - **ばかり** = nothing but (often with complaint).
 - **さえ / でも** = even. **Number + も** = as many as.
