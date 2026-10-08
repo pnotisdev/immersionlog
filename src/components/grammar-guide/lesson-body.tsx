@@ -72,7 +72,7 @@ function ChunkCell({ c, glossed }: { c: Chunk; glossed: boolean }) {
 function Example({ node }: { node: Extract<Node, { t: "ex" }> }) {
   const rows = [node.chunks, ...(node.more ?? [])];
   return (
-    <figure className="min-w-0 rounded-lg border border-border bg-surface px-4 py-3 sm:px-5">
+    <figure className="min-w-0 rounded-lg border border-border/70 bg-surface px-3.5 py-2.5 sm:px-5 sm:py-3">
       <div className={cn("grid", rows.length > 1 && "gap-y-3")}>
         {rows.map((chunks, r) => {
           const glossed = chunks.some((c) => c.gloss);
@@ -96,11 +96,11 @@ function Example({ node }: { node: Extract<Node, { t: "ex" }> }) {
 }
 
 const BOX: Record<BoxKind, { label: string; className: string }> = {
-  note: { label: "Note", className: "border-border bg-surface" },
-  key: { label: "Remember", className: "border-primary/40 bg-accent-tint" },
-  warn: { label: "Careful", className: "border-primary/40 bg-accent-tint" },
-  try: { label: "Look for it", className: "border-border bg-surface-2" },
-  read: { label: "Step by step", className: "border-border bg-surface-2" },
+  note: { label: "Note", className: "border-transparent bg-surface" },
+  key: { label: "Remember", className: "border-primary/30 bg-accent-tint" },
+  warn: { label: "Careful", className: "border-primary/30 bg-accent-tint" },
+  try: { label: "Look for it", className: "border-transparent bg-surface-2" },
+  read: { label: "Step by step", className: "border-transparent bg-surface-2" },
 };
 
 function Nodes({ nodes }: { nodes: Node[] }) {
@@ -110,13 +110,13 @@ function Nodes({ nodes }: { nodes: Node[] }) {
         switch (n.t) {
           case "h2":
             return (
-              <h2 key={i} id={n.id} className="scroll-mt-24 border-t border-border pt-8 text-[1.5rem] leading-8 font-semibold tracking-tight text-balance first:border-t-0 first:pt-0">
+              <h2 key={i} id={n.id} className="mt-6 scroll-mt-24 text-[1.375rem] leading-8 font-semibold tracking-tight text-balance first:mt-0 sm:mt-4 sm:border-t sm:border-border sm:pt-8 sm:text-[1.5rem] sm:first:border-t-0 sm:first:pt-0">
                 {n.text}
               </h2>
             );
           case "h3":
             return (
-              <h3 key={i} className="mt-2 text-h3 font-semibold">
+              <h3 key={i} className="mt-4 text-h3 font-semibold text-foreground">
                 {n.text}
               </h3>
             );
@@ -127,7 +127,7 @@ function Nodes({ nodes }: { nodes: Node[] }) {
           case "box": {
             const b = BOX[n.kind];
             return (
-              <aside key={i} className={cn("rounded-lg border px-5 py-4 text-[0.9375rem] leading-relaxed", b.className)}>
+              <aside key={i} className={cn("rounded-lg border px-4 py-3.5 text-[0.9375rem] leading-relaxed sm:px-5 sm:py-4", b.className)}>
                 <p className="mb-1.5 font-semibold">
                   <span className="mr-2 text-meta font-medium tracking-wide text-dim uppercase">{b.label}</span>
                   {n.title}
@@ -146,7 +146,7 @@ function Nodes({ nodes }: { nodes: Node[] }) {
 
 export function LessonBody({ nodes }: { nodes: Node[] }) {
   return (
-    <div className="grid gap-5 text-[1.0625rem] leading-[1.75] [&_strong]:font-semibold [&_strong]:text-foreground">
+    <div className="grid gap-4 text-[1.0625rem] leading-[1.75] sm:gap-5 [&_strong]:font-semibold [&_strong]:text-foreground">
       <Nodes nodes={nodes} />
     </div>
   );

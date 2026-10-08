@@ -40,55 +40,33 @@ export default function GrammarGuideIndex() {
       />
       <header className="max-w-[44rem]">
         <p className="section-label mb-3">Grammar course</p>
-        <h1 className="text-[2rem] leading-10 font-semibold tracking-tight text-balance sm:text-[2.5rem] sm:leading-[3rem]">{TITLE}</h1>
-        <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">{DESCRIPTION}</p>
+        <h1 className="text-[1.75rem] leading-9 font-semibold tracking-tight text-balance sm:text-[2.5rem] sm:leading-[3rem]">{TITLE}</h1>
       </header>
 
-      <div className="mt-8 grid max-w-[44rem] gap-4 text-[1.0625rem] leading-[1.75]">
-        <h2 className="text-[1.375rem] font-semibold">How this course works</h2>
+      <div className="mt-6 grid max-w-[44rem] gap-4 text-[1.0625rem] leading-[1.75] sm:mt-8">
         <p>
           Japanese grammar looks hostile because the order is backwards and the little words are everywhere. It is much more regular
-          than it looks. This course teaches it as a <strong>small number of ideas</strong> that keep coming back, rather than a
-          long list of unrelated rules.
+          than it looks. This course teaches it as <strong>a small number of ideas</strong> that keep coming back, with every example
+          glossed piece by piece and every lesson ending in longer passages you parse step by step.
         </p>
-        <ul className="grid list-disc gap-2 pl-6 marker:text-dim">
-          <li>
-            <strong>Japanese on its own terms.</strong> Example sentences are glossed piece by piece, so you see what the Japanese
-            actually says before you see the polished English.
-          </li>
-          <li>
-            <strong>One idea at a time, in order.</strong> Nothing is used before it is explained. If you finish a lesson, you can
-            read the next.
-          </li>
-          <li>
-            <strong>Longer sentences in every lesson.</strong> Each lesson ends with multi-sentence passages (news reports,
-            dialogues, stories, formal emails), parsed step by step, so the grammar is practised on text as long as the text you
-            will actually read.
-          </li>
-          <li>
-            <strong>Built for reading.</strong> The last parts are about the grammar of novels, manga, and subtitles: long sentences,
-            dropped subjects, quoted speech and the narrator&apos;s voice.
-          </li>
-          <li>
-            <strong>Understand, then absorb.</strong> You will not memorise this course in one pass, and you are not meant to. Read a
-            lesson, then go and meet its patterns in real Japanese. Come back when something puzzles you.
-          </li>
-        </ul>
-        <p>
-          You should know hiragana and katakana before you start (the <Link className="text-primary underline underline-offset-3" href="/guide/kana">kana chapter</Link>{" "}
-          will get you there in days) and be learning vocabulary alongside, since a grammar course cannot teach you enough words.
-          Start with lesson 1 and go in order.
+        <p className="text-[0.9375rem] text-muted-foreground">
+          Start with lesson 1 and go in order. You should know hiragana and katakana first (the{" "}
+          <Link className="text-primary underline underline-offset-3" href="/guide/kana">
+            kana chapter
+          </Link>{" "}
+          gets you there in days) and be learning vocabulary alongside. You will not memorise a lesson in one pass, and you are not
+          meant to: read it, go and meet the pattern in real Japanese, and come back when something puzzles you.
         </p>
       </div>
 
       <div className="mt-10 grid max-w-[44rem] gap-10">
         {PARTS.map((part) => (
           <section key={part.id} aria-labelledby={part.id}>
-            <h2 id={part.id} className="text-[1.375rem] font-semibold">
+            <h2 id={part.id} className="text-[1.25rem] font-semibold sm:text-[1.375rem]">
               {part.title}
             </h2>
-            <p className="mt-1 text-muted-foreground">{part.blurb}</p>
-            <ol className="mt-4 grid gap-2">
+            <p className="mt-1 text-[0.9375rem] text-muted-foreground">{part.blurb}</p>
+            <ol className="mt-3 grid">
               {part.lessons.map((l) => {
                 n++;
                 const minutes = parseLesson(l).minutes;
@@ -96,14 +74,16 @@ export default function GrammarGuideIndex() {
                   <li key={l.slug}>
                     <Link
                       href={lessonPath(l)}
-                      className="group flex gap-4 rounded-lg border border-border px-4 py-3 transition-colors hover:border-foreground/30"
+                      className="group flex items-baseline gap-3 rounded-md px-2 py-2 transition-colors hover:bg-muted sm:px-3"
                     >
-                      <span className="w-6 shrink-0 pt-0.5 text-right tabular-nums text-dim">{n}</span>
-                      <span className="min-w-0">
+                      <span className="w-6 shrink-0 text-right text-meta text-dim tabular-nums">{n}</span>
+                      <span className="min-w-0 grow">
                         <span className="block font-medium group-hover:underline">{l.title}</span>
-                        <span className="mt-0.5 block text-[0.9375rem] leading-snug text-muted-foreground">{l.description}</span>
-                        <span className="mt-1 block text-meta text-dim">{minutes} min read</span>
+                        <span className="mt-0.5 hidden text-[0.875rem] leading-snug text-muted-foreground sm:line-clamp-1 sm:block">
+                          {l.description}
+                        </span>
                       </span>
+                      <span className="shrink-0 text-meta text-dim tabular-nums">{minutes} min</span>
                     </Link>
                   </li>
                 );
@@ -113,14 +93,17 @@ export default function GrammarGuideIndex() {
         ))}
       </div>
 
-      <section className="mt-12 max-w-[44rem] rounded-lg border border-border bg-surface px-6 py-5">
-        <h2 className="text-h3 font-semibold">Practice what you learn</h2>
-        <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted-foreground">
-          The <Link className="text-primary underline underline-offset-3" href="/grammar/n5">JLPT grammar lists</Link> have a short
-          drill for hundreds of patterns, and the <Link className="text-primary underline underline-offset-3" href="/tools/conjugation">conjugation drill</Link> trains
-          verb and adjective forms until they are automatic. Then go and read: the course is only the map.
-        </p>
-      </section>
+      <p className="mt-10 max-w-[44rem] text-[0.9375rem] leading-relaxed text-muted-foreground">
+        To practise as you go, the{" "}
+        <Link className="text-primary underline underline-offset-3" href="/grammar/n5">
+          JLPT grammar lists
+        </Link>{" "}
+        have a short drill for hundreds of patterns, and the{" "}
+        <Link className="text-primary underline underline-offset-3" href="/tools/conjugation">
+          conjugation drill
+        </Link>{" "}
+        trains verb and adjective forms until they are automatic.
+      </p>
     </article>
   );
 }

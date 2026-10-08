@@ -12,10 +12,10 @@ import type { KanaRow } from "@/lib/kana";
 
 export function GuideSection({ id, step, title, children }: { id: string; step?: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24 border-t border-border pt-10 first:border-t-0 first:pt-0">
+    <section id={id} className="scroll-mt-24 sm:border-t sm:border-border sm:pt-10 sm:first:border-t-0 sm:first:pt-0">
       {step && <p className="section-label mb-2">{step}</p>}
-      <h2 className="text-[1.625rem] leading-8 font-semibold tracking-tight text-balance">{title}</h2>
-      <div className="mt-5 grid gap-4 text-[1.0625rem] leading-[1.75] [&_strong]:font-semibold [&_strong]:text-foreground">{children}</div>
+      <h2 className="text-[1.5rem] leading-8 font-semibold tracking-tight text-balance sm:text-[1.625rem]">{title}</h2>
+      <div className="mt-4 grid gap-4 text-[1.0625rem] leading-[1.75] sm:mt-5 [&_strong]:font-semibold [&_strong]:text-foreground">{children}</div>
     </section>
   );
 }

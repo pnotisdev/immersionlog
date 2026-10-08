@@ -87,9 +87,9 @@ export async function ChapterShell({
         </p>
       </header>
 
-      <div className="mt-10 grid max-w-[44rem] gap-12">{children}</div>
+      <div className="mt-8 grid max-w-[44rem] gap-10 sm:mt-10 sm:gap-12">{children}</div>
 
-      <nav aria-label="Chapters" className="mt-14 grid max-w-[44rem] gap-3 border-t border-border pt-8 sm:grid-cols-2">
+      <nav aria-label="Chapters" className="mt-12 grid max-w-[44rem] gap-3 sm:mt-14 sm:grid-cols-2 sm:border-t sm:border-border sm:pt-8">
         {prev ? (
           <Link href={guidePath(prev.slug)} className="group rounded-lg border border-border px-4 py-3 transition-colors hover:border-foreground/30">
             <span className="flex items-center gap-1.5 text-meta text-dim">

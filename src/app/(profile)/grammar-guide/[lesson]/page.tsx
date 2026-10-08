@@ -65,18 +65,20 @@ export default async function LessonPage(props: Props) {
         <p className="section-label mb-3">
           {part.title} · Lesson {number}
         </p>
-        <h1 className="text-[2rem] leading-10 font-semibold tracking-tight text-balance sm:text-[2.5rem] sm:leading-[3rem]">{lesson.title}</h1>
-        <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">{lesson.description}</p>
-        <p className="mt-3 text-meta text-dim">About {minutes} minutes to read</p>
+        <h1 className="text-[1.75rem] leading-9 font-semibold tracking-tight text-balance sm:text-[2.5rem] sm:leading-[3rem]">{lesson.title}</h1>
+        <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted-foreground sm:mt-4">{lesson.description}</p>
+        <p className="mt-2 text-meta text-dim">About {minutes} minutes to read</p>
       </header>
 
       {sections.length > 2 && (
-        <nav aria-label="In this lesson" className="mt-6 max-w-[44rem] rounded-lg border border-border bg-surface px-4 py-3 text-sm">
-          <p className="mb-1 font-medium">In this lesson</p>
-          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+        <nav aria-label="In this lesson" className="mt-6 max-w-[44rem] text-sm">
+          <ul className="flex flex-wrap gap-x-1 gap-y-1.5">
             {sections.map((s) => (
               <li key={s.id}>
-                <a href={`#${s.id}`} className="text-muted-foreground hover:text-foreground hover:underline">
+                <a
+                  href={`#${s.id}`}
+                  className="inline-block rounded-full bg-surface px-3 py-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                >
                   {s.label}
                 </a>
               </li>
@@ -85,7 +87,7 @@ export default async function LessonPage(props: Props) {
         </nav>
       )}
 
-      <div className="mt-8 max-w-[44rem]">
+      <div className="mt-7 max-w-[44rem] sm:mt-8">
         <FuriganaToggle>
           <LessonBody nodes={nodes} />
         </FuriganaToggle>
@@ -106,7 +108,7 @@ export default async function LessonPage(props: Props) {
           </section>
         )}
 
-        <nav aria-label="Lessons" className="mt-12 grid gap-3 border-t border-border pt-8 sm:grid-cols-2">
+        <nav aria-label="Lessons" className="mt-12 grid gap-3 sm:grid-cols-2 sm:border-t sm:border-border sm:pt-8">
           {prev ? (
             <Link href={lessonPath(prev)} className="group rounded-lg border border-border px-4 py-3 transition-colors hover:border-foreground/30">
               <span className="flex items-center gap-1.5 text-meta text-dim">
