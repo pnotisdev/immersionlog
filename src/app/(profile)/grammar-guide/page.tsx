@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { GUIDE_UPDATED, LESSONS, lessonPath, parseLesson, PARTS } from "@/lib/grammar-guide";
 import { absoluteUrl, breadcrumbs, JsonLd } from "@/lib/seo";
 
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
 };
 
 export default function GrammarGuideIndex() {
-  let n = 0;
   return (
     <article className="min-w-0">
       <JsonLd
@@ -59,39 +59,42 @@ export default function GrammarGuideIndex() {
         </p>
       </div>
 
-      <div className="mt-10 grid max-w-[44rem] gap-10">
-        {PARTS.map((part) => (
-          <section key={part.id} aria-labelledby={part.id}>
-            <h2 id={part.id} className="text-[1.25rem] font-semibold sm:text-[1.375rem]">
-              {part.title}
-            </h2>
-            <p className="mt-1 text-[0.9375rem] text-muted-foreground">{part.blurb}</p>
-            <ol className="mt-3 grid">
-              {part.lessons.map((l) => {
-                n++;
-                const minutes = parseLesson(l).minutes;
-                return (
-                  <li key={l.slug}>
-                    <Link
-                      href={lessonPath(l)}
-                      className="group flex items-baseline gap-3 rounded-md px-2 py-2 transition-colors hover:bg-muted sm:px-3"
-                    >
-                      <span className="w-6 shrink-0 text-right text-meta text-dim tabular-nums">{n}</span>
-                      <span className="min-w-0 grow">
-                        <span className="block font-medium group-hover:underline">{l.title}</span>
-                        <span className="mt-0.5 hidden text-[0.875rem] leading-snug text-muted-foreground sm:line-clamp-1 sm:block">
-                          {l.description}
-                        </span>
-                      </span>
-                      <span className="shrink-0 text-meta text-dim tabular-nums">{minutes} min</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ol>
-          </section>
-        ))}
+      <div className="mt-8 max-w-[44rem]">
+        <Link
+          href={lessonPath(LESSONS[0])}
+          className="inline-flex h-11 items-center gap-2 rounded-sm bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-accent-hover"
+        >
+          Start with lesson 1
+          <ArrowRight className="size-4" aria-hidden />
+        </Link>
       </div>
+
+      <ol className="mt-10 grid max-w-[44rem] gap-3">
+        {PARTS.map((part) => {
+          const minutes = part.lessons.reduce((sum, l) => sum + parseLesson(l).minutes, 0);
+          const [label, title] = part.title.split(" · ");
+          const first = part.lessons[0];
+          return (
+            <li key={part.id}>
+              <Link
+                href={lessonPath(first)}
+                className="group grid gap-1 rounded-lg border border-border px-4 py-3.5 transition-colors hover:border-foreground/30 sm:px-5"
+              >
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="font-medium group-hover:underline">
+                    <span className="mr-2 text-meta text-dim">{label}</span>
+                    {title ?? part.title}
+                  </span>
+                  <span className="shrink-0 text-meta text-dim tabular-nums">
+                    {part.lessons.length} lessons · {Math.round(minutes / 60 * 10) / 10} h
+                  </span>
+                </span>
+                <span className="text-[0.9375rem] leading-snug text-muted-foreground">{part.blurb}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ol>
 
       <p className="mt-10 max-w-[44rem] text-[0.9375rem] leading-relaxed text-muted-foreground">
         To practise as you go, the{" "}

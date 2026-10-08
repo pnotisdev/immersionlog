@@ -78,10 +78,7 @@ export function LessonNav({ variant }: { variant: "sidebar" | "mobile" }) {
   const pathname = usePathname();
   const current = PARTS.find((p) => p.lessons.some((l) => pathname === `/grammar-guide/${l.slug}`));
   // Keyed so that moving to a lesson in another part opens that part.
-  const parts = <Parts key={current?.id ?? "none"} activePart={current?.id ?? PARTS[0].id} />;
-
-  // The course index already lists every lesson, so it needs no second list beside it.
-  if (pathname === "/grammar-guide") return null;
+  const parts = <Parts key={current?.id ?? "none"} activePart={current?.id ?? ""} />;
 
   if (variant === "sidebar") {
     return (
