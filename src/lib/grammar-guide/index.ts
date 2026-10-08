@@ -9,6 +9,7 @@ import { becomingMaking, intention, negativeForms, selfEachOther, suggesting, tr
 import { approximately, cannotHelp, compoundParticles, extraParticles, likeness, stemEndings } from "./lessons/more4";
 import { questionEndings, sentenceEndings } from "./lessons/more5";
 import { archaic, copulaLadder, grammarTerms, noDa, sounds, whyYesNo } from "./lessons/more6";
+import { readingLab } from "./lessons/lab";
 import { desu, sentenceShape, topic } from "./lessons/part1";
 import { ga, no, pointing, roles } from "./lessons/part1b";
 import { PRACTICE } from "./practice";
@@ -53,7 +54,7 @@ export const PARTS: Part[] = [
     id: "real-japanese",
     title: "Part 6 · Reading real Japanese",
     blurb: "Casual speech, sentence endings, questions, the voice of narration, the small nouns that make patterns, and a method for any sentence.",
-    lessons: [casual, sentenceEndings, questionEndings, whyYesNo, noDa, copulaLadder, narration, formalNouns, grammarTerms, parsing],
+    lessons: [casual, sentenceEndings, questionEndings, whyYesNo, noDa, copulaLadder, narration, formalNouns, grammarTerms, parsing, readingLab],
   },
 ];
 
