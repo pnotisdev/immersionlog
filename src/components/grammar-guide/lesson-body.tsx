@@ -60,8 +60,8 @@ function Japanese({ jp, kana }: { jp: string; kana?: string }) {
 
 function ChunkCell({ c, glossed }: { c: Chunk; glossed: boolean }) {
   return (
-    <span className="inline-flex flex-col items-start gap-0.5">
-      <span lang="ja" className={cn("text-[1.375rem] leading-[2.1]", c.hl && "font-semibold text-primary")}>
+    <span className="inline-flex max-w-full flex-col items-start gap-0.5">
+      <span lang="ja" className={cn("text-[1.125rem] leading-[2.1] [overflow-wrap:anywhere] sm:text-[1.375rem]", c.hl && "font-semibold text-primary")}>
         <Japanese jp={c.jp} kana={c.kana} />
       </span>
       {glossed && <span className="max-w-[9rem] text-[0.8125rem] leading-snug text-muted-foreground">{c.gloss ?? " "}</span>}
@@ -72,7 +72,7 @@ function ChunkCell({ c, glossed }: { c: Chunk; glossed: boolean }) {
 function Example({ node }: { node: Extract<Node, { t: "ex" }> }) {
   const rows = [node.chunks, ...(node.more ?? [])];
   return (
-    <figure className="rounded-lg border border-border bg-surface px-4 py-3 sm:px-5">
+    <figure className="min-w-0 rounded-lg border border-border bg-surface px-4 py-3 sm:px-5">
       <div className={cn("grid", rows.length > 1 && "gap-y-3")}>
         {rows.map((chunks, r) => {
           const glossed = chunks.some((c) => c.gloss);

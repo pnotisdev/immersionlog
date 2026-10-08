@@ -1,6 +1,7 @@
 import { EXTRA_PRACTICE } from "./extra";
 import { EXTRA_PRACTICE_2 } from "./extra2";
 import { EXTRA_PRACTICE_3 } from "./extra3";
+import { EXTRA_PRACTICE_4 } from "./extra4";
 import { part1Practice } from "./part1";
 import { part2Practice } from "./part2";
 import { part3Practice } from "./part3";
@@ -22,5 +23,5 @@ const BASE: Record<string, string> = {
 };
 
 export const PRACTICE: Record<string, string> = Object.fromEntries(
-  Object.entries(BASE).map(([slug, text]) => [slug, [text, EXTRA_PRACTICE[slug], EXTRA_PRACTICE_2[slug], EXTRA_PRACTICE_3[slug]].filter(Boolean).join("\n")]),
+  Object.entries(BASE).map(([slug, text]) => [slug, [text, EXTRA_PRACTICE[slug], EXTRA_PRACTICE_2[slug], EXTRA_PRACTICE_3[slug], EXTRA_PRACTICE_4[slug]].filter(Boolean).join("\n")]),
 );
